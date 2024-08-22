@@ -199,30 +199,23 @@
                     </div>
 
 
-                                  
- 
-                           
-
-                        <div class="m-2" [formGroup]="tripAssignmentForm">
-                            <label for="VehicleId">Vehicle Registration</label>
-                            <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
-                            
-                                    (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
-                                    (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
-
-                                    
-                                <option value="">Select vehicleRegistration</option>
-                                <option *ngFor="let vehicle of fetchedVehicleList" value="{{vehicle.vehicleID}}">
-                                    {{ vehicle.vehicleRegNo }}
-                                </option>
-                            </select>                       
-                        
 
 
 
 
+                    <div class="m-2" [formGroup]="tripAssignmentForm">
+                        <label for="VehicleId">Vehicle Registration</label>
+                        <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
+                            (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
+                            (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
+
+
+                            <option value="">Select vehicleRegistration</option>
+                            <option *ngFor="let vehicle of fetchedVehicleList" value="{{vehicle.vehicleID}}">
+                                {{ vehicle.vehicleRegNo }}
+                            </option>
+                        </select>
                         <div *ngIf="vehicleAssignedError" class="text-red-700">
-
                             <small>*This vehicle is already assigned to {{
                                 tripAssignmentForm.get('ReservationId')?.value }}</small>
                         </div>
@@ -433,3 +426,48 @@
         </div>
 
     </ng-template>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<two click events for vehiclefetch and assignmnent></two>
+
+    <div class="m-2" [formGroup]="tripAssignmentForm">
+        <label for="VehicleId">Vehicle Registration</label>
+        <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
+            (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
+            (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
+
+
+            <option value="">Select vehicleRegistration</option>
+            <option *ngFor="let vehicle of fetchedVehicleList" value="{{vehicle.vehicleID}}">
+                {{ vehicle.vehicleRegNo }}
+            </option>
+        </select>
+        <div *ngIf="vehicleAssignedError" class="text-red-700">
+            <small>*This vehicle is already assigned to {{
+                tripAssignmentForm.get('ReservationId')?.value }}</small>
+        </div>
+        <div *ngIf="(tripAssignmentForm.get('vehicleRegistration')?.invalid &&
+                    tripAssignmentForm.get('vehicleRegistration')?.errors &&
+                    tripAssignmentForm.get('vehicleRegistration')?.dirty) ||
+                  tripAssignmentForm.get('vehicleRegistration')?.touched">
+            <small class="text-red-700"
+                *ngIf="tripAssignmentForm.get('BookingFor')?.hasError('required')">*This field
+                is
+                required</small>
+
+        </div>
+    </div> -->

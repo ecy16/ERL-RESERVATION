@@ -145,6 +145,8 @@ export class BookingDetailsComponent {
   selectedFile: File | null = null;
   uploadProgress: number | null = null;
   http: any;
+  showAddressLine2 = false;
+  showAddressLine3 = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -207,6 +209,7 @@ export class BookingDetailsComponent {
       VehicleModel: "",
       vehicleRegistration: "",
       vehicleType: "",
+      Remarks:""
     });
 
     this.tripFormUpdate = this.formBuilder.group({
@@ -634,7 +637,13 @@ export class BookingDetailsComponent {
 
 
 
-
+  addAdditionalAddress() {
+    if (!this.showAddressLine2) {
+      this.showAddressLine2 = true;
+    } else if (!this.showAddressLine3) {
+      this.showAddressLine3 = true;
+    }
+  }
 
 
 

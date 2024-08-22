@@ -86,6 +86,7 @@ export class AssignmentComponent {
 
 
   filteredAssignment: any[] = [];
+  formGroup: any;
 
   toggle(arg0: string) {
     throw new Error("Method not implemented.");
@@ -687,6 +688,15 @@ export class AssignmentComponent {
       });
     console.log('ovcwyey');
     this.getallTrips()
+
+   
+    
+
+   const confirmProceed= window.confirm('Do you wish to generate a CDO?')
+if(confirmProceed){
+this.generateCDO(TripId)
+}
+
   }
   fetchVehiclesByModel(Model: any) {
     this.fetchedVehicleList = [];
@@ -735,7 +745,112 @@ export class AssignmentComponent {
 
   // generating the CDO
 
+
+
+
   generateCDO(TripId: any) {
+    console.log('Fetching trip details for CDO generation, TripId:', TripId);
+  
+    this.fetchedCDOData = [];
+  
+    this.apiService.getRelatedTrip(TripId).subscribe((TripInfo) => {
+      console.log('Fetched trip information:', TripInfo);
+  
+      // Store the fetched trip data
+      this.fetchedCDOData = TripInfo;
+  
+      if (this.fetchedCDOData.length > 0) {
+        console.log('Generating CDO for trip...');
+  
+        for (const d of this.fetchedCDOData) {
+          try {
+            const doc = new jsPDF({
+              orientation: "p",
+              unit: "mm",
+              format: "a4",
+            });
+  
+            // Title
+            doc.setFontSize(20);
+            doc.setFont("arial");
+            doc.text("DRIVER ORDER", 105, 10, { align: "center" });
+  
+            // Header information (replace static text with dynamic data as needed)
+            doc.setFontSize(8);
+            doc.setFont("arial", "bold");
+            doc.text("Office Line: +254 707 603009 | +254 722 513303", 10, 35);
+            doc.text("Office Line: +254 797486389", 202, 35, { align: "right" });
+            doc.text("POBox 45757-0100, Nairobi, Kenya", 10, 39);
+            doc.text("JKIA (Airport)", 202, 39, { align: "right" });
+            doc.text("Office:Off Musa Gitau Road, Waiyaki Way", 10, 43);
+            doc.text("Airport:Office No.9 Parking silo, Ground Floor", 202, 43, { align: "right" });
+            doc.text("info@executiverentalsltd.com", 10, 47);
+            doc.text("hertzkenya@executiverentalsltd.com", 202, 47, { align: "right" });
+  
+            // Organization, Client, and Booking details (use dynamic data)
+            doc.setFontSize(12);
+            doc.text("Organization:", 12, 64);
+            doc.text(d.organization || '', 12, 70);
+            doc.text("Client Name:", 12, 80);
+            doc.text(d.clientName || '', 12, 86);
+            doc.text("Booked by:", 12, 95);
+            doc.text(d.bookedBy || '', 12, 101);
+  
+            // Booking and vehicle details
+            doc.text("Veh.Reg:", 81, 64);
+            doc.text(d.vehicleReg || '', 97, 64);
+            doc.text("Type:", 81, 73);
+            doc.text(d.vehicleType || '', 90, 73);
+            doc.text("Pick-up location:", 81, 84);
+            doc.text(d.pickUpLocation || '', 110, 84);
+            doc.text("Pick-up time:", 81, 93);
+            doc.text(d.pickUpTime || '', 102, 93);
+  
+            // Service instructions
+            doc.setFontSize(14);
+            doc.text("SERVICE INSTRUCTIONS", 105, 110, { align: "center" });
+            doc.rect(10, 115, 190, 60);
+            doc.text(d.serviceInstructions || '', 12, 125);
+  
+            // Fuel and expenses (use dynamic data)
+            doc.setFontSize(10);
+            doc.text("Fuel in:", 125, 185);
+            doc.text(d.fuelIn || '', 137, 185);
+            doc.text("Fuel out:", 125, 195);
+            doc.text(d.fuelOut || '', 139, 195);
+            doc.text("Driver:", 125, 205);
+            doc.text(d.driverName || '', 136, 205);
+  
+            // Save the generated PDF
+            doc.save(`CDO_${d.clientName}_Trip_${d.TripNo}.pdf`);
+          } catch (error) {
+            console.error('Error generating CDO:', error);
+          }
+        }
+      } else {
+        console.log('No trip data found for CDO generation.');
+      }
+    });
+  }
+  
+
+
+
+
+
+  generateCDO1(TripId: any) {
+    const formData = {
+      organization: this.formGroup.get('companyName').value,
+      clientName: this.formGroup.get('clientName').value,
+      bookedBy: this.formGroup.get('bookedBy').value,
+      vehicleReg: this.formGroup.get('vehicleReg').value,
+      vehicleType: this.formGroup.get('vehicleType').value,
+      pickUpLocation: this.formGroup.get('pickUpLocation').value,
+      pickUpTime: this.formGroup.get('pickUpTime').value,
+      dateIn: this.formGroup.get('dateIn').value,
+      dateOut: this.formGroup.get('dateOut').value,
+      // Add other form fields as necessary
+    };
     console.log('hkvwaefviwev', TripId);
     this.fetchedCDOData = [];
     // this.BookingData = [];
@@ -746,7 +861,6 @@ export class AssignmentComponent {
       //   this.fetchedTripList.push(r);
       // }
       for (const r of TripInfo) {
-        // console.log(r.vehicleRegNo, 'uhgh1')
 
         this.fetchedCDOData.push(r);
 
@@ -805,6 +919,8 @@ export class AssignmentComponent {
             doc.rect(10, 60, 70, 40);
             doc.setFontSize(12);
             doc.text("Organization:", 12, 64);
+            doc.text(formData.organization, 12, 70); // Organization name
+
             doc.text('', 12, 70);
             doc.text("Client Name:", 12, 80);
             doc.text("Booked by:", 12, 95);
@@ -1155,4 +1271,8 @@ export class AssignmentComponent {
 
     })
   }
+
+
+
+  
 }

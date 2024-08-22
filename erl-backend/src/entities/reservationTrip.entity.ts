@@ -83,6 +83,8 @@ export class ReservationTripEntity {
     PickupFirstName: string;
     @Column( { nullable: true })
     PickupLastName: string;
+    @Column( { nullable: true })
+    Remarks: string;
 
     constructor(trips: Partial<ReservationTripEntity>) {
         Object.assign(this, trips);

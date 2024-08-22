@@ -259,7 +259,7 @@
                 <td><span>{{ trip.FromDate }}</span></td>
                 <td><span>{{ trip.ToDate }}</span></td>
                 <td><span>{{ trip.FlightNo }}</span></td>
-                <td><span>{{ trip.FlightDate }}</span></td>
+                <td><span>{{ trip.FlightDateTime }}</span></td>
                 <td class="whitespace-nowrap"><span>{{ trip.Airline }}</span></td>
                 <td><span>{{ trip.PickupAddress }}</span></td>
                 <td><span>{{ trip.DropAddress }}</span></td>
@@ -419,7 +419,8 @@
                     <div></div>
 
                     <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Delivery</label>
+                      <label *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven'">PickupAddress</label>
+                      <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Delivery</label>
                       <input type="text" class="rounded-md border border-gray-400 form-control h-24"
                         formControlName="PickupAddress" id="PickupAddress" />
                       <div *ngIf="
@@ -434,7 +435,9 @@
                       </div>
                     </div>
                     <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Collection</label>
+                      <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Collection</label>
+                      <label *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven'">DropAddress</label>
+
                       <input type="text" class="rounded-md border border-gray-400 form-control h-24"
                         formControlName="DropAddress" id="DropAddress" />
                       <div *ngIf="
@@ -537,9 +540,7 @@
                         tripForm.get('FlightNo')?.dirty) ||
                       tripForm.get('FlightNo')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="tripForm.get('FlightNo')?.hasError('required')">*This field
-                          is
-                          required</small>
+
                       </div>
                     </div>
                     <div class="m-2">
@@ -554,9 +555,7 @@
                           tripForm.get('FlightDateTime')?.dirty) ||
                         tripForm.get('FlightDateTime')?.touched
                       ">
-                          <small class="text-red-700" *ngIf="tripForm.get('FlightDateTime')?.hasError('required')">*This
-                            field
-                            is required</small>
+
                         </div>
                       </div>
                     </div>
@@ -571,8 +570,7 @@
                         tripForm.get('Airline')?.dirty) ||
                       tripForm.get('Airline')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="tripForm.get('Airline')?.hasError('required')">*This field is
-                          required</small>
+
                       </div>
                     </div>
                     <!-- </div> -->
@@ -625,14 +623,142 @@
                           required</small>
                       </div>
                     </div>
+                    <div>
+                      <label>Remarks</label>
+                      <input type="text" class="rounded-md border border-gray-400 form-control h-24 w-96"
+                        formControlName="Remarks" id="Remarks" />
+
+                    </div>
 
                     <!-- </div> -->
                   </div>
-                  <button type="button" class="text-sm p-2 w-24 rounded-md border-2 border-green-700"
+                  <button type="button" class="text-sm p-2 m-2 w-24 rounded-md border-2 border-green-700"
                     (click)="saveTrip()" (click)="modal.dismiss('Cross click')">
                     Save
                   </button>
                 </form>
+
+                <div class="servicesInTrips">
+                  <button class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
+                  (click)="viewTripModal(content)">
+                  Add Trip Services
+                </button>
+                <ng-template #content let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title">Add Trip Services</h4>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form [formGroup]="tripServicesForm" id="tripServicesForm">
+                      <div class="tripServicesForm grid grid-cols-2 gap-2">
+                        <div class="text-sm" [formGroup]="tripServicesForm">
+                          <label>Trip</label>
+                          <select class="text-sm form-control" id="TripId" formControlName="TripId">
+                            <option readonly selected>Select the Trip Number</option>
+                            <option *ngFor="let trip of tripReservationList" value="{{ trip.TripId }}">
+                              {{ trip.TripNo }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                          <label>reservationId</label>
+                          <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                            formControlName="ReservationId" />
+                        </div>
+                        <div class="text-sm" [formGroup]="tripServicesForm">
+                          <label for="serviceName">Service Name</label>
+                          <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
+                            (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
+                            <option value="" disabled selected>Select the Service Name</option>
+                            <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
+                              {{ service.serviceDesc }}
+                            </option>
+                          </select>
+                        </div>
+                
+                        <div class="text-sm">
+                          <label for="serviceCode">Service Code</label>
+                          <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                            formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
+                        </div>
+                
+                
+                        <div class="text-sm" [formGroup]="tripServicesForm">
+                          <label for="ServiceQuantity">Service Quantity</label>
+                          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                            formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
+                
+                
+                        </div>
+                        <div class="text-sm" [formGroup]="tripServicesForm">
+                          <label>Service Charge</label>
+                          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                            formControlName="TripCharge" id="TripCharge" />
+                        </div>
+                        <div class="text-sm" [formGroup]="tripServicesForm">
+                          <label>Service Status</label>
+                          <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
+                            <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                              {{ status.category_Options }}
+                            </option>
+                            <!-- <option *ngFor="let TripServiceStatus of serviceStatusList"
+                              value="{{ TripServiceStatus.category_Options }}">
+                              {{ TripServiceStatus.category_Options }}
+                            </option> -->
+                          </select>
+                        </div>
+                
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" (click)="saveTripService()" (click)="modal.close('Save click')">Save</button>
+                  </div>
+                </ng-template>
+                
+                <table datatable class="table table-bordered row-border hover text-sm">
+                  <thead class="text-sm">
+                    <tr>
+                      <th>Trip No</th>
+                      <th>Service Code</th>
+                      <th>Service Name</th>
+                      <th>Service Charge</th>
+                      <th>Service status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-sm">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      *ngFor="let service of tripServicesList">
+                      <td>
+                        <span>{{ service.TripNo }}</span>
+                      </td>
+                      <td>
+                        <span>{{ service.serviceCode }}</span>
+                      </td>
+                      <td>
+                        <span>{{ service.serviceName }}</span>
+                      </td>
+                      <td>
+                        <span>{{ service.TripCharge }}</span>
+                      </td>
+                      <td>
+                        <span>{{ service.TripServiceStatus }}</span>
+                      </td>
+                      <!-- <td>
+                      <span>{{ service.ServiceId }}</span>
+                    </td> -->
+                      <td>
+                        <button (click)="openTripServices(EditTripService)"
+                          class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
+                          (click)="fetchRelatedTripServiceInfo(service.ServiceId)"> <mat-icon>edit</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+          
+                </table>
+              </div>
               </div>
             </div>
 
@@ -946,7 +1072,7 @@
                           field is required</small>
                       </div>
                     </div>
-                    <div class="Remarks m-2 text-sm h-15" *ngIf="selectedStatus ==='Cancelled'">
+                    <div class="Remarks m-2 text-sm h-15">
                       <label>Remarks</label>
                       <input type="text" class="form-control rounded-md border-gray-200" formControlName="Remarks">
                     </div>
@@ -960,6 +1086,12 @@
                     </div>
                   </div>
                 </form>
+
+
+
+               
+
+
               </div>
             </div>
 
@@ -980,11 +1112,6 @@
             <h4 class="modal-title">Add Trip Services</h4>
             <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
           </div>
-          <!-- input
-                  hidden
-                  type="text"
-                  id="reservationId"
-                  [value]="tripData[0].TripId" /> -->
           <div class="modal-body">
             <form [formGroup]="tripServicesForm" id="tripServicesForm">
               <div class="tripServicesForm grid grid-cols-2 gap-2">
@@ -1004,10 +1131,7 @@
                 </div>
                 <div class="text-sm" [formGroup]="tripServicesForm">
                   <label for="serviceName">Service Name</label>
-                  <select 
-                    class="text-sm form-control" 
-                    id="serviceName" 
-                    formControlName="serviceName" 
+                  <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
                     (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
                     <option value="" disabled selected>Select the Service Name</option>
                     <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
@@ -1015,19 +1139,14 @@
                     </option>
                   </select>
                 </div>
-                
+
                 <div class="text-sm">
                   <label for="serviceCode">Service Code</label>
-                  <input 
-                    readonly 
-                    class="form-control rounded-md border border-gray-400 text-sm" 
-                    type="text" 
-                    formControlName="serviceCode" 
-                    id="serviceCode" 
-                    placeholder="Service Code" />
+                  <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                    formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
                 </div>
-                
-                
+
+
                 <div class="text-sm" [formGroup]="tripServicesForm">
                   <label for="ServiceQuantity">Service Quantity</label>
                   <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
@@ -1472,37 +1591,43 @@
               </div>
 
             </div>
-            <div class=" m-2 gap-2">
-              <div class="col-span-1 ">
-                <label for="AddressLine1" class="text-sm">AddressLine1</label>
-                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                  formControlName="AddressLine1" id="AddressLine1" />
+            <div class="grid grid-cols-1 gap-4 m-2" [formGroup]="driverForm">
+              <!-- Address Line 1 -->
+              <div>
+                <label>Address Line 1</label>
+                <input type="text" id="AddressLine1" formControlName="AddressLine1"
+                  class="text-sm form-control rounded-md border border-gray-400" />
                 <div
-                  *ngIf="(driverForm.get('AddressLine1')?.invalid && driverForm.get('AddressLine1')?.errors && driverForm.get('AddressLine1')?.dirty) || driverForm.get('AddressLine1')?.touched">
-                  <small class="text-red-700" *ngIf="driverForm.get('AddressLine1')?.hasError('required')">*This field
+                  *ngIf="(driverForm.get('AddressLine1')?.invalid && driverForm.get('AddressLine1')?.dirty) || driverForm.get('AddressLine1')?.touched">
+                  <small class="text-red-600" *ngIf="driverForm.get('AddressLine1')?.hasError('required')">*This field
                     is required</small>
                 </div>
               </div>
 
-              <div class="col-span-1">
-                <label for="AddressLine2" class="text-sm">AddressLine2</label>
-                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                  formControlName="AddressLine2" id="AddressLine2" />
+              <!-- Button to Add Address Line 2 and 3 -->
+              <div>
+                <button type="button" (click)="addAdditionalAddress()" class="text-red-700 rounded-md text-sm">
+                  Add Another Address
+                </button>
+              </div>
+
+              <!-- Address Line 2 (conditionally shown) -->
+              <div *ngIf="showAddressLine2">
+                <label for="AddressLine2" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+                <input type="text" id="AddressLine2" formControlName="AddressLine2"
+                  class="text-sm form-control rounded-md border border-gray-400" />
                 <div
-                  *ngIf="(driverForm.get('AddressLine2')?.invalid && driverForm.get('AddressLine2')?.errors && driverForm.get('AddressLine2')?.dirty) || driverForm.get('AddressLine2')?.touched">
-                  <small class="text-red-700" *ngIf="driverForm.get('AddressLine2')?.hasError('required')">*This field
-                    is required</small>
+                  *ngIf="(driverForm.get('AddressLine2')?.invalid && driverForm.get('AddressLine2')?.dirty) || driverForm.get('AddressLine2')?.touched">
                 </div>
               </div>
 
-              <div class="col-span-1">
-                <label for="AddressLine3" class="text-sm">AddressLine3</label>
-                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                  formControlName="AddressLine3" id="AddressLine3" />
+              <!-- Address Line 3 (conditionally shown) -->
+              <div *ngIf="showAddressLine3">
+                <label for="AddressLine3" class="block text-sm font-medium text-gray-700">Address Line 3</label>
+                <input type="text" id="AddressLine3" formControlName="AddressLine3"
+                  class="text-sm form-control rounded-md border border-gray-400" />
                 <div
-                  *ngIf="(driverForm.get('AddressLine3')?.invalid && driverForm.get('AddressLine3')?.errors && driverForm.get('AddressLine3')?.dirty) || driverForm.get('AddressLine3')?.touched">
-                  <small class="text-red-700" *ngIf="driverForm.get('AddressLine3')?.hasError('required')">*This field
-                    is required</small>
+                  *ngIf="(driverForm.get('AddressLine3')?.invalid && driverForm.get('AddressLine3')?.dirty) || driverForm.get('AddressLine3')?.touched">
                 </div>
               </div>
             </div>

@@ -110,4 +110,6 @@ export class AddTripDto {
     PickupLastName: string;
     @IsOptional()
     PickupName: string;
+    @IsOptional()
+    Remarks: string;
 }

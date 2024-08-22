@@ -13,7 +13,7 @@ const httpOptions = {
   }),
 };
 
-const url = '192.168.1.247:3000'
+const url = 'localhost:3000'
 
 @Injectable({
   providedIn: "root",
@@ -427,9 +427,9 @@ export class ApiService {
     return this.http.post<any[]>(`${this.reservationCharge}`, "");
   }
 
-  getRelatedTrip(reservationId: number): Observable<any[]> {
+  getRelatedTrip(TripId: number): Observable<any[]> {
     return (
-      this.http.get<any[]>(`${this.fetchTripIds}` + reservationId)
+      this.http.get<any[]>(`${this.fetchTripIds}` + TripId)
     );
   }
 
