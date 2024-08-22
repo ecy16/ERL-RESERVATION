@@ -13,3 +13,11 @@ Angular: A powerful frontend framework for building dynamic and responsive user 
 NestJS: A progressive Node.js framework for building efficient, reliable, and scalable server-side applications.
 JWT Authentication: JSON Web Token-based authentication for secure user authentication and authorization.
 MSSQL:A flexible and scalable SQL database for storing and managing data.
+
+
+Exe generation:
+npm run build 
+npm i -g pkg
+pkg dist/src/main.js -t node18-win-x64
+
+
