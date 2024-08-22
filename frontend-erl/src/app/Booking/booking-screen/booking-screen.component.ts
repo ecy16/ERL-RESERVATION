@@ -1,0 +1,483 @@
+import {
+  Component,
+  inject,
+  Pipe,
+  Input,
+  TemplateRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnInit,
+} from "@angular/core";
+import { CommonModule, JsonPipe, NgFor } from "@angular/common";
+import { MatTabsModule } from "@angular/material/tabs";
+import { FormsModule } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { DataTableDirective, DataTablesModule } from "angular-datatables";
+
+import { DatePipe } from '@angular/common';
+
+
+
+
+import {
+  NgbAlertModule,
+  NgbCalendar,
+  NgbDate,
+  NgbDateParserFormatter,
+  NgbDatepickerModule,
+  NgbDateStruct,
+} from '@ng-bootstrap/ng-bootstrap';
+
+
+import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms";
+import { ApiService } from "src/app/api.services";
+// import { ApiService } from "src/app/api.services-old";
+import { MatIconModule } from "@angular/material/icon";
+import { Router, RouterModule } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
+import dt4Config  from 'datatables.net';
+import { data, error } from "jquery";
+
+import { Config } from 'datatables.net';
+
+import * as moment from "moment";
+
+export interface Reservation {
+  BookingNo: string;
+  BookingDate: string;
+  BookingCategory: string;
+  BookingType: string;
+  Branch: string;
+  BookingStatus: string;
+  Source: string;
+  BookingFor: string;
+  CreatedOn: string;
+  ReservationId: number;
+}
+
+@Component({
+  selector: "app-booking-screen",
+  standalone: true,
+
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatInputModule,
+    MatIconModule,
+    RouterModule,
+    NgFor,
+    NgbDatepickerModule,
+    NgbAlertModule,
+    MatPaginatorModule,
+    DataTablesModule,
+    NgbDatepickerModule,
+    JsonPipe,
+
+
+
+  ],
+  templateUrl: "./booking-screen.component.html",
+  styleUrls: ["./booking-screen.component.css"],
+
+})
+export class BookingScreenComponent implements OnInit {
+  isCollapsed = false;
+  selectedIndex = '1'
+  bookingForm: FormGroup;
+  searchForm: FormGroup;
+
+  selectedOption: string = "";
+  categoryChosen: string = "";
+  showOption: string = "";
+  category_Options: any;
+  columns: any;
+  element: any;
+  reservations: any;
+  stringifiedData: any;
+  formData: any;
+  companyDetails!: FormGroup;
+  BookingData: any;
+  tripData: any;
+  id: any;
+  reservationId: any | string;
+  BookingDetails: any;
+  private _router: any;
+  model: any;
+  companiesData: any;
+  bookingcategories: any;
+  bookingCategoriesData: any;
+  relatedCustCode: any;
+  relatedCustName: any;
+  bookingtypes: any;
+  bookingTypesData: any;
+  dtOptions: DataTables.Settings = {};
+
+
+  date: any;
+  driverData: any;
+  DriverDOB: any;
+  DriverLicenseNo: any;
+  b: any;
+  a: any;
+  // reservationData: any;
+  categories: any;
+  types: any;
+  company: any;
+  bookingBranchData: any;
+  bookingChargeData: any;
+  bookingSourceData: any;
+  bookingStatusData: any;
+  contractsData: any;
+
+
+  @ViewChild(DataTableDirective, { static: false })
+  datatableElement!: DataTableDirective;
+  // dataTable: JQueryDataTableJq | undefined ;
+
+
+
+  filteredReservations: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 10; // Adjust as needed
+  searchQuery: string = "";
+  driversInfo: any;
+  header: any;
+  search: any;
+  column: any;
+
+  private modalService = inject(NgbModal);
+
+
+
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private apiService: ApiService,
+    private toastr: ToastrService,
+    private actRoute: ActivatedRoute,
+    private router: Router
+
+  ) {
+
+    this.BookingData = [];
+    this.companiesData = [];
+    this.contractsData = [];
+    this.bookingCategoriesData = [];
+    this.bookingTypesData = [];
+    this.bookingChargeData = [];
+    this.bookingSourceData = [];
+    this.bookingBranchData = [];
+    this.bookingStatusData = [];
+    this.relatedCustCode = [];
+    this.relatedCustName = [];
+    this.reservations = []
+
+
+
+
+    this.searchForm = this.formBuilder.group({
+      BookingNo: ["", Validators.required],
+      fromDate: ["", Validators.required],
+      toDate: ["", Validators.required],
+      BookingStatus: ["InProgress", Validators.required],
+      BookingType: ["", Validators.required],
+      Branch: ["", Validators.required],
+      BookingCategory:["",Validators.required]
+
+    })
+
+
+    this.bookingForm = this.formBuilder.group({
+      BookingNo: ["", Validators.required],
+      BookingDate: ["", Validators.required],
+      BookingCategory: ["", Validators.required],
+      BookingType: ["", Validators.required],
+      Branch: ["", Validators.required],
+      BookingStatus: ["InProgress", Validators.required],
+      BookingFor: ["", Validators.required],
+      Source: ["", Validators.required],
+      SourceRefNo: ["", Validators.required],
+
+      TotalAmount: ["", Validators.required],
+      TotalPaid: ["", Validators.required],
+      ExchangeRate: ["", Validators.required],
+      ContractId: ["", Validators.required],
+
+      CompanyCode: ["", Validators.required],
+      companyName: ["", Validators.required],
+      PayeeCompanyName: ["", Validators.required],
+      Remarks: ["", Validators.required],
+      ContractNo: ["", Validators.required],
+    });
+    this.companyDetails = this.formBuilder.group({});
+  }
+
+
+
+
+  ngOnInit() {
+    this.dtOptions = {
+      order: [[8, 'asc']],
+      // ordering: false,
+      autoWidth: true
+
+
+
+    }
+
+
+
+
+    this.apiService.getReservations().subscribe(
+
+      (data: any[]) => {
+
+        this.filteredReservations = data.filter(reservation => {
+          return reservation.BookingStatus === 'InProgress';
+        });
+        console.log('rrrrrrrrrreservations for todat', this.filteredReservations)
+        this.reservationData = [...this.filteredReservations];
+
+
+        // if (this.filteredReservations.length === 0) {
+        //   alert('No active contracts found.');
+        // }
+
+
+        this.reservationData = []
+        this.reservationData.push(this.filteredReservations);
+      }
+
+    );
+
+    this.fetchAllTrips();
+
+    this.apiService.getBookingCategories().subscribe((categories: any) => {
+      for (const a of categories) {
+        this.bookingCategoriesData.push(a);
+      }
+      console.log('categories', categories)
+    });
+    this.apiService.getBookingTypes().subscribe((BookingType: any) => {
+      for (const b of BookingType) {
+        this.bookingTypesData.push(b);
+        console.log(this.bookingTypesData, "bookingTypesData");
+      }
+      console.log(this.types, "bookingTypesData");
+    });
+
+    this.apiService.getCompanies().subscribe((company: any) => {
+      for (const c of company) {
+        this.companiesData.push(c);
+      }
+
+
+    });
+
+    this.apiService.getBookingStatus().subscribe((status: any) => {
+      for (const d of status) {
+        this.bookingStatusData.push(d);
+      }
+    });
+
+    this.apiService.getBookingSource().subscribe((source: any) => {
+      for (const e of source) {
+        this.bookingSourceData.push(e);
+      }
+    });
+
+    this.apiService.getBookingBranch().subscribe((branch: any) => {
+      for (const f of branch) {
+        this.bookingBranchData.push(f);
+      }
+    });
+
+    this.apiService.getBookingCharge().subscribe((charge: any) => {
+      for (const g of charge) {
+        this.bookingChargeData.push(g);
+      }
+    });
+
+
+    const BookingDateSX = moment(new Date()).format("YYYY-MM-DD")
+
+    this.searchForm.patchValue({
+      fromDate: BookingDateSX,
+      toDate: BookingDateSX,
+      BookingStatus: "InProgress"
+
+    });
+
+    this.getRelatedContract()
+  }
+
+
+
+
+  open(dates: any) {
+    this.modalService.open(dates, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+
+
+
+
+  searching() {
+    this.filteredReservations = [];
+    console.log(this.searchForm.value, 'form values');
+
+    this.apiService.searchValue(this.searchForm.value).subscribe(
+      (res: any[]) => {
+        this.filteredReservations = res;
+        console.log(res,'these are my serach results')
+      },
+      (error) => {
+      }
+    );
+  }
+
+
+
+
+
+  // Update form controls
+
+  // Trigger search whenever a date is selected
+
+
+
+  saveBookingData() {
+    const data = JSON.stringify(this.bookingForm.value);
+    console.log("with stringify:", this.bookingForm.value);
+    this.apiService
+      .addReservation(this.bookingForm.value)
+      .subscribe((response: any) => {
+        const ReservationId = response.ReservationId;
+
+        this.fetchAllTrips();
+        setTimeout(() => {
+          const confirmProceed = window.confirm(`Booking information for Reservation ID ${ReservationId} has been saved. Do you wish to add Trip Details?`);
+          if (confirmProceed) {
+            this.router.navigate([`BookingDetails/${ReservationId}`]);
+          }
+        }, 0);
+
+        this.toastr.success("Booking Added Successfully");
+      });
+
+
+
+    this.bookingForm.reset();
+
+
+  }
+  maxDate(){
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  }
+
+  reservationData: any[] = [];
+
+  fetchAllTrips() {
+    this.reservationData = [];
+    this.apiService.getReservations().subscribe((reservations: any[]) => {
+      this.reservationData.push(reservations)
+      // this.reservationData.push(reservations);
+      // this.filteredReservations = reservations;
+    });
+  }
+
+
+  viewBooking() {
+    console.log("sucesss");
+  }
+
+  onCategoryChange(event: any) {
+    this.categoryChosen = event.target.value;
+    console.log('category', this.categoryChosen)
+  }
+
+  getRelatedCustCode(name: any) {
+    console.log(name, "hodvcuiwdbc");
+    this.relatedCustCode = [];
+    this.apiService.getRelatedCustCode(name).subscribe((custCode: any) => {
+      for (const bb of custCode) {
+        this.relatedCustCode.push(bb);
+        console.log(this.relatedCustCode[0]);
+        this.bookingForm.patchValue({
+          CompanyCode: this.relatedCustCode[0].Account,
+        });
+      }
+    });
+  }
+
+  getRelatedCustName(code: any) {
+    this.relatedCustName = [];
+    console.log(code, "igvtyukwdbc");
+    this.apiService.getRelatedCustName(code).subscribe((custName: any) => {
+      for (const aa of custName) {
+        this.relatedCustName.push(aa);
+        this.bookingForm.patchValue({
+          companyName: this.relatedCustName[0].Name,
+        });
+      }
+    });
+  }
+
+
+  getRelatedContract(): void {
+    this.contractsData = [];
+    console.log('contracts are being fetched');
+    this.apiService.findDemandContracts().subscribe((res: any) => {
+      console.log('Yours truly on demand',res)
+      // this.contractsData.push(contracts);
+      // if (this.contractsData.length > 0) {
+      //   this.bookingForm.patchValue({
+      //     companyName: this.contractsData[0].companyName
+      //   });
+      // // // // }
+      for (const g of res) {
+        this.contractsData.push(g)
+      }
+      // this.contractsData=contracts;
+      console.log( this.contractsData,'perez');
+    });
+  }
+  
+
+  // getRelatedContract(name: any) {
+  //   console.log(name, "contract");
+  //   this.relatedContract = [];
+  //   this.apiService.findContracts().subscribe((custCode: any) => {
+  //     for (const bb of custCode) {
+  //       this.relatedCustCode.push(bb);
+  //       console.log(this.relatedCustCode[0]);
+  //       this.bookingForm.patchValue({
+  //         CompanyCode: this.relatedCustCode[0].Account,
+  //       });
+  //     }
+  //   });
+  // }
+
+  private getDismissReason(reason: any): string {
+    switch (reason) {
+      case ModalDismissReasons.ESC:
+        return "by pressing ESC";
+      case ModalDismissReasons.BACKDROP_CLICK:
+        return "by clicking on a backdrop";
+      default:
+        return `with: ${reason}`;
+    }
+  }
+}

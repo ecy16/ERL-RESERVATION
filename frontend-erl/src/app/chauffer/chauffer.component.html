@@ -1,0 +1,358 @@
+<!-- <form [formGroup]="contractDetailForm" class="grid grid-cols-2 gap-2">
+
+  <div [formGroup]="contractDetailForm" hidden>
+      <label class="text-xs ">Contract Details No</label>
+
+      <input type="search" formControlName="ContractDetailNo" id="ContractId"
+          class="form-control rounded-md border border-gray-400 ">
+
+  </div>
+
+  <div [formGroup]="contractDetailForm" hidden>
+      <label class="text-xs ">ContractId</label>
+
+      <input type="search" formControlName="ContractId" id="ContractId"
+          class="form-control rounded-md border border-gray-400 ">
+
+  </div>
+
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">Status</label>
+      <select class="form-control rounded-md border border-gray-400 "
+          formControlName="status">
+          <option>Active</option>
+          <option>Inactive</option>
+      </select>
+  </div>
+  <div></div>
+
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">BookingType</label>
+      <select class=" form-control" id=" BookingType"
+          formControlName="BookingType">
+          <option *ngFor="let types of bookingTypesData"
+              value="{{ types.category_Options }}">
+              {{ types.category_Options }}
+          </option>
+      </select>
+  </div>
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">VehicleType</label>
+      <select id="vehicleType" formControlName="vehicleType"
+          class="text-sm rounded-md form-control">
+          <option value="suv">SUV</option>
+          <option value="sedan">Sedan</option>
+          <option value="hatchBack">HatchBack</option>
+
+      </select>
+  </div>
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">Transmission</label>
+      <input type="search" formControlName="Transmission"
+          class="form-control rounded-md border border-gray-400 ">
+  </div>
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">NoOfVehicles</label>
+      <input type="search" formControlName="NoOfVehicles"
+          class="form-control rounded-md border border-gray-400 ">
+  </div>
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">Service From Date</label>
+      <input type="date" formControlName="ServiceFromDate"
+          class="form-control rounded-md border border-gray-400 ">
+  </div>
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">Service To Date</label>
+      <input type="date" formControlName="ServiceToDate"
+          class="form-control rounded-md border border-gray-400 ">
+  </div>
+
+  <div class="frequency grid text-xs border rounded-md"
+      [formGroup]="contractDetailForm">
+      <label class="m-1 ">Frequency</label>
+      <div class="day m-1">
+          <label>Day</label>
+          <input class="form-check-input m-1" type="radio" formControlName="frequency"
+              value="day">
+          <div *ngIf="selectedFrequency === 'day'">
+              <input type="datetime-local"
+                  class="form-control rounded-md border border-gray-400"
+                  formControlName="interval">
+          </div>
+      </div>
+      <div class="day m-1">
+          <label>Every</label>
+          <input class="form-check-input m-1" type="radio" formControlName="frequency"
+              value="every">
+          <div *ngIf="selectedFrequency === 'every'">
+              <input type="text"
+                  class="form-control rounded-md border border-gray-400"
+                  formControlName="interval">
+          </div>
+      </div>
+      <div class="week m-1">
+          <label>Week</label>
+          <input class="form-check-input m-1" type="radio" formControlName="frequency"
+              value="week">
+          <div *ngIf="selectedFrequency === 'week'" class="m-1 ">
+              <select class="form-control rounded-md border border-gray-400 text-sm p-1"
+                  formControlName="interval">
+                  <option selected>WeekDay</option>
+                  <option>Monday</option>
+                  <option>Tuesday</option>
+                  <option>Wednesday</option>
+                  <option>Thursday</option>
+                  <option>Friday</option>
+                  <option>Saturday</option>
+                  <option>Sunday</option>
+
+
+              </select>
+          </div>
+      </div>
+      <div class="month m-1">
+          <label>Month</label>
+          <input class="form-check-input m-1" type="radio" formControlName="frequency"
+              value="month" formControlName="interval">
+          <div *ngIf="selectedFrequency === 'month'">
+              <input type="date"
+                  class="form-control rounded-md border border-gray-400"     formControlName="interval">
+          </div>
+      </div>
+  </div>
+
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">ChargeType</label>
+      <input type="search" formControlName="ChargeType"
+          class="form-control rounded-md border border-gray-400 ">
+  </div>
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">ChargeCurr</label>
+      <input type="search" formControlName="ChargeCurr"
+          class="form-control rounded-md border border-gray-400 ">
+  </div>
+  <div [formGroup]="contractDetailForm">
+      <label class="text-xs ">ChargeAmount</label>
+      <input type="search" formControlName="ChargeAmount"
+          class="form-control rounded-md border border-gray-400 ">
+  </div>
+  <div></div>
+
+</form> -->
+<div>
+    <h1 class="text-3xl m-2 font-semibold text-center underline">ENQUIRIES</h1>
+
+</div>
+<div class="container text-sm">
+     
+    <h3 class=" m-2"></h3>
+    <form id="inquiry-form" class="text-sm grid grid-cols-2 gap-2">
+       
+        <div>
+            <label class="font-bold">Booking Catergory</label>
+            <select id="booking-category" class="text-sm form-control" > 
+                <option  value=default class="">please choose option...</option>
+                <option class="text-sm">Chauffer-Driven</option>
+                <option class="text-sm">Self-Driven</option>
+            </select>
+        </div>
+            <div>
+                <label class="font-bold">Booking Type</label>
+                <select id="booking-type" class="text-sm form-control" > 
+                    <option  value=default class="text-sm">please choose option...</option>
+                    <option class="text-sm">Complimentary</option>
+                    <option class="text-sm">Contract</option>
+                    <option class="text-sm">Corporate</option>
+                    <option class="text-sm">Internal</option>
+                    <option class="text-sm">Self-pay</option>
+                            
+                </select>
+            </div>
+
+                <div>
+                    <label class="font-bold">Vehicle Type</label>
+                    <select id="Vehicle-type" class="text sm form-control" > 
+                        <option  value=default class="">please choose option...</option>
+                        <option class="text-sm">SUV</option>
+                        <option class="text-sm">Sedan</option>
+                        <option class="text-sm">HatchBack</option>
+                        
+                    </select>
+                </div>
+
+                    <div>
+                        <label class="font-bold">Make</label>
+                        <select id="booking-category" class="text sm form-control" > 
+                            <option  value=default class="">please choose option...</option>
+                            <option class="text-sm">Toyota</option>
+                            <option class="text-sm">Mercedes</option>
+                            <option class="text-sm">BMW</option>
+                            <option class="text-sm">Porsche</option>
+                        </select>
+                       <!-- <select id="MakeSelect" class="form-control" name="MakeSelect"[(ngModel)]="selectedMAKE" (change)="onMakeChange()" required>
+                            <option value=""] disabled selected>Please choose an option...</option>
+                            <option *ngFor="let option of Makeoptions" [value]="option.value">{{ option.label }}</option>
+                        </select>-->
+                </div>
+
+                        <div>
+                            <label class="font-bold">Model</label>
+                            <select id="booking-category" class="text sm form-control" > 
+                                <option  value=default class="">please choose option...</option>
+                                <option class="text-sm">C200</option>
+                                <option class="text-sm">E350</option>
+                                <option class="text-sm">E300</option>
+                                <option class="text-sm">C250</option>
+                                <option class="text-sm">S350</option>
+                            </select>
+                            <!--<select id="ModelSelect" class="form-control" name="ModelSelect" [(ngModel)]="selectedModel" required>
+                                <option value="" disabled selected>Please choose an option...</option>
+                                <option *ngFor="let option of ModelOptions" [value]="option.value">{{ option.label }}</option>
+                              </select>-->
+                        </div>
+                        <div class=" grid grid-cols-2">
+                                <div>
+                                    <label class="font-bold">Trip-Date From</label><br>
+                                        <input type ="date" class="rounded-md w-56 border-gray-400 outline-none h-9">
+                                </div>
+                                <div>
+                                    <label class="font-bold">Trip-Date To</label><br>
+                                    <input type ="date" class="rounded-md w-56 border-gray-400 outline-none h-9">
+                                </div>
+                        
+                        </div>
+                                    
+                        
+                            <div>
+                                <label class="font-bold">Pick-up Address</label>
+                                <input type="text" class="rounded-md border border-gray-400 form-control h-24">
+                             </div>
+        
+                             <div>
+                                <label class="font-bold"> Drop Address</label>
+                                <input type="text" class="rounded-md border border-gray-400 form-control h-24">
+                             </div>
+                             <div class="">
+                                <label class="font-bold">Distance(km)</label>
+                                <input type="number" class="rounded-md border border-gray-400 form-control">
+                            </div> 
+                       
+                             <div class="mt-3">
+                                <div>
+                                    <button  type='button'class="btn btn-md btn-outline-none bg-red-700  text-white hover:bg-red-700" (click)="open(addservices)">add trip services</button>
+                                    
+                                </div>
+                                <div>
+                                    <table *ngIf="tableData.length" class="table mt-3">
+                                        <thead>
+                                          <tr>
+                                            <th>Services</th>
+                                            <th>Quantity</th>
+                                            <th>Charge</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let row of tableData">
+                                            <td>{{ row.services }}</td>
+                                            <td>{{ row.quantity }}</td>
+                                            <td>{{ row.charge }}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                </div>
+                                                                                 
+                            <div> 
+                                <button class=" active:bg-white active:text-black text-center text-sm font-sans font-medium bg-red-700 rounded-md text-white p-2 m-2 relative ">ENQUIRE</button>
+                            </div>
+                           
+    </form> 
+    <table class="  border-separate  flex  justify-center  rounded-sm m-10 mb-8 ">
+        <div>
+            <tr class="text-xl text-center font-sans border-solid border-3  bg-red-50"> 
+                                <th class=" border-solid  border-3  w-96" >
+                  SUB-TOTAL
+                </th>
+                <th class=" border-solid  border-3  w-96" >
+                  VAT(16%)
+                </th>
+                <th class=" border-solid  border-3 w-96" >
+                    TOTAL AMOUNT
+                </th>
+                    
+            </tr>
+                                                          
+                           
+                <tr class="text-xl text-center font-sans border-solid border-3"> 
+                    <th class=" border-solid  border-3">16,000</th>
+                    <td class=" border-solid  border-3">
+                        <p>1,000</p>
+                    </td>
+                    <td rowspan="2"  class=" border-solid  border-3">
+                    <p>17,000</p>
+                    </td>
+                    
+                    
+                </tr>
+                
+                
+                                        
+                                
+        </div>
+    </table>
+    
+        
+   
+                           
+    <!--<ngb-alert    #selfClosingAlert *ngIf="messageType == 'success'" type="success" [dismissible]="false">
+        This is a success message. This alert will close automatically after 5 seconds.
+      </ngb-alert>
+      <ngb-alert   #selfClosingAlert *ngIf="messageType == 'failure'" type="failure" [dismissible]="false">
+        This is a failure message. This alert will close automatically after 5 seconds.
+      </ngb-alert>
+       
+       <button type="button " class="btn btn-primary" (click)="showSuccess()">reset</button>
+        <button type="button " class="btn btn-primary" (click)="showFailure()">reset</button>-->
+
+                     
+  
+  <ng-template #addservices let-modal>
+	<div class="modal-header">
+		<h4 class="add services" id="add services">Add Services</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form #form="ngForm">
+			<div class="mb-3">
+				<label for="addservices">Add Service</label>
+				<div class="input-group grid grid-cols-1">
+                    <div>
+                    <select id="services" class="text sm form-control" > 
+                        <option  value=default class="" >please choose option...</option>
+                        <option class="text-sm">FLOWER</option>
+                        <option class="text-sm">CHOCOLATE</option>
+                        <option class="text-sm">WATER</option>
+                        
+                    </select>
+
+                    </div>
+                    <div>
+                    <label for="quantity">QUANTITY </label>
+                     
+                    <input type="number" id="quantity"  class=" form-control w-full rounded-md outline-none " placeholder="choose quantity" >
+                    </div>
+					
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary bg-red-700 text-white " (click)="modal.dismiss('Close click')">Close</button>
+      <button type="button" class="btn btn-primary  bg-red-700 text-white" (click)="saveData(form, modal)">Save</button>
+	</div>
+</ng-template>
+
+
+
+
+

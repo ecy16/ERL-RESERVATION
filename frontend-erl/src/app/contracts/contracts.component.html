@@ -1,0 +1,807 @@
+<div class="contracts-container">
+    <h1>Contracts</h1>
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Create Contract">
+            <ng-template matTabContent>
+                <div class="contracts-container  ">
+                    <div class="contract m-2 rounded-md border ">
+                        <h1 class="text-2xl m-2 font-semibold text-center">Contract</h1>
+
+                         <form [formGroup]="contractForm" class="grid grid-cols-2 gap-1  ">
+                            <div [formGroup]="contractForm " class="m-1">
+                                <label class="text-xs ">Contract ID</label>
+                                <input type="search" formControlName="ContractIdTemp"  readonly
+                                    class="form-control rounded-md border border-gray-400" placeholder="Auto-Generated">
+                            </div>
+
+                            <div [formGroup]="contractForm" class="m-1">
+                                <label class="text-xs ">Customer Contract No</label>
+                                <input type="search" formControlName="ContractNo"
+                                    class="form-control rounded-md border border-gray-400">
+                            </div>
+
+                            <!-- <div [formGroup]="contractForm" class="m-1" hidden>
+                                <label class="text-xs ">Contract Number</label>
+                                <input type="search" formControlName="ContractNo"
+                                    class="form-control rounded-md border border-gray-400">
+                            </div> -->
+                            <div [formGroup]="contractForm" class="m-1">
+                                <label class="text-xs ">Customer</label>
+                                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                                    formControlName="companyName" list="datalistOptions" id="companyName"
+                                    (change)="getRelatedCustCode(contractForm.get('companyName')?.value)"
+                                    placeholder="Type to search..." />
+
+                                <datalist id="datalistOptions">
+                                    <option *ngFor="let company of companiesData" value="{{ company.Name }}">
+                                        {{ company.Client_Info }}
+                                    </option>
+
+                                </datalist>
+                            </div>
+                            <div [formGroup]="contractForm" class="m-1">
+                                <label class="text-xs ">Code</label>
+                                <input class="form-control  rounded-md border border-gray-400 text-sm" type="text"
+                                    list="datalistOption"
+                                    (change)="getRelatedCustName(contractForm.get('CompanyCode')?.value)"
+                                    id="CompanyCode" formControlName="CompanyCode" placeholder="Type to search..." />
+                                <datalist id="datalistOption">
+                                    <option *ngFor="let company of companiesData" value="{{ company.Account }}">
+                                        {{ company.Account }}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div [formGroup]="contractForm" class="m-1">
+                                <label class="text-xs ">Start Date</label>
+                                <input type="date" class="form-control rounded-md border border-gray-400 text-sm"
+                                    formControlName="StartDate">
+                            </div>
+                            <div [formGroup]="contractForm" class="m-1">
+                                <label class="text-xs ">End Date</label>
+                                <input type="date" class="form-control rounded-md border border-gray-400 text-sm "
+                                    formControlName="EndDate">
+
+                            </div>
+                            <div [formGroup]="contractForm" class="m-1">
+                                <label class="text-xs ">Billing Day</label>
+                                <select class="form-control" formControlName="BillingDay">
+                                    <option *ngFor="let day of billingDays" [value]="day">{{day}}</option>
+
+
+                                </select>
+                            </div>
+
+                            <div [formGroup]="contractForm" class="m-1">
+                                <label class="text-xs ">Status</label>
+                                <select class="form-control rounded-md border border-gray-400 text-sm "
+                                    formControlName="status">
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                </select>
+                            </div>
+                             <!-- <div  [formGroup]="contractForm" class="m-1">
+                                <input type="file" (change)="onImageUpload($event)" [multiple]="true" [accept]="['.png']" formControlName="image">
+                                <p *ngIf="selectedImage">Image selected: {{ selectedImage.name }}</p>
+                                <button (click)="uploadImg()">Upload</button>
+                              </div>  -->
+
+
+
+                         </form>  
+
+
+
+
+                       
+                    </div>
+
+
+
+
+                    <div class="contract-details m-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" [(ngModel)]="isChecked" value=""
+                                (change)="onCheckboxChange($event)" [disabled]="isSubmitted"
+                                id="flexCheckIndeterminate">
+                            <label class="form-check-label" for="flexCheckIndeterminate">
+                                Contract Details
+                            </label>
+                        </div>
+                        <div class="" *ngIf="isChecked">
+
+                            <button (click)="openContract(contract)"
+                                class="rounded-md p-2 m-2 text-white text-xs bg-red-700">Add Details </button>
+                            <ng-template #contract let-modal>
+                                <div class="modal-header" [formGroup]="contractDetailForm">
+                                    <h4 class="modal-title" id="modal-basic-title">CONTRACT FOR:{{
+                                        contractForm.get('companyName')?.value }}</h4>
+                                    <button type="button" class="btn-close" aria-label="Close"
+                                        (click)="modal.dismiss('Cross click')"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form [formGroup]="contractDetailForm" class="grid grid-cols-2 gap-2">
+
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Contract Details No</label>
+
+                                            <input type="search" formControlName="ContractDetailNo"
+                                                placeholder="Auto-Generated"
+                                                class="form-control rounded-md border border-gray-400 ">
+
+                                        </div>
+
+                                        <div [formGroup]="contractDetailForm" hidden>
+                                            <label class="text-xs ">ContractId</label>
+
+                                            <input type="search" formControlName="ContractId" id="ContractId"
+                                                class="form-control rounded-md border border-gray-400 ">
+
+                                        </div>
+
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Status</label>
+                                            <select class="form-control rounded-md border border-gray-400 "
+                                                formControlName="status">
+                                                <option>Active</option>
+                                                <option>Inactive</option>
+                                            </select>
+                                        </div>
+
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">BookingType</label>
+                                            <select class=" form-control" id=" BookingType"
+                                                formControlName="BookingType">
+                                                <option *ngFor="let types of bookingTypesData"
+                                                    value="{{ types.category_Options }}">
+                                                    {{ types.category_Options }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">VehicleType</label>
+                                            <select id="vehicleType" formControlName="vehicleType"
+                                                class="rounded-md form-control">
+                                                <option value="suv">SUV</option>
+                                                <option value="sedan">Sedan</option>
+                                                <option value="hatchBack">HatchBack</option>
+
+                                            </select>
+                                        </div>
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Transmission</label>
+                                            <select id="Transmission" formControlName="Transmission"
+                                                class="rounded-md form-control">
+                                                <option value="2WD">2WD</option>
+                                                <option value="4WD">4WD</option>
+
+                                            </select>
+                                        </div>
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Number Of Vehicles</label>
+                                            <input type="search" formControlName="NoOfVehicles"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Service From Date</label>
+                                            <input type="date" formControlName="ServiceFromDate"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Service To Date</label>
+                                            <input type="date" formControlName="ServiceToDate"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+
+                                        <div class="frequency" [formGroup]="contractDetailForm">
+                                            <label class="m-1 text-xs">Frequency</label>
+                                            <div class="flex text-xs border rounded-md max-h-20 p-1">
+                                              <div class="day m-1">
+                                                <label>Day</label>
+                                                <input class="form-check-input m-1" type="radio" formControlName="frequency" value="day">
+                                                <div *ngIf="selectedFrequency === 'day'">
+                                                  <input type="datetime-local" class="form-control rounded-md border border-gray-400 w-10" formControlName="interval">
+                                                </div>
+                                              </div>
+                                              <div class="day m-1">
+                                                <label>Every</label>
+                                                <input class="form-check-input m-1" type="radio" formControlName="frequency" value="every">
+                                                <div *ngIf="selectedFrequency === 'every'">
+                                                  <input type="text" class="form-control rounded-md border border-gray-400" formControlName="interval">
+                                                </div>
+                                              </div>
+                                              <div class="week m-1">
+                                                <label>Week</label>
+                                                <input class="form-check-input m-1" type="radio" formControlName="frequency" value="week">
+                                                <div *ngIf="selectedFrequency === 'week'" class="m-1">
+                                                  <select id="week" class="form-select rounded-md border border-gray-400 text-sm" formControlName="interval">
+                                                    <option >WeekDay</option>
+                                                    <option value="Monday">Monday</option>
+                                                    <option value="Tuesday">Tuesday</option>
+                                                    <option value="Wednesday">Wednesday</option>
+                                                    <option value="Thursday">Thursday</option>
+                                                    <option value="Friday">Friday</option>
+                                                    <option value="Saturday">Saturday</option>
+                                                    <option value="Sunday">Sunday</option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                              <div class="month m-1">
+                                                <label>Month</label>
+                                                <input class="form-check-input m-1" type="radio" formControlName="frequency" value="month">
+                                                <div *ngIf="selectedFrequency === 'month'" class="m-1">
+                                                  <input type="date" class="form-control rounded-md border border-gray-400" formControlName="interval">
+                                                </div>
+                                              </div>
+                                              <div class="demand m-1">
+                                                <label>On Demand</label>
+                                                <input class="form-check-input m-1" type="radio" formControlName="frequency" value="onDemand">
+                                                <!-- <div *ngIf="selectedFrequency === 'demand'">
+                                                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text" formControlName="companyName" list="datalistOptions" id="companyName" (change)="getRelatedCustCode(contractDetailForm.get('companyName')?.value)" placeholder="Type to search..." />
+                                                  <datalist id="datalistOptions">
+                                                    <option *ngFor="let company of companiesData" [value]="company.Name">{{ company.Client_Info }}</option>
+                                                  </datalist>
+                                                </div> -->
+                                              </div>
+                                            </div>
+                                          </div>
+                                          
+
+
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Charge Type</label>
+                                            <input type="search" formControlName="ChargeType" list="chargeTypes"
+                                                (change)="getRelatedChargeType(contractDetailForm.get('ContractId')?.value)"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                            <datalist id="chargeTypes">
+                                                <option *ngFor="let charge of chargeTypeData"
+                                                    value="{{ charge.code }} , {{ charge.Description_2 }}">
+                                                    {{ charge.Description_2 }}
+                                                </option>
+                                            </datalist>
+                                        </div>
+
+
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs">Charge Currency</label>
+                                            <input type="text" formControlName="ChargeCurr" id="ChargeCurr"
+                                                class="form-control rounded-md border border-gray-400"
+                                                placeholder="Type..." readonly>
+                                        </div>
+
+
+
+                                        <div [formGroup]="contractDetailForm">
+                                            <label class="text-xs ">Charge Amount</label>
+                                            <input type="search" formControlName="ChargeAmount"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div>
+                                            <button (click)="saveContractDetails()"
+                                                class="flex text-white bg-red-700 m-2 p-2 w-24 rounded-md"
+                                                (click)="modal.dismiss('close')">Save</button>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+
+                            </ng-template>
+
+
+
+                            <ng-template #EditDetailsForm let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-basic-title">Contract</h4>
+                                    <button type="button" class="btn-close" aria-label="Close"
+                                        (click)="modal.dismiss('Cross click')"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <form [formGroup]="contractEditDetailForm" class="grid grid-cols-2 gap-2">
+
+                                        <div [formGroup]="contractEditDetailForm" hidden>
+                                            <label class="text-xs ">Contract Details No</label>
+
+                                            <input type="search" formControlName="ContractDetailNo"
+                                                id="ContractDetailNo"
+                                                class="form-control rounded-md border border-gray-400 ">
+
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">Contract Details Id</label>
+
+                                            <input type="search" formControlName="ContractDetailsId"
+                                                id="ContractDetailsId"
+                                                class="form-control rounded-md border border-gray-400 ">
+
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm" hidden>
+                                            <label class="text-xs ">ContractId</label>
+
+                                            <input type="search" formControlName="ContractId" id="ContractId"
+                                                class="form-control rounded-md border border-gray-400 ">
+
+                                        </div>
+
+
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">Status</label>
+                                            <select class="form-control rounded-md border border-gray-400 "
+                                                formControlName="status">
+                                                <option>Active</option>
+                                                <option>Inactive</option>
+                                            </select>
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">BookingType</label>
+                                            <select class="text-sm form-control" id=" BookingType"
+                                                formControlName="BookingType">
+                                                <option *ngFor="let types of bookingTypesData"
+                                                    value="{{ types.category_Options }}">
+                                                    {{ types.category_Options }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">VehicleType</label>
+                                            <select id="vehicleType" formControlName="vehicleType"
+                                                class="text-sm rounded-md form-control">
+                                                <option value="suv">SUV</option>
+                                                <option value="sedan">Sedan</option>
+                                                <option value="hatchBack">HatchBack</option>
+
+                                            </select>
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">Transmission</label>
+                                            <input type="search" formControlName="Transmission"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">NoOfVehicles</label>
+                                            <input type="search" formControlName="NoOfVehicles"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">Service From Date</label>
+                                            <input type="date" formControlName="ServiceFromDate"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">Service To Date</label>
+                                            <input type="date" formControlName="ServiceToDate"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+
+
+
+
+
+                                        <div class="frequency grid text-xs border rounded-md"
+                                            [formGroup]="contractEditDetailForm">
+                                            <label class="m-1 ">Frequency</label>
+                                            <div class="day m-1">
+                                                <label>Day</label>
+                                                <input class="form-check-input" type="radio" formControlName="frequency"
+                                                    value="day">
+                                                <div *ngIf="selectedFrequency === 'day'">
+                                                    <input type="datetime-local"
+                                                        class="form-control rounded-md border border-gray-400"
+                                                        formControlName="interval">
+                                                </div>
+                                            </div>
+                                            <div class="day m-1">
+                                                <label>Every</label>
+                                                <input class="form-check-input" type="radio" formControlName="frequency"
+                                                    value="every">
+                                                <div *ngIf="selectedFrequency === 'every'">
+                                                    <input type="text"
+                                                        class="form-control rounded-md border border-gray-400"
+                                                        formControlName="interval">
+                                                </div>
+                                            </div>
+                                            <div class="week m-1">
+                                                <label>Week</label>
+                                                <input class="form-check-input" type="radio" formControlName="frequency"
+                                                    value="week">
+                                                <div *ngIf="selectedFrequency === 'week'" class="m-1 ">
+                                                    <select class="form-control rounded-md border border-gray-400"
+                                                        formControlName="interval">
+                                                        <option selected>Week</option>
+                                                        <option>Monday</option>
+                                                        <option>Tuesday</option>
+                                                        <option>Wednesday</option>
+                                                        <option>Thursday</option>
+                                                        <option>Friday</option>
+                                                        <option>Saturday</option>
+                                                        <option>Sunday</option>
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="month m-1">
+                                                <label>Month</label>
+                                                <input class="form-check-input" type="radio" formControlName="frequency"
+                                                    value="month" formControlName="interval">
+                                                <div *ngIf="selectedFrequency === 'month'">
+                                                    <input type="date"
+                                                        class="form-control rounded-md border border-gray-400">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">ChargeType</label>
+                                            <input type="search" formControlName="ChargeType"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">ChargeCurr</label>
+                                            <input type="search" formControlName="ChargeCurr"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div [formGroup]="contractEditDetailForm">
+                                            <label class="text-xs ">ChargeAmount</label>
+                                            <input type="search" formControlName="ChargeAmount"
+                                                class="form-control rounded-md border border-gray-400 ">
+                                        </div>
+                                        <div></div>
+                                        <!-- <button class=" text-white bg-red-700  rounded-md p-2 w-32 h-10 " (click)="saveContract()">
+                                                Submit</button> -->
+                                        <div class="flex justify-end"> <button type="button"
+                                                class="float-right text-white bg-red-700 m-2 p-2 w-24 rounded-md"
+                                                (click)="modal.close('Save click')"
+                                                (click)="EditDetails(contractEditDetailForm.get('ContractDetailsId')?.value)">Save</button>
+                                        </div>
+                                    </form>
+
+
+
+
+
+
+
+
+
+
+                                    <div class="modal-footer">
+                                    </div>
+
+                                </div>
+
+                            </ng-template>
+
+
+
+
+
+
+
+
+
+
+                            <div class="contractDetails-table m-2 ">
+
+
+
+
+
+
+
+
+
+                                <table class="table   table-bordered hover  " >
+                                    <thead class="text-xs">
+                                        <tr>
+                                            <!-- <th>ContractId</th> -->
+                                            <th>ContractDetailsNo</th>
+                                            <th>Status</th>
+                                            <th>BookingType</th>
+                                            <th>VehicleType</th>
+                                            <th>NoOfVehicles</th>
+                                            <th>Frequency</th>
+                                            <th>ServiceFromDate</th>
+                                            <th>ServiceToDate</th>
+                                            <th>ChargeAmount</th>
+                                            <th colspan="2">Action</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let Details of contractsDetailsData">
+
+                                            <td>
+                                                <span>{{ Details.ContractDetailNo }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ Details.status }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ Details.BookingType }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ Details.vehicleType }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ Details.NoOfVehicles }}</span>
+                                            </td>
+                                            <td><span>{{Details.frequency}}</span></td>
+
+                                            <td>
+                                                <span>{{ Details.ServiceFromDate }}</span>
+                                            </td>
+
+
+                                            <td>
+                                                <span>{{ Details.ServiceToDate }}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ Details.ChargeAmount }}</span>
+                                            </td>
+                                            <td (click)="copyDetails(Details.ContractDetailsId)">
+                                                <mat-icon>assignment_late</mat-icon>
+
+
+
+                                            </td>
+                                            <td (click)=" openEditDetails(EditDetailsForm)"
+                                                (click)="updateDetails(Details.ContractDetailsId)">
+                                                <mat-icon>edit</mat-icon>
+
+
+                                            </td>
+
+
+
+
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </ng-template>
+        </mat-tab>
+
+
+        <mat-tab label="View Contracts">
+
+
+
+
+
+            <ng-template matTabContent>
+
+                <div class="contract-table">
+                    <h1 class="text-2xl m-2 font-semibold text-center">All Contracts</h1>
+                    <div class="searches" [formGroup]="searchForm " class=" rounded-md border bg-red-50">
+                        <form [formGroup]="searchForm" class="flex m-2 font-medium w-32 gap-1 ">
+                            <div>
+                                <label class="text-xs ">ContractNo</label>
+                                <input type="search" formControlName="ContractNo"
+                                    class="rounded-md border-gray-300   h-8 w-32">
+                            </div>
+                            <div [formGroup]="searchForm" class="">
+                                <label class="text-xs ">Customer</label>
+                                <input class="form-control rounded-md border border-gray-400 text-sm  h-8 w-32"
+                                    type="text" formControlName="companyName" list="datalistOptions" id="companyName"
+                                    (change)="getRelatedCustCode(contractForm.get('companyName')?.value)"
+                                    placeholder="Type to search..." />
+                                <datalist id="datalistOptions">
+                                    <option *ngFor="let company of companiesData" value="{{ company.Name }}">
+                                        {{ company.Client_Info }}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div [formGroup]="searchForm" class="" hidden>
+                                <label class="text-xs ">Code</label>
+                                <input class="form-control rounded-md border border-gray-400 text-sm  h-8 w-32"
+                                    type="text" list="datalistOption"
+                                    (change)="getRelatedCustName(contractForm.get('CompanyCode')?.value)"
+                                    id="CompanyCode" formControlName="CompanyCode" placeholder="Type to search..." />
+                                <datalist id="datalistOption">
+                                    <option *ngFor="let company of companiesData" value="{{ company.Account }}">
+                                        {{ company.Account }}
+                                    </option>
+                                </datalist>
+                            </div>
+
+                            <div class="" [formGroup]="searchForm">
+                                <div class="flex  gap-2">
+                                  <div>
+                                    <label class="text-xs">Contract StartDate</label>
+                                    <input type="date" formControlName="StartDate" class="rounded-md border-gray-300 text-sm   h-8 w-32">
+                                  </div>
+                                  <div><label class="text-xs">Contract EndDate</label>
+                                    <input type="date" formControlName="EndDate" class="rounded-md border-gray-300 text-sm   h-8 w-32">
+                                  </div>
+                                </div>
+                              </div>
+
+                            <div [formGroup]="searchForm">
+                                <button (click)="searching()"
+                                    class="float-left mt-4 rounded-md p-2 text-white text-xs bg-red-700 "
+                                    type="button">Search</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+
+                    <div *ngIf="contractsData && contractsData.length === 0" class="alert alert-warning m-2 text-center">
+                        No active contracts found for today.
+                      </div>
+
+                    <table datatable [dtOptions]="dtOptions" class=" table row-border hover booking  " class="display" *ngIf="contractsData && contractsData.length > 0">
+                        <thead>
+                            <tr class="text-sm">
+                                <th class="text-center">Contract No</th>
+                                <th class="text-center">Company Name</th>
+                                <th>Status</th>
+                                <th>ContractStartDate</th>
+                                <th>ContractEndDate</th>
+                                <th>Action</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let contract of contractsData" >
+
+                                <!-- <td>
+                                    <span>{{ contract.ContractId }}</span>
+                                </td> -->
+                                <td class="text-center">
+                                    <span>{{ contract.ContractNo }}</span>
+                                </td>
+                                <td class="text-center">
+                                    <span>{{ contract.companyName }}</span>
+                                </td>
+                                <!-- <td>
+                                    <span>{{ contract.CompanyCode }}</span>
+                                </td> -->
+                                <td>
+                                    <span>{{ contract.status }}</span>
+                                </td>
+
+                                <td>
+                                    <span>{{ contract.StartDate }}</span>
+                                </td>
+                                <td>
+                                    <span>{{ contract.EndDate }}</span>
+                                </td>
+
+                                <!-- <td>
+                                    <span>{{ contract.BillingDay }}</span>
+                                </td> -->
+                                <td class="flex gap-2">
+                                    <span>
+                                        <button (click)="viewContract()">
+                                            <a class="nav-link" href="ContractInformation" [routerLink]="[
+                                              '/contract-details/related/',
+                                              contract.ContractId
+                                            ]" routerLinkActive="active">
+                                                <mat-icon>visibility</mat-icon>
+                                            </a>
+                                        </button>
+                                    </span>
+                                    <span>
+                                        <button (click)="openEditContract(ContractEdit)"
+                                            (click)="fetchContract(contract.ContractId)">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    </span>
+
+
+
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <ng-template #ContractEdit let-modal>
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">Contract</h4>
+                        <button type="button" class="btn-close" aria-label="Close"
+                            (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="contractEditForm" class="grid grid-cols-2 gap-1 ">
+                            <div [formGroup]="contractEditForm " class="m-1" hidden>
+                                <label class="text-xs ">ContractId</label>
+                                <input type="search" formControlName="ContractId"
+                                    class="form-control rounded-md border border-gray-400">
+                            </div>
+                            <div [formGroup]="contractEditForm" class="m-1">
+                                <label class="text-xs ">Contract Number</label>
+                                <input type="search" formControlName="ContractNo"
+                                    class="form-control rounded-md border border-gray-400">
+                            </div>
+                            <div [formGroup]="contractEditForm" class="m-1">
+                                <label class="text-xs ">Customer</label>
+                                <input type="text" class="form-control rounded-md border border-gray-400 "
+                                    formControlName="Customer">
+                            </div>
+                            <div [formGroup]="contractEditForm" class="m-1">
+                                <label class="text-xs ">Name</label>
+                                <input type="text" class="form-control rounded-md border border-gray-400 "
+                                    formControlName="Name">
+                            </div>
+                            <div [formGroup]="contractEditForm" class="m-1">
+                                <label class="text-xs ">Start Date</label>
+                                <input type="date" class="form-control rounded-md border border-gray-400 text-sm"
+                                    formControlName="StartDate">
+                            </div>
+                            <div [formGroup]="contractEditForm" class="m-1">
+                                <label class="text-xs ">End Date</label>
+                                <input type="date" class="form-control rounded-md border border-gray-400 text-sm "
+                                    formControlName="EndDate">
+
+                            </div>
+                            <div [formGroup]="contractEditForm" class="m-1">
+                                <label class="text-xs ">Billing Day</label>
+                                <input type="text" class="form-control rounded-md border border-gray-400 text-sm "
+                                    formControlName="BillingDay">
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+
+                            <div [formGroup]="contractEditForm" class="m-1">
+                                <label class="text-xs ">Status</label>
+                                <select class="form-control rounded-md border border-gray-400 "
+                                    formControlName="status">
+                                    <option></option>
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                </select>
+                            </div>
+
+                            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"
+                                (click)="editContract(contractEditForm.get('ContractId')?.value)">Save</button>
+
+
+
+                        </form>
+                        <div class="modal-footer">
+                        </div>
+
+                    </div>
+
+                </ng-template>
+
+
+
+
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+
+
+
+
+</div>
+<!-- <div *ngIf="selectedOption === 'Contract'" class="m-2">
+    <label>Contract No</label>
+    <input class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"
+      list="datalistOption" id="ContractNo" formControlName="ContractNo" placeholder="Type to search..." />
+     
+        <datalist id="contracts">
+          <option *ngFor="let contract of contractsData"
+            value="{{ contract.ContractId }} , {{ contract.companyName }}">
+            {{ contract.companyName }},{{ contract.ContractId }} 
+          </option>
+        </datalist>
+  </div> -->

@@ -1,0 +1,435 @@
+<mat-tab-group dynamicHeight [selectedIndex]="selectedIndex">
+  <mat-tab label="Add Reservation">
+    <ng-template matTabContent>
+      <div class="booking-container m-2">
+        <h1 class="text-2xl m-2 font-semibold text-center">Reservations Information</h1>
+        <div class="booking forms">
+          <div class="bookingType-container rounded-md m-2 ">
+            <h3 class="text-center font-semibold m-2"></h3>
+            <form [formGroup]="bookingForm" id="bookingForm" class="text-sm grid grid-cols-2">
+              <div class="m-2 text-sm" [formGroup]="bookingForm">
+                <label>Booking No</label>
+                <input readonly id="bookingNo" type="text" placeholder="Auto-Generated"
+                  class="form-control rounded-md border border-gray-400 " formControlName="BookingNo" />
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Booking Date</label>
+                <div class="input-group text-sm">
+                  <input type="date" class="form-control border rounded-md" formControlName="BookingDate"
+                  [max]="maxDate()" 
+                  />
+                </div>
+                <div *ngIf="(bookingForm.get('BookingDate')?.invalid &&
+                             bookingForm.get('BookingDate')?.errors &&
+                             bookingForm.get('BookingDate')?.dirty) ||
+                           bookingForm.get('BookingDate')?.touched">
+                  <small class="text-red-700" *ngIf="bookingForm.get('BookingDate')?.hasError('required')">*This field
+                    is required</small>
+                </div>
+              </div>
+
+
+
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Booking Category</label>
+                <select class="text-sm form-control" id="BookingCategory" formControlName="BookingCategory">
+                  <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
+                    {{ category.category_Options }}
+                  </option>
+                </select>
+                <div *ngIf="
+                    (bookingForm.get('BookingCategory')?.invalid &&
+                      bookingForm.get('BookingCategory')?.errors &&
+                      bookingForm.get('BookingCategory')?.dirty) ||
+                    bookingForm.get('BookingCategory')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="
+                      bookingForm.get('BookingCategory')?.hasError('required')
+                    ">*This field is required</small>
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Booking Type</label>
+                <select class="text-sm form-control" id=" BookingType" formControlName="BookingType"
+                  [(ngModel)]="selectedOption">
+                  <!-- <option value="corporate">Corporate</option> -->
+                  <option *ngFor="let BookingType of bookingTypesData" value="{{ BookingType.category_Options }}">
+                    {{ BookingType.category_Options }}
+                  </option>
+                </select>
+                <div *ngIf="
+                    (bookingForm.get('BookingType')?.invalid &&
+                      bookingForm.get('BookingType')?.errors &&
+                      bookingForm.get('BookingType')?.dirty) ||
+                    bookingForm.get('BookingType')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="bookingForm.get('BookingType')?.hasError('required')">*This field
+                    is required</small>
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Branch</label>
+                <select class="text-sm form-control" id=" Branch" formControlName="Branch">
+                  <option *ngFor="let branch of bookingBranchData" value="{{ branch.category_Options }}">
+                    {{ branch.category_Options }}
+                  </option>
+                </select>
+                <div *ngIf="
+                    (bookingForm.get('Branch')?.invalid &&
+                      bookingForm.get('Branch')?.errors &&
+                      bookingForm.get('Branch')?.dirty) ||
+                    bookingForm.get('Branch')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="bookingForm.get('Branch')?.hasError('required')">*This field is
+                    required</small>
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Booking Status</label>
+                <select class="text-sm form-control" formControlName="BookingStatus" id="BookingStatus">
+                  <option selected value="InProgress">InProgress</option>
+                  <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                    {{ status.category_Options }}
+                  </option>
+                </select>
+                <div *ngIf="
+                    (bookingForm.get('BookingStatus')?.invalid &&
+                      bookingForm.get('BookingStatus')?.errors &&
+                      bookingForm.get('BookingStatus')?.dirty) ||
+                    bookingForm.get('BookingStatus')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="
+                      bookingForm.get('BookingStatus')?.hasError('required')
+                    ">*This field is required</small>
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Booking For</label>
+                <input id="BookingFor" type="text" class="form-control rounded-md border border-gray-400"
+                  formControlName="BookingFor" />
+                <div *ngIf="
+                    (bookingForm.get('BookingFor')?.invalid &&
+                      bookingForm.get('BookingFor')?.errors &&
+                      bookingForm.get('BookingFor')?.dirty) ||
+                    bookingForm.get('BookingFor')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="bookingForm.get('BookingFor')?.hasError('required')">*This field is
+                    required</small>
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Source</label>
+                <select class="text-sm form-control" formControlName="Source">
+                  <option *ngFor="let source of bookingSourceData" value="{{ source.category_Options }}">
+                    {{source.category_Options }}
+                  </option>
+                </select>
+                <div *ngIf="
+                    (bookingForm.get('Source')?.invalid &&
+                      bookingForm.get('Source')?.errors &&
+                      bookingForm.get('Source')?.dirty) ||
+                    bookingForm.get('Source')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="bookingForm.get('Source')?.hasError('required')">*This field is
+                    required</small>
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Source Ref No</label>
+                <input id="SourceRefNo" type="text" class="form-control rounded-md border border-gray-400"
+                  formControlName="SourceRefNo" />
+                <div *ngIf="
+                    (bookingForm.get('SourceRefNo')?.invalid &&
+                      bookingForm.get('SourceRefNo')?.errors &&
+                      bookingForm.get('SourceRefNo')?.dirty) ||
+                    bookingForm.get('SourceRefNo')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="bookingForm.get('SourceRefNo')?.hasError('required')">*This field
+                    is required</small>
+                </div>
+              </div>
+              <div class="m-2 h-10" [formGroup]="bookingForm">
+                <label>Remarks</label>
+                <input id="Remarks" type="text" class="form-control rounded-md border border-gray-400"
+                  formControlName="Remarks" />
+                <div *ngIf="
+                    (bookingForm.get('Remarks')?.invalid &&
+                      bookingForm.get('Remarks')?.errors &&
+                      bookingForm.get('Remarks')?.dirty) ||
+                    bookingForm.get('Remarks')?.touched
+                  ">
+                  <small class="text-red-700" *ngIf="bookingForm.get('Remarks')?.hasError('required')">*This field
+                    is required</small>
+                </div>
+              </div>
+
+              <div class="company-details border rounded-md m-2 mt-2" *ngIf="selectedOption === 'Corporate'">
+                <h3 class="text-center m-2 font-semibold">Company Details</h3>
+                <div class="companyDetails flex justify-center mb-2 text-sm">
+                  <form [formGroup]="bookingForm" class="grid grid-cols-2 gap-4">
+                    <div class="">
+                      <label for="CompanyName">Company Name</label>
+                      <input class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"
+                        formControlName="companyName" list="datalistOptions" id="companyName"
+                        (change)="getRelatedCustCode(bookingForm.get('companyName')?.value)"
+                        placeholder="Type to search..." />
+                      <datalist id="datalistOptions">
+                        <option *ngFor="let company of companiesData" value="{{ company.Name }}">
+                          {{ company.Client_Info }}
+                        </option>
+                      </datalist>
+                    </div>
+                    <div class="">
+                      <label for="CompanyCode">Company Code</label>
+                      <input class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"
+                        list="datalistOption" (change)="getRelatedCustName(bookingForm.get('CompanyCode')?.value)"
+                        id="CompanyCode" formControlName="CompanyCode" placeholder="Type to search..." />
+                      <datalist id="datalistOption">
+                        <option *ngFor="let company of companiesData" value="{{ company.Account }}">
+                          {{ company.Account }}
+                        </option>
+                      </datalist>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+              <div class="company-details border rounded-md m-2 mt-2" *ngIf="selectedOption === 'SelfPay'">
+                <h3 class="text-center m-2 font-semibold">Account Details</h3>
+                <div class="companyDetails flex justify-center mb-2 text-sm">
+                  <form [formGroup]="bookingForm" class="grid grid-cols-2 gap-4">
+                    <div class="">
+                      <label for="CompanyName">Account Name</label>
+                      <input class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"
+                        formControlName="companyName" list="datalistOptions" id="companyName"
+                        (change)="getRelatedCustCode(bookingForm.get('companyName')?.value)"
+                        placeholder="Type to search..." />
+                      <datalist id="datalistOptions">
+                        <option *ngFor="let company of companiesData" value="{{ company.Name }}">
+                          {{ company.Client_Info }}
+                        </option>
+                      </datalist>
+                    </div>
+                    <div class="">
+                      <label for="CompanyCode">Account Code</label>
+                      <input class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"
+                        list="datalistOption" (change)="getRelatedCustName(bookingForm.get('CompanyCode')?.value)"
+                        id="CompanyCode" formControlName="CompanyCode" placeholder="Type to search..." />
+                      <datalist id="datalistOption">
+                        <option *ngFor="let company of companiesData" value="{{ company.Account }}">
+                          {{ company.Account }}
+                        </option>
+                      </datalist>
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+              <form [formGroup]="bookingForm" class="grid grid-cols-2 gap-4">
+                <div *ngIf="selectedOption === 'Contract'" class="m-2">
+                  <label>Contract No</label>
+                  <!-- <input class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text" list="datalistcontracts1"
+                  "
+                    placeholder="Type to search..." />
+                  <datalist id="datalistcontracts1">
+                    <option value="eric">kiki</option>
+                    <option *ngFor="let contract of contractsData" value="{{contract.ContractId}}">
+                      {{ contract.ContractNo }}
+
+                    </option>
+                  </datalist> -->
+
+                  <input class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"  formControlName="ContractId"  
+                    list="datalistOptions" placeholder="Type to search..." />
+                  <datalist id="datalistOptions">
+                    <option *ngFor="let contract of contractsData" value="{{contract.ContractId}}">
+                      {{ contract.ContractNo }}
+                    </option>
+                  </datalist>
+                  <!-- <select  (onclick)="getRelatedContract()" name="" id="ContractId" formControlName="ContractId" class="w-48 rounded-md border border-gray-400 text-sm">
+                    <option value="hello">hello</option>
+                    <option value="world">world</option>
+                    <option *ngFor="let contract of contractsData" value="{{contract.ContractId}}">
+                      {{ contract.ContractNo }}
+
+                    </option>
+              
+                  </select> -->
+                </div>
+
+              </form>
+
+              <div class="m-2" [formGroup]="bookingForm">
+                <button type="button" (click)="saveBookingData()" class="float-right  m-2  w-24 rounded-md  border-1 border-red-700   text-red-700 p-2 hover:bg-red-700 hover:text-white
+                  ">
+                  Submit
+                </button>
+              </div>
+
+
+
+            </form>
+
+
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="View Reservations">
+    <ng-template matTabContent>
+      <div class="tablecontainer overflow-x-auto m-2">
+        <h1 class="text-2xl m-2 font-semibold text-center">All Reservations</h1>
+        <div class="searches" [formGroup]="searchForm " class=" rounded-md border bg-red-50">
+          <form [formGroup]="searchForm" class="flex m-2 font-medium w-32 gap-1">
+            <div [formGroup]="searchForm">
+              <label class="text-xs ">BookingNo</label>
+              <input type="search" formControlName="BookingNo" class="rounded-md border-gray-300   h-8 w-32">
+            </div>
+
+            <div [formGroup]="searchForm">
+              <label class="text-xs">Booking Type</label>
+              <select class="text-sm form-control w-32" id=" BookingType" formControlName="BookingType"
+                [(ngModel)]="selectedOption">
+                <option *ngFor="let BookingType of bookingTypesData" value="{{ BookingType.category_Options }}">
+                  {{ BookingType.category_Options }}
+                </option>
+              </select>
+            </div>
+            <div [formGroup]="searchForm">
+              <label class="text-xs">Booking Category</label>
+              <select class="text-sm form-control w-32" id=" BookingCategory" formControlName="BookingCategory">
+                <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
+                  {{ category.category_Options }}
+                </option>
+              </select>
+            </div>
+            <div [formGroup]="searchForm">
+              <label class="text-xs">Booking Status</label>
+              <select class="text-sm form-control h-8 w-32" formControlName="BookingStatus" id="BookingStatus">
+                <option selected *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                  {{ status.category_Options }}
+                </option>
+              </select>
+            </div>
+            <div class="" [formGroup]="searchForm">
+              <div class="flex  gap-2">
+                <div>
+                  <label class="text-xs">From Date</label>
+                  <input type="date" formControlName="fromDate" class="rounded-md border-gray-300 text-sm   h-8 w-32">
+                </div>
+                <div><label class="text-xs">To Date</label>
+                  <input type="date" formControlName="toDate" class="rounded-md border-gray-300 text-sm   h-8 w-32">
+                </div>
+              </div>
+            </div>
+            <div>
+              <button (click)="searching()" class="float-left mt-4 rounded-md  border-1 border-red-700   text-red-700 p-2 hover:bg-red-700 hover:text-white
+              text-xs  " type="button">Search</button>
+            </div>
+          </form>
+
+
+        </div>
+        <div *ngIf="filteredReservations && filteredReservations.length === 0"
+          class="alert alert-warning m-2 text-center">
+          No active bookings found.
+        </div>
+
+
+        <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display"
+          *ngIf="filteredReservations && filteredReservations.length > 0">
+
+
+
+          <thead class=" text-sm text-black bg-gradient-to-tr from-red-200">
+
+            <tr>
+              <th>BookingNo</th>
+              <th>BookingDate</th>
+              <th>BookingCategory</th>
+              <th>BookingType</th>
+              <th>Branch</th>
+              <th>BookingStatus</th>
+              <th>Source</th>
+              <th>BookingFor</th>
+              <th>Company Name</th>
+              <!-- <th>CreatedOn</th> -->
+
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <!-- <tr></tr>
+            <tr></tr>
+            <tr></tr> -->
+
+            <tr *ngFor="let reservation of filteredReservations">
+              <td class="whitespace-nowrap">
+                <span>{{ reservation.BookingNo }}</span>
+              </td>
+              <td>
+                <span>{{ reservation.BookingDate }}</span>
+              </td>
+              <td>
+                <span>{{ reservation.BookingCategory }}</span>
+              </td>
+              <td>
+                <span>{{ reservation.BookingType }}</span>
+              </td>
+              <td>
+                <span>{{ reservation.Branch }}</span>
+              </td>
+              <td>
+                <span>{{ reservation.BookingStatus }}</span>
+              </td>
+              <!-- <td>
+                <span>{{ reservation.BookingFor }}</span>
+              </td> -->
+              <td>
+                <span>{{ reservation.Source }}</span>
+              </td>
+              <td class="whitespace-nowrap">
+                <span>{{ reservation.BookingFor }}</span>
+              </td>
+              <td class="whitespace-nowrap">
+                <span>{{ reservation.companyName }}</span>
+              </td>
+              <td>
+                <span>
+                  <button (click)="viewBooking()">
+                    <a class="nav-link" href="BookingDetails" [routerLink]="[
+                        '/BookingDetails',
+                        reservation.ReservationId
+                      ]" routerLinkActive="active">View
+                    </a>
+                  </button>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+          <!-- <tfoot>
+            <tr class="text-sm">
+              <th><input type="text" placeholder="BookingNo" value="" name="search-BookingNo" /></th>
+              <th><input type="text" placeholder="BookingCategory" value="" name="search-BookingCategory" /></th>
+              <th><input type="text" placeholder="BookingType"  name="search-BookingType" /></th>
+            </tr>
+          </tfoot> -->
+        </table>
+        <!-- <div class="pagination">
+          <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+          <span>{{ currentPage }} / {{ totalPages }}</span>
+          <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+        </div> -->
+      </div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
+<!-- {{reservation.reservationID}} -->

@@ -1,0 +1,224 @@
+<div class="vehicleDetails-container">
+  <h1 class="text-center m-2 font-bold">Vehicle Details</h1>
+  <div class="card-body m-2 p-4">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row">Year Of Manufacture</th>
+          <td>2016</td>
+        </tr>
+        <tr>
+          <th scope="row">Current Location</th>
+          <td>Nairobi</td>
+        </tr>
+        <tr>
+          <th scope="row">Availability</th>
+          <td>Available</td>
+        </tr>
+        <tr>
+          <th scope="row">Drive</th>
+          <td>AWD</td>
+        </tr>
+        <tr>
+          <th scope="row">Mileage</th>
+          <td>143,000 km</td>
+        </tr>
+        <tr>
+          <th scope="row">Fuel Type</th>
+          <td>Diesel</td>
+        </tr>
+        <tr>
+          <th scope="row"></th>
+          <td>
+            <button>
+              <a
+                class="nav-link"
+                href="vehicleDocuments"
+                routerLink="/vehicleDocuments"
+                routerLinkActive="active"
+                >View Documents
+              </a>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="forms-container grid justify-items-center">
+      <div class="forms shadow-md mt-4 ring-1 ring-red-100 border rounded-lg">
+        <h2 class="font-medium text-2xl text-center mt-4">Edit Car Details</h2>
+
+        <div class="vehicleInput-container flex justify-center gap-4 mt-4">
+          <div>
+            <input
+              type="text"
+              id="Reg_No"
+              class="shadow-md text-xs rounded-lg focus:border-blue-500 block w-64 p-4  text-black read-only:bg-gray-100"
+              placeholder="Enter Vehicle Reg No"
+              required
+            />
+          </div>
+        </div>
+        <div class="vehicleSelect-container grid grid-cols-2 gap-4 m-4">
+       
+          <select
+            id="vehicleStatus"
+            class="shadow-md text-sm rounded-lg block w-64 p-2.5 bg-white text-gray-600"
+          >
+            <option selected>Select status</option>
+            <option value="ReadyToUse">Ready To Use</option>
+            <option value="inWorkShop">inWorkShop</option>
+            <option value="Decommisioned">Decomissioned</option>
+            <option value="Sold">Sold</option>
+          </select>
+          <div class="relative w-64">
+            <label
+              for="inspectionDate"
+              class="block mb-2 text-sm font-normal text-black"
+              >Inspection Date</label
+            >
+            <div
+              class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+            ></div>
+            <input
+              datepicker
+        
+              type="date"
+              class="shadow-md text-gray-400  rounded-lg 0 block w-full ps-10 p-2.5 text-xs"
+              placeholder="Select date"
+            />
+          </div>
+          <div class="relative w-64">
+            <label
+              for="insuranceDate"
+              class="block mb-2 text-sm font-normal text-black"
+              >Insurance Date</label
+            >
+            <div
+              class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+            ></div>
+            <input
+              datepicker
+              
+              type="date"
+              class="shadow-md text-gray-400 rounded-lg block w-full ps-10 p-2.5 text-xs"
+              placeholder="Select date"
+            />
+          </div>
+          <div class="relative w-64">
+            <label
+              for="psvdueDate"
+              class="block mb-2 text-sm font-normal text-black"
+              >PsvDue Date</label
+            >
+            <div
+              class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+            ></div>
+            <input
+              datepicker
+              
+              type="date"
+              class="shadow-md text-gray-400  rounded-lg block w-full ps-10 p-2.5 text-xs"
+              placeholder="Select date"
+            />
+          </div>
+        
+          <select
+            id="vehicleModel"
+            disabled="true"
+            
+            class="shadow-md text-sm rounded-lg block w-64 p-2.5 bg-white text-gray-600"
+            readonly
+          >
+            <option selected>Select Vehicle Model</option>
+            <option value="mazdaDemio">MazdaDemio</option>
+            <option value="Toyota">ToyotaAuris</option>
+            
+          </select>
+          <select
+            id="transmission"
+            disabled="true"
+            class="shadow-md text-sm rounded-lg block w-64 p-2.5 bg-white text-gray-600"
+          >
+            <option selected>Select Transmission</option>
+            <option value="4WD">4WD</option>
+            <option value="2WD">2WD</option>
+          </select>
+        </div>
+
+        <div class="datepicker-container m-4 grid grid-cols-2 gap-4">
+          <div class="relative w-64">
+            <label
+              for="commisionDate"
+              class="block mb-2 text-sm font-normal text-black "
+              >Commision Date</label
+            >
+            <div
+              class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+            ></div>
+            <input
+              datepicker
+            
+              type="date"
+              class="shadow-md text-gray-400  rounded-lg block w-full ps-10 p-2.5 text-xs"
+              placeholder="Select date"
+              readonly
+            />
+          </div>
+          <select
+          id="vehicleMake"
+          disabled="true"
+          class="shadow-md text-sm rounded-lg block w-64 p-2.5 bg-white text-gray-600"
+        >
+          <option selected>Select Vehicle Make</option>
+          <option value="toyota">Toyota</option>
+          <option value="nissan">Nissan</option>
+          <option value="mazda">Mazda</option>
+          <option value="audi">Audi</option>
+        </select>
+          
+          
+          
+        </div>
+      </div>
+      ...
+    </div>
+
+
+
+
+
+
+
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="modal.close('Save click')"
+      >
+        Save
+      </button>
+    </div>
+  </ng-template>
+
+  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+  <button class="btn btn-outline-primary mb-2 me-2" (click)="openLg(content)">
+    Large modal
+  </button>
+
+  <hr />
+
+  <pre>{{ closeResult }}</pre>
+</div>

@@ -1,0 +1,70 @@
+<div class="contractInfo">
+    <p class="text-center m-2 font-bold ">Contract Information</p>
+
+    <table class="table  hover text-center">
+        <thead class="text-sm  ">
+            <tr>
+                <th colspan="8" class="text-center"></th>
+            </tr>
+            <tr>
+                <th>ContractNo</th>
+                <th>CustomerName</th>
+                <th>CustomerCode</th>
+                <th>Status</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th>BillingDay</th>
+                <!-- <th>Action</th> -->
+            </tr>
+        </thead>
+        <tbody class="">
+            <tr *ngFor="let contract of contractsInfo">
+                <td><span>{{ contract.ContractNo }}</span></td>
+                <td><span>{{ contract.companyName }}</span></td>
+                <td><span>{{ contract.CompanyCode }}</span></td>
+                <td><span>{{ contract.status }}</span></td>
+                <td><span>{{ contract.StartDate }}</span></td>
+                <td><span>{{ contract.EndDate }}</span></td>
+                <td><span>{{ contract.BillingDay }}</span></td>
+                <td><!-- Action buttons or links here --></td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    <table class="table   hover text-center">
+                        <thead class="text-sm">
+                            <tr>
+                                <th colspan="10" class="text-center">Contracts Details</th>
+                            </tr>
+                            <tr>
+                                <th>ContractDetailsNo</th>
+                                <th>Status</th>
+                                <th>BookingType</th>
+                                <th>VehicleType</th>
+                                <th>NoOfVehicles</th>
+                                <th>Frequency</th>
+                                <th>Interval</th>
+                                <th>ServiceFromDate</th>
+                                <th>ServiceToDate</th>
+                                <th>ChargeAmount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="">
+                            <tr *ngFor="let detail of contractsDetails">
+                                <td><span>{{ detail.ContractDetailsId }}</span></td>
+                                <td><span>{{ detail.status }}</span></td>
+                                <td><span>{{ detail.BookingType }}</span></td>
+                                <td><span>{{ detail.vehicleType }}</span></td>
+                                <td><span>{{ detail.NoOfVehicles }}</span></td>
+                                <td><span>{{ detail.frequency }}</span></td>
+                                <td><span>{{ detail.interval }}</span></td>
+                                <td><span>{{ detail.ServiceFromDate }}</span></td>
+                                <td><span>{{ detail.ServiceToDate }}</span></td>
+                                <td><span>{{ detail.ChargeAmount }}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

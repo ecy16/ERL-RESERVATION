@@ -1,0 +1,104 @@
+<div class="sideBar-container relative float-left no-print">
+  <div class="sidebar-List text-white bg-gradient-to-r from-red-300  fixed top-0 left-0 h-full shadow-lg overflow-y-auto" style="width: 250px">
+    <div class="logo font-bold text-white ">
+      <img src="/assets/logo.png" alt="Logo" style="width: 200px" >
+    </div>
+    <nav class="">
+      <ul class="text-center cursor-default ">
+        <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
+          <button (click)="navigateTo('login')" class="sidebar-btn ">
+            Login
+          </button>
+          <hr>
+        </li>
+        <!-- <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md  ">
+          <button class="sidebar-btn  ">
+            Dashboard
+          </button>
+          <hr>
+        </li> -->
+
+        <ul class="masterScreenMenu  hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
+          <li>
+            <button class="sidebar-btn" (click)="toogleMasterMenu()">Master Screen</button>
+            <hr>
+
+            <ul class="masterMenu text-sm shadow-lg bg-red-400 p-2 rounded-md mt-2" *ngIf="showMasterMenu">
+
+              <li (click)="navigateTo('vehicles')" class="submenu-item">
+                <mat-icon class="submenu-icon">drive_eta</mat-icon>
+                Vehicles
+                <hr>
+              </li>
+              <li (click)="navigateTo('drivers')" class="submenu-item">
+                <mat-icon class="submenu-icon">supervisor_account</mat-icon>
+                Drivers
+                <hr>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <ul class="bookingScreenMenu hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
+          <li>
+            <button class="sidebar-btn" (click)="toogleBookingMenu()">Reservations</button>
+            <hr>
+
+            <ul class="bookingMenu text-sm shadow-lg bg-red-400 p-2 rounded-md mt-2" *ngIf="showbookingMenu">
+
+              <li (click)="navigateTo('Booking')" class="submenu-item">
+                <mat-icon class="submenu-icon">event_available</mat-icon>Reservation Information
+                <hr>
+              </li>
+              <li (click)="navigateTo('Assignment')" class="submenu-item">
+                <mat-icon class="submenu-icon">event_note</mat-icon>Resource Assignment
+                <hr>
+              </li>
+        
+              <li (click)="navigateTo('scheduledTrips')" class="submenu-item">
+                <mat-icon class="submenu-icon">event_available</mat-icon>Delivery/Collections
+                <hr>
+              </li>
+        
+              <!-- <li (click)="navigateTo('Incidents')" class="submenu-item">
+                <mat-icon class="submenu-icon">report</mat-icon>Incidents & Mileage
+                <hr>
+              </li> -->
+              <li (click)="navigateTo('Roster')" class="submenu-item">
+                <mat-icon class="submenu-icon">event</mat-icon>Duty Roster
+                <hr>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
+          <button class="sidebar-btn" (click)="navigateTo('Contracts')">
+            Contracts
+          </button>
+          <hr>
+
+        </li>
+        <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
+          <button class="sidebar-btn">
+            <a class="nav-link" href="Chauffer" routerLink="/Chauffer" routerLinkActive="active">Enquiries</a>
+          </button>
+          <hr>
+
+        </li>
+        <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
+          <button class="sidebar-btn">
+            <a class="nav-link" href="Billing" routerLink="/Billing" routerLinkActive="active">Billing</a>
+          </button>
+          <hr>
+
+        </li>
+        <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
+          <button class="sidebar-btn">
+            <a class="nav-link" href="AdminSettings" routerLink="/Admin" routerLinkActive="active">Admin Settings</a>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

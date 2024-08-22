@@ -1,0 +1,198 @@
+<div class="userManagement-container">
+  <h1>Users Management</h1>
+  <button
+    class="p-2 text-white text-sm rounded-md bg-red-700 m-2"
+    (click)="openLg(content)">
+    Add User
+  </button>
+
+  <div class="usersTable">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>UserName</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Roles</th>
+        </tr>
+        <tr *ngFor="let user of usersData">
+          <td>{{ user. username }}</td>
+          <td>{{ user.   EmailAddress }}</td>
+          <td>{{ user. Department }}</td>
+          <td>{{ user.  roles}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Edit users Modal -->
+  <div class="editusersModal">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit User</h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="usersForm">
+          <form [formGroup]="usersForm" class="grid grid-cols-2 p-2 m-2 gap-2">
+            <div [formGroup]="usersForm" class="text-sm">
+              <label>Full Name</label>
+              <input
+                type="text"
+                id="fullName"
+                class="border rounded-md border-gray-400 block w-64 p-2.5 text-sm text-black"
+                placeholder="John Doe"
+                formControlName="FullName"
+                required />
+            </div>
+            <div [formGroup]="usersForm" class="text-sm">
+              <label>User Name</label>
+              <input
+                type="text"
+                id="userName"
+                class="block mb-2 rounded-md text-sm border-gray-400 w-64 p-2.5 text-black"
+                placeholder="John123"
+                formControlName="username"
+                required />
+            </div>
+            <div [formGroup]="usersForm" class="text-sm">
+              <label>Email Address</label>
+              <input
+                type="text"
+                id="emailAddress"
+                class="border border-blue-500 text-xs rounded-md block w-64 p-2.5 text-black"
+                placeholder=" john@gmail.com"
+                formControlName="EmailAddress"
+                required />
+            </div>
+            <div [formGroup]="usersForm" class="text-sm">
+              <label>Password</label>
+              <input
+                type="text"
+                id="Password"
+                class="border border-blue-500 text-xs rounded-md block w-64 p-2.5 text-black"
+                placeholder=" password"
+                formControlName="password"
+                required />
+            </div>
+            <div [formGroup]="usersForm" class="text-sm">
+              <label>Department</label>
+
+              <select
+                id="department"
+                formControlName="Department"
+                class="border border-blue-500 text-sm rounded-md block w-64 p-2.5 bg-white text-gray-600">
+                
+                <option value=""></option>
+                <option value="sales">Sales</option>
+                <option value="marketing">Marketing</option>
+                <option value="business">Business</option>
+              </select>
+            </div>
+            <div [formGroup]="usersForm" class="text-sm">
+              <label>Roles</label>
+              <select
+                id="roles"
+                formControlName="roles"
+                class="border border-blue-500 text-sm rounded-md block w-64 p-2.5 bg-white text-gray-600">
+                <option></option>
+
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          (click)="addUsers()"
+          (click)="modal.close('Save click')">
+          Add User
+        </button>
+      </div>
+    </ng-template>
+
+    <hr />
+  </div>
+  <!--AddUsersModal-->
+  <div class="addusersModal">
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add Users</h4>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"></button>
+      </div>
+      <div class="modal-body">
+        <div class="usersForm grid grid-cols-2 p-2 m-2">
+          <div>
+            <label
+              for="fullName"
+              class="block mb-2 text-sm font-bold text-black"
+              >Full Name</label
+            >
+            <input
+              type="text"
+              id="fullName"
+              class="shadow-md border border-blue-500 text-xs rounded-lg focus:border-blue-500 block w-64 p-2.5 dark:border-gray-600 text-black"
+              placeholder="john Doe"
+              required />
+          </div>
+          <div>
+            <label
+              for="userName"
+              class="block mb-2 text-sm font-bold text-black"
+              >User Name</label
+            >
+            <input
+              type="text"
+              id="username"
+              class="shadow-md border border-blue-500 text-xs rounded-lg focus:border-blue-500 block w-64 p-8 dark:border-gray-600 text-black"
+              placeholder="John123"
+              required />
+          </div>
+          <div>
+            <label
+              for="emailAddress"
+              class="block mt-2 text-sm font-bold text-black"
+              >Email Address</label
+            >
+            <input
+              type="text"
+              id="emailaddress"
+              class="shadow-md border border-blue-500 text-xs rounded-lg focus:border-blue-500 block w-64 p-2.5 dark:border-gray-600 text-black"
+              placeholder=" john@gmail.com"
+              required />
+          </div>
+          <select
+            id="department"
+            class="shadow-md border border-blue-500 text-sm rounded-lg block w-64 p-2.5 bg-white text-gray-600 mt-4">
+            <option selected>Department</option>
+            <option value="sales">Sales</option>
+            <option value="marketing">Marketing</option>
+            <option value="business">Business</option>
+          </select>
+          <select
+            id="roles"
+            class="shadow-md border border-blue-500 text-sm rounded-lg block w-64 p-2.5 bg-white text-gray-600 mt-4">
+            <option selected>Roles</option>
+            <option value="1">Admin</option>
+            <option value="2">User</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="p-2 rounded-md border-2 border-red-700"
+          (click)="modal.close('Save click')">
+          Save
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

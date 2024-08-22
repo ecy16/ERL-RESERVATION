@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<head>
+    <meta charset="UTF-8">
+    <meta name=" viewpoint" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="html,css">
+    <title>register</title>
+    <link rel="stylesheet" href="register.component.css">
+   
+</head>
+<body>
+    <div class="wrapper">
+        <form action [formGroup]="registerform">
+            <div >
+                <img src="Logo Illustration.png">
+            </div>
+            <div class="text-container">
+               <div class="item">
+                  <label for="fname">ENTER FIRST NAME</label><br>
+                   <input type="text" id="fname" placeholder="Enter first name" name="first name">
+                 </div>
+                <div class="item">
+                 <label for="LNAME">ENTER  LAST NAME</label><br>
+                 <input type="text"  id="lname"placeholder="Enter last name" name=" last name">
+                </div>
+                <div class="item">
+                    <label for="gender">ENTER GENDER</label><br>
+                    <input type="text" id="gender" placeholder="Enter Gender." name="gender">
+                </div>
+
+                
+                <div class="item">
+                    <label for="national-id">ENTER NATIONAL ID</label><br>
+                 <input type="text" id="national-id" placeholder="Enter National Id No." name="identification">
+                </div>
+
+                <div class="item">
+                   <label for="address">ENTER ADDRESS</label><br>
+                   <input type="text" id="address"placeholder="Enter home address" name="address">
+                </div>
+                <div class="item">
+                    <label for="mail">ENTER EMAIL</label><br>
+                    <input type="text" id="mail" placeholder="Enter email" name="email">           
+                </div>
+                 
+                <div class="item">
+                    <label for="password">ENTER NEW PASSWORD</label><br>
+                    <input type="text" id="password" placeholder="Enter New password." name="password">
+                </div>
+                <div class="item">
+                    <label for="comfirm">CONFIRM NEW PASSWORD</label><br>
+                   <input type="text" id="confirm" placeholder="Confirm password" name="confirm">
+                </div>
+
+            </div>    
+             
+                 <div >
+                            <button type="submit" id="submit-register">Submit</button>
+                 </div>
+              
+               
+                    
+            
+        </form>
+    </div>
+</body>

@@ -1,0 +1,48 @@
+<div class="dutyRoster-container">
+    <table datatable [dtOptions]="dtOptions" class="table border border-gray-700  hover sleek-table table-bordered hover " class="display">
+        <thead class="text-center text-sm align-text-top whitespace-nowrap">
+            <th class="text-center">Check Out Date</th>
+            <th class="text-center">Check out Time</th>
+            <th class="text-center">Debitors Name</th>
+            <th class="text-center">License</th>
+            <th class="text-center">Chauffer</th>
+            <th class="text-center">Duty Instructions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let duty of dutiesList">
+                <td class="text-center">
+                    <span> {{duty.FromDate}}</span>
+                </td>
+                <td class="text-center">
+                    <span> {{duty.FromTime}}</span>
+                </td>
+                <td class="text-center">
+                    <span> {{duty.companyName}}</span>
+                </td>
+                <td class="text-center"><span> {{duty.vehicleRegNo}}</span>
+                </td>
+                <td class="text-center"><span> {{duty.DriverName}}</span>
+                </td>
+                <td class="text-left"><span> {{duty.BookingFor}}</span>
+                    <ul class="align text-left">
+                        <li>
+                            <p> Flight No:{{duty.FlightNo}}</p>
+                        <li>
+                            <p>Phone No: {{duty.PickupContactNo}}</p>
+                        </li>
+                        <li>
+                            <p>Pick Up Time: @{{duty.FromTime}}</p>
+                        <li>
+                            <p> Pick Up Place{{duty.PickupAddress}}</p>
+                        <li>
+                            <p>{{duty.DropAddress}}</p>
+                        <!-- <li class="list-disc">
+                            <p>{{duty.Instructions}}</p>
+                        </li> -->
+                    </ul>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

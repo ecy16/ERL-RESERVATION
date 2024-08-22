@@ -1,0 +1,57 @@
+<div class="billing-page">
+    <h1 class="text-lg text-center font-medium">BILLINGS</h1>
+    <div class="billing-container">
+        <div class="billing-table">
+            <!-- <table datatable class="row-border  " class="display"> -->
+                <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display">
+
+                <thead class="text-sm">
+                    <tr>
+                        <th>BookingNo</th>
+                        <th>ReservationId</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Source</th>
+                        <th>CompanyDetails</th>
+                        <th>ContractID</th>
+                        <!-- <th>Billing</th> -->
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm">
+                    <tr *ngFor="let billing of completedBillings">
+                        <td> <span>{{ billing.BookingNo }}</span>
+                        </td>
+                        <td> <span>{{ billing.ReservationId }}</span>
+                        </td>
+                        <td> <span>{{ billing.BookingCategory }}</span>
+                        </td>
+                        <td> <span>{{ billing.BookingStatus }}</span>
+                        </td>
+                        <td> <span>{{ billing.Source }}</span>
+                        </td>
+                        <td> <span>{{ billing.companyName }}</span>
+                        </td>
+                        <td> <span>{{ billing.ContractId }}</span>
+                        </td>
+                        <!-- <td> <span>{{ billing.BillingDay }}</span>
+                        </td> -->
+                        <td>
+                            <span>
+                              <button (click)="viewBill()">
+                                <a class="nav-link" href="BillingDetails" [routerLink]="[
+                                    '/BillingDetails',
+                                     billing.ReservationId
+                                  ]" routerLinkActive="active">View
+                                </a>
+                              </button>
+                            </span>
+                          </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>

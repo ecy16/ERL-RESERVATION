@@ -1,0 +1,764 @@
+<div class="drivers-container">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Driver Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form class="grid grid-cols-2 text-sm" [formGroup]="OurDriversForm">
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver First Name</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="DriverFirstName" id="DriverFirstName" required />
+          <div *ngIf="
+                                    (OurDriversForm.get('DriverFirstName')?.invalid &&
+                                      OurDriversForm.get('DriverFirstName')?.errors &&
+                                      OurDriversForm.get('DriverFirstName')?.dirty) ||
+                                    OurDriversForm.get('DriverFirstName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverFirstName')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver Last Name</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="DriverLastName" id="DriverLastName" />
+          <div *ngIf="
+                                    (OurDriversForm.get('DriverLastName')?.invalid &&
+                                      OurDriversForm.get('DriverLastName')?.errors &&
+                                      OurDriversForm.get('DriverLastName')?.dirty) ||
+                                    OurDriversForm.get('DriverLastName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLastName')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver DOB</label>
+          <div class="input-group border rounded-md">
+            <input class="form-control border-gray-50" formControlName="DriverDOB" id="DriverDOB" type="date"
+              placeholder="dd-mm-yyyy " />
+            <div *ngIf="
+                                      (OurDriversForm.get('DriverDOB')?.invalid &&
+                                        OurDriversForm.get('DriverDOB')?.errors &&
+                                        OurDriversForm.get('DriverDOB')?.dirty) ||
+                                      OurDriversForm.get('DriverDOB')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('DriverDOB')?.hasError('required')">*This field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver LicenseNo</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="DriverLicenseNo" id="DriverLicenseNo" />
+          <div *ngIf="
+                                    (OurDriversForm.get('DriverLicenseNo')?.invalid &&
+                                      OurDriversForm.get('DriverLicenseNo')?.errors &&
+                                      OurDriversForm.get('DriverLicenseNo')?.dirty) ||
+                                    OurDriversForm.get('DriverLicenseNo')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLicenseNo')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver License Issue</label>
+
+          <div class="input-group border rounded-md">
+            <input class="form-control border-gray-50" formControlName="DriverLicenseIssue" id="LicenseIssue"
+              type="date" />
+            <div *ngIf="
+                                      (OurDriversForm.get('DriverLicenseIssue')?.invalid &&
+                                        OurDriversForm.get('DriverLicenseIssue')?.errors &&
+                                        OurDriversForm.get('DriverLicenseIssue')?.dirty) ||
+                                      OurDriversForm.get('DriverLicenseIssue')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLicenseIssue')?.hasError('required')">*This
+                field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver License Expiry</label>
+
+          <div class="input-group border rounded-md">
+            <input class="form-control border-gray-50" formControlName="DriverLicenseExpiry" id="DriverLicenseExpiry"
+              type="date" />
+          </div>
+          <div *ngIf="
+                                  (OurDriversForm.get('DriverLicenseExpiry')?.invalid &&
+                                    OurDriversForm.get('DriverLicenseExpiry')?.errors &&
+                                    OurDriversForm.get('DriverLicenseExpiry')?.dirty) ||
+                                  OurDriversForm.get('DriverLicenseExpiry')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLicenseExpiry')?.hasError('required')">*This
+              field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Nationality</label>
+          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+            formControlName="Nationality" list="datalistOption" id="Nationality" placeholder="Type to search..." />
+          <datalist id="datalistOption">
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="KENYA">KENYA</option>
+          </datalist>
+          <div *ngIf="
+                                  (OurDriversForm.get('Nationality')?.invalid &&
+                                    OurDriversForm.get('Nationality')?.errors &&
+                                    OurDriversForm.get('Nationality')?.dirty) ||
+                                  OurDriversForm.get('Nationality')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('Nationality')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>IDPP</label>
+          <div class="input-group border rounded-md">
+            <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPP"
+              id="IDPP" />
+            <div *ngIf="
+                                      (OurDriversForm.get('BookingDate')?.invalid &&
+                                        OurDriversForm.get('BookingDate')?.errors &&
+                                        OurDriversForm.get('BookingDate')?.dirty) ||
+                                      OurDriversForm.get('BookingDate')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('BookingDate')?.hasError('required')">*This field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>IDPPExpiry</label>
+          <div class="input-group border rounded-md">
+            <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPPExpiry"
+              id="IDPPExpiry" type="date" />
+            <div *ngIf="
+                                      (OurDriversForm.get('IDPPExpiry')?.invalid &&
+                                        OurDriversForm.get('IDPPExpiry')?.errors &&
+                                        OurDriversForm.get('IDPPExpiry')?.dirty) ||
+                                      OurDriversForm.get('IDPPExpiry')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('BookingDate')?.hasError('required')">*This field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>CountryOfIssue</label>
+          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+            formControlName="CountryOfIssue" list="datalistOption" id="CountryOfIssue"
+            placeholder="Type to search..." />
+          <datalist id="datalistOption">
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="KENYA">KENYA</option>
+          </datalist>
+          <div *ngIf="
+                                  (OurDriversForm.get('CountryOfIssue')?.invalid &&
+                                    OurDriversForm.get('CountryOfIssue')?.errors &&
+                                    OurDriversForm.get('CountryOfIssue')?.dirty) ||
+                                  OurDriversForm.get('CountryOfIssue')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('CountryOfIssue')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>CountryOfResidence</label>
+          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+            formControlName="CountryOfResidence" list="datalistOption" id="CountryOfResidence"
+            placeholder="Type to search..." />
+          <datalist id="datalistOption">
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="KENYA">KENYA</option>
+          </datalist>
+          <div *ngIf="
+                                  (OurDriversForm.get('CountryOfResidence')?.invalid &&
+                                    OurDriversForm.get('CountryOfResidence')?.errors &&
+                                    OurDriversForm.get('CountryOfResidence')?.dirty) ||
+                                  OurDriversForm.get('CountryOfResidence')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('CountryOfResidence')?.hasError('required')">*This
+              field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2">
+          <label>AddressLine1</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="AddressLine1" id="AddressLine1" />
+          <div *ngIf="
+                                    (OurDriversForm.get('AddressLine1')?.invalid &&
+                                      OurDriversForm.get('AddressLine1')?.errors &&
+                                      OurDriversForm.get('AddressLine1')?.dirty) ||
+                                    OurDriversForm.get('AddressLine1')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('AddressLine1')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>AddressLine2</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="AddressLine2" id="AddressLine2" />
+          <div *ngIf="
+                                    (OurDriversForm.get('AddressLine2')?.invalid &&
+                                      OurDriversForm.get('AddressLine2')?.errors &&
+                                      OurDriversForm.get('AddressLine2')?.dirty) ||
+                                    OurDriversForm.get('AddressLine2')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('AddressLine2')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>AddressLine3</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="AddressLine3" id="AddressLine3" />
+          <div *ngIf="
+                                    (OurDriversForm.get('AddressLine3')?.invalid &&
+                                      OurDriversForm.get('AddressLine3')?.errors &&
+                                      OurDriversForm.get('AddressLine3')?.dirty) ||
+                                    OurDriversForm.get('AddressLine3')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('AddressLine3')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>ContactNo</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="ContactNo"
+            id="ContactNo" />
+          <div *ngIf="
+                                    (OurDriversForm.get('ContactNo')?.invalid &&
+                                      OurDriversForm.get('ContactNo')?.errors &&
+                                      OurDriversForm.get('ContactNo')?.dirty) ||
+                                    OurDriversForm.get('ContactNo')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('ContactNo')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Email</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="Email"
+            id="Email" />
+          <div *ngIf="
+                                    (OurDriversForm.get('Email')?.invalid &&
+                                      OurDriversForm.get('Email')?.errors &&
+                                      OurDriversForm.get('Email')?.dirty) ||
+                                    OurDriversForm.get('Email')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('Email')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>NextOfKinName</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="NextOfKinName" id="NextOfKinName" />
+          <div *ngIf="
+                                    (OurDriversForm.get('NextOfKinName')?.invalid &&
+                                      OurDriversForm.get('NextOfKinName')?.errors &&
+                                      OurDriversForm.get('NextOfKinName')?.dirty) ||
+                                    OurDriversForm.get('NextOfKinName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('NextOfKinName')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>NextOfKinContactNo</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="NextOfKinName" id="NextOfKinContactNo" />
+          <div *ngIf="
+                                    (OurDriversForm.get('NextOfKinName')?.invalid &&
+                                      OurDriversForm.get('NextOfKinName')?.errors &&
+                                      OurDriversForm.get('NextOfKinName')?.dirty) ||
+                                    OurDriversForm.get('NextOfKinName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('NextOfKinName')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>BookingRemarks</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="BookingRemarks" id="BookingRemarks" />
+          <div *ngIf="
+                                    (OurDriversForm.get('BookingRemarks')?.invalid &&
+                                      OurDriversForm.get('BookingRemarks')?.errors &&
+                                      OurDriversForm.get('BookingRemarks')?.dirty) ||
+                                    OurDriversForm.get('BookingRemarks')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('BookingRemarks')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div></div>
+        <div class="uploads flex">
+          <div>
+            <input type="file" (change)="onFileChange($event)">
+            <p *ngIf="selectedFile">File selected: {{ selectedFile.name }}</p>
+            <button (click)="submitForm()">Upload</button>
+          </div>
+
+          <div>
+            <button mat-mini-fab color="primary" class="upload-btn" (change)="onFileChange($event)" >
+              <mat-icon>attach_file</mat-icon>
+            </button> 
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addChauffer()"
+            (click)="modal.close('Save click')">
+            Save
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+  </ng-template>
+  <button class="button p-2 rounded-md text-sm m-2 bg-red-700 text-white" (click)="open(content)">Add Driver</button>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="driver-table">
+
+
+<div class="driverSearch">
+  <form [formGroup]="searchDriverForm" class="flex m-2 font-medium w-32 gap-1">
+    <div>
+      <label class="text-xs ">Driver First Name</label>
+      <input type="search" formControlName="DriverFirstName" class="rounded-md border-gray-300  h-8 w-32">
+    </div>
+   
+   <div> 
+    <label class="text-xs">DriverLicenseNo</label>
+    <input type="search" formControlName="DriverLicenseNo" class="rounded-md  border-gray-300  h-8 w-32">
+  </div>
+   <div class=""> 
+     <label class="text-xs">ContactNo</label>
+    <input type="text" formControlName="ContactNo" class="rounded-md  border-gray-300  h-8 w-32 text-sm">
+  </div>
+  <div class=""> 
+    <label class="text-xs">Booking Status</label>
+   <input type="text" formControlName="ContactNo" class="rounded-md  border-gray-300  h-8 w-32 text-sm">
+ </div>
+  <div>
+    <button (click)="searchingDriver()" class="float-left mt-4 rounded-md p-2 text-white text-xs bg-red-700 " type="button">Search</button>
+  </div>
+  </form>
+
+
+
+
+
+  <ng-template #Driver let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Driver Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form class="grid grid-cols-2 text-sm" [formGroup]="OurDriversForm">
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver First Name</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="DriverFirstName" id="DriverFirstName" required />
+          <div *ngIf="
+                                    (OurDriversForm.get('DriverFirstName')?.invalid &&
+                                      OurDriversForm.get('DriverFirstName')?.errors &&
+                                      OurDriversForm.get('DriverFirstName')?.dirty) ||
+                                    OurDriversForm.get('DriverFirstName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverFirstName')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver Last Name</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="DriverLastName" id="DriverLastName" />
+          <div *ngIf="
+                                    (OurDriversForm.get('DriverLastName')?.invalid &&
+                                      OurDriversForm.get('DriverLastName')?.errors &&
+                                      OurDriversForm.get('DriverLastName')?.dirty) ||
+                                    OurDriversForm.get('DriverLastName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLastName')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver DOB</label>
+          <div class="input-group border rounded-md">
+            <input class="form-control border-gray-50" formControlName="DriverDOB" id="DriverDOB" type="date"
+              placeholder="dd-mm-yyyy " />
+            <div *ngIf="
+                                      (OurDriversForm.get('DriverDOB')?.invalid &&
+                                        OurDriversForm.get('DriverDOB')?.errors &&
+                                        OurDriversForm.get('DriverDOB')?.dirty) ||
+                                      OurDriversForm.get('DriverDOB')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('DriverDOB')?.hasError('required')">*This field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver LicenseNo</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="DriverLicenseNo" id="DriverLicenseNo" />
+          <div *ngIf="
+                                    (OurDriversForm.get('DriverLicenseNo')?.invalid &&
+                                      OurDriversForm.get('DriverLicenseNo')?.errors &&
+                                      OurDriversForm.get('DriverLicenseNo')?.dirty) ||
+                                    OurDriversForm.get('DriverLicenseNo')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLicenseNo')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver License Issue</label>
+
+          <div class="input-group border rounded-md">
+            <input class="form-control border-gray-50" formControlName="DriverLicenseIssue" id="LicenseIssue"
+              type="date" />
+            <div *ngIf="
+                                      (OurDriversForm.get('DriverLicenseIssue')?.invalid &&
+                                        OurDriversForm.get('DriverLicenseIssue')?.errors &&
+                                        OurDriversForm.get('DriverLicenseIssue')?.dirty) ||
+                                      OurDriversForm.get('DriverLicenseIssue')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLicenseIssue')?.hasError('required')">*This
+                field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Driver License Expiry</label>
+
+          <div class="input-group border rounded-md">
+            <input class="form-control border-gray-50" formControlName="DriverLicenseExpiry" id="DriverLicenseExpiry"
+              type="date" />
+          </div>
+          <div *ngIf="
+                                  (OurDriversForm.get('DriverLicenseExpiry')?.invalid &&
+                                    OurDriversForm.get('DriverLicenseExpiry')?.errors &&
+                                    OurDriversForm.get('DriverLicenseExpiry')?.dirty) ||
+                                  OurDriversForm.get('DriverLicenseExpiry')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('DriverLicenseExpiry')?.hasError('required')">*This
+              field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Nationality</label>
+          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+            formControlName="Nationality" list="datalistOption" id="Nationality" placeholder="Type to search..." />
+          <datalist id="datalistOption">
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="KENYA">KENYA</option>
+          </datalist>
+          <div *ngIf="
+                                  (OurDriversForm.get('Nationality')?.invalid &&
+                                    OurDriversForm.get('Nationality')?.errors &&
+                                    OurDriversForm.get('Nationality')?.dirty) ||
+                                  OurDriversForm.get('Nationality')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('Nationality')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>IDPP</label>
+          <div class="input-group border rounded-md">
+            <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPP"
+              id="IDPP" />
+            <div *ngIf="
+                                      (OurDriversForm.get('BookingDate')?.invalid &&
+                                        OurDriversForm.get('BookingDate')?.errors &&
+                                        OurDriversForm.get('BookingDate')?.dirty) ||
+                                      OurDriversForm.get('BookingDate')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('BookingDate')?.hasError('required')">*This field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>IDPPExpiry</label>
+          <div class="input-group border rounded-md">
+            <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPPExpiry"
+              id="IDPPExpiry" type="date" />
+            <div *ngIf="
+                                      (OurDriversForm.get('IDPPExpiry')?.invalid &&
+                                        OurDriversForm.get('IDPPExpiry')?.errors &&
+                                        OurDriversForm.get('IDPPExpiry')?.dirty) ||
+                                      OurDriversForm.get('IDPPExpiry')?.touched
+                                    ">
+              <small class="text-red-700" *ngIf="OurDriversForm.get('BookingDate')?.hasError('required')">*This field is
+                required</small>
+            </div>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>CountryOfIssue</label>
+          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+            formControlName="CountryOfIssue" list="datalistOption" id="CountryOfIssue"
+            placeholder="Type to search..." />
+          <datalist id="datalistOption">
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="KENYA">KENYA</option>
+          </datalist>
+          <div *ngIf="
+                                  (OurDriversForm.get('CountryOfIssue')?.invalid &&
+                                    OurDriversForm.get('CountryOfIssue')?.errors &&
+                                    OurDriversForm.get('CountryOfIssue')?.dirty) ||
+                                  OurDriversForm.get('CountryOfIssue')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('CountryOfIssue')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>CountryOfResidence</label>
+          <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+            formControlName="CountryOfResidence" list="datalistOption" id="CountryOfResidence"
+            placeholder="Type to search..." />
+          <datalist id="datalistOption">
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="KENYA">KENYA</option>
+          </datalist>
+          <div *ngIf="
+                                  (OurDriversForm.get('CountryOfResidence')?.invalid &&
+                                    OurDriversForm.get('CountryOfResidence')?.errors &&
+                                    OurDriversForm.get('CountryOfResidence')?.dirty) ||
+                                  OurDriversForm.get('CountryOfResidence')?.touched
+                                ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('CountryOfResidence')?.hasError('required')">*This
+              field
+              is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2">
+          <label>AddressLine1</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="AddressLine1" id="AddressLine1" />
+          <div *ngIf="
+                                    (OurDriversForm.get('AddressLine1')?.invalid &&
+                                      OurDriversForm.get('AddressLine1')?.errors &&
+                                      OurDriversForm.get('AddressLine1')?.dirty) ||
+                                    OurDriversForm.get('AddressLine1')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('AddressLine1')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>AddressLine2</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="AddressLine2" id="AddressLine2" />
+          <div *ngIf="
+                                    (OurDriversForm.get('AddressLine2')?.invalid &&
+                                      OurDriversForm.get('AddressLine2')?.errors &&
+                                      OurDriversForm.get('AddressLine2')?.dirty) ||
+                                    OurDriversForm.get('AddressLine2')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('AddressLine2')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>AddressLine3</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="AddressLine3" id="AddressLine3" />
+          <div *ngIf="
+                                    (OurDriversForm.get('AddressLine3')?.invalid &&
+                                      OurDriversForm.get('AddressLine3')?.errors &&
+                                      OurDriversForm.get('AddressLine3')?.dirty) ||
+                                    OurDriversForm.get('AddressLine3')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('AddressLine3')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>ContactNo</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="ContactNo"
+            id="ContactNo" />
+          <div *ngIf="
+                                    (OurDriversForm.get('ContactNo')?.invalid &&
+                                      OurDriversForm.get('ContactNo')?.errors &&
+                                      OurDriversForm.get('ContactNo')?.dirty) ||
+                                    OurDriversForm.get('ContactNo')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('ContactNo')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>Email</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="Email"
+            id="Email" />
+          <div *ngIf="
+                                    (OurDriversForm.get('Email')?.invalid &&
+                                      OurDriversForm.get('Email')?.errors &&
+                                      OurDriversForm.get('Email')?.dirty) ||
+                                    OurDriversForm.get('Email')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('Email')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>NextOfKinName</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="NextOfKinName" id="NextOfKinName" />
+          <div *ngIf="
+                                    (OurDriversForm.get('NextOfKinName')?.invalid &&
+                                      OurDriversForm.get('NextOfKinName')?.errors &&
+                                      OurDriversForm.get('NextOfKinName')?.dirty) ||
+                                    OurDriversForm.get('NextOfKinName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('NextOfKinName')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>NextOfKinContactNo</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="NextOfKinName" id="NextOfKinContactNo" />
+          <div *ngIf="
+                                    (OurDriversForm.get('NextOfKinName')?.invalid &&
+                                      OurDriversForm.get('NextOfKinName')?.errors &&
+                                      OurDriversForm.get('NextOfKinName')?.dirty) ||
+                                    OurDriversForm.get('NextOfKinName')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('NextOfKinName')?.hasError('required')">*This field is
+              required</small>
+          </div>
+        </div>
+
+        <div class="m-2" [formGroup]="OurDriversForm">
+          <label>BookingRemarks</label>
+          <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+            formControlName="BookingRemarks" id="BookingRemarks" />
+          <div *ngIf="
+                                    (OurDriversForm.get('BookingRemarks')?.invalid &&
+                                      OurDriversForm.get('BookingRemarks')?.errors &&
+                                      OurDriversForm.get('BookingRemarks')?.dirty) ||
+                                    OurDriversForm.get('BookingRemarks')?.touched
+                                  ">
+            <small class="text-red-700" *ngIf="OurDriversForm.get('BookingRemarks')?.hasError('required')">*This field
+              is
+              required</small>
+          </div>
+        </div>
+        <div></div>
+        <div class="uploads flex">
+          <div>
+            <input type="file" (change)="onFileChange($event)">
+            <p *ngIf="selectedFile">File selected: {{ selectedFile.name }}</p>
+            <button (click)="submitForm()">Upload</button>
+          </div>
+
+          <div>
+            <button mat-mini-fab color="primary" class="upload-btn" (change)="onFileChange($event)" >
+              <mat-icon>attach_file</mat-icon>
+            </button> 
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addChauffer()"
+            (click)="modal.close('Save click')">
+            Save
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+  </ng-template>
+
+</div>
+
+
+
+
+
+  <table datatable class="table row-border hover display w-full text-sm ">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>License Expiry</th>
+        <th>Drivers Date of Birth</th>
+        <th>Driver License</th>
+        <th>Contacts</th>
+        <th>Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let driver of DriversList" class="text-center">
+        <td>{{ driver.DriverFirstName }}</td>
+        <td>{{ driver.DriverLastName }}</td>
+        <td>{{ driver.DriverLicenseExpiry }}</td>
+        <td>{{ driver.DriverDOB }}</td>
+        <td>{{ driver.DriverLicenseNo }}</td>
+        <td>{{ driver.ContactNo }}</td>
+        <td><button class="p-2 w-24 hover:text-red-700 hover:border border-red-700 rounded-md " (click)="openEdit(Driver)">Edit</button></td>
+
+      </tr>
+    </tbody>
+  </table>
+  <!-- </div> -->
+</div>

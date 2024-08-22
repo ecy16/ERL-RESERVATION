@@ -1,0 +1,192 @@
+
+body
+{
+align-items: center;
+justify-content: center;
+display:flex;
+min-height: 624px;
+
+
+}
+.wrapper
+{
+border-radius:16px;
+/* background-color:#a00303; */
+color:rgb(173, 49, 49);
+width: 480px;
+height: 500px;
+border:white;
+position:relative;
+left:300px;
+}
+
+.register-wrapper{
+border-radius:16px;
+background-color:#a00303;
+color:rgb(152, 46, 46);
+width: 480px;
+height:670px;;
+padding:8px;
+
+}
+
+img{
+   width:200px;
+   height:200px;
+   margin-right:-305px ;
+   margin-left: 130px ;
+   margin: bottom -100px;
+   
+}
+.username input{
+    width:368px;
+    height: 48px;
+    margin-bottom: 5px;
+    margin-left:50px;
+    box-shadow:48px;
+    font-family: Verdana; 
+    font-size:1.6rem;
+    border-radius:6.2px;
+    border:none;
+    color:black;
+    font-family: sans-serif;
+
+
+  }
+  .password input{
+   width:368px;
+   height: 48px;
+   margin-bottom: 5px;
+   margin-left:50px;
+   box-shadow:48px;
+   font-family: Verdana; 
+   font-size:1.6rem;
+   border-radius:6.2px;
+   border:none;
+   color:black;
+
+
+ }
+  
+  label
+  {
+   margin-left: 50px;
+   font-family: arial;
+   font-size:0.6rem;
+   font-weight: bold;
+     }
+
+
+  #newpwd
+  {
+   /*  the  id 'newpwd' is for the inputbox in forgot password.html*/
+   width:368px;
+   height: 48px;
+   margin-bottom: 16px;
+   margin-left:50px;
+   box-shadow:64px ;
+   color:black;
+   font-family: Verdana; 
+   font-size:2rem;
+   border-radius:11.2px;
+   border:none;
+  }
+  /* .text-container is for the register.html*/
+ .text-container input
+ {
+   width:368px;
+   height: 35px;
+   margin-bottom: 16px;
+   margin-left:50px;
+   box-shadow:64px;
+   color:black;
+   font-family: arial; 
+   font-size:1.6rem;
+   border-radius:6.2px;
+   border:none;
+   
+
+}
+
+
+ ::placeholder
+ {
+    opacity: 60%;;
+    color:gray;
+    font-family:arial;
+    font-size:1rem;
+
+    
+   
+ }
+  
+ 
+ button{
+    height:48px;
+    width:176px;
+    margin-top: 20px;
+    position:relative;
+    left:150px;    
+    border-radius:4.8px;
+    font-weight: 8px;
+    background-color: white;
+    border:none;
+    
+ }
+  
+ button:hover{
+   background-color:rgb(210, 26, 26);
+   color:white;
+ 
+ }
+
+
+  
+ .forgot{
+   margin-left:192px;
+   padding-left: 320px;
+ }
+ 
+ 
+    
+ 
+ .remember-forgot a
+ {
+   margin-left:172px;
+   font-size:0.9rem;
+   color:aliceblue;
+
+
+ }
+ 
+ p
+{
+   text-align:center;
+   font-family:arial;
+   font-size:0.8rem;
+   position:relative;
+   top: -8px;
+   color:aliceblue;
+   
+}
+
+#userimg
+{
+   position:relative;
+   top:0px;
+   left:-32px;
+   color:black;
+    
+}
+.register-link{
+   margin-top:5px;
+}
+
+.image{
+background-image: url('/frontend-erl/src/assets/logo.png');}
+   
+
+
+
+
+

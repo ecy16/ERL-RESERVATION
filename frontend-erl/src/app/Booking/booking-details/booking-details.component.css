@@ -1,0 +1,22 @@
+table {
+  width: 80%;
+  font-size:smaller;
+  /* zoom: 0.8; */
+}
+/* .BookingDetails-container{
+  overflow-x: scroll;
+} */
+@media print {
+  .no-print {
+
+      display: none;
+  }
+}
+.upload-btn {
+  padding: 8px 12px;
+  color: maroon;
+  border:1px  gray;
+  border-radius: 4px;
+  cursor: pointer;
+}
+

@@ -1,0 +1,109 @@
+<div class="scheduledTrips">
+<h1 class="text-center m-2 font-bold text-xl">Delivery and collections screen</h1>
+
+    <div class="searches" [formGroup]="scheduleSearchForm " class=" rounded-md border m-2">
+        <form [formGroup]="scheduleSearchForm" class="flex m-2 font-medium gap-1">
+            <div>
+                <label class="text-xs">BookingNo</label>
+                <input type="search" formControlName="BookingNo" class="rounded-md border-gray-300 h-8 w-24">
+            </div>
+            <div>
+                <label class="text-xs">Booking Category</label>
+                <select class="text-sm form-control w-32" id="BookingCategory" formControlName="BookingCategory">
+                    <option *ngFor="let category of bookingCategoriesData" [value]="category.category_Options">
+                        {{ category.category_Options }}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label class="text-xs">Branch</label>
+                <select class="text-sm form-control rounded-md border-gray-300 h-8 w-24" id="Branch" formControlName="Branch">
+                    <option *ngFor="let branch of bookingBranchData" [value]="branch.category_Options">
+                        {{ branch.category_Options }}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label class="text-xs">VehicleMake</label>
+                <input type="text" formControlName="vehicleMake" class="rounded-md border-gray-300 h-8 w-24">
+            </div>
+            <div>
+                <label class="text-xs">RegNo</label>
+                <input type="text" formControlName="VehicleId" class="rounded-md border-gray-300 h-8 w-24">
+            </div>
+            <div class="flex gap-2">
+                <div>
+                    <label class="text-xs">From Date</label>
+                    <input type="date" formControlName="FromDateTime" class="rounded-md border-gray-300 text-sm h-8 w-32">
+                </div>
+                <div>
+                    <label class="text-xs">To Date</label>
+                    <input type="date" formControlName="ToDateTime" class="rounded-md border-gray-300 text-sm h-8 w-32">
+                </div>
+                <div class="flex items-end">
+                    <button class="rounded-md p-2.5 text-white text-xs bg-red-700" type="button" (click)="searchScheduled()">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </form>
+        
+
+
+    </div>
+
+    <table datatable [dtOptions]="dtOptions" class="row-border hover booking   " class="display">
+        <thead class=" text-sm bg-red-50 text-center whitespace-nowrap">
+            <tr>
+                <th>BookingNo</th>
+                <th>Booking For</th>
+                <th>BookingCategory</th>
+                <th>TripStatus</th>
+                <th>PickUp Address</th>
+                <th>Drop Address</th>
+                <th>Company Name</th>
+                <th>Driver</th>
+                <th>vehicleMake</th>
+                <th>vehicleModel</th>
+                <th>Reg No</th>
+                <th>FromDateTime</th>
+                <th>ToDateTime</th>
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let assignment of assignmentAllTrips">
+                <tr class="text-xs  text-center whitespace-nowrap">
+                    <td>{{ assignment.BookingNo }}</td>
+                    <!-- <td>{{ assignment.ReservationId }}</td> -->
+                    <td>{{ assignment.BookingFor }}</td>
+                    <td>{{ assignment.BookingCategory }}</td>
+                    <!-- <td>{{ assignment.BookingDate }}</td> -->
+                    <td>{{ assignment.TripStatus }}</td>
+                    <td>{{ assignment.PickupAddress }}</td>
+                    <td>{{ assignment.DropAddress }}</td>
+                    <td>{{assignment.companyName}}</td>
+                    <td>{{ assignment.DriverName }}</td>
+                    <td>{{ assignment.VehicleMake }}</td>
+                    <td>{{ assignment.VehicleModel }}</td>
+                    <td>{{ assignment.chosenRegNo }}</td>
+                    <td>{{assignment.TripFromDateTime}}</td>
+                    <td>{{assignment.TripToDateTime}}</td>
+                    <td><button>
+                            <a class="nav-link" href="delivery" [routerLink]="[
+                            '/delivery',
+                            assignment.ReservationId
+                          ]" routerLinkActive="active">
+                                View
+                            </a>
+                        </button>
+                    </td>
+
+                    <!-- <td>{{ assignment.ReservationId }}</td> -->
+                </tr>
+
+            </ng-container>
+        </tbody>
+    </table>
+</div>
