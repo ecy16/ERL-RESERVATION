@@ -13,8 +13,8 @@ import { TripIncidentsEntity } from './tripIncidents.entity';
 export class ReservationTripEntity {
     @PrimaryGeneratedColumn()
     TripId: number;
-    @Column({ nullable: true })
-    TripNo: number;
+    @Column({ nullable: false })
+    tripNumber: number;
     @Column({ nullable: true })
     ReservationId: number;
     @Column({ nullable: true })
@@ -26,8 +26,8 @@ export class ReservationTripEntity {
     @Column({ nullable: true })
     DriverRemarks: string;
     @Column({ nullable: true })
-    VehicleId: number;
-    @Column({ nullable: true })
+    // VehicleId: number;
+    // @Column({ nullable: true })
     TripStatus: string;
     @Column({ nullable: true })
     VehicleRemarks: string;
@@ -37,7 +37,7 @@ export class ReservationTripEntity {
     ToDateTime: string;
     @Column({ nullable: true })
     FlightNo: string;
-    @Column( { nullable: true })
+    @Column({ nullable: true })
     FlightDateTime: string;
     @Column({ nullable: true })
     Airline: string;
@@ -79,12 +79,14 @@ export class ReservationTripEntity {
     ModifiedBy: string;
     @Column('datetime', { nullable: true })
     ModifiedOn: string;
-    @Column( { nullable: true })
+    @Column({ nullable: true })
     PickupFirstName: string;
-    @Column( { nullable: true })
+    @Column({ nullable: true })
     PickupLastName: string;
-    @Column( { nullable: true })
+    @Column({ nullable: true })
     Remarks: string;
+    @Column({ nullable: true })
+    vehicleID: number;
 
     constructor(trips: Partial<ReservationTripEntity>) {
         Object.assign(this, trips);

@@ -438,7 +438,11 @@ export class ApiService {
       this.http.get<any[]>(`${this.fetchRelatedReservationTrip}` + reservationId)
     );
   }
-
+  fetchLastRelatedTrips(reservationId: number): Observable<any[]> {
+    return (
+      this.http.get<any[]>(`${this.fetchRelatedReservationTrip}` + reservationId)
+    );
+  }
   fetchAllTrips(): Observable<any[]> {
     return (
       this.http.post<any[]>(`${this.tripUrl}/all`, "")

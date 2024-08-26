@@ -30,13 +30,16 @@ export class TripsService {
     ) { }
 
     async createTrip(addTripsDto: AddTripDto) {
+        console.log(addTripsDto, 'AddTripDto')
         const reservationTrip = new ReservationTripEntity(addTripsDto);
         const lastTripNo = await this.findLastRelatedTrips(
-            Number(reservationTrip.ReservationId),
+            Number(reservationTrip.ReservationId)
         );
-        reservationTrip.TripNo = Number(lastTripNo[0].lastNo);
-
+        console.log(lastTripNo)
+        reservationTrip.tripNumber = (lastTripNo[0].lastNo);
+        console.log(reservationTrip, 'ReservationTrip')
         try {
+
             return await this.tripsEntity.save(reservationTrip);
         } catch (err) {
             throw new Error(err.message);
@@ -193,42 +196,6 @@ export class TripsService {
         }
     }
 
-    // async findRelatedReservationTrips(reservationId: number) {
-    //     const trip = this.tripDataSource.createQueryRunner();
-    //     await trip.connect();
-    //     try {
-    //         await trip.startTransaction();
-    //         const tripInfo = await trip.query(
-    //             `select c.vehicleRegNo,c.vehicleID, a.*,b.BookingCategory,b.BookingNo,format(FlightDateTime,'dd-MM-yyyy HH:mm') as FlightDate,
-    //             format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  
-    //             a join _cplReservations b on a.ReservationId = b.ReservationId 
-    //             left join _cplVehicles c on a.VehicleId = c.vehicleID where a.ReservationId=@0`,
-    //             [reservationId],
-    //         );
-    //         await trip.commitTransaction();
-    //         return tripInfo;
-    //     } catch (e) {
-    //         throw new Error(`Failed to find trips: ${e.message}`);
-    //     }
-    // }
-
-
-    // async saveResource(){
-    //     const resource = this.tripDataSource.createQueryRunner();
-    //     await resource.connect();
-    //     try{
-    //         await resource.startTransaction();
-    //         const resourceInfo= await resource.query(
-    //             ``
-    //         );
-
-    //         await this.tripDataSource.commitTransaction();
-    //         return resourceInfo;
-    //     }catch(e){
-    //         throw new Error(`failed to find trips:${e.message}`)
-    //     }
-
-    // }
 
     async findLastRelatedTrips(reservationId: number) {
         const relatedLastNo = this.tripDataSource.createQueryRunner();
@@ -257,13 +224,11 @@ export class TripsService {
                 `select  distinct category_Options from _cplItemMaster where item_Name=@0 and (category_name=@1 or category_name=@2)`,
                 ['ReservationTrip', 'FuelIN', 'FuelOut'],
             );
-            // console.log('helleo')
             await fetchFuelLevel.commitTransaction();
             return fuelLevel;
         } catch (e) {
             throw new BadRequestException(e.message);
         }
-        // throw new Error(`Failed to find booking type: ${e.message}`);\
     }
 
     async driverService() {
@@ -275,13 +240,11 @@ export class TripsService {
                 `select  distinct category_Options from _cplItemMaster where item_Name=@0 and category_name=@1`,
                 ['ReservationTrip', 'DriverServiceStatus'],
             );
-            // console.log('helleo')
             await driverService.commitTransaction();
             return serviceStatus;
         } catch (e) {
             throw new BadRequestException(e.message);
         }
-        // throw new Error(`Failed to find booking type: ${e.message}`);\
     }
 
     async tripStatus() {
@@ -308,7 +271,7 @@ export class TripsService {
         try {
             await assignVehicleQuery.startTransaction();
             const vehicle = await assignVehicleQuery.manager.query(
-                `select  * from _cplVehicles where vehicleModel=@0`,
+                `select  * from _cplVehicles where vehicleModel=@0 order By vehicleRegNo`,
                 [model],
             );
             // console.log('helleo')
@@ -319,31 +282,12 @@ export class TripsService {
         }
         // throw new Error(`Failed to find booking type: ${e.message}`);\
     }
-    // async assignReg(FromDateTime:string,ToDateTime:string,VehicleId:string){
-    //     const  assignRegQuery = await this.tripDataSource.createQueryRunner();
-    //     await assignRegQuery.connect();
-    //     try{
-    //         await assignRegQuery.startTransaction();
-    //         const vehicle=await assignRegQuery.manager.query(
-    //             `
-    // select *from _cplReservationTrips where vehicleID=@0 
-    // and 
-    // ((format(FromDateTime,'yyyy-MM-dd HH:mm') between '@1' and '@2')
 
-    // or (format(ToDateTime, 'yyyy-MM-dd HH:mm') between '@1' and '@2'))`,[parseInt(VehicleId),FromDateTime,ToDateTime]
-    //         )
-    //         await assignRegQuery.commitTransaction();
-    //         return FromDateTime;
-
-    //     }catch(e){
-    // throw new BadRequestException(e.message)
-    //     }
-
-    // }
 
     async assignReg(vehicleValidationDto: VehicleValidationDto) {
         const vehicle = new ReservationTripEntity(vehicleValidationDto)
-        const { VehicleId, FromDateTime, ToDateTime } = vehicle;
+
+        const { vehicleID, FromDateTime, ToDateTime } = vehicle;
 
         const assignRegQuery = this.tripDataSource.createQueryRunner();
         await assignRegQuery.connect();
@@ -359,16 +303,15 @@ SELECT * FROM _cplReservationTrips
                  AND (
                      (FORMAT(FromDateTime, 'yyyy-MM-dd HH:mm') BETWEEN @1 AND @2)
                      OR (FORMAT(ToDateTime, 'yyyy-MM-dd HH:mm') BETWEEN @1 AND @2)
-
-            )
-
-                `, [VehicleId,FromDateTime, ToDateTime]
+            )`,
+                [vehicleID, FromDateTime, ToDateTime]
             );
-
+// console.log(vehicleID,'MY VEHICLEID')
             // Continue with the assignment process if vehicle is available
             // Your logic to assign the vehicle here...
 
             await assignRegQuery.commitTransaction();
+            // console.log('Validatee', myVehicle)
             return myVehicle;
 
         } catch (error) {
@@ -411,7 +354,6 @@ SELECT * FROM _cplReservationTrips
                  )`,
                 [DriverId, FromDateTime, ToDateTime, DriverFirstName]
             );
-
             await assignDriverQuery.commitTransaction();
             return Driver;
         } catch (e) {
@@ -424,57 +366,6 @@ SELECT * FROM _cplReservationTrips
 
 
 
-    // async searchResources(SearchResourcesDto: SearchResourcesDto): Promise<ReservationTripEntity[]> {
-    //     const query = this.tripsRepo.createQueryBuilder('trips');
-
-    //     Object.keys(SearchResourcesDto).forEach(key => {
-    //         const value = SearchResourcesDto[key];
-    //         if (value) {
-    //             if (key === 'FromDateTime' || key === 'ToDateTime') {
-    //                 if (key === 'FromDateTime') {
-    //                     query.andWhere(`trips.date >= :FromDateTime`, { FromDateTime: value });
-    //                 } else if (key === 'ToDateTime') {
-    //                     query.andWhere(`trips.date <= :ToDateTime`, { ToDateTime: value });
-    //                 }
-    //             } else if (typeof value === 'string') {
-    //                 query.andWhere(`trips.${key} LIKE :${key}`, { [key]: `%${value}%` });
-    //             } else {
-    //                 query.andWhere(`trips.${key} = :${key}`, { [key]: value });
-    //             }
-    //         }
-    //     });
-
-    //     try {
-    //         const results = await query.getMany();
-    //         return results;
-    //     } catch (e) {
-    //         throw new Error(`Failed to find any results: ${e.message}`);
-    //     }
-    // }
-
-
-
-
-
-
-    // async searchResources(searchResourcesDto: SearchResourcesDto) {
-    //     const query = this.tripsRepo.createQueryBuilder('trips')
-    //     Object.keys(searchResourcesDto).forEach(key => {
-    //         console.log('this is my searcgh dto')
-    //         const value = searchResourcesDto[key]
-    //         if (value) {
-    //             query.andWhere(`trips.${key} = :${key}`, { [key]: value });
-    //             console.log(key, 'value')
-
-    //         }
-    //     })
-    //     try {
-    //         const results = await query.getMany();
-    //         return results;
-    //     } catch (e) {
-    //         throw new Error(`Failed to find any results: ${e.message}`);
-    //     }
-    // }
 
     async searchResources(searchResourcesDto: SearchResourcesDto) {
         const trip = this.tripDataSource.createQueryRunner();
@@ -541,32 +432,7 @@ SELECT * FROM _cplReservationTrips
         return query.getMany();
     }
 
-    // async assignDriver(driverValidationDto: DriverValidationDto) {
-    //     const trip = new ReservationTripEntity(driverValidationDto);
 
-    //     var DriverId = trip.DriverId;
-    //     var DriverFirstName = trip.DriverFirstName;
-    //     var FromDateTime = trip.FromDateTime;
-    //     var ToDateTime = trip.ToDateTime;
-
-    //     const assignDriverQuery = await this.tripDataSource.createQueryRunner();
-    //     await assignDriverQuery.connect();
-    //     try {
-    //         await assignDriverQuery.startTransaction();
-    //         const Driver = await assignDriverQuery.manager.query(
-
-    //             ` select *from _cplReservationTrips where DriverId=@0 
-    //             and 
-    //                 ((format(FromDateTime,'yyyy-MM-dd HH:mm') between @1 and @2)
-
-    //             or (format(ToDateTime, 'yyyy-MM-dd HH:mm') between @1 and @2))`, [DriverId,DriverFirstName, FromDateTime, ToDateTime]
-    //         )
-    //         await assignDriverQuery.commitTransaction();
-    //         return Driver
-    //     }catch(e){
-    //         throw new BadRequestException(e.message)
-    //     }
-    // }
     async searchTripsSchedules(searchParams: any): Promise<ReservationDetailsViewEntity[]> {
         // Create a query builder for the ReservationDetailsViewEntity
         const query = this.reservationDetailsRepo.createQueryBuilder('reservations');

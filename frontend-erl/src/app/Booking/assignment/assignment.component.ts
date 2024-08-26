@@ -159,13 +159,13 @@ export class AssignmentComponent {
       BookingNo: ["", Validators.required],
       BookingDate: ["", Validators.required],
       BookingCategory: ["", Validators.required],
-      fromDate: ["", Validators.required],
-      toDate: ["", Validators.required],
+      FromDateTime: ["", Validators.required],
+      ToDateTime: ["", Validators.required],
       BookingStatus: ["InProgress", Validators.required],
       BookingType: ["", Validators.required],
       Branch: ["", Validators.required],
       vehicleMake: ["", Validators.required],
-      VehicleId: ["", Validators.required],
+      vehicleID: ["", Validators.required],
     });
 
     this.tripFormUpdate = this.formBuilder.group({
@@ -437,30 +437,21 @@ export class AssignmentComponent {
           vehicleID: d.vehicleID,
           DriverId: d.DriverId,
           DriverFirstName: d.DriverFirstName,
-          vehicleRegNo:d.vehicleRegNo
+          vehicleRegNo: d.vehicleRegNo
         });
 
         console.log(d.PickupName, "driverr patched");
         this.fetchModels(d.VehicleMake);
         this.fetchVehiclesByModel(d.VehicleModel);
 
-        // console.log(d,ve)
-        // this.BookingCategory = 'ChaufferDriven'; 
-        // this.BookingCategory = 'SelfDriven'; 
+
       }
 
     });
 
   }
 
-  // fetchVehicles(vehicleModel:any){
-  //   vehicleModel='HILUX'
-  //   this.apiService.assignVehicle(vehicleModel).subscribe((res)=>{
-  //     console.log('Api response',res)
-  //     this.fetchedVehicleList.push(res)
-  //     console.log('VehicleModel',vehicleModel)
-  //   })
-  // }
+
 
   getVehicleRegNo(vehicleModel: string) {
     if (vehicleModel) {
@@ -478,35 +469,35 @@ export class AssignmentComponent {
 
 
 
-  checkVehicleAssignment(vehicleID: any, FromDateTime: any, ToDateTime: any) {
-    console.log("myvehicleid",vehicleID,FromDateTime,ToDateTime);
+  checkVehicleAssignment(vehicleID: Number, FromDateTime: any, ToDateTime: any) {
+    console.log("myvehicleid", vehicleID, FromDateTime, ToDateTime);
     // this.vehicleAssignedError = "";
 
     const vehicleDetails = {
-      VehicleId:vehicleID.trim(),
+      vehicleID:Number(vehicleID),
       FromDateTime: moment(FromDateTime).format("YYYY-MM-DD HH:mm"),
       ToDateTime: moment(ToDateTime).format("YYYY-MM-DD HH:mm"),
     };
-  
 
 
-    console.log(vehicleDetails,'vehicle details');
+
+    console.log(vehicleDetails, 'vehicle DDDdetails');
     // Add your logic here, e.g., call an API or perform validation
 
 
-    console.log(vehicleDetails);
-    this.apiService.validateVehicle(vehicleDetails).subscribe((response) => {
-      this.fetchedVehicleList=response
-      console.log("Response:", response);
+    this.apiService.validateVehicle(vehicleDetails).subscribe((res) => {
+      console.log("ResponsfroValidateVehicle:", res);
 
-      if (response && response.length > 0) {
+
+      if (res && res.length > 0) {
         const confirmProceed = window.confirm(
-          `This Vehicle has already been assigned to TripNo: ${response[0].TripId}. Do you wish to proceed?`
+          `This Vehicle has already been assigned to TripNo: ${res[0].TripId}. Do you wish to proceed?`
         );
         if (!confirmProceed) {
           this.vehicleAssignedError = "This vehicle is already assigned.";
         } else {
           this.tripAssignmentForm.get('vehicleID').setValue(vehicleID);
+          this.tripAssignmentForm.patchValue({vehicleID:vehicleID})
           this.tripAssignmentForm.get('TripStatus').setValue('Scheduled');
         }
       } else {
@@ -515,61 +506,10 @@ export class AssignmentComponent {
         this.tripAssignmentForm.get('TripStatus').setValue('Scheduled');
       }
     });
+    
   }
 
-  //   combinedVehicleHandler(vehicleModel: string, FromDateTime: any, ToDateTime: any) {
-  //     if (vehicleModel) {
-  //         this.apiService.assignVehicle(vehicleModel).subscribe((res) => {
-  //             console.log('API response', res);
-  //             this.fetchedVehicleList = res;  // Assuming res is the list of vehicles
-  //             console.log('VehicleModel', vehicleModel);
 
-  //             // After fetching the vehicles, get the selected vehicle ID
-  //             const VehicleId = this.tripAssignmentForm.get('VehicleId')?.value;
-  //             console.log('MY VEHICLE ID', VehicleId);
-
-  //             // Proceed with vehicle assignment check
-  //             if (VehicleId) {
-  //                 this.vehicleAssignedError = "";
-
-  //                 const vehicleDetails = {
-  //                     VehicleId: VehicleId,
-  //                     FromDateTime: moment(FromDateTime).format("YYYY-MM-DD HH:mm"),
-  //                     ToDateTime: moment(ToDateTime).format("YYYY-MM-DD HH:mm"),
-  //                 };
-
-  //                 console.log(vehicleDetails, 'vehicle details');
-
-  //                 // Validate vehicle assignment
-  //                 this.apiService.validateVehicle(vehicleDetails).subscribe((response) => {
-  //                     console.log("Response:", response);
-
-  //                     if (response && response.length > 0) {
-  //                         const confirmProceed = window.confirm(
-  //                             `This Vehicle has already been assigned to TripNo: ${response[0].TripId}. Do you wish to proceed?`
-  //                         );
-  //                         if (!confirmProceed) {
-  //                             this.vehicleAssignedError = "This vehicle is already assigned.";
-  //                         } else {
-  //                             this.tripAssignmentForm.get('VehicleId')?.setValue(VehicleId);
-  //                             this.tripAssignmentForm.get('TripStatus')?.setValue('Scheduled');
-  //                         }
-  //                     } else {
-  //                         // No conflict, proceed with assignment
-  //                         this.tripAssignmentForm.get('VehicleId')?.setValue(VehicleId);
-  //                         this.tripAssignmentForm.get('TripStatus')?.setValue('Scheduled');
-  //                     }
-  //                 });
-  //             } else {
-  //                 console.error('VehicleId is not selected.');
-  //             }
-  //         }, (error) => {
-  //             console.error('Failed to fetch vehicles', error);
-  //         });
-  //     } else {
-  //         console.error('Vehicle model is not provided.');
-  //     }
-  // }
 
 
 
@@ -623,43 +563,6 @@ export class AssignmentComponent {
     });
   }
 
-  // isVehicleAlreadyAssigned(vehicleId: number): boolean {
-  //   console.log('trip has a carrtyui')
-
-  //   const currentTripStart = moment(this.tripAssignmentForm.get('FromDateTime')?.value).format("YYYY-MM-DD HH:mm:ss");
-  //   const currentTripEnd = moment(this.tripAssignmentForm.get('ToDateTime')?.value).format("YYYY-MM-DD HH:mm:ss");
-
-  //   // Create a map to store vehicle assignments
-  //   const vehicleAssignments = new Map<number, { start: string, end: string }[]>();
-
-  //   // Populate the map with existing trips
-  //   this.fetchedTripList.forEach((trip: any) => { // use 'any' type to represent each trip
-  //     const tripStart = moment(trip.FromDateTime).format("YYYY-MM-DD HH:mm:ss");
-  //     const tripEnd = moment(trip.ToDateTime).format("YYYY-MM-DD HH:mm:ss");
-
-  //     if (!vehicleAssignments.has(trip.VehicleId)) {
-  //       vehicleAssignments.set(trip.VehicleId, []);
-  //       console.log('trip has been assigned aii')
-
-  //     }
-  //     vehicleAssignments.get(trip.VehicleId)?.push({ start: tripStart, end: tripEnd });
-  //   });
-
-  //   // Check for overlapping assignments
-  //   const assignedTrips = vehicleAssignments.get(vehicleId) || [];
-  //   for (const assignedTrip of assignedTrips) {
-  //     if ((currentTripStart >= assignedTrip.start && currentTripStart <= assignedTrip.end) ||
-  //         (currentTripEnd >= assignedTrip.start && currentTripEnd <= assignedTrip.end) ||
-  //         (currentTripStart <= assignedTrip.start && currentTripEnd >= assignedTrip.end)) {
-  //       return true;
-  //     }
-  //     console.log('trip  aii')
-
-  //   }
-  //   console.log(' assigned aii')
-
-  //   return false;
-  // }
 
   printForm() {
     const printableContent = this.rentalAgreement.nativeElement.innerHTML;
@@ -678,24 +581,26 @@ export class AssignmentComponent {
 
     console.log(this.tripAssignmentForm.value, ".......trip assignment");
 
+
+
     this.apiService.editTrip(TripId, this.tripAssignmentForm.value).subscribe((assign) => {
-        console.log(assign, ".......trip ass");
-        for(const r of assign){
-          this.assignmentAllTrips.push(r)
-        }
-        this.assignmentAllTrips=assign
-        // this.getRelatedTrips(this.tripAssignmentForm.value.ReservationId)
-      });
+      console.log(assign, ".......trip ass");
+      for (const r of assign) {
+        this.assignmentAllTrips.push(r)
+      }
+      // this.assignmentAllTrips = assign
+      // this.getRelatedTrips(this.tripAssignmentForm.value.ReservationId)
+    });
     console.log('ovcwyey');
     this.getallTrips()
 
-   
-    
 
-   const confirmProceed= window.confirm('Do you wish to generate a CDO?')
-if(confirmProceed){
-this.generateCDO(TripId)
-}
+
+    const confirmProceed = window.confirm('Do you wish to generate a CDO?')
+    if (confirmProceed) {
+      this.generateCDO(TripId)
+    }
+
 
   }
   fetchVehiclesByModel(Model: any) {
@@ -722,9 +627,9 @@ this.generateCDO(TripId)
     this.assignmentAllTrips = [];
     this.apiService.fetchAllTrips().subscribe((trips) => {
       for (const m of trips) {
-        if (m.TripStatus === 'InProgress') {
+        // if (m.TripStatus === 'InProgress') {
           this.assignmentAllTrips.push(m);
-        }
+        // }
       }
       console.log(this.assignmentAllTrips, "yuitd");
     });
@@ -748,110 +653,15 @@ this.generateCDO(TripId)
 
 
 
+
+
+
+
+
+
+
   generateCDO(TripId: any) {
-    console.log('Fetching trip details for CDO generation, TripId:', TripId);
-  
-    this.fetchedCDOData = [];
-  
-    this.apiService.getRelatedTrip(TripId).subscribe((TripInfo) => {
-      console.log('Fetched trip information:', TripInfo);
-  
-      // Store the fetched trip data
-      this.fetchedCDOData = TripInfo;
-  
-      if (this.fetchedCDOData.length > 0) {
-        console.log('Generating CDO for trip...');
-  
-        for (const d of this.fetchedCDOData) {
-          try {
-            const doc = new jsPDF({
-              orientation: "p",
-              unit: "mm",
-              format: "a4",
-            });
-  
-            // Title
-            doc.setFontSize(20);
-            doc.setFont("arial");
-            doc.text("DRIVER ORDER", 105, 10, { align: "center" });
-  
-            // Header information (replace static text with dynamic data as needed)
-            doc.setFontSize(8);
-            doc.setFont("arial", "bold");
-            doc.text("Office Line: +254 707 603009 | +254 722 513303", 10, 35);
-            doc.text("Office Line: +254 797486389", 202, 35, { align: "right" });
-            doc.text("POBox 45757-0100, Nairobi, Kenya", 10, 39);
-            doc.text("JKIA (Airport)", 202, 39, { align: "right" });
-            doc.text("Office:Off Musa Gitau Road, Waiyaki Way", 10, 43);
-            doc.text("Airport:Office No.9 Parking silo, Ground Floor", 202, 43, { align: "right" });
-            doc.text("info@executiverentalsltd.com", 10, 47);
-            doc.text("hertzkenya@executiverentalsltd.com", 202, 47, { align: "right" });
-  
-            // Organization, Client, and Booking details (use dynamic data)
-            doc.setFontSize(12);
-            doc.text("Organization:", 12, 64);
-            doc.text(d.organization || '', 12, 70);
-            doc.text("Client Name:", 12, 80);
-            doc.text(d.clientName || '', 12, 86);
-            doc.text("Booked by:", 12, 95);
-            doc.text(d.bookedBy || '', 12, 101);
-  
-            // Booking and vehicle details
-            doc.text("Veh.Reg:", 81, 64);
-            doc.text(d.vehicleReg || '', 97, 64);
-            doc.text("Type:", 81, 73);
-            doc.text(d.vehicleType || '', 90, 73);
-            doc.text("Pick-up location:", 81, 84);
-            doc.text(d.pickUpLocation || '', 110, 84);
-            doc.text("Pick-up time:", 81, 93);
-            doc.text(d.pickUpTime || '', 102, 93);
-  
-            // Service instructions
-            doc.setFontSize(14);
-            doc.text("SERVICE INSTRUCTIONS", 105, 110, { align: "center" });
-            doc.rect(10, 115, 190, 60);
-            doc.text(d.serviceInstructions || '', 12, 125);
-  
-            // Fuel and expenses (use dynamic data)
-            doc.setFontSize(10);
-            doc.text("Fuel in:", 125, 185);
-            doc.text(d.fuelIn || '', 137, 185);
-            doc.text("Fuel out:", 125, 195);
-            doc.text(d.fuelOut || '', 139, 195);
-            doc.text("Driver:", 125, 205);
-            doc.text(d.driverName || '', 136, 205);
-  
-            // Save the generated PDF
-            doc.save(`CDO_${d.clientName}_Trip_${d.TripNo}.pdf`);
-          } catch (error) {
-            console.error('Error generating CDO:', error);
-          }
-        }
-      } else {
-        console.log('No trip data found for CDO generation.');
-      }
-    });
-  }
-  
-
-
-
-
-
-  generateCDO1(TripId: any) {
-    const formData = {
-      organization: this.formGroup.get('companyName').value,
-      clientName: this.formGroup.get('clientName').value,
-      bookedBy: this.formGroup.get('bookedBy').value,
-      vehicleReg: this.formGroup.get('vehicleReg').value,
-      vehicleType: this.formGroup.get('vehicleType').value,
-      pickUpLocation: this.formGroup.get('pickUpLocation').value,
-      pickUpTime: this.formGroup.get('pickUpTime').value,
-      dateIn: this.formGroup.get('dateIn').value,
-      dateOut: this.formGroup.get('dateOut').value,
-      // Add other form fields as necessary
-    };
-    console.log('hkvwaefviwev', TripId);
+    console.log('CDOTRIPID', TripId);
     this.fetchedCDOData = [];
     // this.BookingData = [];
     this.apiService.getRelatedTrip(TripId).subscribe((TripInfo) => {
@@ -917,24 +727,30 @@ this.generateCDO(TripId)
 
             // Organization, Client, and Booking details
             doc.rect(10, 60, 70, 40);
-            doc.setFontSize(12);
+            doc.setFontSize(11);
             doc.text("Organization:", 12, 64);
-            doc.text(formData.organization, 12, 70); // Organization name
-
-            doc.text('', 12, 70);
+            doc.text(d.companyName, 12, 70);
             doc.text("Client Name:", 12, 80);
+            doc.text(d.companyName, 25, 80);
+
             doc.text("Booked by:", 12, 95);
+            doc.text(d.BookingFor, 8, 90);
+
 
             doc.text("Veh.Reg", 81, 64);
             doc.line(97, 64, 130, 64);
             doc.text("Type", 81, 73);
             doc.line(90, 73, 130, 73);
             doc.text("Pick-up location", 81, 84);
+            doc.text(d.PickupAddress, 70, 80);
+
             doc.line(110, 84, 130, 84);
             doc.text("Pick-up time", 81, 93);
             doc.line(102, 93, 130, 93);
 
             doc.text("CDO.PT_______________", 140, 55);
+            doc.text(d.BookingNo + "/"+ d.tripNumber, 160, 55);
+
             doc.text("Date In:", 140, 64);
             doc.line(153, 64, 180, 64);
             doc.text("Date Out:", 140, 73);
@@ -1273,6 +1089,4 @@ this.generateCDO(TripId)
   }
 
 
-
-  
 }

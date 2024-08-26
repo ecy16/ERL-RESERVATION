@@ -1,5 +1,5 @@
 <div class="BookingDetails-container no-print">
-  <p class="text-center m-2 font-bold">Booking Details</p>
+  <p class="text-center m-2 font-bold">Reservation Details</p>
   <div class="card-body m-2">
     <table class="table-auto w-full border-collapse text-center border">
       <tbody>
@@ -9,19 +9,19 @@
             {{ booking.ReservationId }}
           </td>
           <td class="px-4 py-2 whitespace-nowrap">
-            <p class="font-semibold">BookingNo:</p>
+            <p class="font-semibold">ReservationNo:</p>
             {{ booking.BookingNo }}
           </td>
           <td class="px-4 py-2">
-            <p class="font-semibold">BookingDate:</p>
+            <p class="font-semibold">ReservationDate:</p>
             {{ booking.ReservationDate }}
           </td>
           <td class="px-4 py-2">
-            <p class="font-semibold">BookingCategory:</p>
+            <p class="font-semibold">ReservationCategory:</p>
             {{ booking.BookingCategory }}
           </td>
           <td class="px-4 py-2">
-            <p class="font-semibold">BookingType:</p>
+            <p class="font-semibold">ReservationType:</p>
             {{ booking.BookingType }}
           </td>
           <td class="px-4 py-2 whitespace-nowrap">
@@ -37,7 +37,7 @@
             {{ booking.Branch }}
           </td>
           <td class="px-4 py-2">
-            <p class="font-semibold">BookingFor:</p>
+            <p class="font-semibold">ReservationFor:</p>
             {{ booking.BookingFor }}
           </td>
           <td class="px-2 py-2">
@@ -53,13 +53,13 @@
 
     <ng-template #Details let-modal>
       <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Booking update</h4>
+        <h4 class="modal-title" id="modal-basic-title">Reservation update</h4>
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="bookingFormEdit" id="bookingFormEdit" class="text-sm grid grid-cols-2">
           <div class="m-2" [formGroup]="bookingFormEdit">
-            <label>Booking Date</label>
+            <label>Reservation Date</label>
             <div class="input-group">
               <input type="date" id="BookingDate" formControlName="BookingDate"
                 class="form-control border rounded-md" />
@@ -78,7 +78,7 @@
           </div>
 
           <div class="m-2" [formGroup]="bookingFormEdit">
-            <label>Booking Category</label>
+            <label>Reservation Category</label>
             <select class="text-sm form-control" id="BookingCategory" formControlName="BookingCategory">
 
               <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
@@ -98,7 +98,7 @@
             </div>
           </div>
           <div class="m-2" [formGroup]="bookingFormEdit">
-            <label>Booking Type</label>
+            <label>Reservation Type</label>
             <select class="text-sm form-control" id=" BookingType" formControlName="BookingType"
               [(ngModel)]="selectedOption">
               <!-- <option value="corporate">Corporate</option> -->
@@ -135,7 +135,7 @@
             </div>
           </div>
           <div class="m-2" [formGroup]="bookingFormEdit">
-            <label>Booking Status</label>
+            <label>Reservation Status</label>
             <select class="text-sm form-control" formControlName="BookingStatus" id="BookingStatus">
               <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
                 {{ status.category_Options }}
@@ -153,7 +153,7 @@
             </div>
           </div>
           <div class="m-2" [formGroup]="bookingFormEdit">
-            <label>Booking For</label>
+            <label>Reservation For</label>
             <input id="BookingFor" type="text" class="form-control rounded-md border border-gray-400"
               formControlName="BookingFor" />
             <div *ngIf="
@@ -253,7 +253,7 @@
             </thead>
             <tbody class="text-sm whitespace-nowrap ">
               <tr class="bg-white" *ngFor="let trip of tripReservationList">
-                <td><span>{{ trip.TripNo }}</span></td>
+                <td><span>{{ trip.tripNumber }}</span></td>
                 <td><span>{{ trip.DriverServiceStatus }}</span></td>
                 <td><span>{{ trip.TripStatus }}</span></td>
                 <td><span>{{ trip.FromDate }}</span></td>
@@ -653,10 +653,10 @@
                       <div class="tripServicesForm grid grid-cols-2 gap-2">
                         <div class="text-sm" [formGroup]="tripServicesForm">
                           <label>Trip</label>
-                          <select class="text-sm form-control" id="TripId" formControlName="TripId">
+                          <select  class="text-sm form-control" id="TripId" formControlName="TripId">
                             <option readonly selected>Select the Trip Number</option>
                             <option *ngFor="let trip of tripReservationList" value="{{ trip.TripId }}">
-                              {{ trip.TripNo }}
+                              {{ trip.tripNumber }}
                             </option>
                           </select>
                         </div>
@@ -731,7 +731,7 @@
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       *ngFor="let service of tripServicesList">
                       <td>
-                        <span>{{ service.TripNo }}</span>
+                        <span>{{ service.tripNumber }}</span>
                       </td>
                       <td>
                         <span>{{ service.serviceCode }}</span>
@@ -1120,7 +1120,7 @@
                   <select class="text-sm form-control" id="TripId" formControlName="TripId">
                     <option readonly selected>Select the Trip Number</option>
                     <option *ngFor="let trip of tripReservationList" value="{{ trip.TripId }}">
-                      {{ trip.TripNo }}
+                      {{ trip.tripNumber }}
                     </option>
                   </select>
                 </div>

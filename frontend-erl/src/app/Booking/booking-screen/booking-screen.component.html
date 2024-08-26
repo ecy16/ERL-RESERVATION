@@ -8,12 +8,12 @@
             <h3 class="text-center font-semibold m-2"></h3>
             <form [formGroup]="bookingForm" id="bookingForm" class="text-sm grid grid-cols-2">
               <div class="m-2 text-sm" [formGroup]="bookingForm">
-                <label>Booking No</label>
+                <label>Reservation No</label>
                 <input readonly id="bookingNo" type="text" placeholder="Auto-Generated"
                   class="form-control rounded-md border border-gray-400 " formControlName="BookingNo" />
               </div>
               <div class="m-2" [formGroup]="bookingForm">
-                <label>Booking Date</label>
+                <label>Reservation Date</label>
                 <div class="input-group text-sm">
                   <input type="date" class="form-control border rounded-md" formControlName="BookingDate"
                   [max]="maxDate()" 
@@ -31,7 +31,7 @@
 
 
               <div class="m-2" [formGroup]="bookingForm">
-                <label>Booking Category</label>
+                <label>Reservation Category</label>
                 <select class="text-sm form-control" id="BookingCategory" formControlName="BookingCategory">
                   <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
                     {{ category.category_Options }}
@@ -49,7 +49,7 @@
                 </div>
               </div>
               <div class="m-2" [formGroup]="bookingForm">
-                <label>Booking Type</label>
+                <label>Reservation Type</label>
                 <select class="text-sm form-control" id=" BookingType" formControlName="BookingType"
                   [(ngModel)]="selectedOption">
                   <!-- <option value="corporate">Corporate</option> -->
@@ -85,7 +85,7 @@
                 </div>
               </div>
               <div class="m-2" [formGroup]="bookingForm">
-                <label>Booking Status</label>
+                <label>Reservation Status</label>
                 <select class="text-sm form-control" formControlName="BookingStatus" id="BookingStatus">
                   <option selected value="InProgress">InProgress</option>
                   <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
@@ -104,7 +104,7 @@
                 </div>
               </div>
               <div class="m-2" [formGroup]="bookingForm">
-                <label>Booking For</label>
+                <label>ReservingFor For</label>
                 <input id="BookingFor" type="text" class="form-control rounded-md border border-gray-400"
                   formControlName="BookingFor" />
                 <div *ngIf="
@@ -290,12 +290,12 @@
         <div class="searches" [formGroup]="searchForm " class=" rounded-md border bg-red-50">
           <form [formGroup]="searchForm" class="flex m-2 font-medium w-32 gap-1">
             <div [formGroup]="searchForm">
-              <label class="text-xs ">BookingNo</label>
+              <label class="text-xs ">ReservationNo</label>
               <input type="search" formControlName="BookingNo" class="rounded-md border-gray-300   h-8 w-32">
             </div>
 
             <div [formGroup]="searchForm">
-              <label class="text-xs">Booking Type</label>
+              <label class="text-xs">Reservation Type</label>
               <select class="text-sm form-control w-32" id=" BookingType" formControlName="BookingType"
                 [(ngModel)]="selectedOption">
                 <option *ngFor="let BookingType of bookingTypesData" value="{{ BookingType.category_Options }}">
@@ -304,7 +304,7 @@
               </select>
             </div>
             <div [formGroup]="searchForm">
-              <label class="text-xs">Booking Category</label>
+              <label class="text-xs">Reservation Category</label>
               <select class="text-sm form-control w-32" id=" BookingCategory" formControlName="BookingCategory">
                 <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
                   {{ category.category_Options }}
@@ -312,7 +312,7 @@
               </select>
             </div>
             <div [formGroup]="searchForm">
-              <label class="text-xs">Booking Status</label>
+              <label class="text-xs">Reservation Status</label>
               <select class="text-sm form-control h-8 w-32" formControlName="BookingStatus" id="BookingStatus">
                 <option selected *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
                   {{ status.category_Options }}
@@ -340,7 +340,7 @@
         </div>
         <div *ngIf="filteredReservations && filteredReservations.length === 0"
           class="alert alert-warning m-2 text-center">
-          No active bookings found.
+          No active Reservations found.
         </div>
 
 
@@ -352,14 +352,14 @@
           <thead class=" text-sm text-black bg-gradient-to-tr from-red-200">
 
             <tr>
-              <th>BookingNo</th>
-              <th>BookingDate</th>
-              <th>BookingCategory</th>
-              <th>BookingType</th>
+              <th>ReservationNo</th>
+              <th>ReservationDate</th>
+              <th>ReservationCategory</th>
+              <th>ReservationType</th>
               <th>Branch</th>
-              <th>BookingStatus</th>
+              <th>ReservationStatus</th>
               <th>Source</th>
-              <th>BookingFor</th>
+              <th>ReservingFor</th>
               <th>Company Name</th>
               <!-- <th>CreatedOn</th> -->
 

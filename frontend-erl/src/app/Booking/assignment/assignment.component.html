@@ -4,11 +4,11 @@
     <div class="searches" [formGroup]="AssignmentSearchForm " class=" rounded-md border m-2 bg-red-50 w-full">
         <form [formGroup]="AssignmentSearchForm" class="flex m-2 font-medium w-32 gap-1">
             <div>
-                <label class="text-xs">BookingNo</label>
+                <label class="text-xs">ReservationNo</label>
                 <input type="search" formControlName="BookingNo" class="rounded-md border-gray-300 h-8 w-24">
             </div>
             <div [formGroup]="AssignmentSearchForm">
-                <label class="text-xs">Booking Status</label>
+                <label class="text-xs">Reservation Status</label>
                 <select class="text-sm form-control h-8 w-32" formControlName="BookingStatus" id="BookingStatus">
                     <option selected *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
                         {{ status.category_Options }}
@@ -16,7 +16,7 @@
                 </select>
             </div>
             <div [formGroup]="AssignmentSearchForm">
-                <label class="text-xs">Booking Category</label>
+                <label class="text-xs">Reservation Category</label>
                 <select class="text-sm form-control w-32" id=" BookingCategory" formControlName="BookingCategory">
                     <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
                         {{ category.category_Options }}
@@ -45,12 +45,12 @@
                 <div class="flex gap-2">
                     <div>
                         <label for="fromDate" class="text-xs">From Date Time</label>
-                        <input type="datetime-local" id="fromDate" formControlName="FromDateTime"
+                        <input type="datetime-local" id="FromDateTime" formControlName="FromDateTime"
                             class="rounded-md border-gray-300 text-sm h-8 w-32">
                     </div>
                     <div>
                         <label for="toDate" class="text-xs">To Date Time</label>
-                        <input type="datetime-local" id="toDate" formControlName="ToDateTime"
+                        <input type="datetime-local" id="ToDateTime" formControlName="ToDateTime"
                             class="rounded-md border-gray-300 text-sm h-8 w-32">
                     </div>
                 </div>
@@ -68,8 +68,7 @@
     <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display">
         <thead class=" text-sm bg-red-50">
             <tr>
-                <th class="text-center">BookingNo</th>
-                <th>BookingCategory</th>
+                <th class="text-center">ReservationNo</th>
                 <!-- <th>Branch</th> -->
                 <!-- <th>BookingStatus</th> -->
                 <!-- <th>Booking Date</th> -->
@@ -86,6 +85,8 @@
                 <th class="text-center">Reg No</th>
                 <th class="text-center">FromDateTime</th>
                 <th class="text-center">ToDateTime</th>
+                <th>BookingCategory</th>
+
                 <th class="text-center">Action</th>
 
             </tr>
@@ -93,8 +94,7 @@
         <tbody>
             <ng-container *ngFor="let assignment of assignmentAllTrips">
                 <tr class="text-xs  text-center whitespace-nowrap">
-                    <td>{{ assignment.BookingNo }}</td>
-                    <td>{{ assignment.BookingCategory }}</td>
+                    <td>{{ assignment.ReservationNo }}</td>
                     <!-- <td>{{ assignment.Branch }}</td> -->
                     <!-- <td>{{ assignment.BookingStatus }}</td> -->
                     <!-- <td>{{ assignment.BookingDate }}</td> -->
@@ -111,6 +111,8 @@
                     <td>{{ assignment.chosenRegNo }}</td>
                     <td>{{assignment.TripFromDateTime}}</td>
                     <td>{{assignment.TripToDateTime}}</td>
+                    <td>{{ assignment.BookingCategory }}</td>
+
                     <td><button (click)="openEditAssignment(editAssignment)"
                             (click)="fetchTrip(assignment.TripId)">View</button></td>
 
@@ -130,7 +132,7 @@
                 <div class="grid grid-cols-3">
 
                     <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
-                        <label>BookingNo</label>
+                        <label>ReservationNo</label>
                         <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
                             readonly formControlName="BookingNo" />
                     </div>
@@ -141,7 +143,7 @@
                     </div>
 
                     <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
-                        <label>BookingCategory</label>
+                        <label>ReservationCategory</label>
                         <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingCategory"
                             readonly formControlName="BookingCategory" />
                     </div>
@@ -205,16 +207,25 @@
 
                     <div class="m-2" [formGroup]="tripAssignmentForm">
                         <label for="VehicleId">Vehicle Registration</label>
+                        <!-- <input #vehicleID class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"
+                            formControlName="vehicleID" list="datalistOptions" id="vehicleID"
+                            (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
+                            (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
+                        <datalist  id="datalistOptions">
+                            <option *ngFor="let vehicle of fetchedVehicleList" value="{{vehicle.vehicleRegNo }}">
+                                {{ vehicle.vehicleID}}
+                            </option>
+                        </datalist> -->
+
                         <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
                             (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
                             (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
-
-
                             <option value="">Select vehicleRegistration</option>
-                            <option *ngFor="let vehicle of fetchedVehicleList" value="{{vehicle.vehicleID}}">
+                            <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID'  >
                                 {{ vehicle.vehicleRegNo }}
                             </option>
                         </select>
+
                         <div *ngIf="vehicleAssignedError" class="text-red-700">
                             <small>*This vehicle is already assigned to {{
                                 tripAssignmentForm.get('ReservationId')?.value }}</small>
@@ -407,8 +418,8 @@
                     </div>
 
                 </div>
-                <div
-                    *ngIf="fetchedTripList && fetchedTripList.length > 0 && fetchedTripList[0]?.BookingCategory === 'ChaufferDriven'">
+                <div>
+                    <!-- *ngIf="fetchedTripList && fetchedTripList.length > 0 && fetchedTripList[0]?.BookingCategory === 'ChaufferDriven'"> -->
                     <button
                         class="border rounded-md m-2 p-2 text-center w-24 text-red-700 hover:bg-red-700 hover:text-white"
                         (click)="generateCDO(tripAssignmentForm.get('TripId').value)">

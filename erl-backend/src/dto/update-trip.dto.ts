@@ -87,5 +87,5 @@ export class UpdateTripDto {
     @IsOptional()
     vehicleRegNo: string;
     @IsOptional()
-    vehicleID: string;
+    vehicleID: number;
 }

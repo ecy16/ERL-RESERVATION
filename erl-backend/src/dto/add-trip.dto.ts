@@ -4,8 +4,8 @@ export class AddTripDto {
     // @IsNumber()
     @IsOptional()
     ReservationId: number;
-    @IsOptional()
-    TripNo: number;
+    // @IsOptional()
+    // TripNo: number;
     // // @IsNumber()
     @IsOptional()
     DriverId: number;
@@ -95,7 +95,7 @@ export class AddTripDto {
     tripFuelLevel: string;
   
     @IsOptional()
-    tripNumber: string;
+    tripNumber: number=1;
     @IsOptional()
     VehicleMake: string;
     @IsOptional()
@@ -112,4 +112,6 @@ export class AddTripDto {
     PickupName: string;
     @IsOptional()
     Remarks: string;
+    @IsOptional()
+    vehicleID: number;
 }

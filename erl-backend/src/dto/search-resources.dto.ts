@@ -19,9 +19,9 @@ export class SearchResourcesDto {
     TripStatus: string;
     @IsOptional()
     vehicleMake: string;
-     @IsOptional()
-     FromDateTime: string;
+    @IsOptional()
+    FromDateTime: string;
     @IsOptional()
     ToDateTime: string;
-  
+
 }
