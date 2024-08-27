@@ -83,8 +83,11 @@ export class TripsService {
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select  a.*,b.BookingCategory,format(FlightDateTime,'dd-MM-yyyy HH:mm') as FlightDate,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId where a.TripId=@0`,
-                [id],
+                `select  a.*,b.BookingCategory,
+(FromDateTime) as FromDate,
+                format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a 
+                join _cplReservations b on a.ReservationId = b.ReservationId where a.TripId=${(id)}`
+                
             );
             await trip.commitTransaction();
             return tripInfo;
@@ -109,6 +112,7 @@ export class TripsService {
             throw new NotFoundException('trips not found');
         }
         Object.assign(trips, attrs);
+        console.log(trips)
         return this.tripsRepo.save(trips);
     }
 
@@ -137,7 +141,7 @@ export class TripsService {
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,FlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID 
+                `select b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,ArrivalFlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID 
 				left join _cplChaufferDrivers d on a.DriverId = d.DriverId
 				where a.ReservationId=@0  ` , [reservationId],
             );

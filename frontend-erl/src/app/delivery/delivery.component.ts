@@ -278,7 +278,7 @@ export class DeliveryComponent {
   
   
       this.deliveryForm = this.formBuilder.group({
-        TripNo: ['', Validators.required],
+        tripNumber: ['', Validators.required],
         TripId: ['', Validators.required],
         VehicleMake: ['', Validators.required],
         VehicleModel: ['', Validators.required],
@@ -325,7 +325,7 @@ export class DeliveryComponent {
         TripId: "",
         tripType: "",
         serviceName: "",
-        TripNo: "",
+        tripNumber: "",
         Stocklink: "",
       });
   
@@ -623,6 +623,7 @@ fetchdeliveryDetails(reservationId:any){
 
       for(const dd of res){
         this.deliveryForm.patchValue({
+          tripNumber:dd.tripNumber,
           BookingFor:dd.BookingFor,
           PickupContactNo:dd.PickupContactNo,
           PickupEmail:dd.PickupEmail,

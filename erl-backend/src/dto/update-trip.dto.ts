@@ -51,7 +51,7 @@ export class UpdateTripDto {
     @IsOptional()
     CheckOUTBy: string;
     @IsOptional()
-    CheckInBy: string;
+    CheckINBy: string;
     @IsOptional()
     //
     ModifiedBy: string;
@@ -59,7 +59,7 @@ export class UpdateTripDto {
     //
     ModifiedOn: string;
     @IsOptional()
-    TripNo: number;
+    tripNumber: number;
     @IsOptional()
     FlightDate: string;
     @IsOptional()
@@ -88,4 +88,14 @@ export class UpdateTripDto {
     vehicleRegNo: string;
     @IsOptional()
     vehicleID: number;
+    @IsOptional()
+    CreatedBy: string;
+    @IsOptional()
+    CreatedOn: string;
+    @IsOptional()
+    PickupFirstName: string;
+    @IsOptional()
+    PickupLastName: string;
+    @IsOptional()
+    Remarks: string;
 }

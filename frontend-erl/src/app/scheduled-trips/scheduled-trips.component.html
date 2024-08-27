@@ -1,5 +1,5 @@
 <div class="scheduledTrips">
-<h1 class="text-center m-2 font-bold text-xl">Delivery and collections screen</h1>
+<h1 class="text-center m-2 font-bold text-xl">VehicleIN / VehicleOUT</h1>
 
     <div class="searches" [formGroup]="scheduleSearchForm " class=" rounded-md border m-2">
         <form [formGroup]="scheduleSearchForm" class="flex m-2 font-medium gap-1">
@@ -56,18 +56,20 @@
         <thead class=" text-sm bg-red-50 text-center whitespace-nowrap">
             <tr>
                 <th>BookingNo</th>
-                <th>Booking For</th>
+                <!-- <th>Booking For</th> -->
+                <th>FromDateTime</th>
+                <th>ToDateTime</th>
+                <th>VehicleIN/VehicleOUT</th>
+                <th>Reg No</th>
                 <th>BookingCategory</th>
-                <th>TripStatus</th>
+                <!-- <th>TripStatus</th> -->
                 <th>PickUp Address</th>
                 <th>Drop Address</th>
-                <th>Company Name</th>
+                <th class="text-center">Company Name</th>
                 <th>Driver</th>
                 <th>vehicleMake</th>
                 <th>vehicleModel</th>
-                <th>Reg No</th>
-                <th>FromDateTime</th>
-                <th>ToDateTime</th>
+              
                 <th>Action</th>
 
             </tr>
@@ -75,21 +77,24 @@
         <tbody>
             <ng-container *ngFor="let assignment of assignmentAllTrips">
                 <tr class="text-xs  text-center whitespace-nowrap">
-                    <td>{{ assignment.BookingNo }}</td>
+                    <td>TripNo:{{assignment.tripNumber}},     {{ assignment.BookingNo }}</td>
+                    <td>{{assignment.TripFromDateTime}}</td>
+                    <td>{{assignment.TripToDateTime}}</td>
+                    <td>{{assignment.bnn}}</td>
+                    <td>{{ assignment.chosenRegNo }}</td>
+
                     <!-- <td>{{ assignment.ReservationId }}</td> -->
-                    <td>{{ assignment.BookingFor }}</td>
+                    <!-- <td>{{ assignment.BookingFor }}</td> -->
                     <td>{{ assignment.BookingCategory }}</td>
                     <!-- <td>{{ assignment.BookingDate }}</td> -->
-                    <td>{{ assignment.TripStatus }}</td>
+                    <!-- <td>{{ assignment.TripStatus }}</td> -->
                     <td>{{ assignment.PickupAddress }}</td>
                     <td>{{ assignment.DropAddress }}</td>
                     <td>{{assignment.companyName}}</td>
                     <td>{{ assignment.DriverName }}</td>
                     <td>{{ assignment.VehicleMake }}</td>
                     <td>{{ assignment.VehicleModel }}</td>
-                    <td>{{ assignment.chosenRegNo }}</td>
-                    <td>{{assignment.TripFromDateTime}}</td>
-                    <td>{{assignment.TripToDateTime}}</td>
+                  
                     <td><button>
                             <a class="nav-link" href="delivery" [routerLink]="[
                             '/delivery',

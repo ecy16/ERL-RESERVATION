@@ -94,7 +94,7 @@
         <tbody>
             <ng-container *ngFor="let assignment of assignmentAllTrips">
                 <tr class="text-xs  text-center whitespace-nowrap">
-                    <td>{{ assignment.ReservationNo }}</td>
+                    <td>{{ assignment.BookingNo }}</td>
                     <!-- <td>{{ assignment.Branch }}</td> -->
                     <!-- <td>{{ assignment.BookingStatus }}</td> -->
                     <!-- <td>{{ assignment.BookingDate }}</td> -->
@@ -155,8 +155,7 @@
                         <label> Vehicle Make </label>
                         <select class="text-sm form-control" id="VehicleMake" formControlName="VehicleMake"
                             (change)="fetchModels(tripAssignmentForm.get('VehicleMake')?.value)">
-                            <option selected value="toyota">Toyota</option>
-                            <option *ngFor="let vehicleMake of  vehicleMakeList"
+                          <option *ngFor="let vehicleMake of  vehicleMakeList"
                                 value="{{ vehicleMake.category_Options }}">
                                 {{ vehicleMake.category_Options }}
                             </option>

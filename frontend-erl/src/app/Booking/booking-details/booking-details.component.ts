@@ -147,6 +147,7 @@ export class BookingDetailsComponent {
   http: any;
   showAddressLine2 = false;
   showAddressLine3 = false;
+  showServicesInTrips: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -706,7 +707,16 @@ export class BookingDetailsComponent {
       console.log(VehicleMake, "eric");
     });
   }
+  fetchVehiclesByModel(Model: any) {
+    this.vehicleModelList = [];
+    this.apiService.getVehicleByModel(Model).subscribe((vehicleModel) => {
+      for (const ve of vehicleModel) {
+        this.vehicleModelList.push(ve);
+      }
 
+      console.log(this.vehicleModelList, "fetched");
+    });
+  }
   
   viewReservationDoc() {
     this.apiService.getDocuments(this.reservationId).subscribe((reservation) => {
@@ -727,7 +737,6 @@ export class BookingDetailsComponent {
     this.apiService.addTripService(this.tripServicesForm.value).subscribe((res) => {
       this.tripServicesList.push(res)
     })
-
 
 
 
@@ -919,11 +928,11 @@ export class BookingDetailsComponent {
 
   // -------------------------------------Reservation Trip-------------------------------------
 
-  fetchTrip(TripId: any) {
+  NotfetchTrips(TripId: any) {
     // loading data on a modal for edit
-    // console.log(TripId, "tripid");
-    this.fetchedTripList = [];
-    this.apiService.getTripById(TripId).subscribe((relatedTrip) => {
+    console.log(TripId, "tripid");
+    // this.fetchedTripList = [];
+    this.apiService.fetchTrips(TripId).subscribe((relatedTrip) => {
       console.log(relatedTrip, 'relatedTriperty')
       for (const z of relatedTrip) {
         this.fetchedTripList.push(z);
@@ -955,6 +964,44 @@ export class BookingDetailsComponent {
         this.fetchModels(d.VehicleMake);
       }
     });
+  }
+  fetchTrip(TripId:any){
+this.fetchedTripList=[]
+this.apiService.fetchTrips(TripId).subscribe((res)=>{
+  console.log('MY FETCHED TRIPS',res)
+  for (const z of res) {
+    this.fetchedTripList.push(z);
+  }
+  for(const d of this.fetchedTripList){
+    this.tripFormUpdate.patchValue({
+      DriverServiceStatus: d.DriverServiceStatus,
+            TripStatus: d.TripStatus,
+            VehicleMarks: d.VehicleMarks,
+            FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
+            ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
+            FlightNo: d.FlightNo,
+            FlightDateTime: moment(d.FlightDateTime).format(
+              "YYYY-MM-DD HH:mm"
+            ),
+            Airline: d.Airline,
+            PickupAddress: d.PickupAddress,
+            PickupContactNo: d.PickupContactNo,
+            PickupEmail: d.PickupEmail,
+            DropAddress: d.DropAddress,
+            VehicleMake: d.VehicleMake,
+            VehicleModel: d.VehicleModel,
+            vehicleType:d.vehicleType,
+            ReservationId: d.ReservationId,
+            tripNumber: d.tripNumber,
+            TripId: d.TripId,
+      
+    })
+    this.fetchModels(d.VehicleMake);
+        this.fetchVehiclesByModel(d.VehicleModel);
+  }
+})
+
+
   }
 
   fetchRelatedTrips(reservationId: any) {
@@ -993,11 +1040,21 @@ export class BookingDetailsComponent {
     this.apiService.addTrip(this.tripForm.value).subscribe(() => {
       console.log("string for response", this.tripForm.value);
 
+      
+      const confirmServices= window.confirm('Do you wish to add TripServices?')
+      if(confirmServices){
+        this.showServicesInTrips = true;
+      
+        console.log('TripId',this.TripId)
+      }
+
+
       this.tripData.push(this.tripForm.value);
 
 
       this.fetchRelatedReservationTrips(this.reservationId);
 
+      
       this.toastr.success("Trip Added Successfully");
 
       //  this.fetchRelatedTrips(this.reservationId);

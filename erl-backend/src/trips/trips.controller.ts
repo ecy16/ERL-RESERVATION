@@ -19,8 +19,8 @@ export class TripsController {
     constructor(private tripService: TripsService) { }
 
     @Get('/:id')
-    fetchTrips(@Param('id') id: string) {
-        return this.tripService.findTrips(parseInt(id));
+    fetchTrips(@Param('id') id: number) {
+        return this.tripService.findTrips((id));
     }
 
     @Get()
@@ -50,7 +50,7 @@ export class TripsController {
     }
 
     @Patch('update/:id')
-    updateTrip(@Param('id') id: string, @Body() body: UpdateTripDto) {
+    updateTripById(@Param('id') id: string, @Body() body: UpdateTripDto) {
         return this.tripService.updateTrip(parseInt(id), body);
     }
 

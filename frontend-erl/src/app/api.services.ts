@@ -304,7 +304,14 @@ export class ApiService {
     return this.http.post<any[]>(`${this.tripUrl}/create`, tripForm);
   }
   editTrip(TripId: any, tripForm: any): Observable<any> {
+    console.log('UpdateTrips',tripForm)
     return this.http.patch<any[]>(`${this.updateTrip}` + TripId, tripForm);
+  }
+  updateTripById(TripId: any, tripForm: any): Observable<any> {
+    return this.http.patch<any[]>(`${this.updateTrip}` + TripId, tripForm);
+  }
+  fetchTrips(TripId: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.tripUrl}/` + TripId);
   }
 
   // -------------------------------------Trip Service-------------------------------------
