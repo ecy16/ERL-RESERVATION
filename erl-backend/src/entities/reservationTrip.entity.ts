@@ -91,6 +91,8 @@ export class ReservationTripEntity {
     Remarks: string;
     @Column({ nullable: true })
     vehicleID: number;
+    @Column({ nullable: true })
+    Transaction: string;
 
     constructor(trips: Partial<ReservationTripEntity>) {
         Object.assign(this, trips);

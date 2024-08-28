@@ -35,613 +35,656 @@ export class DeliveryComponent {
 
   selectedTransaction: string = '';
 
-    fetchedRAData: any;
-  
-    private modalService = inject(NgbModal);
-    @Input() showOption: string = "";
-    @ViewChild('rentalAgreement')
-    rentalAgreement: any = ElementRef<any>;
-  
-    closeResult = "";
-    booking: any;
-    addTrip: any;
-    tripData: any;
-    Details: any;
-    editDriver: any;
-    driverForm: FormGroup;
-    tripForm: FormGroup;
-    tripServicesForm: FormGroup;
-    bookingForm: FormGroup;
-    bookingFormEdit: FormGroup;
-    tripServicesData: any;
-    reservationId: any;
-    tripId: any;
-    reservation: any;
-    viewbookingDetails: any;
-    BookingNo: any;
-    BookingDate: any;
-    BookingCategory: any;
-    BookingType: any;
-    Branch: any;
-    BookingStatus: any;
-    reservationData: any = [];
-    BookingData: any;
-    driverData: any;
-    types: any;
-    selectedStatus: any = "";
-    ReservationId: any;
-    TripId: any;
-    BookingDriverId: any;
-    x: any;
-    tripNumber = 0;
-    model: any;
-    tripIncidentsForm: FormGroup;
-    incidentDate: any;
-    tripIncidentsData: any;
-    tripList: any;
-    tripFuelLevel: any;
-    tripStatusList: any;
-    category_Options: string = "";
-  
-    driverServiceStatusList: any;
-    bookingCategoriesData: any;
-    selectedOption: any;
-  
-    bookingTypesData: any;
-    bookingBranchData: any;
-    bookingStatusData: any;
-    bookingSourceData: any;
-    // categoryChosen: any;
-    // categoryChosen:string;
-    companiesData: any;
-    bookingChargeData: any;
-    tripIncidentsList: any;
-    serviceStatusList: any;
-    // vehicleRegistrationList: any;
-    tripIncidentsTypeList: any;
-    serviceNameList: any;
-    fetchedTripList: any;
-    tripReservationList:any;
-    fetchedReservationList: any;
-    fetchedServicesList: any;
-    vehicleModelList: any;
-    vehicleMakeList: any;
-    tripFormUpdate: any;
-    vehicleTypeList: any;
-    tripServicesList: any;
-    fetchedDriverList: any;
-    fetchedChaufferDriverList: any;
-    driverFormUpdate: FormGroup;
-    tripServicesFormUpdate: FormGroup;
-    sageServiceInfoList: any;
-    reservationinfo: any;
-    DriverList: any;
-    isShow = false;
-    rentalAgreementForm: FormGroup;
-    rentalAgreementList: any;
-    DriversNameList: any;
-    deliveryForm:any
-    nativeElement: any;
-    ServiceQuantity: any[];
-    countries: any[] = [];
-    deliveryList:any
-  
-    constructor(
-      private formBuilder: FormBuilder,
-      private apiService: ApiService,
-      private toastr: ToastrService,
-      private actRoute: ActivatedRoute,
-      private router:Router,
-      private readonly renderer: Renderer2,
-    ) {
-      this.DriverList = [];
-      this.BookingData = [];
-      this.BookingCategory = [];
-      this.companiesData = [];
-      this.reservationinfo = [];
-      this.tripIncidentsData = [];
-      this.bookingCategoriesData = [];
-      this.bookingTypesData = [];
-      this.bookingChargeData = [];
-      this.bookingSourceData = [];
-      this.bookingBranchData = [];
-      this.bookingStatusData = [];
-      this.serviceStatusList = [];
-      this.tripIncidentsList = [];
-      this.tripIncidentsTypeList = [];
-      this.vehicleRegistrationList = [];
-      this.vehicleMakeList = [];
-      this.serviceNameList = [];
-      this.tripFuelLevel = [];
-      this.vehicleModelList = [];
-      this.tripData = [];
-      this.sageServiceInfoList = [];
-      this.DriversNameList = [];
-      this.fetchedRAData = [];
-      this.deliveryList=[]
-  
-      this.tripForm = this.formBuilder.group({
-        DriverServiceStatus: ["InProgress", Validators.required],
-        TripStatus: "InProgress",
-        // VehicleMarks: "",
-        FromDateTime: "",
-        ToDateTime: "",
-        FlightNo: ["", Validators.required],
-        FlightDateTime: "",
-        Airline: "",
-        PickupAddress: "",
-        PickupContactNo: "",
-        FirstName: "",
-        LastName: "",
-        PickupEmail: "",
-        DropAddress: "",
-        MileageIN: "",
-        tripFuelLevel: "",
-        MileageOUT: "",
-        FuelIN: "",
-        FuelOUT: "",
-        ReservationId: "",
-        tripNumber: "",
-        VehicleMake: "",
-        VehicleModel: "",
-        vehicleRegistration: "",
-        vehicleType: "",
-      });
-  
-      this.tripFormUpdate = this.formBuilder.group({
-        DriverServiceStatus: "",
-        TripStatus: "",
-        // VehicleMarks: "",
-        FromDateTime: "",
-        ToDateTime: "",
-        FlightNo: "",
-        FlightDateTime: "",
-        Airline: "",
-        PickupAddress: "",
-        PickupContactNo: "",
-        PickupEmail: "",
-        DropAddress: "",
-        ReservationId: "",
-        tripNumber: "",
-        TripId: "",
-        VehicleMake: "",
-        VehicleModel: "",
-        vehicleRegistration: "",
-        vehicleType: "",
-        Remarks:""
-      });
-  
-      this.tripServicesFormUpdate = this.formBuilder.group({
-        ServiceCode: "",
-        TripCharge: "",
-        quantity:"",
-        TripServiceStatus: "",
-        ReservationId: "",
-        TripId: "",
-        TripNo: "",
-        tripType: "",
-        serviceName: "",
-        ServiceId: "",
-        Stocklink: "",
-      });
-  
-      this.bookingForm = this.formBuilder.group({
-        BookingNo: ["", Validators.required],
-        BookingDate: ["", Validators.required],
-        BookingCategory: ["", Validators.required],
-        BookingType: ["", Validators.required],
-        Branch: ["", Validators.required],
-        BookingStatus: ["", Validators.required],
-        BookingFor: ["", Validators.required],
-        Source: ["", Validators.required],
-        SourceRef: ["", Validators.required],
-  
-        TotalAmount: ["", Validators.required],
-        TotalPaid: ["", Validators.required],
-        ExchangeRate: ["", Validators.required],
-        ContractId: ["", Validators.required],
-  
-        CompanyCode: ["", Validators.required],
-        PayeeCompanyName: ["", Validators.required],
-        Remarks: ["", Validators.required],
-      });
-  
-      this.tripForm.patchValue({
-        ReservationId: this.actRoute.snapshot.params["ReservationId"],
-      });
-  
-  
-      this.bookingFormEdit = this.formBuilder.group({
-        BookingNo: ["", Validators.required],
-        BookingDate: ["", Validators.required],
-        BookingCategory: ["", Validators.required],
-        BookingType: ["", Validators.required],
-        Branch: ["", Validators.required],
-        BookingStatus: ["", Validators.required],
-        BookingFor: ["", Validators.required],
-        Source: ["", Validators.required],
-        SourceRefNo: ["", Validators.required],
-  
-        TotalAmount: ["", Validators.required],
-        TotalPaid: ["", Validators.required],
-        ExchangeRate: ["", Validators.required],
-        ContractId: ["", Validators.required],
-  
-        CompanyCode: ["", Validators.required],
-        PayeeCompanyName: ["", Validators.required],
-        Remarks: ["", Validators.required],
-      });
-  
-      this.tripForm.patchValue({
-        ReservationId: this.actRoute.snapshot.params["ReservationId"],
-      });
-  
-  
-      this.deliveryForm = this.formBuilder.group({
-        tripNumber: ['', Validators.required],
-        TripId: ['', Validators.required],
-        VehicleMake: ['', Validators.required],
-        VehicleModel: ['', Validators.required],
-        vehicleRegNo: ['', Validators.required],
-        Destination: ['', Validators.required],
-        Time: ['', Validators.required],
-        DeliveredBy: ['', Validators.required],
-        CollectedBy: ['', Validators.required],
-        FuelIN: ['', Validators.required],
-        FuelOUT: ['', Validators.required],
-        MileageIN: ['', Validators.required],
-        MileageOUT: ['', Validators.required],
-        IncidentsType: ['', Validators.required],
-        IncidentDate: ['', Validators.required],
-        Remarks: ['', Validators.required],
-        ReportedBy: ['', Validators.required],
-        BookingFor: ['', Validators.required],
-        Delivery: [''],
-        PickupContactNo:[''],
-        PickupEmail:[''],
-        Collection: [''],
-        Transaction:[''],
-        BookingDate:['']
-      });
-      
-      
-  
-      //  this.driverForm.patchValue({
-      //    ReservationId: this.actRoute.snapshot.params["ReservationId"],
-      //  });
-  
-      // this.tripServicesForm.patchValue({
-      //   ReservationId: this.actRoute.snapshot.params["ReservationId"],
-      // });
-    
-  
-      this.tripServicesData = [];
-      this.tripServicesForm = this.formBuilder.group({
-        ServiceCode: "",
-        quantity:"",
-        TripCharge: "",
-        TripServiceStatus: "InProgress",
-        ReservationId: "",
-        TripId: "",
-        tripType: "",
-        serviceName: "",
-        tripNumber: "",
-        Stocklink: "",
-      });
-  
-  
-      this.ServiceQuantity=[]
-  
-      for (let i = 1; i <= 28; i++) {
-        this.ServiceQuantity.push(i);
+  fetchedRAData: any;
+
+  private modalService = inject(NgbModal);
+  @Input() showOption: string = "";
+  @ViewChild('rentalAgreement')
+  rentalAgreement: any = ElementRef<any>;
+
+  closeResult = "";
+  booking: any;
+  addTrip: any;
+  tripData: any;
+  Details: any;
+  editDriver: any;
+  driverForm: FormGroup;
+  tripForm: FormGroup;
+  tripServicesForm: FormGroup;
+  bookingForm: FormGroup;
+  bookingFormEdit: FormGroup;
+  tripServicesData: any;
+  reservationId: any;
+  tripId: any;
+  reservation: any;
+  viewbookingDetails: any;
+  BookingNo: any;
+  BookingDate: any;
+  BookingCategory: any;
+  BookingType: any;
+  Branch: any;
+  BookingStatus: any;
+  reservationData: any = [];
+  BookingData: any;
+  driverData: any;
+  types: any;
+  selectedStatus: any = "";
+  ReservationId: any;
+  TripId: any;
+  BookingDriverId: any;
+  x: any;
+  tripNumber = 0;
+  model: any;
+  tripIncidentsForm: FormGroup;
+  incidentDate: any;
+  tripIncidentsData: any;
+  tripList: any;
+  tripFuelLevel: any;
+  tripStatusList: any;
+  category_Options: string = "";
+
+  driverServiceStatusList: any;
+  bookingCategoriesData: any;
+  selectedOption: any;
+
+  bookingTypesData: any;
+  bookingBranchData: any;
+  bookingStatusData: any;
+  bookingSourceData: any;
+  // categoryChosen: any;
+  // categoryChosen:string;
+  companiesData: any;
+  bookingChargeData: any;
+  tripIncidentsList: any;
+  serviceStatusList: any;
+  // vehicleRegistrationList: any;
+  tripIncidentsTypeList: any;
+  serviceNameList: any;
+  fetchedTripList: any;
+  tripReservationList: any;
+  fetchedReservationList: any;
+  fetchedServicesList: any;
+  vehicleModelList: any;
+  vehicleMakeList: any;
+  tripFormUpdate: any;
+  vehicleTypeList: any;
+  tripServicesList: any;
+  fetchedDriverList: any;
+  fetchedChaufferDriverList: any;
+  driverFormUpdate: FormGroup;
+  tripServicesFormUpdate: FormGroup;
+  sageServiceInfoList: any;
+  reservationinfo: any;
+  DriverList: any;
+  isShow = false;
+  rentalAgreementForm: FormGroup;
+  rentalAgreementList: any;
+  DriversNameList: any;
+  deliveryForm: any
+  nativeElement: any;
+  ServiceQuantity: any[];
+  countries: any[] = [];
+  deliveryList: any
+  assignmentAllTrips: any;
+
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private apiService: ApiService,
+    private toastr: ToastrService,
+    private actRoute: ActivatedRoute,
+    private router: Router,
+    private readonly renderer: Renderer2,
+  ) {
+    this.DriverList = [];
+    this.BookingData = [];
+    this.BookingCategory = [];
+    this.companiesData = [];
+    this.reservationinfo = [];
+    this.tripIncidentsData = [];
+    this.bookingCategoriesData = [];
+    this.bookingTypesData = [];
+    this.bookingChargeData = [];
+    this.bookingSourceData = [];
+    this.bookingBranchData = [];
+    this.bookingStatusData = [];
+    this.serviceStatusList = [];
+    this.tripIncidentsList = [];
+    this.tripIncidentsTypeList = [];
+    this.vehicleRegistrationList = [];
+    this.vehicleMakeList = [];
+    this.serviceNameList = [];
+    this.tripFuelLevel = [];
+    this.vehicleModelList = [];
+    this.tripData = [];
+    this.sageServiceInfoList = [];
+    this.DriversNameList = [];
+    this.fetchedRAData = [];
+    this.deliveryList = [];
+    this.assignmentAllTrips=[]
+
+    this.tripForm = this.formBuilder.group({
+      DriverServiceStatus: ["InProgress", Validators.required],
+      TripStatus: "InProgress",
+      // VehicleMarks: "",
+      FromDateTime: "",
+      ToDateTime: "",
+      FlightNo: ["", Validators.required],
+      FlightDateTime: "",
+      Airline: "",
+      PickupAddress: "",
+      PickupContactNo: "",
+      FirstName: "",
+      LastName: "",
+      PickupEmail: "",
+      DropAddress: "",
+      MileageIN: "",
+      tripFuelLevel: "",
+      MileageOUT: "",
+      FuelIN: "",
+      FuelOUT: "",
+      ReservationId: "",
+      tripNumber: "",
+      VehicleMake: "",
+      VehicleModel: "",
+      vehicleRegistration: "",
+      vehicleType: "",
+    });
+
+    this.tripFormUpdate = this.formBuilder.group({
+      DriverServiceStatus: "",
+      TripStatus: "",
+      // VehicleMarks: "",
+      FromDateTime: "",
+      ToDateTime: "",
+      FlightNo: "",
+      FlightDateTime: "",
+      Airline: "",
+      PickupAddress: "",
+      PickupContactNo: "",
+      PickupEmail: "",
+      DropAddress: "",
+      ReservationId: "",
+      tripNumber: "",
+      TripId: "",
+      VehicleMake: "",
+      VehicleModel: "",
+      vehicleRegistration: "",
+      vehicleType: "",
+      Remarks: ""
+    });
+
+    this.tripServicesFormUpdate = this.formBuilder.group({
+      ServiceCode: "",
+      TripCharge: "",
+      quantity: "",
+      TripServiceStatus: "",
+      ReservationId: "",
+      TripId: "",
+      TripNo: "",
+      tripType: "",
+      serviceName: "",
+      ServiceId: "",
+      Stocklink: "",
+    });
+
+    this.bookingForm = this.formBuilder.group({
+      BookingNo: ["", Validators.required],
+      BookingDate: ["", Validators.required],
+      BookingCategory: ["", Validators.required],
+      BookingType: ["", Validators.required],
+      Branch: ["", Validators.required],
+      BookingStatus: ["", Validators.required],
+      BookingFor: ["", Validators.required],
+      Source: ["", Validators.required],
+      SourceRef: ["", Validators.required],
+
+      TotalAmount: ["", Validators.required],
+      TotalPaid: ["", Validators.required],
+      ExchangeRate: ["", Validators.required],
+      ContractId: ["", Validators.required],
+
+      CompanyCode: ["", Validators.required],
+      PayeeCompanyName: ["", Validators.required],
+      Remarks: ["", Validators.required],
+    });
+
+    this.tripForm.patchValue({
+      ReservationId: this.actRoute.snapshot.params["ReservationId"],
+    });
+
+
+    this.bookingFormEdit = this.formBuilder.group({
+      BookingNo: ["", Validators.required],
+      BookingDate: ["", Validators.required],
+      BookingCategory: ["", Validators.required],
+      BookingType: ["", Validators.required],
+      Branch: ["", Validators.required],
+      BookingStatus: ["", Validators.required],
+      BookingFor: ["", Validators.required],
+      Source: ["", Validators.required],
+      SourceRefNo: ["", Validators.required],
+
+      TotalAmount: ["", Validators.required],
+      TotalPaid: ["", Validators.required],
+      ExchangeRate: ["", Validators.required],
+      ContractId: ["", Validators.required],
+
+      CompanyCode: ["", Validators.required],
+      PayeeCompanyName: ["", Validators.required],
+      Remarks: ["", Validators.required],
+    });
+
+    this.tripForm.patchValue({
+      ReservationId: this.actRoute.snapshot.params["ReservationId"],
+    });
+
+
+    this.deliveryForm = this.formBuilder.group({
+      tripNumber: ['', Validators.required],
+      TripId: ['', Validators.required],
+      VehicleMake: ['', Validators.required],
+      VehicleModel: ['', Validators.required],
+      vehicleRegNo: ['', Validators.required],
+      Destination: ['', Validators.required],
+      Time: ['', Validators.required],
+      DeliveredBy: ['', Validators.required],
+      CollectedBy: ['', Validators.required],
+      FuelIN: ['', Validators.required],
+      FuelOUT: ['', Validators.required],
+      MileageIN: ['', Validators.required],
+      MileageOUT: ['', Validators.required],
+      IncidentsType: ['', Validators.required],
+      IncidentDate: ['', Validators.required],
+      Remarks: ['', Validators.required],
+      ReportedBy: ['', Validators.required],
+      BookingFor: ['', Validators.required],
+      vehicleIN: [''],
+      vehicleOUT: [''],
+      PickupContactNo: [''],
+      PickupEmail: [''],
+      Collection: [''],
+      Transaction: [''],
+      BookingDate: [''],
+      PickupAddress: [''],
+      DriverFirstName: [''],
+      FromDate: [''],
+      FromTime: [''],
+      BookingNo:['']
+
+    });
+
+    this.deliveryForm.patchValue({
+      TripId: this.actRoute.snapshot.params["TripId"],
+    });
+
+
+    //  this.driverForm.patchValue({
+    //    ReservationId: this.actRoute.snapshot.params["ReservationId"],
+    //  });
+
+    // this.tripServicesForm.patchValue({
+    //   ReservationId: this.actRoute.snapshot.params["ReservationId"],
+    // });
+
+
+    this.tripServicesData = [];
+    this.tripServicesForm = this.formBuilder.group({
+      ServiceCode: "",
+      quantity: "",
+      TripCharge: "",
+      TripServiceStatus: "InProgress",
+      ReservationId: "",
+      TripId: "",
+      tripType: "",
+      serviceName: "",
+      tripNumber: "",
+      Stocklink: "",
+    });
+
+
+    this.ServiceQuantity = []
+
+    for (let i = 1; i <= 28; i++) {
+      this.ServiceQuantity.push(i);
+    }
+    this.BookingData = [];
+    this.tripFuelLevel = [];
+    this.tripList = [];
+    this.tripReservationList = [];
+    this.driverServiceStatusList = [];
+    this.tripStatusList = [];
+    this.tripIncidentsList = [];
+    this.fetchedTripList = [];
+    this.fetchedReservationList = [];
+    this.fetchedServicesList = [];
+    this.rentalAgreementList = [];
+
+    this.fetchedDriverList = [];
+    this.fetchedChaufferDriverList = [];
+
+    this.tripIncidentsForm = this.formBuilder.group({
+      IncidentType: [""],
+      IncidentRemarks: [""],
+      ReportedBy: [""],
+      DriverName: [""],
+      IncidentDateTime: [""],
+      Disposition: [""],
+      TripId: [""],
+      ReservationId: [""],
+    });
+
+    this.driverData = [];
+    this.tripServicesList = [];
+    this.tripServicesForm.patchValue({
+      ReservationId: this.actRoute.snapshot.params["ReservationId"],
+    });
+    this.tripIncidentsForm.patchValue({
+      ReservationId: this.actRoute.snapshot.params["ReservationId"],
+    });
+
+    this.driverForm = this.formBuilder.group({
+      DriverFirstName: ["", Validators.required],
+      DriverLastName: ["", Validators.required],
+      DriverDOB: ["", Validators.required],
+      DriverLicenseNo: ["", Validators.required],
+      DriverLicenseIssue: ["", Validators.required],
+      DriverLicenseExpiry: ["", Validators.required],
+      Nationality: ["", Validators.required],
+      IDPP: ["", Validators.required],
+      IDPPExpiry: ["", Validators.required],
+      CountryOfIssue: ["", Validators.required],
+      CountryOfResidence: ["", Validators.required],
+      AddressLine1: ["", Validators.required],
+      AddressLine2: ["", Validators.required],
+      AddressLine3: ["", Validators.required],
+      ContactNo: ["", Validators.required],
+      Email: ["", Validators.required],
+      NextOfKinName: ["", Validators.required],
+      NextOfKinContactNo: ["", Validators.required],
+      BookingRemarks: ["", Validators.required],
+      ReservationId: "",
+    });
+
+    this.driverFormUpdate = this.formBuilder.group({
+      DriverFirstName: [""],
+      DriverLastName: [""],
+      DriverDOB: [""],
+      DriverLicenseNo: [""],
+      DriverLicenseIssue: [""],
+      DriverLicenseExpiry: [""],
+      Nationality: [""],
+      IDPP: [""],
+      IDPPExpiry: [""],
+      CountryOfIssue: [""],
+      CountryOfResidence: [""],
+      AddressLine1: [""],
+      AddressLine2: [""],
+      AddressLine3: [""],
+      ContactNo: [""],
+      Email: [""],
+      NextOfKinName: [""],
+      NextOfKinContactNo: [""],
+      BookingRemarks: [""],
+      ReservationId: "",
+      BookingDriverId: "",
+    });
+
+    this.driverForm.patchValue({
+      ReservationId: this.actRoute.snapshot.params["ReservationId"],
+    });
+
+    this.rentalAgreementForm = this.formBuilder.group({
+      DriverFirstName: '',
+      DriverLastName: '',
+      ContactNo: '',
+      Email: '',
+      AddressLine1: '',
+      DriverLicenseNo: '',
+      DriverLicenseIssue: '',
+      DriverLicenseExpiry: '',
+      CountryOfResidence: '',
+      DriverDOB: '',
+      IDPP: '',
+      CountryOfIssue: '',
+      PickupAddress: '',
+      BookingNo: '',
+      vehicleRegNo: '',
+      VehicleModel: '',
+      VehicleMake: '',
+      FromDateTime: '',
+      DropAddress: '',
+      ToDateTime: '',
+
+    })
+  }
+
+
+  ngOnInit() {
+
+
+
+
+    this.apiService.getBookingCategories().subscribe((categories: any) => {
+      for (const a of categories) {
+        this.bookingCategoriesData.push(a);
       }
-      this.BookingData = [];
-      this.tripFuelLevel = [];
-      this.tripList = [];
-      this.tripReservationList = [];
-      this.driverServiceStatusList = [];
-      this.tripStatusList = [];
-      this.tripIncidentsList = [];
-      this.fetchedTripList = [];
-      this.fetchedReservationList = [];
-      this.fetchedServicesList = [];
-      this.rentalAgreementList = [];
-  
-      this.fetchedDriverList = [];
-      this.fetchedChaufferDriverList = [];
-  
-      this.tripIncidentsForm = this.formBuilder.group({
-        IncidentType: [""],
-        IncidentRemarks: [""],
-        ReportedBy: [""],
-        DriverName: [""],
-        IncidentDateTime: [""],
-        Disposition: [""],
-        TripId: [""],
-        ReservationId: [""],
-      });
-  
-      this.driverData = [];
-      this.tripServicesList = [];
-      this.tripServicesForm.patchValue({
-        ReservationId: this.actRoute.snapshot.params["ReservationId"],
-      });
-      this.tripIncidentsForm.patchValue({
-        ReservationId: this.actRoute.snapshot.params["ReservationId"],
-      });
-  
-      this.driverForm = this.formBuilder.group({
-        DriverFirstName: ["",Validators.required],
-        DriverLastName: ["",Validators.required],
-        DriverDOB: ["",Validators.required],
-        DriverLicenseNo: ["",Validators.required],
-        DriverLicenseIssue: ["",Validators.required],
-        DriverLicenseExpiry: ["",Validators.required],
-        Nationality: ["",Validators.required],
-        IDPP: ["",Validators.required],
-        IDPPExpiry: ["",Validators.required],
-        CountryOfIssue: ["",Validators.required],
-        CountryOfResidence: ["",Validators.required],
-        AddressLine1: ["",Validators.required],
-        AddressLine2: ["",Validators.required],
-        AddressLine3: ["",Validators.required],
-        ContactNo: ["",Validators.required],
-        Email: ["",Validators.required],
-        NextOfKinName: ["",Validators.required],
-        NextOfKinContactNo: ["",Validators.required],
-        BookingRemarks: ["",Validators.required],
-        ReservationId: "",
-      });
-  
-      this.driverFormUpdate = this.formBuilder.group({
-        DriverFirstName: [""],
-        DriverLastName: [""],
-        DriverDOB: [""],
-        DriverLicenseNo: [""],
-        DriverLicenseIssue: [""],
-        DriverLicenseExpiry: [""],
-        Nationality: [""],
-        IDPP: [""],
-        IDPPExpiry: [""],
-        CountryOfIssue: [""],
-        CountryOfResidence: [""],
-        AddressLine1: [""],
-        AddressLine2: [""],
-        AddressLine3: [""],
-        ContactNo: [""],
-        Email: [""],
-        NextOfKinName: [""],
-        NextOfKinContactNo: [""],
-        BookingRemarks: [""],
-        ReservationId: "",
-        BookingDriverId: "",
-      });
-  
-      this.driverForm.patchValue({
-        ReservationId: this.actRoute.snapshot.params["ReservationId"],
-      });
-  
-      this.rentalAgreementForm = this.formBuilder.group({
-        DriverFirstName: '',
-        DriverLastName: '',
-        ContactNo: '',
-        Email: '',
-        AddressLine1: '',
-        DriverLicenseNo: '',
-        DriverLicenseIssue: '',
-        DriverLicenseExpiry: '',
-        CountryOfResidence: '',
-        DriverDOB: '',
-        IDPP: '',
-        CountryOfIssue: '',
-        PickupAddress: '',
-        BookingNo: '',
-        vehicleRegNo: '',
-        VehicleModel: '',
-        VehicleMake:'',
-        FromDateTime: '',
-        DropAddress: '',
-        ToDateTime: '',
-  
-      })
-    }
-  
-  
-    ngOnInit() {
-  
-    
-    
-  
-      this.apiService.getBookingCategories().subscribe((categories: any) => {
-        for (const a of categories) {
-          this.bookingCategoriesData.push(a);
+      console.log('categories', categories)
+    });
+    this.apiService.getBookingTypes().subscribe((BookingType: any) => {
+      for (const b of BookingType) {
+        this.bookingTypesData.push(b);
+        console.log(this.bookingTypesData, "bookingTypesData");
+      }
+      console.log(this.types, "bookingTypesData");
+    });
+
+    this.apiService.getCompanies().subscribe((company: any) => {
+      for (const c of company) {
+        this.companiesData.push(c);
+      }
+    });
+
+    this.apiService.getBookingStatus().subscribe((status: any) => {
+      for (const d of status) {
+        this.bookingStatusData.push(d);
+      }
+    });
+
+    this.apiService.getBookingSource().subscribe((source: any) => {
+      for (const e of source) {
+        this.bookingSourceData.push(e);
+      }
+    });
+
+    this.apiService.getBookingBranch().subscribe((branch: any) => {
+      for (const f of branch) {
+        this.bookingBranchData.push(f);
+      }
+    });
+
+    this.apiService.getBookingCharge().subscribe((charge: any) => {
+      for (const g of charge) {
+        this.bookingChargeData.push(g);
+      }
+    });
+
+
+
+    this.reservationId = this.actRoute.snapshot.params["ReservationId"];
+    this.apiService
+      .getReservationsById(this.reservationId)
+
+      .subscribe((reservationsInfo) => {
+        console.log(reservationsInfo, "reservationsInfo");
+
+        for (const x of reservationsInfo) {
+          this.BookingData.push(x);
         }
-        console.log('categories', categories)
+
+        console.log(this.BookingData, "bookingData");
       });
-      this.apiService.getBookingTypes().subscribe((BookingType: any) => {
-        for (const b of BookingType) {
-          this.bookingTypesData.push(b);
-          console.log(this.bookingTypesData, "bookingTypesData");
+    this.apiService.getVehicleRegistration().subscribe((vehicleReg) => {
+      for (const f of vehicleReg) {
+        this.vehicleRegistrationList.push(f);
+      }
+    });
+
+    this.apiService.getVehicleMake().subscribe((VehicleMake) => {
+      for (const j of VehicleMake) {
+        this.vehicleMakeList.push(j);
+        console.log("vehivle makes");
+      }
+      // console.log(vehicleMake, "vvvvvvv");
+    });
+
+    // this.apiService
+    //   .getRelatedTrip(this.reservationId)
+    //   .subscribe((tripNumbers: any) => {
+    //     for (const a of tripNumbers) {
+    //       this.tripList.push(a);
+    //     }
+    //     // console.log(this.tripList,'.....................')
+    //   });
+
+    this.apiService.getFuelLevel().subscribe((fuelLevel) => {
+      for (const b of fuelLevel) {
+        this.tripFuelLevel.push(b);
+      }
+      // console.log(this.tripFuelLevel, ".....................");
+    });
+    this.apiService
+      .getDriverServiceStatus()
+      .subscribe((driverServiceStatus) => {
+        for (const c of driverServiceStatus) {
+          this.driverServiceStatusList.push(c);
         }
-        console.log(this.types, "bookingTypesData");
+        // console.log(this.driverServiceStatusList, ".....................");
       });
-  
-      this.apiService.getCompanies().subscribe((company: any) => {
-        for (const c of company) {
-          this.companiesData.push(c);
-        }
-      });
-  
-      this.apiService.getBookingStatus().subscribe((status: any) => {
-        for (const d of status) {
-          this.bookingStatusData.push(d);
-        }
-      });
-  
-      this.apiService.getBookingSource().subscribe((source: any) => {
-        for (const e of source) {
-          this.bookingSourceData.push(e);
-        }
-      });
-  
-      this.apiService.getBookingBranch().subscribe((branch: any) => {
-        for (const f of branch) {
-          this.bookingBranchData.push(f);
-        }
-      });
-  
-      this.apiService.getBookingCharge().subscribe((charge: any) => {
-        for (const g of charge) {
-          this.bookingChargeData.push(g);
-        }
-      });
-  
-  
-  
-      this.reservationId = this.actRoute.snapshot.params["ReservationId"];
-  
-      this.apiService
-        .getReservationsById(this.reservationId)
-        .subscribe((reservationsInfo) => {
-          for (const x of reservationsInfo) {
-            this.BookingData.push(x);
-          }
-  
-          console.log(this.BookingData, "bookingData");
-        });
-      this.apiService.getVehicleRegistration().subscribe((vehicleReg) => {
-        for (const f of vehicleReg) {
-          this.vehicleRegistrationList.push(f);
-        }
-      });
-  
-      this.apiService.getVehicleMake().subscribe((VehicleMake) => {
-        for (const j of VehicleMake) {
-          this.vehicleMakeList.push(j);
-          console.log("vehivle makes");
-        }
-        // console.log(vehicleMake, "vvvvvvv");
-      });
-  
-      // this.apiService
-      //   .getRelatedTrip(this.reservationId)
-      //   .subscribe((tripNumbers: any) => {
-      //     for (const a of tripNumbers) {
-      //       this.tripList.push(a);
-      //     }
-      //     // console.log(this.tripList,'.....................')
-      //   });
-  
-      this.apiService.getFuelLevel().subscribe((fuelLevel) => {
-        for (const b of fuelLevel) {
-          this.tripFuelLevel.push(b);
-        }
-        // console.log(this.tripFuelLevel, ".....................");
-      });
-      this.apiService
-        .getDriverServiceStatus()
-        .subscribe((driverServiceStatus) => {
-          for (const c of driverServiceStatus) {
-            this.driverServiceStatusList.push(c);
-          }
-          // console.log(this.driverServiceStatusList, ".....................");
-        });
-      this.apiService.getTripStatus().subscribe((tripStatus) => {
-        for (const d of tripStatus) {
-          this.tripStatusList.push(d);
-        }
-        // console.log(this.tripStatusList, ".....................");
-      });
-      this.apiService.getIncidentsType().subscribe((Incident) => {
-        for (const h of Incident) {
-          this.tripIncidentsTypeList.push(h);
-        }
-        // console.log("NNNNNNN", Incident);
-      });
-      this.apiService.fetchAllChauffers().subscribe((chauffers) => {
-        for (const y of chauffers) {
-          this.fetchedChaufferDriverList.push(y)
+    this.apiService.getTripStatus().subscribe((tripStatus) => {
+      for (const d of tripStatus) {
+        this.tripStatusList.push(d);
+      }
+      // console.log(this.tripStatusList, ".....................");
+    });
+    this.apiService.getIncidentsType().subscribe((Incident) => {
+      for (const h of Incident) {
+        this.tripIncidentsTypeList.push(h);
+      }
+      // console.log("NNNNNNN", Incident);
+    });
+    this.apiService.fetchAllChauffers().subscribe((chauffers) => {
+      for (const y of chauffers) {
+        this.fetchedChaufferDriverList.push(y)
+      }
+    })
+
+
+    this.apiService.getServiceStatus().subscribe((serviceStatus) => {
+      for (const m of serviceStatus) {
+        this.serviceStatusList.push(m);
+      }
+      // console.log(this.serviceStatusList, "tripservice");
+    });
+
+    this.apiService.getServiceName().subscribe((serviceName) => {
+      for (const k of serviceName) {
+        this.serviceNameList.push(k);
+        // console.log('hhhhh',this.serviceNameList.Description_1)
+      }
+      // console.log('hhhhh',this.serviceNameList)
+    });
+
+    this.fetchRelatedTripServices(this.reservationId);
+
+    //call trip incidents
+
+    this.fetchRelatedTripIncidents(this.reservationId);
+
+    //call trips
+    this.fetchRelatedReservationTrips(this.reservationId);
+
+    this.fetchRelatedDrivers(this.reservationId);
+    console.log('Trip IDDD', this.TripId)
+  }
+
+
+  fetchdeliveryDetails(reservationId: any) {
+    console.log('deliverydetails', reservationId)
+    this.apiService
+      .getRelatedReservationTrip(reservationId)
+      .subscribe((tripNumbers: any) => {
+        for (const a of tripNumbers) {
+          this.deliveryList.push(a);
         }
       })
-  
-  
-      this.apiService.getServiceStatus().subscribe((serviceStatus) => {
-        for (const m of serviceStatus) {
-          this.serviceStatusList.push(m);
-        }
-        // console.log(this.serviceStatusList, "tripservice");
-      });
-  
-      this.apiService.getServiceName().subscribe((serviceName) => {
-        for (const k of serviceName) {
-          this.serviceNameList.push(k);
-          // console.log('hhhhh',this.serviceNameList.Description_1)
-        }
-        // console.log('hhhhh',this.serviceNameList)
-      });
-  
-      this.fetchRelatedTripServices(this.reservationId);
-  
-      //call trip incidents
-  
-      this.fetchRelatedTripIncidents(this.reservationId);
-  
-      //call trips
-      this.fetchRelatedReservationTrips(this.reservationId);
-  
-      this.fetchRelatedDrivers(this.reservationId);
-    }
-  
-  
-  //   countriesCode(){
-  //     console.log('my countries','herroz')
-
-  //  const k:any =  this.countriesService.getCountries(res:any[])
-
-  //   console.log('my countries',k)
-  // }
-
-
-  // <--------delivery------->
-
-fetchdeliveryDetails(reservationId:any){
-  this.apiService
-  .getRelatedReservationTrip(reservationId)
-  .subscribe((tripNumbers: any) => {
-    for (const a of tripNumbers) {
-      this.deliveryList.push(a);
-    }})
 
   }
 
-  fetchDetails(TripId:any){
-    console.log('WERTYU',TripId)
-    this.apiService.getRelatedTrip(TripId).subscribe((res)=>{
-      console.log('deliverysxh',TripId)
 
-      
-
-      for(const dd of res){
+  fetchDetails(TripId: any) {
+    console.log('WERTYU', TripId)
+    this.apiService.fetchTrips(TripId).subscribe((res) => {
+      console.log('deliverysxh', res)
+      for (const dd of res) {
         this.deliveryForm.patchValue({
-          tripNumber:dd.tripNumber,
-          BookingFor:dd.BookingFor,
-          PickupContactNo:dd.PickupContactNo,
-          PickupEmail:dd.PickupEmail,
-          VehicleModel:dd.VehicleModel,
-          VehicleMake:dd.VehicleMake,
-          vehicleRegNo:dd.vehicleRegNo,
-          BookingDate:dd.BookingDate
+          tripNumber: dd.tripNumber,
+          BookingFor: dd.BookingFor,
+          PickupContactNo: dd.PickupContactNo,
+          PickupEmail: dd.PickupEmail,
+          VehicleModel: dd.VehicleModel,
+          VehicleMake: dd.VehicleMake,
+          vehicleRegNo: dd.vehicleRegNo,
+          BookingDate: dd.BookingDate
         })
-        console.log('deliverysxh',this.deliveryForm.value)
+        console.log('deliverysxh', this.deliveryForm.value)
 
       }
 
     })
   }
-  addDelivery(){
+
+  vehicleMovement(TripId: any) {
+    this.apiService.fetchDeliverTrips(TripId).subscribe((res) => {
+      console.log('vehiclemovement', res)
+
+      for (const dd of res) {
+        this.deliveryForm.patchValue({
+          BookingNo:dd.BookingNo,
+          tripNumber: dd.tripNumber,
+          BookingFor: dd.BookingFor,
+          PickupContactNo: dd.PickupContactNo,
+          PickupEmail: dd.PickupEmail,
+          VehicleModel: dd.VehicleModel,
+          VehicleMake: dd.VehicleMake,
+          vehicleRegNo: dd.vehicleRegNo,
+          BookingDate: dd.BookingDate,
+          PickupAddress: dd.PickupAddress,
+          DriverFirstName: dd.DriverFirstName,
+          FromDate: dd.FromDate,
+          FromTime: dd.FromTime,
+          vehicleIN:dd.vehicleIN,
+          vehicleOUT:dd.vehicleOUT,
+        })
+        console.log('vehiclemovement', this.deliveryForm.value)
+
+      }
+
+    })
+
+  }
+
+
+  addDelivery() {
     JSON.stringify(this.deliveryForm.value);
-    console.log("Delivery saved",this.deliveryForm.value)
+    console.log("Delivery saved", this.deliveryForm.value)
     this.deliveryList.push(this.deliveryForm.value)
+    this.apiService.addVehicleMovement(this.TripId,this.deliveryForm).subscribe((res)=>{
+      console.log('AddFuels',this.deliveryForm.value)
+    })
+    
+this.assignmentAllTrips.push(this.deliveryForm.value)
+
   }
 
 
@@ -961,10 +1004,10 @@ fetchdeliveryDetails(reservationId:any){
     });
   }
 
-  fetchRelatedTrips(reservationId: any) {
+  fetchRelatedTrips(TripId: any) {
     this.tripList = [];
     this.apiService
-      .getRelatedTrip(reservationId)
+      .getRelatedTrip(TripId)
       .subscribe((tripNumbers: any) => {
         for (const a of tripNumbers) {
           this.tripList.push(a);
@@ -977,12 +1020,12 @@ fetchdeliveryDetails(reservationId:any){
 
   fetchRelatedReservationTrips(reservationId: any) {
 
-    console.log('working trips',reservationId)
+    console.log('working trips', reservationId)
     this.tripReservationList = [];
     this.apiService
       .getRelatedReservationTrip(reservationId)
-      .subscribe((tripNumbers: any) => {
-        for (const a of tripNumbers) {
+      .subscribe((res: any) => {
+        for (const a of res) {
           this.tripReservationList.push(a);
         }
         console.log(this.tripReservationList, "....ffffffffffff");

@@ -50,4 +50,19 @@ export class VehicleMasterService {
             throw new Error(`Failed to fetch models for make: ${e.message}`);
         }
     }
+    async fetchVehicleType(Model: string) {
+        const fetchModel = await this.dataSource.createQueryRunner();
+        await fetchModel.connect();
+        try {
+            await fetchModel.startTransaction();
+            const vehicleModel = await fetchModel.query(
+                `select *from _cplItemMaster where category_Name='Type' and item_Name='Vehicle'`,
+                ['Vehicle', 'Model', Model],
+            );
+            await fetchModel.commitTransaction();
+            return vehicleModel;
+        } catch (e) {
+            throw new Error(`Failed to fetch models for make: ${e.message}`);
+        }
+    }
 }

@@ -88,13 +88,15 @@
                 <th>BookingCategory</th>
 
                 <th class="text-center">Action</th>
+                <th class="text-center">Action</th>
+
 
             </tr>
         </thead>
         <tbody>
             <ng-container *ngFor="let assignment of assignmentAllTrips">
                 <tr class="text-xs  text-center whitespace-nowrap">
-                    <td>{{ assignment.BookingNo }}</td>
+                    <td>{{ assignment.BookingNo }}/{{assignment.TripNo}}</td>
                     <!-- <td>{{ assignment.Branch }}</td> -->
                     <!-- <td>{{ assignment.BookingStatus }}</td> -->
                     <!-- <td>{{ assignment.BookingDate }}</td> -->
@@ -114,7 +116,20 @@
                     <td>{{ assignment.BookingCategory }}</td>
 
                     <td><button (click)="openEditAssignment(editAssignment)"
-                            (click)="fetchTrip(assignment.TripId)">View</button></td>
+                            (click)="fetchTrip(assignment.TripId)">AssignResource</button>
+                       
+                    </td>
+                    <td>
+
+                    <button>
+                        <a class="nav-link" href="delivery" [routerLink]="[
+                            '/delivery',
+                            assignment.TripId
+                          ]" routerLinkActive="active">
+                            IN/OUT
+                        </a>
+                    </button>
+                    </td>
 
                     <!-- <td>{{ assignment.ReservationId }}</td> -->
                 </tr>
@@ -155,7 +170,7 @@
                         <label> Vehicle Make </label>
                         <select class="text-sm form-control" id="VehicleMake" formControlName="VehicleMake"
                             (change)="fetchModels(tripAssignmentForm.get('VehicleMake')?.value)">
-                          <option *ngFor="let vehicleMake of  vehicleMakeList"
+                            <option *ngFor="let vehicleMake of  vehicleMakeList"
                                 value="{{ vehicleMake.category_Options }}">
                                 {{ vehicleMake.category_Options }}
                             </option>
@@ -220,7 +235,7 @@
                             (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
                             (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
                             <option value="">Select vehicleRegistration</option>
-                            <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID'  >
+                            <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID'>
                                 {{ vehicle.vehicleRegNo }}
                             </option>
                         </select>
@@ -436,6 +451,10 @@
         </div>
 
     </ng-template>
+
+
+
+    
 </div>
 
 

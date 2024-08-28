@@ -80,7 +80,7 @@
                     <td>TripNo:{{assignment.tripNumber}},     {{ assignment.BookingNo }}</td>
                     <td>{{assignment.TripFromDateTime}}</td>
                     <td>{{assignment.TripToDateTime}}</td>
-                    <td>{{assignment.bnn}}</td>
+                    <td>{{assignment.Transaction}}</td>
                     <td>{{ assignment.chosenRegNo }}</td>
 
                     <!-- <td>{{ assignment.ReservationId }}</td> -->
@@ -98,7 +98,7 @@
                     <td><button>
                             <a class="nav-link" href="delivery" [routerLink]="[
                             '/delivery',
-                            assignment.ReservationId
+                            assignment.TripId
                           ]" routerLinkActive="active">
                                 View
                             </a>

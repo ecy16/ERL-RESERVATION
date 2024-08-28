@@ -177,6 +177,7 @@ export class BookingDetailsComponent {
     this.serviceNameList = [];
     this.tripFuelLevel = [];
     this.vehicleModelList = [];
+    this.vehicleTypeList=[]
     this.tripData = [];
     this.sageServiceInfoList = [];
     this.DriversNameList = [];
@@ -187,8 +188,8 @@ export class BookingDetailsComponent {
       // VehicleMarks: "",
       FromDateTime: "",
       ToDateTime: "",
-      FlightNo: "",
-      FlightDateTime: "",
+      ArrivalFlightDateTime: "",
+      DepartureFlightDateTime:"",
       Airline: "",
       PickupAddress: "",
       PickupContactNo: "",
@@ -210,7 +211,11 @@ export class BookingDetailsComponent {
       VehicleModel: "",
       vehicleRegistration: "",
       vehicleType: "",
-      Remarks:""
+      Remarks:"",
+      DepartureFlightNo: "",
+      ArrivalFlightNo: "",
+
+
     });
 
     this.tripFormUpdate = this.formBuilder.group({
@@ -233,7 +238,10 @@ export class BookingDetailsComponent {
       VehicleModel: "",
       vehicleRegistration: "",
       vehicleType: "",
-      Remarks: ""
+      Remarks: "",
+      ArrivalFlightNo: "",
+      DepartureFlightNo: "",
+      BookingNo:""
     });
 
     this.tripServicesFormUpdate = this.formBuilder.group({
@@ -717,6 +725,16 @@ export class BookingDetailsComponent {
       console.log(this.vehicleModelList, "fetched");
     });
   }
+  fetchTypes(Model: any) {
+
+    this.apiService.getVehicleModel(Model).subscribe((res) => {
+      this.vehicleTypeList = [];
+      for (const g of res) {
+        this.vehicleTypeList.push(g);
+      }
+      console.log(res, "eric");
+    });
+  }
   
   viewReservationDoc() {
     this.apiService.getDocuments(this.reservationId).subscribe((reservation) => {
@@ -944,8 +962,13 @@ export class BookingDetailsComponent {
           VehicleMarks: d.VehicleMarks,
           FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
           ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
-          FlightNo: d.FlightNo,
-          FlightDateTime: moment(d.FlightDateTime).format(
+          ArrivalFlightNo: d.ArrivalFlightNo,
+          DepartureFlightNo: d.DepartureFlightNo,
+
+          ArrivalFlightDateTime: moment(d.ArrivalFlightDateTime).format(
+            "YYYY-MM-DD HH:mm"
+          ),
+          DepartureFlightDateTime: moment(d.DepartureFlightDateTime).format(
             "YYYY-MM-DD HH:mm"
           ),
           Airline: d.Airline,
@@ -994,6 +1017,7 @@ this.apiService.fetchTrips(TripId).subscribe((res)=>{
             ReservationId: d.ReservationId,
             tripNumber: d.tripNumber,
             TripId: d.TripId,
+            BookingNo:d.BookingNo
       
     })
     this.fetchModels(d.VehicleMake);
@@ -1041,12 +1065,12 @@ this.apiService.fetchTrips(TripId).subscribe((res)=>{
       console.log("string for response", this.tripForm.value);
 
       
-      const confirmServices= window.confirm('Do you wish to add TripServices?')
-      if(confirmServices){
+      // const confirmServices= window.confirm('Do you wish to add TripServices?')
+      // if(confirmServices){
         this.showServicesInTrips = true;
       
-        console.log('TripId',this.TripId)
-      }
+      //   console.log('TripId',this.TripId)
+      // }
 
 
       this.tripData.push(this.tripForm.value);

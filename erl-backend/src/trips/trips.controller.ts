@@ -13,6 +13,7 @@ import { AddTripDto } from '../dto/add-trip.dto';
 import { UpdateTripDto } from '../dto/update-trip.dto';
 import { VehicleValidationDto } from 'src/dto/vehicleValidation.dto';
 import { DriverValidationDto } from 'src/dto/driverValidation.dto';
+import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
 
 @Controller('trips')
 export class TripsController {
@@ -48,6 +49,7 @@ export class TripsController {
     addNewTrip(@Body(ValidationPipe) body: AddTripDto) {
         return this.tripService.createTrip(body);
     }
+    
 
     @Patch('update/:id')
     updateTripById(@Param('id') id: string, @Body() body: UpdateTripDto) {
@@ -67,8 +69,12 @@ export class TripsController {
     fetchSortedTrips() {
         return this.tripService.fetchSortedTrips();
     }
+    @Post('/vehicleMovements/:TripId')
+    addVehicleMovement(@Param('TripId') TripId: string, @Body() body: VehicleMovementDto) {
+        return this.tripService.addVehicleMovement(parseInt(TripId), body)
+    }
 
-    @Post('delivered/:TripId')
+    @Get('delivered/:TripId')
     fetchDeliverTrips(@Param('TripId') TripId: string) {
         return this.tripService.fetchDeliverTrips(parseInt(TripId));;
     }

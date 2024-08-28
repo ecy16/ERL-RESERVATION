@@ -39,7 +39,13 @@ export class AddTripDto {
     Airline: string;
     //@IsString()
     @IsOptional()
-    FlightDateTime: string;
+    ArrivalFlightDateTime: string;
+    @IsOptional()
+    DepartureFlightDateTime: string;
+    @IsOptional()
+    DepartureFlightNo: string;
+    @IsOptional()
+    ArrivalFlightNo: string;
     //@IsString()
     @IsOptional()
     PickupAddress: string;

@@ -12,6 +12,7 @@ import { DriverValidationDto } from 'src/dto/driverValidation.dto';
 import { SearchResourcesDto } from 'src/dto/search-resources.dto';
 import { ReservationEntity } from 'src/entities/reservation.entity';
 import { ReservationDetailsViewEntity } from 'src/entities/View.entity';
+import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
 
 // import {ReservationEntity} from "../entities/trips.entity";
 
@@ -33,6 +34,7 @@ export class TripsService {
         console.log(addTripsDto, 'AddTripDto')
         const reservationTrip = new ReservationTripEntity(addTripsDto);
         const lastTripNo = await this.findLastRelatedTrips(
+
             Number(reservationTrip.ReservationId)
         );
         console.log(lastTripNo)
@@ -45,6 +47,7 @@ export class TripsService {
             throw new Error(err.message);
         }
     }
+  
 
 
 
@@ -83,11 +86,11 @@ export class TripsService {
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select  a.*,b.BookingCategory,
-(FromDateTime) as FromDate,
+                `select  a.*,b.BookingCategory,b.BookingNo,
+format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
                 format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a 
                 join _cplReservations b on a.ReservationId = b.ReservationId where a.TripId=${(id)}`
-                
+
             );
             await trip.commitTransaction();
             return tripInfo;
@@ -124,7 +127,7 @@ export class TripsService {
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,FlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID 
+                `select b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,ArrivalFlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID 
 				left join _cplChaufferDrivers d on a.DriverId = d.DriverId
 				where a.TripId=@0  ` , [reservationId],
             );
@@ -160,11 +163,11 @@ export class TripsService {
             const tripInfo = await trip.query(
                 `select c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [DriverName] ,b.BookingFor,e.ContractId,d.email,
 				case when b.companyName=' ' then e.companyName else b.companyName end [companyName],
-				b.BookingCategory,b.BookingNo,format(FlightDateTime,'dd-MM-yyyy HH:mm') as FlightDate,
+				b.BookingCategory,b.BookingNo,
 				format(FromDateTime,'dd-MM-yyyy ') as FromDate,format(ToDateTime,'dd-MM-yyyy ') as ToDate ,
-				format(FromDateTime,' HH:mm:ss') as FromTime,format(ToDateTime,'HH:mm:ss') as ToTime  a.PickupFirstName + '' +a.PickupLastName [PickupName]
+				format(FromDateTime,' HH:mm:ss') as FromTime,format(ToDateTime,'HH:mm:ss') as ToTime , a.PickupFirstName +'' +a.PickupLastName [PickupName]
 				from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId  left join _cplVehicles c on a.VehicleId = c.vehicleID 
-				left join _cplChaufferDrivers d on a.DriverId = d.DriverId left join _cplContracts e on b.ContractId=e.ContractId`
+				left join _cplChaufferDrivers d on a.DriverId = d.DriverId left join _cplContracts e on b.ContractId=e.ContractId  `
 
             );
             await trip.commitTransaction();
@@ -186,14 +189,15 @@ export class TripsService {
             const tripInfo = await trip.query(
                 `select c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [DriverName] ,b.BookingFor,e.ContractId,d.email,
 				case when b.companyName=' ' then e.companyName else b.companyName end [companyName],
-				b.BookingCategory,b.BookingNo,format(FlightDateTime,'dd-MM-yyyy HH:mm') as FlightDate,
+				b.BookingCategory,b.BookingNo,
 				format(FromDateTime,'dd-MM-yyyy ') as FromDate,format(ToDateTime,'dd-MM-yyyy ') as ToDate ,
 				format(FromDateTime,' HH:mm:ss') as FromTime,format(ToDateTime,'HH:mm:ss') as ToTime
 				from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId  left join _cplVehicles c on a.VehicleId = c.vehicleID 
-				left join _cplChaufferDrivers d on a.DriverId = d.DriverId left join _cplContracts e on b.ContractId=e.ContractId`, [TripId]
+				left join _cplChaufferDrivers d on a.DriverId = d.DriverId left join _cplContracts e on b.ContractId=e.ContractId where a.TripId=@0 `, [TripId]
 
             );
             await trip.commitTransaction();
+            console.log(TripId, 'my trip ID')
             return tripInfo;
         } catch (e) {
             throw new Error(`Failed to find trips: ${e.message}`);
@@ -310,7 +314,7 @@ SELECT * FROM _cplReservationTrips
             )`,
                 [vehicleID, FromDateTime, ToDateTime]
             );
-// console.log(vehicleID,'MY VEHICLEID')
+            // console.log(vehicleID,'MY VEHICLEID')
             // Continue with the assignment process if vehicle is available
             // Your logic to assign the vehicle here...
 
@@ -368,7 +372,19 @@ SELECT * FROM _cplReservationTrips
         }
     }
 
-
+    async addVehicleMovement(TripId,vehicleMovementDto:VehicleMovementDto) {
+        console.log(vehicleMovementDto, 'vehicleMovementDto1')
+        const reservationTrip = new ReservationTripEntity(vehicleMovementDto);
+        reservationTrip.TripId = TripId;
+        
+       
+        try {
+            console.log(vehicleMovementDto, 'vehicleMovementDto')
+            return await this.tripsEntity.save(reservationTrip);
+        } catch (err) {
+            throw new Error(err.message);
+        }
+    }
 
 
     async searchResources(searchResourcesDto: SearchResourcesDto) {

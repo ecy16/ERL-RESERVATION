@@ -304,7 +304,7 @@ export class ScheduledTripsComponent {
       this.assignmentAllTrips = [];
       this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
         for (const m of trips) {
-          if (m.TripStatus === 'Scheduled') {  
+          if (m.Transaction !== null) {  
             this.assignmentAllTrips.push(m);
           }
         }

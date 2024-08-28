@@ -464,8 +464,8 @@ export class ApiService {
     return this.http.post<any[]>(`${this.tripUrl}/sorted`, '')
 
   }
-  fetchDeliverTrips(): Observable<any[]> {
-    return this.http.post<any[]>(`${this.tripUrl}/delivered`, '')
+  fetchDeliverTrips(TripId:any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.tripUrl}/delivered/${TripId}`)
 
   }
 
@@ -533,6 +533,12 @@ uploadVehicleFiles(file:any){
 
 uploadResvFile(file:any){
   return this.http.post(`${this.filesUrl}/UploadFile`,file)
+
+}
+
+addVehicleMovement(TripId:any,deliveryForm:any){
+  
+  return this.http.post(`${this.filesUrl}/UploadFile`,deliveryForm)
 
 }
 

@@ -10,6 +10,7 @@ import * as moment from "moment";
 import { DataTablesModule } from "angular-datatables";
 import { Router } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
+import { RouterModule } from "@angular/router";
 
 
 import { jsPDF } from "jspdf";
@@ -39,6 +40,7 @@ export interface Reservation {
     FormsModule,
     ReactiveFormsModule,
     DataTablesModule,
+    RouterModule,
     MatIconModule
   ],
 })

@@ -42,7 +42,7 @@ const routes: Routes = [
   { path: 'BillingDetails/:id', component: BillingDetailsComponent },
   {path:"Roster",component:RosterComponent},
   {path:"contract-details/related/:ContractId",component:ContractInformationComponent},
-  {path:"delivery/:ReservationId",component:DeliveryComponent},
+  {path:"delivery/:TripId",component:DeliveryComponent},
 {path:"scheduledTrips",component:ScheduledTripsComponent}
 ];
 

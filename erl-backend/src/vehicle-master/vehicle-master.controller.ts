@@ -14,4 +14,8 @@ export class VehicleMasterController {
     fetchVehicleModels(@Param('Make') Make: string) {
         return this.vehicleMasterService.fetchVehicleModel(Make);
     }
+    @Get('/:Model')
+    fetchVehicleType(@Param('Model') Model: string) {
+        return this.vehicleMasterService.fetchVehicleType(Model);
+    }
 }
