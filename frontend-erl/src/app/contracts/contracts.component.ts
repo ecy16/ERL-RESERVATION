@@ -584,7 +584,8 @@ export class ContractsComponent {
         })
 
 
-      })
+
+              })
     }
     else {
       console.log('Action cancelled by user.');

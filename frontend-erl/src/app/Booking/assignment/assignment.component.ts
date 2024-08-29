@@ -675,6 +675,7 @@ export class AssignmentComponent {
       for (const r of TripInfo) {
 
         this.fetchedCDOData.push(r);
+        console.log('cdo data',this.fetchedCDOData)
 
       }
 
@@ -729,22 +730,22 @@ export class AssignmentComponent {
 
             // Organization, Client, and Booking details
             doc.rect(10, 60, 70, 40);
-            doc.setFontSize(11);
+            doc.setFontSize(9);
             doc.text("Organization:", 12, 64);
             doc.text(d.companyName, 12, 70);
             doc.text("Client Name:", 12, 80);
-            doc.text(d.companyName, 25, 80);
+            doc.text(d.companyName, 12, 86);
 
             doc.text("Booked by:", 12, 95);
-            doc.text(d.BookingFor, 8, 90);
+            doc.text(d.BookingFor, 12, 98);
 
 
             doc.text("Veh.Reg", 81, 64);
-            doc.line(97, 64, 130, 64);
+            doc.text(d.vehicleRegNo,81,70);
             doc.text("Type", 81, 73);
             doc.line(90, 73, 130, 73);
             doc.text("Pick-up location", 81, 84);
-            doc.text(d.PickupAddress, 70, 80);
+            doc.text(d.PickupAddress, 81, 90);
 
             doc.line(110, 84, 130, 84);
             doc.text("Pick-up time", 81, 93);
@@ -779,6 +780,7 @@ export class AssignmentComponent {
             doc.setFontSize(14);
             doc.text("SERVICE INSTRUCTIONS", 105, 110, { align: "center" }, null);
             doc.rect(10, 115, 190, 60); // Rectangle for Service Instructions
+            
 
             doc.rect(10, 180, 110, 90);
             // Expenses Table header
@@ -834,6 +836,7 @@ export class AssignmentComponent {
             doc.line(35, 23, 145, 23);
             doc.setFontSize(10);
             doc.text("Driver's Name:", 10, 23);
+            doc.text(d.DriverFirstName,10,29)
             doc.text("Veh. No.:", 150, 23);
             doc.line(163, 23, 190, 23);
             doc.text("File Ref.:", 150, 33);

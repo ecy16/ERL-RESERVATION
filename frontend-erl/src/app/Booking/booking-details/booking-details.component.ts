@@ -1028,6 +1028,12 @@ this.apiService.fetchTrips(TripId).subscribe((res)=>{
 
   }
 
+
+
+
+
+  
+
   fetchRelatedTrips(reservationId: any) {
     this.tripList = [];
     this.apiService

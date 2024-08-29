@@ -1,5 +1,5 @@
 <div class="dekiveryscreen">
-  <h1 class="text-center">VehicleIN / VehicleOUT </h1>
+  <h1 class="text-center">Vehicle IN/OUT </h1>
 
 
 
@@ -14,7 +14,7 @@
   <div class="m-1 p-2">
     <button (click)="openForm(delivery)" (click)="vehicleMovement(deliveryForm.get('TripId')?.value)"
       class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">
-      VehicleIN/VehicleOUT
+      Vehicle IN/OUT
     </button>
     <ng-container>
 
@@ -73,8 +73,8 @@
             <label>Transaction</label>
             <select class="form-control text-sm" [(ngModel)]="selectedTransaction" formControlName="Transaction">
               <option value="">Select transaction</option>
-              <option value="VehicleOUT">VehicleOUT</option>
-              <option value="VehicleIN">VehicleIN</option>
+              <option value="OUT">VehicleOUT</option>
+              <option value="IN">VehicleIN</option>
             </select>
           </div>
           <div class="m-2" [formGroup]="deliveryForm">
