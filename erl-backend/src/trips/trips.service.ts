@@ -78,7 +78,7 @@ export class TripsService {
 
 
 
-    async findTrips(id: number) {
+    async findTrips(id: number){
         const trip = this.tripDataSource.createQueryRunner();
         await trip.connect();
         try {
@@ -93,7 +93,7 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
             await trip.commitTransaction();
             return tripInfo;
         } catch (e) {
-            throw new Error(`Failed to find trips: ${e.message}`);
+            throw new Error(`Failed to find trips: ${e.message}`)
         }
     }
 

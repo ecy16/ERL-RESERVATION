@@ -947,48 +947,7 @@ export class BookingDetailsComponent {
 
   // -------------------------------------Reservation Trip-------------------------------------
 
-  NotfetchTrips(TripId: any) {
-    // loading data on a modal for edit
-    console.log(TripId, "tripid");
-    // this.fetchedTripList = [];
-    this.apiService.fetchTrips(TripId).subscribe((relatedTrip) => {
-      console.log(relatedTrip, 'relatedTriperty')
-      for (const z of relatedTrip) {
-        this.fetchedTripList.push(z);
-      }
-      for (const d of this.fetchedTripList) {
-        this.tripFormUpdate.patchValue({
-          DriverServiceStatus: d.DriverServiceStatus,
-          TripStatus: d.TripStatus,
-          VehicleMarks: d.VehicleMarks,
-          FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
-          ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
-          ArrivalFlightNo: d.ArrivalFlightNo,
-          DepartureFlightNo: d.DepartureFlightNo,
-
-          ArrivalFlightDateTime: moment(d.ArrivalFlightDateTime).format(
-            "YYYY-MM-DD HH:mm"
-          ),
-          DepartureFlightDateTime: moment(d.DepartureFlightDateTime).format(
-            "YYYY-MM-DD HH:mm"
-          ),
-          Airline: d.Airline,
-          PickupAddress: d.PickupAddress,
-          PickupContactNo: d.PickupContactNo,
-          PickupEmail: d.PickupEmail,
-          DropAddress: d.DropAddress,
-          VehicleMake: d.VehicleMake,
-          VehicleModel: d.VehicleModel,
-          ReservationId: d.ReservationId,
-          tripNumber: d.tripNumber,
-          TripId: d.TripId,
-        });
-
-        console.log(this.fetchedTripList, 'dtddtrdydytr');
-        this.fetchModels(d.VehicleMake);
-      }
-    });
-  }
+ 
   fetchTrip(TripId: any) {
     this.fetchedTripList = []
     this.apiService.fetchTrips(TripId).subscribe((res) => {

@@ -187,8 +187,8 @@
             <input type="text" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="ReportedBy" id="ReportedBy" required />
           </div>
-          <div class="m-2 border-red-700" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Delivery'">
-            <button class="border-red-700" (click)="fetchRentalAgreement(reservationId)">Print Rental
+          <div class="m-2 border-red-700" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+            <button class="border-red-700" (click)="generateRA(deliveryForm.get('TripId')?.value)">Print Rental
               Agreement</button>
           </div>
 

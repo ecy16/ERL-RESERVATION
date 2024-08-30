@@ -1299,15 +1299,29 @@ this.assignmentAllTrips.push(this.deliveryForm.value)
 
     // const { jsPDF } = window.jspdf;
 
+this.apiService.getRelatedTrip(TripId).subscribe((TripDetails)=>{
+  console.log(TripDetails, "TripDetails");
 
-    const doc = new jsPDF({
-      orientation: "p",
-      unit: "mm",
-      format: "a4",
-    });
+  for(const y of TripDetails){
+this.fetchedRAData.push(y)
+console.log('fetchedRAData', this.fetchedRAData)
 
-    // Title
-    doc.setFontSize(20);
+  }
+
+  if(this.fetchedRAData.length>0){
+    console.log('if');
+
+
+    for( const d of this.fetchedRAData){
+      console.log('eric eric', d.BookingCategory)
+
+      try {
+        const doc = new jsPDF({
+          orientation: "p",
+          unit: "mm",
+          format: "a4",
+        });
+        doc.setFontSize(20);
     doc.setFont('impact');
     doc.text('RENTAL AGREEMENT', 105, 10, { align: "center" }, null);
 
@@ -1347,18 +1361,42 @@ this.assignmentAllTrips.push(this.deliveryForm.value)
 
       //customer information
       doc.text('Customer name:', 12, 56);
-      doc.text('Renter name:', 12, 61);
-      doc.text('Contact Address:', 12, 66);
-      doc.line(10, 67, 107, 67);
-      doc.text('Tel:', 12, 71);
-      doc.line(10, 72, 107, 72);
-      doc.text('Email', 12, 76);
-      doc.line(10, 77, 107, 77);
-      doc.text('Place/Business', 12, 81);
-      doc.line(10, 82, 107, 82);
-      doc.text('Address:', 12, 86);
+doc.text(d.BookingFor, 50, 56); // Adjusted x position for better alignment
+
+doc.text('Renter name:', 12, 61);
+doc.text(d.BookingFor, 50, 61); // Adjusted x position
+
+doc.text('Contact Address:', 12, 66);
+doc.text(d.PickupAddress, 50, 66); // Adjusted x position for address
+
+// Horizontal line
+doc.line(10, 68, 107, 68); // Adjusted line position slightly
+
+doc.text('Tel:', 12, 72);
+doc.text(d.PickupContactNo, 50, 72); // Adjusted x position for contact number
+
+// Horizontal line
+doc.line(10, 73, 107, 73); // Adjusted line position
+
+doc.text('Email:', 12, 77);
+doc.text(d.PickupEmail, 50, 77); // Adjusted x position for email
+
+// Horizontal line
+doc.line(10, 78, 107, 78); // Adjusted line position
+
+doc.text('Place/Business:', 12, 82);
+doc.text(d.companyName, 50, 82); // Adjusted x position for company name
+
+// Horizontal line
+doc.line(10, 83, 107, 83); // Adjusted line position
+
+doc.text('Address:', 12, 87);
+doc.text(d.PickupAddress, 50, 87); // Adjusted x position for address
+
+
       doc.line(10, 87, 107, 87);
       doc.text('Driver License', 12, 91);
+
       doc.line(10, 97, 107, 97);
       doc.text('Number:', 12, 95);
       doc.text('Date of', 70, 91)
@@ -1516,6 +1554,7 @@ this.assignmentAllTrips.push(this.deliveryForm.value)
       doc.text('Rented At', 109, 56)
       doc.text('No', 159, 56)
       doc.text('Vehicle Reg', 109, 60.5)
+
       doc.setFont('arial', 'bold')
 
       doc.text('Check In', 129, 60.5);
@@ -1699,6 +1738,23 @@ this.assignmentAllTrips.push(this.deliveryForm.value)
 
 
 
+
+    }
+    catch(error){
+      console.log('error RA',error)
+    }
+
+  }
+  }
+})
+    // const doc = new jsPDF({
+    //   orientation: "p",
+    //   unit: "mm",
+    //   format: "a4",
+    // });
+
+    // Title
+    
 
   }
 
