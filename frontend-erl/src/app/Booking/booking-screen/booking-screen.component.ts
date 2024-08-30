@@ -197,10 +197,8 @@ export class BookingScreenComponent implements OnInit {
 
     })
 
-
     this.bookingForm = this.formBuilder.group({
       BookingNo: ["", Validators.required],
-      BookingDate: ["", Validators.required],
       BookingCategory: ["", Validators.required],
       BookingType: ["", Validators.required],
       Branch: ["", Validators.required],
@@ -220,7 +218,8 @@ export class BookingScreenComponent implements OnInit {
       Remarks: ["", Validators.required],
       ContractNo: ["", Validators.required],
     });
-    this.companyDetails = this.formBuilder.group({});
+    
+   
   }
 
 
@@ -235,9 +234,15 @@ export class BookingScreenComponent implements OnInit {
 
 
     }
+    const today = new Date().toISOString().split('T')[0];
 
+    this.bookingForm = this.formBuilder.group({
+      BookingDate: [today],
+      // other form controls
+    });
 
-
+   
+    this.companyDetails = this.formBuilder.group({});
 
     this.apiService.getReservations().subscribe(
 
@@ -246,7 +251,6 @@ export class BookingScreenComponent implements OnInit {
         this.filteredReservations = data.filter(reservation => {
           return reservation.BookingStatus === 'InProgress';
         });
-        console.log('rrrrrrrrrreservations for todat', this.filteredReservations)
         this.reservationData = [...this.filteredReservations];
 
 
@@ -267,14 +271,11 @@ export class BookingScreenComponent implements OnInit {
       for (const a of categories) {
         this.bookingCategoriesData.push(a);
       }
-      console.log('categories', categories)
     });
     this.apiService.getBookingTypes().subscribe((BookingType: any) => {
       for (const b of BookingType) {
         this.bookingTypesData.push(b);
-        console.log(this.bookingTypesData, "bookingTypesData");
       }
-      console.log(this.types, "bookingTypesData");
     });
 
     this.apiService.getCompanies().subscribe((company: any) => {
@@ -335,12 +336,10 @@ export class BookingScreenComponent implements OnInit {
 
   searching() {
     this.filteredReservations = [];
-    console.log(this.searchForm.value, 'form values');
 
     this.apiService.searchValue(this.searchForm.value).subscribe(
       (res: any[]) => {
         this.filteredReservations = res;
-        console.log(res,'these are my serach results')
       },
       (error) => {
       }
@@ -359,19 +358,18 @@ export class BookingScreenComponent implements OnInit {
 
   saveBookingData() {
     const data = JSON.stringify(this.bookingForm.value);
-    console.log("with stringify:", this.bookingForm.value);
     this.apiService
       .addReservation(this.bookingForm.value)
       .subscribe((response: any) => {
         const ReservationId = response.ReservationId;
 
         this.fetchAllTrips();
-        setTimeout(() => {
-          const confirmProceed = window.confirm(`Booking information for Reservation ID ${ReservationId} has been saved. Do you wish to add Trip Details?`);
-          if (confirmProceed) {
+        // setTimeout(() => {
+        //   const confirmProceed = window.confirm(`Booking information for Reservation ID ${ReservationId} has been saved. Do you wish to add Trip Details?`);
+        //   if (confirmProceed) {
             this.router.navigate([`BookingDetails/${ReservationId}`]);
-          }
-        }, 0);
+          // }
+        // }, 0);
 
         this.toastr.success("Booking Added Successfully");
       });
@@ -400,21 +398,17 @@ export class BookingScreenComponent implements OnInit {
 
 
   viewBooking() {
-    console.log("sucesss");
   }
 
   onCategoryChange(event: any) {
     this.categoryChosen = event.target.value;
-    console.log('category', this.categoryChosen)
   }
 
   getRelatedCustCode(name: any) {
-    console.log(name, "hodvcuiwdbc");
     this.relatedCustCode = [];
     this.apiService.getRelatedCustCode(name).subscribe((custCode: any) => {
       for (const bb of custCode) {
         this.relatedCustCode.push(bb);
-        console.log(this.relatedCustCode[0]);
         this.bookingForm.patchValue({
           CompanyCode: this.relatedCustCode[0].Account,
         });
@@ -424,7 +418,6 @@ export class BookingScreenComponent implements OnInit {
 
   getRelatedCustName(code: any) {
     this.relatedCustName = [];
-    console.log(code, "igvtyukwdbc");
     this.apiService.getRelatedCustName(code).subscribe((custName: any) => {
       for (const aa of custName) {
         this.relatedCustName.push(aa);
@@ -438,37 +431,17 @@ export class BookingScreenComponent implements OnInit {
 
   getRelatedContract(): void {
     this.contractsData = [];
-    console.log('contracts are being fetched');
     this.apiService.findDemandContracts().subscribe((res: any) => {
-      console.log('Yours truly on demand',res)
-      // this.contractsData.push(contracts);
-      // if (this.contractsData.length > 0) {
-      //   this.bookingForm.patchValue({
-      //     companyName: this.contractsData[0].companyName
-      //   });
-      // // // // }
+   
       for (const g of res) {
         this.contractsData.push(g)
       }
       // this.contractsData=contracts;
-      console.log( this.contractsData,'perez');
     });
   }
   
 
-  // getRelatedContract(name: any) {
-  //   console.log(name, "contract");
-  //   this.relatedContract = [];
-  //   this.apiService.findContracts().subscribe((custCode: any) => {
-  //     for (const bb of custCode) {
-  //       this.relatedCustCode.push(bb);
-  //       console.log(this.relatedCustCode[0]);
-  //       this.bookingForm.patchValue({
-  //         CompanyCode: this.relatedCustCode[0].Account,
-  //       });
-  //     }
-  //   });
-  // }
+
 
   private getDismissReason(reason: any): string {
     switch (reason) {

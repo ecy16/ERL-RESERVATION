@@ -9,6 +9,19 @@ export class AddTripDto {
     // // @IsNumber()
     @IsOptional()
     DriverId: number;
+    @IsOptional()
+    DriverFirstName: string;
+    @IsOptional()
+    VehicleRemarks: string;
+    @IsOptional()
+    CheckINBy: string;
+    @IsOptional()
+    ModifiedBy: string;
+    @IsOptional()
+    ModifiedOn: string;
+    @IsOptional()
+    Transaction: string;
+    
     //@IsString()
     @IsOptional()
     DriverServiceStatus: string;
@@ -83,8 +96,7 @@ export class AddTripDto {
     @IsOptional()
     CheckOUTBy: string;
     //@IsString()
-    @IsOptional()
-    CheckInBy: string;
+    
     //@IsString()
     @IsOptional()
     CreatedBy: string;

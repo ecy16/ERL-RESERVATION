@@ -16,7 +16,7 @@
                 <label>Reservation Date</label>
                 <div class="input-group text-sm">
                   <input type="date" class="form-control border rounded-md" formControlName="BookingDate"
-                  [max]="maxDate()" 
+                   readonly
                   />
                 </div>
                 <div *ngIf="(bookingForm.get('BookingDate')?.invalid &&
@@ -104,7 +104,7 @@
                 </div>
               </div>
               <div class="m-2" [formGroup]="bookingForm">
-                <label>ReservingFor For</label>
+                <label>Reserving For </label>
                 <input id="BookingFor" type="text" class="form-control rounded-md border border-gray-400"
                   formControlName="BookingFor" />
                 <div *ngIf="

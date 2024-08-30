@@ -31,6 +31,7 @@ import { AccessControlModule } from 'nest-access-control';
 import { Role } from './role.enum';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { FileUploadService } from './FileUpload.service';
+import { CountriesModule } from './countries/countries.module';
 
 @Module({
     imports: [
@@ -58,7 +59,8 @@ import { FileUploadService } from './FileUpload.service';
         UsersModule,
         ForgotPasswordModule,
         BillingModule,
-        PhotosModule
+        PhotosModule,
+        CountriesModule
         // AccessControlModule.forRoles(Role)
     ],
     controllers: [AppController],

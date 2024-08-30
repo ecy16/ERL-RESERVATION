@@ -313,6 +313,9 @@ export class ApiService {
   fetchTrips(TripId: any): Observable<any[]> {
     return this.http.get<any[]>(`${this.tripUrl}/` + TripId);
   }
+  getOneTrip(TripId: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.tripUrl}/ById/` + TripId);
+  }
 
   // -------------------------------------Trip Service-------------------------------------
   //-------save trip service-------

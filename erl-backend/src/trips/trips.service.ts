@@ -37,9 +37,7 @@ export class TripsService {
 
             Number(reservationTrip.ReservationId)
         );
-        console.log(lastTripNo)
         reservationTrip.tripNumber = (lastTripNo[0].lastNo);
-        console.log(reservationTrip, 'ReservationTrip')
         try {
 
             return await this.tripsEntity.save(reservationTrip);
@@ -99,6 +97,29 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
         }
     }
 
+    // async findRelatedContractDetails(id: number) {
+    //     // return this.contractDetailsRepo.find({ where: { ContractId: id } });
+    
+    
+    //     const contractsDetailsQuery = await this.contractDetailDataSource.createQueryRunner();
+    //     await contractsDetailsQuery.connect();
+    //     try {
+    //       await contractsDetailsQuery.startTransaction();
+    //       const contractsDetail = await contractsDetailsQuery.query(
+    //         `
+    //         select x.* from _cplContractDetails x join  _cplcontracts  y on x.ContractId=y.ContractId where x.ContractId =@0  order by ContractId desc `, [id]
+    
+    
+    //       );
+    //       await contractsDetailsQuery.commitTransaction();
+    //       return contractsDetail;
+    //     }
+    //     catch (e) {
+    //       throw new Error(`Failed to find any contracts: ${e.message}`);
+    //     }
+    
+    //   }
+    
 
     async findTrips1(id: number) {
 
