@@ -456,7 +456,12 @@ export class BookingDetailsComponent {
   ngOnInit() {
 
 
-
+    this.tripForm.get('VehicleModel')?.valueChanges.subscribe((model) => {
+      if (model) {
+        this.fetchVehicleTypes(model);
+      }
+    });
+  
 
     this.apiService.getBookingCategories().subscribe((categories: any) => {
       for (const a of categories) {
@@ -599,8 +604,20 @@ export class BookingDetailsComponent {
   }
 
 
-
-
+  fetchVehicleTypes(model: string): void {
+    this.apiService.getVehicleType(model).subscribe((vehicleTypes) => {
+      console.log('VehicleType',vehicleTypes)
+      this.vehicleTypeList = vehicleTypes;
+      if (vehicleTypes.length > 0) {
+        this.tripForm.patchValue({ vehicleType: vehicleTypes[0].category_Options_2 });
+      } else {
+        // Optionally clear the vehicleType field if no types are found
+        this.tripForm.patchValue({ vehicleType: null });
+      }
+  
+    });
+  }
+ 
 
 
   triggerFileInput() {
@@ -716,6 +733,18 @@ export class BookingDetailsComponent {
       console.log(VehicleMake, "eric");
     });
   }
+  fetchTypes(VehicleModel: any) {
+
+    this.apiService.getVehicleType(VehicleModel).subscribe((vehicleType) => {
+      this.vehicleModelList = [];
+      for (const g of vehicleType) {
+        this.vehicleTypeList.push(g);
+      }
+      console.log(vehicleType, "vehicleType");
+    });
+  }
+
+
   fetchVehiclesByModel(Model: any) {
     this.vehicleModelList = [];
     this.apiService.getVehicleByModel(Model).subscribe((vehicleModel) => {
@@ -726,16 +755,7 @@ export class BookingDetailsComponent {
       console.log(this.vehicleModelList, "fetched");
     });
   }
-  fetchTypes(Model: any) {
-
-    this.apiService.getVehicleModel(Model).subscribe((res) => {
-      this.vehicleTypeList = [];
-      for (const g of res) {
-        this.vehicleTypeList.push(g);
-      }
-      console.log(res, "eric");
-    });
-  }
+ 
 
   viewReservationDoc() {
     this.apiService.getDocuments(this.reservationId).subscribe((reservation) => {

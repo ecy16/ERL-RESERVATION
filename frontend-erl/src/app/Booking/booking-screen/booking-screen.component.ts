@@ -217,6 +217,7 @@ export class BookingScreenComponent implements OnInit {
       PayeeCompanyName: ["", Validators.required],
       Remarks: ["", Validators.required],
       ContractNo: ["", Validators.required],
+
     });
     
    
@@ -234,12 +235,12 @@ export class BookingScreenComponent implements OnInit {
 
 
     }
-    const today = new Date().toISOString().split('T')[0];
+    // const today = new Date().toISOString().split('T')[0];
 
-    this.bookingForm = this.formBuilder.group({
-      BookingDate: [today],
-      // other form controls
-    });
+    // this.bookingForm = this.formBuilder.group({
+    //   BookingDate: [today],
+    //   // other form controls
+    // });
 
    
     this.companyDetails = this.formBuilder.group({});

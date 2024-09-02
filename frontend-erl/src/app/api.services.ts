@@ -418,6 +418,10 @@ export class ApiService {
   getVehicleMake(): Observable<any[]> {
     return this.http.get<any[]>(`${this.vehicleMasterUrl}/` );
   }
+  getVehicleType(Model:any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.vehicleMasterUrl}/Types/` + Model );
+  }
+ 
   getVehicleMakeAll(): Observable<any[]> {
     return this.http.get<any[]>(`${this.vehicleMasterUrl}`);
   }

@@ -16,7 +16,7 @@
                 <label>Reservation Date</label>
                 <div class="input-group text-sm">
                   <input type="date" class="form-control border rounded-md" formControlName="BookingDate"
-                   readonly
+                   readonly 
                   />
                 </div>
                 <div *ngIf="(bookingForm.get('BookingDate')?.invalid &&
@@ -296,8 +296,7 @@
 
             <div [formGroup]="searchForm">
               <label class="text-xs">Reservation Type</label>
-              <select class="text-sm form-control w-32" id=" BookingType" formControlName="BookingType"
-                [(ngModel)]="selectedOption">
+              <select class="text-sm form-control w-32" id=" BookingType" formControlName="BookingType">
                 <option *ngFor="let BookingType of bookingTypesData" value="{{ BookingType.category_Options }}">
                   {{ BookingType.category_Options }}
                 </option>

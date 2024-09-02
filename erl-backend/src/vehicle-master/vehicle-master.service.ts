@@ -45,24 +45,70 @@ export class VehicleMasterService {
                 ['Vehicle', 'Make', Make],
             );
             await fetchModel.commitTransaction();
+            console.log('tyy',vehicleModel)
+
             return vehicleModel;
         } catch (e) {
             throw new Error(`Failed to fetch models for make: ${e.message}`);
         }
     }
-    async fetchVehicleType(Model: string) {
-        const fetchModel = await this.dataSource.createQueryRunner();
-        await fetchModel.connect();
+
+    async fetchVehicleType(Model: string): Promise<string> {
+        console.log('vehicleModel:', Model);
+    
+        const fetchType = await this.dataSource.createQueryRunner();
+        await fetchType.connect();
         try {
-            await fetchModel.startTransaction();
-            const vehicleModel = await fetchModel.query(
-                `select *from _cplItemMaster where category_Name='Type' and item_Name='Vehicle'`,
-                ['Vehicle', 'Model', Model],
+            await fetchType.startTransaction();
+    
+            // Query to fetch vehicle type
+            const VehicleType = await fetchType.query(
+                `select category_Options_2 from _cplItemMaster where item_Name='Vehicle' and category_Options_1=@0`,
+                [Model]
             );
-            await fetchModel.commitTransaction();
-            return vehicleModel;
+            console.log('vehicleModel2:', Model);
+
+            await fetchType.commitTransaction();
+            console.log('vehicleType:', VehicleType);
+    
+            // Assuming result is an array and we need the first entry
+            return VehicleType
+            // return VehicleType.length > 0 ? VehicleType[0].category_Options_2 : null;
+
         } catch (e) {
-            throw new Error(`Failed to fetch models for make: ${e.message}`);
-        }
+            console.log('vehicleModel:4', fetchType);
+            throw new Error(`Failed to fetch vehicle type: ${e.message}`);
+        } 
     }
-}
+    // async fetchVehicleType(Model: string): Promise<string> {
+    //     console.log('vehicleModel:', Model);
+    
+    //     const fetchType = await this.dataSource.createQueryRunner();
+    //     await fetchType.connect();
+    //     try {
+    //         await fetchType.startTransaction();
+    
+    //         // Query to fetch vehicle type
+    //         const result = await fetchType.query(
+    //             `select category_Options_2 from _cplItemMaster where item_Name='Vehicle' and category_Options_1=@0`,
+    //             [Model]
+    //         );
+    //         console.log('vehicleModel2:', Model);
+
+    //         await fetchType.commitTransaction();
+    //         console.log('vehicleType:', result);
+    
+    //         // Assuming result is an array and we need the first entry
+    //         return result.length > 0 ? result[0].category_Options_2 : null;
+
+    //     } catch (e) {
+    //         console.log('vehicleModel:4', fetchType);
+
+    //         await fetchType.rollbackTransaction();
+    //         throw new Error(`Failed to fetch vehicle type: ${e.message}`);
+    //     } finally {
+    //         await fetchType.release();
+    //     }
+    }
+    
+

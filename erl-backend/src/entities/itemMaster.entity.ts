@@ -13,6 +13,8 @@ export class ItemMasterEntity {
     @Column({ nullable: true })
     category_Options_1: string;
     @Column({ nullable: true })
+    category_Options_2: string;
+    @Column({ nullable: true })
     CreatedBy: string;
     @Column({ nullable: true })
     CreatedOn: string;

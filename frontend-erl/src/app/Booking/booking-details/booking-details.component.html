@@ -579,37 +579,31 @@
                       </div>
                     </div>
                     <div class="m-2" [formGroup]="tripForm">
-                      <label> Vehicle Model</label>
+                      <label>Vehicle Model</label>
                       <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
-                        <option *ngFor="let vehicleModel of vehicleModelList"
-                          value="{{ vehicleModel.category_Options_1 }}">
+                        <option *ngFor="let vehicleModel of vehicleModelList" [value]="vehicleModel.category_Options_1">
                           {{ vehicleModel.category_Options_1 }}
                         </option>
                       </select>
                       <div *ngIf="
-                      (tripForm.get('vehicleModel')?.invalid &&
-                        tripForm.get('vehicleModel')?.errors &&
-                        tripForm.get('vehicleModel')?.dirty) ||
-                      tripForm.get('vehicleModel')?.touched
-                    ">
-                        <small class="text-red-700" *ngIf="tripForm.get('VehicleModel')?.hasError('required')">*This
-                          field
-                          is required</small>
+                        (tripForm.get('VehicleModel')?.invalid &&
+                        tripForm.get('VehicleModel')?.errors &&
+                        tripForm.get('VehicleModel')?.dirty) ||
+                        tripForm.get('VehicleModel')?.touched
+                      ">
+                        <small class="text-red-700" *ngIf="tripForm.get('VehicleModel')?.hasError('required')">*This field is required</small>
                       </div>
                     </div>
-
+                    
                     <div class="vehicleType text-sm m-2" [formGroup]="tripForm">
                       <label>Vehicle Type</label>
                       <select id="vehicleType" formControlName="vehicleType" class="text-sm rounded-md form-control">
-                        <option *ngFor="let vehicleType of vehicleTypeList" value="{{ vehicleType.category_Options }}">
-                          {{ vehicleType.category_Options }}
+                        <option *ngFor="let vehicleType of vehicleTypeList" [value]="vehicleType.category_Options_2">
+                          {{ vehicleType.category_Options_2 }}
                         </option>
-                        <option value="suv">SUV</option>
-                        <option value="sedan">Sedan</option>
-                        <option value="hatchBack">HatchBack</option>
-
                       </select>
                     </div>
+                    
                    
                     <div class="m-2" [formGroup]="tripForm">
                       <label> Driver Service Status</label>
