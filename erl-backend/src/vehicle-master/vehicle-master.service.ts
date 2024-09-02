@@ -45,7 +45,6 @@ export class VehicleMasterService {
                 ['Vehicle', 'Make', Make],
             );
             await fetchModel.commitTransaction();
-            console.log('tyy',vehicleModel)
 
             return vehicleModel;
         } catch (e) {
@@ -54,7 +53,6 @@ export class VehicleMasterService {
     }
 
     async fetchVehicleType(Model: string): Promise<string> {
-        console.log('vehicleModel:', Model);
     
         const fetchType = await this.dataSource.createQueryRunner();
         await fetchType.connect();

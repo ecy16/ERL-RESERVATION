@@ -92,6 +92,8 @@ export interface Reservation {
 
 })
 export class BookingScreenComponent implements OnInit {
+  dateVal = new Date();
+
   isCollapsed = false;
   selectedIndex = '1'
   bookingForm: FormGroup;
@@ -217,6 +219,9 @@ export class BookingScreenComponent implements OnInit {
       PayeeCompanyName: ["", Validators.required],
       Remarks: ["", Validators.required],
       ContractNo: ["", Validators.required],
+      BookingDate:["",Validators.required]
+      // BookingDate: [{ value: this.getTodayDate(), disabled: true }, Validators.required],
+
 
     });
     
@@ -231,16 +236,8 @@ export class BookingScreenComponent implements OnInit {
       order: [[8, 'asc']],
       // ordering: false,
       autoWidth: true
-
-
-
     }
-    // const today = new Date().toISOString().split('T')[0];
 
-    // this.bookingForm = this.formBuilder.group({
-    //   BookingDate: [today],
-    //   // other form controls
-    // });
 
    
     this.companyDetails = this.formBuilder.group({});
@@ -327,6 +324,43 @@ export class BookingScreenComponent implements OnInit {
 
 
 
+  saveBookingData() {
+    const data = JSON.stringify(this.bookingForm.value);
+    console.log('BookingInformation',this.bookingForm.value)
+    this.apiService.addReservation(this.bookingForm.value)
+    .subscribe((response: any) => {
+            console.log('responseBookingInfo',response)
+      const ReservationId = response.ReservationId;
+
+    // this.apiService.addReservation(data).subscribe((response: any) => {
+    //   console.log('responseBookingInfo',response)
+
+    //     const ReservationId = response.ReservationId;
+
+        this.fetchAllTrips();
+       
+            this.router.navigate([`BookingDetails/${ReservationId}`]);
+       
+
+        this.toastr.success("Booking Added Successfully");
+      });
+
+      console.log('BookingInformation2',this.bookingForm.value)
+
+
+    this.bookingForm.reset();
+
+  }
+  
+  // getTodayDate(): string {
+  //   console.log(Date,'Date')
+  //   const today = new Date();
+  //   const day = String(today.getDate()).padStart(2, '0');
+  //   const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  //   const year = today.getFullYear();
+  //   return `${year}-${month}-${day}`;
+  // }
+
   open(dates: any) {
     this.modalService.open(dates, { ariaLabelledBy: 'modal-basic-title' });
   }
@@ -357,30 +391,7 @@ export class BookingScreenComponent implements OnInit {
 
 
 
-  saveBookingData() {
-    const data = JSON.stringify(this.bookingForm.value);
-    this.apiService
-      .addReservation(this.bookingForm.value)
-      .subscribe((response: any) => {
-        const ReservationId = response.ReservationId;
-
-        this.fetchAllTrips();
-        // setTimeout(() => {
-        //   const confirmProceed = window.confirm(`Booking information for Reservation ID ${ReservationId} has been saved. Do you wish to add Trip Details?`);
-        //   if (confirmProceed) {
-            this.router.navigate([`BookingDetails/${ReservationId}`]);
-          // }
-        // }, 0);
-
-        this.toastr.success("Booking Added Successfully");
-      });
-
-
-
-    this.bookingForm.reset();
-
-
-  }
+ 
   maxDate(){
     const today = new Date();
     return today.toISOString().split('T')[0];

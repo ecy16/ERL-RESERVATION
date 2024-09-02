@@ -3,59 +3,44 @@ import { IsNumber, IsOptional, IsString } from 'class-validator';
 export class AddReservationDto {
     @IsOptional()
     BookingNo: string;
-    @IsString()
+    @IsOptional()
     BookingDate: string;
-    @IsString()
+    @IsOptional()
     BookingCategory: string;
-    @IsString()
+    @IsOptional()
     BookingType: string;
-    @IsString()
+    @IsOptional()
     Branch: string;
-    @IsString()
+    @IsOptional()
     BookingStatus: string;
-    @IsString()
+    @IsOptional()
     BookingFor: string;
-    @IsString()
     @IsOptional()
     CompanyCode: string;
-    @IsString()
     @IsOptional()
     PayeeCompanyName: string;
-    @IsString()
     @IsOptional()
     Remarks: string;
-    @IsString()
     @IsOptional()
     Source: string;
-    @IsString()
     @IsOptional()
     SourceRefNo: string;
-    // @IsNumber()
     @IsOptional()
     ContractId: number;
-
-    @IsString()
     @IsOptional()
     CreditCardPreAuthStatus: string;
-    @IsString()
     @IsOptional()
     CreatedBy: string;
-    @IsString()
     @IsOptional()
     CreatedOn: string;
-    @IsString()
     @IsOptional()
     TotalAmount: string;
-    @IsString()
     @IsOptional()
     TotalPaid: string;
-    @IsString()
     @IsOptional()
     ExchangeRate: string;
-    @IsString()
     @IsOptional()
     companyName: string;
-    @IsString()
     @IsOptional()
     ContractNo: string;
     

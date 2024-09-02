@@ -14,9 +14,9 @@
               </div>
               <div class="m-2" [formGroup]="bookingForm">
                 <label>Reservation Date</label>
-                <div class="input-group text-sm">
-                  <input type="date" class="form-control border rounded-md" formControlName="BookingDate"
-                   readonly 
+                <div class="text-sm">
+                  <input type="date" class="form-control border rounded-md" formControlName="BookingDate" [ngModel] ="dateVal | date:'yyyy-MM-dd'"
+                   readonly  id="BookingDate"
                   />
                 </div>
                 <div *ngIf="(bookingForm.get('BookingDate')?.invalid &&
