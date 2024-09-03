@@ -123,49 +123,49 @@
               id="FromTime"  />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Delivery'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
             <label>Delivered by</label>
             <input type="text" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="DriverFirstName" id="DriverFirstName" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Collection'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
             <label>Collected by</label>
             <input type="text" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="DriverFirstName" id="DriverFirstName" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction === 'Collection'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction === 'IN'">
             <label>Fuel In</label>
             <input type="number" class="text-sm form-control rounded-md border border-gray-400" formControlName="FuelIN"
               id="FuelIN" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Delivery'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
             <label>Fuel Out</label>
             <input type="number" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="FuelOUT" id="FuelOUT" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Collection'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
             <label>Mileage In</label>
             <input type="number" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="MileageIN" id="MileageIN" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Delivery'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
             <label>Mileage Out</label>
             <input type="number" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="MileageOUT" id="MileageOUT" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Collection'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
             <label>Incidents Type</label>
             <input type="text" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="IncidentsType" id="IncidentsType" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Collection'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
             <label>Incident Date</label>
             <input type="date" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="IncidentDate" id="IncidentDate" required />
@@ -182,7 +182,7 @@
               id="Remarks" required />
           </div>
 
-          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='Collection'">
+          <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
             <label>Reported by</label>
             <input type="text" class="text-sm form-control rounded-md border border-gray-400"
               formControlName="ReportedBy" id="ReportedBy" required />

@@ -62,103 +62,6 @@ export class ReservationsService {
     }
 
 
-    // async searchView(searchReservationsDto: SearchReservationsDto) {
-
-    //     const reservationSearch = new ReservationEntity(searchReservationsDto);
-
-    //     var BookingNo = reservationSearch.BookingNo;
-    //     var fromDate = reservationSearch.CreatedOn;
-    //     var toDate = reservationSearch.ModifiedOn;
-    //     var BookingCategory = reservationSearch.BookingCategory;
-    //     var BookingType = reservationSearch.BookingType;
-    //     var BookingStatus = reservationSearch.BookingStatus;
-
-    //     const searchQuery = await this.reservDataSource.createQueryRunner();
-    //     await searchQuery.connect();
-    //     try {
-    //         await searchQuery.startTransaction();
-    //         const results = await searchQuery.query(
-    //             `select * from _cplReservations
-    //             where BookingNo=@0 and BookingDate between fromDate and toDate and BookingCategory and BookingType and BookingStatus`, [BookingNo, fromDate, toDate, BookingCategory, BookingType, BookingStatus],
-    //         );
-    //         await searchQuery.commitTransaction();
-    //         return results;
-    //     }
-    //     catch (e) {
-    //         throw new Error(`Failed to find any results: ${e.message}`);
-    //     }
-
-    // }
-
-    // async searchView(searchReservationsDto: SearchReservationsDto) {
-    //     // Create a new instance of ReservationEntity from the DTO
-    //     const reservationSearch = new ReservationEntity(searchReservationsDto);
-
-    //     // Extract fields from the reservation search entity
-    //     const { BookingNo, CreatedOn, ModifiedOn, BookingCategory, BookingType, BookingStatus, Branch } = reservationSearch;
-
-    //     // Initialize the query runner
-    //     const searchQuery = await this.reservDataSource.createQueryRunner();
-    //     await searchQuery.connect();
-
-    //     try {
-    //         // Start a transaction
-    //         await searchQuery.startTransaction();
-
-    //         // Build the query dynamically
-    //         let query = "SELECT * FROM _cplReservations WHERE BookingNo <>''";
-    //         const queryParams = [];
-
-    //         if (BookingNo) {
-    //             query += " AND BookingNo = '@0'";
-    //             queryParams.push(BookingNo);
-    //         }
-    //         // if (CreatedOn && ModifiedOn) {
-    //         //     query += " AND BookingDate BETWEEN '@1' AND '@2'";
-    //         //     queryParams.push(CreatedOn, ModifiedOn);
-    //         // }
-    //         // else if (CreatedOn) {
-    //         //     query += " AND BookingDate >= ?";
-    //         //     queryParams.push(CreatedOn);
-    //         // } else if (ModifiedOn) {
-    //         //     query += " AND BookingDate <= ?";
-    //         //     queryParams.push(ModifiedOn);
-    //         // }
-    //         if (BookingCategory) {
-    //             query += " AND BookingCategory = '@1'";
-    //             queryParams.push(BookingCategory);
-    //         }
-    //         if (BookingType) {
-    //             query += " AND BookingType = '@2'";
-    //             queryParams.push(BookingType);
-    //         }
-    //         if (BookingStatus) {
-    //             query += " AND BookingStatus = '@3'";
-    //             queryParams.push(BookingStatus);
-    //         }
-    //         if (Branch) {
-    //             query += " AND Branch = '@4'";
-    //             queryParams.push(Branch);
-    //         }
-
-    //         // Execute the query
-    //         const results = await searchQuery.query(query, queryParams);
-
-    //         // Commit the transaction
-    //         await searchQuery.commitTransaction();
-
-    //         // Return the results
-    //         // return query +'_______________________________'+ queryParams;
-    //         return results
-    //     } catch (e) {
-    //         // Rollback the transaction in case of an error
-    //         await searchQuery.rollbackTransaction();
-    //         throw new Error(`Failed to find any results: ${e.message}`);
-    //     } finally {
-    //         // Release the query runner
-    //         await searchQuery.release();
-    //     }
-    // }
 
 
 
@@ -204,44 +107,7 @@ export class ReservationsService {
 
     }
 
-    // async createReservation(addReservationDto: AddReservationDto) {
-
-
-    //     const reservation = new ReservationEntity(addReservationDto);
-    //     const lastID = await this.findLastRec(reservation.Branch);
-
-    //     let branch_abv = '';
-    //     switch (reservation.Branch) {
-    //         case 'HeadQuarters':
-    //             branch_abv = 'HQ'
-    //             break;
-    //         case 'Mombasa':
-    //             branch_abv = 'MSA'
-    //             break;
-    //         case 'Nanyuki':
-    //             branch_abv = 'NYK'
-    //             break;
-    //         case 'Kisumu':
-    //             branch_abv = 'KSM'
-    //             break;
-    //         default:
-    //             branch_abv = reservation.Branch
-    //             break;
-    //     }
-    //     reservation.BookingNo = 'ERL-' + branch_abv + '-' + lastID[0].lastNo;
-
-    //     // this.reservationEntity.create(reservation);
-
-    //     try {
-
-    //         return await this.reservationEntity.save(reservation);
-
-    //     } catch (err) {
-
-    //         throw new BadRequestException(err);
-    //     }
-
-    // }
+   
 
 
     async createReservation(addReservationDto: AddReservationDto) {

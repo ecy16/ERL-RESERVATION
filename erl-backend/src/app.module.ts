@@ -32,6 +32,7 @@ import { Role } from './role.enum';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { FileUploadService } from './FileUpload.service';
 import { CountriesModule } from './countries/countries.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
     imports: [
@@ -60,7 +61,8 @@ import { CountriesModule } from './countries/countries.module';
         ForgotPasswordModule,
         BillingModule,
         PhotosModule,
-        CountriesModule
+        CountriesModule,
+        TransactionsModule
         // AccessControlModule.forRoles(Role)
     ],
     controllers: [AppController],

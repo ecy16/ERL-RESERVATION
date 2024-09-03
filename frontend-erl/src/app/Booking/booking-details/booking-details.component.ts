@@ -334,6 +334,7 @@ export class BookingDetailsComponent {
       serviceName: "",
       tripNumber: "",
       Stocklink: "",
+      
     });
 
 
@@ -375,8 +376,9 @@ export class BookingDetailsComponent {
     });
     this.tripIncidentsForm.patchValue({
       ReservationId: this.actRoute.snapshot.params["ReservationId"],
+      
     });
-
+   
     this.driverForm = this.formBuilder.group({
       DriverFirstName: ["", Validators.required],
       DriverLastName: ["", Validators.required],
@@ -454,6 +456,7 @@ export class BookingDetailsComponent {
 
 
   ngOnInit() {
+
 
 
     this.tripForm.get('VehicleModel')?.valueChanges.subscribe((model) => {
@@ -1051,6 +1054,18 @@ export class BookingDetailsComponent {
     }
   }
 
+
+fetchTripSId(TripId:any){
+console.log('fetchTripID',TripId)
+this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
+  for(const g of res){
+    this.tripServicesForm.patchValue({
+      tripId:g.tripId,
+      tripNumber:g.tripNumber
+    })
+  }
+})
+}
 
 
 

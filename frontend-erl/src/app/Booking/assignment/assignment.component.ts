@@ -756,7 +756,6 @@ export class AssignmentComponent {
 
 
             doc.text("Veh.Reg", 81, 64);
-            doc.text(d.vehicleRegNo,81,70);
             doc.text("Type", 81, 73);
             doc.line(90, 73, 130, 73);
             doc.text("Pick-up location", 81, 84);
