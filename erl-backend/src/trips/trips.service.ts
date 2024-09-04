@@ -45,7 +45,7 @@ export class TripsService {
             throw new Error(err.message);
         }
     }
-  
+
 
 
 
@@ -78,7 +78,7 @@ export class TripsService {
 
 
 
-    async findTrips(id: number){
+    async findTrips(id: number) {
         const trip = this.tripDataSource.createQueryRunner();
         await trip.connect();
         try {
@@ -99,8 +99,8 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
 
     // async findRelatedContractDetails(id: number) {
     //     // return this.contractDetailsRepo.find({ where: { ContractId: id } });
-    
-    
+
+
     //     const contractsDetailsQuery = await this.contractDetailDataSource.createQueryRunner();
     //     await contractsDetailsQuery.connect();
     //     try {
@@ -108,8 +108,8 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
     //       const contractsDetail = await contractsDetailsQuery.query(
     //         `
     //         select x.* from _cplContractDetails x join  _cplcontracts  y on x.ContractId=y.ContractId where x.ContractId =@0  order by ContractId desc `, [id]
-    
-    
+
+
     //       );
     //       await contractsDetailsQuery.commitTransaction();
     //       return contractsDetail;
@@ -117,9 +117,9 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
     //     catch (e) {
     //       throw new Error(`Failed to find any contracts: ${e.message}`);
     //     }
-    
+
     //   }
-    
+
 
     async findTrips1(id: number) {
 
@@ -314,50 +314,80 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
 
 
     async assignReg(vehicleValidationDto: VehicleValidationDto) {
-        const vehicle = new ReservationTripEntity(vehicleValidationDto)
+        const vehicle = new ReservationTripEntity(vehicleValidationDto);
+const { vehicleID,vehicleRegNo, FromDateTime, ToDateTime } = vehicle;
 
-        const { vehicleID, FromDateTime, ToDateTime } = vehicle;
+const assignRegQuery = this.tripDataSource.createQueryRunner();
+await assignRegQuery.connect();
 
-        const assignRegQuery = this.tripDataSource.createQueryRunner();
-        await assignRegQuery.connect();
+try {
+    await assignRegQuery.startTransaction();
 
-        try {
-            await assignRegQuery.startTransaction();
+    // Query to check for overlapping reservations
+    const overlappingReservations = await assignRegQuery.manager.query(
+        `
+        SELECT COUNT(*)
+        FROM _cplReservationTrips
+        WHERE VehicleId = $1
+        AND (
+            (FromDateTime < $3 AND ToDateTime > $2)  -- Overlaps if reservation starts before and ends after the given range
+        )
+        `,
+        [vehicleID, FromDateTime, ToDateTime]
+    );
 
-            // Validate if the vehicle is available in the given time range
-            const myVehicle = await assignRegQuery.manager.query(
-                `
-SELECT * FROM _cplReservationTrips 
-                 WHERE VehicleId = @0 
-                 AND (
-                     (FORMAT(FromDateTime, 'yyyy-MM-dd HH:mm') BETWEEN @1 AND @2)
-                     OR (FORMAT(ToDateTime, 'yyyy-MM-dd HH:mm') BETWEEN @1 AND @2)
-            )`,
-                [vehicleID, FromDateTime, ToDateTime]
-            );
-            // console.log(vehicleID,'MY VEHICLEID')
-            // Continue with the assignment process if vehicle is available
-            // Your logic to assign the vehicle here...
-
-            await assignRegQuery.commitTransaction();
-            // console.log('Validatee', myVehicle)
-            return myVehicle;
-
-        } catch (error) {
-            await assignRegQuery.rollbackTransaction();
-            throw new BadRequestException(error.message);
-        } finally {
-            await assignRegQuery.release();
-        }
+    // Check if there are overlapping reservations
+    if (overlappingReservations[0].count > 0) {
+        // Vehicle is not available
+        throw new BadRequestException('Vehicle is not available for the selected dates.');
     }
 
-    // select vehicleRegNo,vehicleID from _cplVehicles
-    // where VehicleID=@2 and  vehicleStatus='ReadyToUse' 
-    // and vehicleID not in ( select isnull(vehicleid,0) from _cplReservationTrips 
-    // where (@0 between format(FromDateTime,'yyyy-MM-dd hh:mm') and format(ToDateTime,'yyyy-MM-dd hh:mm')
-    // or @1 between format(FromDateTime,'yyyy-MM-dd hh:mm') and format(ToDateTime,'yyyy-MM-dd hh:mm'))
-    // and (format(fromdatetime,'yyyy-MM-dd hh:mm') between @0 and @1
-    // or format(todatetime,'yyyy-MM-dd hh:mm') between @0 and @1) )
+    // Proceed with vehicle assignment if available
+    // (Insert your vehicle assignment logic here)
+
+    await assignRegQuery.commitTransaction();
+
+    console.log(vehicle);
+    return vehicle;
+
+} catch (error) {
+    await assignRegQuery.rollbackTransaction();
+    throw new BadRequestException(error.message);
+} finally {
+    await assignRegQuery.release();
+}
+
+//         const vehicle = new ReservationTripEntity(vehicleValidationDto)
+
+//         const { vehicleID, FromDateTime, ToDateTime } = vehicle;
+
+//         const assignRegQuery = this.tripDataSource.createQueryRunner();
+//         await assignRegQuery.connect();
+
+//         try {
+//             await assignRegQuery.startTransaction();
+//             const myVehicle = await assignRegQuery.manager.query(
+//                 `
+// SELECT _cplReservationTrips.*,_cplVehicles.vehicleRegNo FROM _cplReservationTrips 
+// left join _cplVehicles on _cplReservationTrips.VehicleId = _cplVehicles.VehicleID
+// WHERE _cplReservationTrips.VehicleId =@0 
+// AND ((FORMAT(FromDateTime, 'yyyy-MM-dd HH:mm') BETWEEN @1 AND @2)OR (FORMAT(ToDateTime, 'yyyy-MM-dd HH:mm') BETWEEN @1 AND @2)
+//             )`,
+//                 [vehicleID, FromDateTime, ToDateTime]
+//             );
+//             await assignRegQuery.commitTransaction();
+// console.log(vehicle)
+//             return vehicle;
+
+//         } catch (error) {
+//             await assignRegQuery.rollbackTransaction();
+//             throw new BadRequestException(error.message);
+//         } finally {
+//             await assignRegQuery.release();
+//         }
+    }
+
+
 
 
 
@@ -393,12 +423,12 @@ SELECT * FROM _cplReservationTrips
         }
     }
 
-    async addVehicleMovement(TripId,vehicleMovementDto:VehicleMovementDto) {
+    async addVehicleMovement(TripId, vehicleMovementDto: VehicleMovementDto) {
         console.log(vehicleMovementDto, 'vehicleMovementDto1')
         const reservationTrip = new ReservationTripEntity(vehicleMovementDto);
         reservationTrip.TripId = TripId;
-        
-       
+
+
         try {
             console.log(vehicleMovementDto, 'vehicleMovementDto')
             return await this.tripsEntity.save(reservationTrip);

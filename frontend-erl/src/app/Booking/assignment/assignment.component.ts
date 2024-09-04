@@ -124,7 +124,7 @@ export class AssignmentComponent {
     this.tripAssignmentList = [];
     this.tripAssignmentForm = this.formBuilder.group({
       DriverServiceStatus: "",
-      TripNo: "",
+      tripNumber: "",
       TripStatus: "",
       VehicleMarks: "",
       FromDateTime: "",
@@ -155,6 +155,7 @@ export class AssignmentComponent {
       DriverFirstName: "",
       BookingCategory: "",
       BookingFor: "",
+      vehicle:""
     });
 
     this.AssignmentSearchForm = this.formBuilder.group({
@@ -458,35 +459,39 @@ export class AssignmentComponent {
   getVehicleRegNo(vehicleModel: string) {
     if (vehicleModel) {
       this.apiService.assignVehicle(vehicleModel).subscribe((res) => {
-        console.log('Api response', res);
         this.fetchedVehicleList = res;
-        console.log('VehicleModel', vehicleModel);
       });
     }
 
   }
+  onVehicleChange(event: any) {
+    const vehicleID = event.target.value;
+    const vehicleRegNo = event.target.selectedOptions[0].getAttribute('data-regno');
+    const FromDateTime = this.tripAssignmentForm.get('FromDateTime')?.value;
+    const ToDateTime = this.tripAssignmentForm.get('ToDateTime')?.value;
+
+    this.checkVehicleAssignment(vehicleID, vehicleRegNo, FromDateTime, ToDateTime);
+}
 
 
 
 
 
 
-  checkVehicleAssignment(vehicleID: Number, FromDateTime: any, ToDateTime: any) {
-    console.log("myvehicleid", vehicleID, FromDateTime, ToDateTime);
+
+  checkVehicleAssignment(vehicleID: Number, vehicleRegNo: string,FromDateTime: any, ToDateTime: any) {
+    console.log("myvehicleid", vehicleID, FromDateTime, ToDateTime,vehicleRegNo);
     // this.vehicleAssignedError = "";
 
     const vehicleDetails = {
       vehicleID:Number(vehicleID),
+      vehicleRegNo:(vehicleRegNo),
       FromDateTime: moment(FromDateTime).format("YYYY-MM-DD HH:mm"),
       ToDateTime: moment(ToDateTime).format("YYYY-MM-DD HH:mm"),
     };
 
 
-
     console.log(vehicleDetails, 'vehicle DDDdetails');
-    // Add your logic here, e.g., call an API or perform validation
-
-
     this.apiService.validateVehicle(vehicleDetails).subscribe((res) => {
       console.log("ResponsfroValidateVehicle:", res);
 
@@ -684,7 +689,7 @@ export class AssignmentComponent {
 
 
         for (const d of this.fetchedCDOData) {
-          console.log('eric eric', d.BookingCategory)
+          console.log('eric eric', d)
           try {
             const doc = new jsPDF({
               orientation: "p",
@@ -755,22 +760,24 @@ export class AssignmentComponent {
             doc.text(d.BookingFor, 12, 98);
 
 
-            doc.text("Veh.Reg", 81, 64);
-            doc.text("Type", 81, 73);
-            doc.line(90, 73, 130, 73);
-            doc.text("Pick-up location", 81, 84);
-            doc.text(d.PickupAddress, 81, 90);
+            doc.text("Veh.Reg: " + d.vehicleRegNo, 81, 64);
+            doc.text("Type: " + d.VehicleModel, 81, 73);
+            doc.text("Pick-up location: " + d.PickupAddress, 81, 84);
 
-            doc.line(110, 84, 130, 84);
-            doc.text("Pick-up time", 81, 93);
-            doc.line(102, 93, 130, 93);
+            // doc.text("Pick-up location:", 81, 84);
+            // doc.text(d.PickupAddress, 81, 75);
+
+            // doc.line(110, 84, 130, 84);
+            // doc.text("Pick-up time", 81, 93);
+            // doc.text(d.PickupAddress, 81, 83);
+
 
             doc.text("CDO.PT_______________", 140, 55);
-            doc.text(d.BookingNo + "/"+ d.tripNumber, 160, 55);
+            doc.text(d.BookingNo + "/"+ d.tripNumber, 155, 55);
 
-            doc.text("Date In:", 140, 64);
+            doc.text("Date In: " + d.FromDateTime, 140, 64);
             doc.line(153, 64, 180, 64);
-            doc.text("Date Out:", 140, 73);
+            doc.text("Date Out:" + d.ToDateTime, 140, 73);
             doc.line(157, 73, 180, 73);
             doc.text("Time", 180, 64);
             doc.line(190, 64, 200, 64);

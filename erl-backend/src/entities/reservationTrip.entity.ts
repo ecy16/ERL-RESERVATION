@@ -1,13 +1,9 @@
 import {
     Column,
     Entity,
-    ManyToOne,
-    OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ReservationEntity } from './reservation.entity';
-import { TripServicesEntity } from './tripServices.entity';
-import { TripIncidentsEntity } from './tripIncidents.entity';
+
 
 @Entity('_cplReservationTrips')
 export class ReservationTripEntity {
@@ -91,6 +87,10 @@ export class ReservationTripEntity {
     Remarks: string;
     @Column({ nullable: true })
     vehicleID: number;
+    @Column({ nullable: true })
+    vehicleRegNo: string;
+  
+
     @Column({ nullable: true })
     Transaction: string;
 

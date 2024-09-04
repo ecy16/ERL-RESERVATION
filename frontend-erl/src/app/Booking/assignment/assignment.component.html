@@ -117,18 +117,18 @@
 
                     <td><button (click)="openEditAssignment(editAssignment)"
                             (click)="fetchTrip(assignment.TripId)">AssignResource</button>
-                       
+
                     </td>
                     <td>
 
-                    <button>
-                        <a class="nav-link" href="delivery" [routerLink]="[
+                        <button>
+                            <a class="nav-link" href="delivery" [routerLink]="[
                             '/delivery',
                             assignment.TripId
                           ]" routerLinkActive="active">
-                            IN/OUT
-                        </a>
-                    </button>
+                                IN/OUT
+                            </a>
+                        </button>
                     </td>
 
                     <!-- <td>{{ assignment.ReservationId }}</td> -->
@@ -151,10 +151,15 @@
                         <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
                             readonly formControlName="BookingNo" />
                     </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
-                        <label>TripNo</label>
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm" hidden>
+                        <label>TripId</label>
                         <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
                             formControlName="TripId" />
+                    </div>
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
+                        <label>TripNo</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" readonly
+                            formControlName="tripNumber" />
                     </div>
 
                     <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
@@ -216,26 +221,19 @@
 
 
 
+                    <!-- (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)"> -->
 
 
 
                     <div class="m-2" [formGroup]="tripAssignmentForm">
                         <label for="VehicleId">Vehicle Registration</label>
-                        <!-- <input #vehicleID class="form-control w-48 rounded-md border border-gray-400 text-sm" type="text"
-                            formControlName="vehicleID" list="datalistOptions" id="vehicleID"
-                            (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
-                            (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
-                        <datalist  id="datalistOptions">
-                            <option *ngFor="let vehicle of fetchedVehicleList" value="{{vehicle.vehicleRegNo }}">
-                                {{ vehicle.vehicleID}}
-                            </option>
-                        </datalist> -->
-
+                        
                         <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
                             (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
-                            (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
+                            (change)="onVehicleChange($event)"
+                            >
                             <option value="">Select vehicleRegistration</option>
-                            <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID'>
+                            <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID' [attr.data-regno]='vehicle.vehicleRegNo'>
                                 {{ vehicle.vehicleRegNo }}
                             </option>
                         </select>
@@ -252,7 +250,6 @@
                                 *ngIf="tripAssignmentForm.get('BookingFor')?.hasError('required')">*This field
                                 is
                                 required</small>
-
                         </div>
                     </div>
                     <div class="m-2" [formGroup]="tripAssignmentForm"
@@ -454,7 +451,7 @@
 
 
 
-    
+
 </div>
 
 

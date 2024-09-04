@@ -3,7 +3,9 @@ import { IsOptional } from "class-validator";
 export class VehicleValidationDto {
     @IsOptional()
     vehicleID: number;
-    @IsOptional()
+        @IsOptional()
+        vehicleRegNo:string
+        @IsOptional()
     FromDateTime: string;
     @IsOptional()
     ToDateTime: string;

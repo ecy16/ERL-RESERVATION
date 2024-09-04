@@ -23,6 +23,8 @@ export class TripsController {
     fetchTrips(@Param('id') id: number) {
         return this.tripService.findTrips((id));
     }
+
+    
     @Get('ById/:id')
     getOneTrip(@Param('id') id: number) {
         return this.tripService.findTrips1((id));

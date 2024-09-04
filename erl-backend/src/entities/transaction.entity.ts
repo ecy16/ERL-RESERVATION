@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, Transaction } from "typeorm";
 @Entity('_cplTransactions')
 
 export class TransactionEntity {
@@ -53,6 +53,8 @@ export class TransactionEntity {
     @Column({ nullable: true })
     VehicleMake: string;
     @Column({ nullable: true })
+    vehicleRegNo: string;
+    @Column({ nullable: true })
     VehicleModel: string;
     @Column('float', { nullable: true })
     MileageCap: number;
@@ -86,6 +88,7 @@ export class TransactionEntity {
     vehicleID: number;
     @Column({ nullable: true })
     Transaction: string;
+    @Column({ nullable: true })
     ServiceId: number;
     @Column({ nullable: true })
     serviceName: string;
@@ -104,7 +107,7 @@ export class TransactionEntity {
 
 
 
-
+   
 
 
 }
