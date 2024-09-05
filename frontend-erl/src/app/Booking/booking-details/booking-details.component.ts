@@ -1012,27 +1012,6 @@ export class BookingDetailsComponent {
   }
 
 
-  copyTrips(TripId: any) {
-    console.log(TripId, 'CopyTripsClicked')
-
-    const userConfirmed = window.confirm('This action copies the Trip.Do you wish to proceed?');
-    if (userConfirmed) {
-      this.apiService.getOneTrip(TripId).subscribe((res: any) => {
-        console.log(res, "First response");
-       
-      
-        const { TripId, ...tripWithoutId } = res;
-        console.log(res, "modified response");
-
-        this.apiService.addTrip(tripWithoutId).subscribe((response) => {
-          this.fetchRelatedTrips(response.TripId)
-
-          console.log(response, "copied response");
-
-        })
-      })
-    }
-  }
   copyTrip(tripId: any) {
     console.log(tripId, 'CopyTripsClicked');
   
@@ -1042,11 +1021,11 @@ export class BookingDetailsComponent {
         console.log(res, "First response");
   
         // Create a new object without the TripId
-        const { TripId, ...tripWithoutId } = res;
+        const { TripId,vehicleRegNo, ...tripWithoutId } = res;
         console.log(tripWithoutId, "Modified response");
   
         this.apiService.addTrip(tripWithoutId).subscribe((response) => {
-          this.tripData.push(response);
+          this.tripData=(response);
           this.fetchRelatedReservationTrips(this.reservationId);
           console.log(response, "Copied response");
         });
@@ -1060,7 +1039,7 @@ console.log('fetchTripID',TripId)
 this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
   for(const g of res){
     this.tripServicesForm.patchValue({
-      tripId:g.tripId,
+      TripId:g.TripId,
       tripNumber:g.tripNumber
     })
   }
@@ -1270,6 +1249,18 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
   openTripServices(TripService: any) {
     this.modalService
       .open(TripService, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        (result) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
+  }
+  openEditTripServices(EditTripService: any) {
+    this.modalService
+      .open(EditTripService, { ariaLabelledBy: "modal-basic-title" })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;

@@ -20,7 +20,7 @@ import { RosterComponent } from "./roster/roster.component";
 import { DeliveryComponent } from "./delivery/delivery.component";
 import { ScheduledTripsComponent } from "./scheduled-trips/scheduled-trips.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   // {path:"",component:LoginComponent},
 
   { path: "vehicles", component: VehiclesComponent },
@@ -47,7 +47,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  // imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
+
+export { Routes };
