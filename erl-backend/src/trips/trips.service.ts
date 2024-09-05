@@ -31,7 +31,6 @@ export class TripsService {
     ) { }
 
     async createTrip(addTripsDto: AddTripDto) {
-        console.log(addTripsDto, 'AddTripDto')
         const reservationTrip = new ReservationTripEntity(addTripsDto);
         const lastTripNo = await this.findLastRelatedTrips(
 
@@ -136,7 +135,6 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
             throw new NotFoundException('trips not found');
         }
         Object.assign(trips, attrs);
-        console.log(trips)
         return this.tripsRepo.save(trips);
     }
 
@@ -218,7 +216,6 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
 
             );
             await trip.commitTransaction();
-            console.log(TripId, 'my trip ID')
             return tripInfo;
         } catch (e) {
             throw new Error(`Failed to find trips: ${e.message}`);
@@ -285,7 +282,6 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
                 `select  distinct category_Options from _cplItemMaster where item_Name=@0 and category_name=@1`,
                 ['ReservationTrip', 'TripStatus'],
             );
-            // console.log('helleo')
             await tripStatusQuery.commitTransaction();
             return tripStatus;
         } catch (e) {
@@ -347,7 +343,6 @@ try {
 
     await assignRegQuery.commitTransaction();
 
-    console.log(vehicle);
     return vehicle;
 
 } catch (error) {
@@ -424,13 +419,11 @@ try {
     }
 
     async addVehicleMovement(TripId, vehicleMovementDto: VehicleMovementDto) {
-        console.log(vehicleMovementDto, 'vehicleMovementDto1')
         const reservationTrip = new ReservationTripEntity(vehicleMovementDto);
         reservationTrip.TripId = TripId;
 
 
         try {
-            console.log(vehicleMovementDto, 'vehicleMovementDto')
             return await this.tripsEntity.save(reservationTrip);
         } catch (err) {
             throw new Error(err.message);

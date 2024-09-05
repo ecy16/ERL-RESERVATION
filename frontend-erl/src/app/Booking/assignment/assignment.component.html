@@ -121,14 +121,21 @@
                     </td>
                     <td>
 
-                        <button>
+                        <!-- <button>
                             <a class="nav-link" href="delivery" [routerLink]="[
                             '/delivery',
                             assignment.TripId
                           ]" routerLinkActive="active">
                                 IN/OUT
                             </a>
-                        </button>
+                        </button> -->
+                        <button *ngIf="assignment.chosenRegNo">
+  <a class="nav-link" [routerLink]="['/delivery', assignment.TripId]" routerLinkActive="active">
+    IN/OUT
+  </a>
+</button>
+
+                          
                     </td>
 
                     <!-- <td>{{ assignment.ReservationId }}</td> -->
@@ -430,19 +437,18 @@
 
                 </div>
                 <div>
-                    <!-- *ngIf="fetchedTripList && fetchedTripList.length > 0 && fetchedTripList[0]?.BookingCategory === 'ChaufferDriven'"> -->
-                    <button
+                    <!-- <button 
                         class="border rounded-md m-2 p-2 text-center w-24 text-red-700 hover:bg-red-700 hover:text-white"
                         (click)="generateCDO(tripAssignmentForm.get('TripId').value)">
                         CDO
                         <mat-icon class="p-1">get_app</mat-icon>
-                    </button>
+                    </button> -->
                 </div>
 
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"
-                        (click)="editTripAssignment(tripAssignmentForm.get('TripId').value)">Save</button>
+                        (click)="assignResource(tripAssignmentForm.get('TripId').value)">Save</button>
                 </div>
             </form>
         </div>

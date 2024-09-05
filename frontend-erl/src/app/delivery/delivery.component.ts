@@ -1294,7 +1294,6 @@ this.assignmentAllTrips.push(this.deliveryForm.value)
 
 
   generateRA(TripId: any) {
-    // console.log();
     this.fetchedRAData = [];
 
     // const { jsPDF } = window.jspdf;
@@ -1313,7 +1312,7 @@ console.log('fetchedRAData', this.fetchedRAData)
 
 
     for( const d of this.fetchedRAData){
-      console.log('eric eric', d.BookingCategory)
+      console.log('eric eric', d)
 
       try {
         const doc = new jsPDF({
