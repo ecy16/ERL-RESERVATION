@@ -23,6 +23,10 @@ export class ReservationsController {
     fetchReservation(@Param('id') id: string) {
         return this.reservationsService.findReservationsById(parseInt(id));
     }
+    @Get('/details/:id')
+    fetchOneReservation(@Param('id') id: string) {
+        return this.reservationsService.findReservations(parseInt(id));
+    }
 
     @Get()
     // @UseGuards(RolesGuard)

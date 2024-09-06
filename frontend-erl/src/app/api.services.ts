@@ -299,7 +299,9 @@ export class ApiService {
   fetchReservation(Id: any): Observable<any[]> {
     return this.http.get<any[]>(`${this.resvUrl}/` + Id);
   }
-
+  fetchOneReservation(Id: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.resvUrl}/details/` + Id);
+  }
   addTrip(tripForm: any): Observable<any> {
     return this.http.post<any[]>(`${this.tripUrl}/create`, tripForm);
   }

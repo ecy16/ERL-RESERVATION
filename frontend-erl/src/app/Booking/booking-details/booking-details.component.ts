@@ -3,6 +3,7 @@ import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { MatTableModule } from "@angular/material/table";
 import { CommonModule, NgFor } from "@angular/common";
 import { Router } from '@angular/router';
+import { COUNTRIES_WITH_CODES } from "src/app/countries";
 
 import {
   FormBuilder,
@@ -50,8 +51,11 @@ export class BookingDetailsComponent {
   dataToExport: any;
 
 
-
-
+  countries = [
+    { name: 'United States' },
+    { name: 'Canada' },
+    { name: 'United Kingdom' },
+  ];
 
   private modalService = inject(NgbModal);
   @Input() showOption: string = "";
@@ -139,8 +143,26 @@ export class BookingDetailsComponent {
 
   nativeElement: any;
   ServiceQuantity: any[];
-  countries: any[] = [];
-  countryCodes: string[] = ['+1 (USA)', '+44 (UK)', '+91 (India)', '+254 (Kenya)', '+81 (Japan)']; 
+  countryCodes: string[] = ['+1 (USA)',
+    '+44 (UK)',
+    '+91 (India)',
+    '+254 (Kenya)',
+    '+81 (Japan)',
+    '+33 (France)',
+    '+49 (Germany)',
+    '+61 (Australia)',
+    '+39 (Italy)',
+    '+55 (Brazil)',
+    '+7 (Russia)',
+    '+27 (South Africa)',
+    '+20 (Egypt)',
+    '+86 (China)',
+    '+27 (South Africa)',
+    '+60 (Malaysia)',
+    '+63 (Philippines)',
+    '+64 (New Zealand)',
+    '+34 (Spain)',
+    '+31 (Netherlands)']; 
 
   selectedFile: File | null = null;
   uploadProgress: number | null = null;
@@ -149,6 +171,7 @@ export class BookingDetailsComponent {
   showAddressLine3 = false;
   showServicesInTrips: boolean = false;
   rest: any;
+  resvList: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -159,6 +182,7 @@ export class BookingDetailsComponent {
     private readonly renderer: Renderer2,
   ) {
     this.DriverList = [];
+    this.resvList=[];
     this.BookingData = [];
     this.BookingCategory = [];
     this.companiesData = [];
@@ -283,6 +307,7 @@ export class BookingDetailsComponent {
     this.tripForm.patchValue({
       ReservationId: this.actRoute.snapshot.params["ReservationId"],
     });
+ 
 
 
     this.bookingFormEdit = this.formBuilder.group({
@@ -384,7 +409,7 @@ export class BookingDetailsComponent {
    
     this.driverForm = this.formBuilder.group({
       DriverFirstName: ["", Validators.required],
-      DriverLastName: ["", Validators.required],
+      // DriverLastName: ["", Validators.required],
       DriverDOB: ["", Validators.required],
       DriverLicenseNo: ["", Validators.required],
       DriverLicenseIssue: ["", Validators.required],
@@ -404,6 +429,7 @@ export class BookingDetailsComponent {
       BookingRemarks: ["", Validators.required],
       ReservationId: "",
     });
+    
 
     this.driverFormUpdate = this.formBuilder.group({
       DriverFirstName: [""],
@@ -778,8 +804,9 @@ export class BookingDetailsComponent {
       this.TripId,
     );
     console.log("trips services", this.tripServicesForm.value, this.TripId);
+    const { BookingNo, ...newres } =this.tripServicesForm.value ;
+    this.apiService.addTripService(newres).subscribe((res) => {
 
-    this.apiService.addTripService(this.tripServicesForm.value).subscribe((res) => {
       this.tripServicesList.push(res)
       console.log(res,'tripservice res')
     })
@@ -1073,15 +1100,15 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
         for (const a of tripNumbers) {
           this.tripReservationList.push(a);
         }
-// for(const dd of this.tripReservationList ){
-//   this.tripServicesForm.patchValue({
-//     tripNumber:dd.tripNumber,
-//     TripId:dd.TripId,
-//     reservationId:dd.reservationId,
-//     BookingNo:dd.BookingNo
+for(const dd of this.tripReservationList ){
+  this.tripServicesForm.patchValue({
+    tripNumber:dd.tripNumber,
+    TripId:dd.TripId,
+    reservationId:dd.reservationId,
+    BookingNo:dd.BookingNo
     
-//   })
-// }
+  })
+}
         console.log(this.tripReservationList, "....ffffffffffff");
       });
   }
@@ -1195,6 +1222,30 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
       }
 
     });
+  }
+
+
+  fetchDriverInfo(){
+    console.log("cliicked");
+
+    const ReservationId = this.actRoute.snapshot.params['ReservationId'];
+      this.resvList=[]
+this.apiService.fetchOneReservation(ReservationId).subscribe((res)=>{
+  console.log("fetchedResvdriver", res);
+
+  this.resvList.push(res)
+
+  for(const dr of this.resvList){
+    this.driverForm.patchValue({
+      DriverFirstName:dr.BookingFor,
+      // BookingFor:dr.DriverLastName
+    })
+
+  }
+})
+
+
+
   }
 
   fetchDriver(BookingDriverId: any) {
@@ -1372,6 +1423,21 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
     }
   }
 
+
+  // onCountryChange(selectedCountry: string | null) {
+  //   if (!selectedCountry) {
+  //     return;
+  //   }
+  
+  //   const selected = this.countriesWithCodes.find(
+  //     country => country.name === selectedCountry
+  //   );
+  //   if (selected) {
+  //     this.driverForm.patchValue({ DialCode: selected.dialCode });
+  //   }
+  // }
+  
+  
 
 
 }

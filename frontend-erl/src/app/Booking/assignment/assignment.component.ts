@@ -156,6 +156,7 @@ export class AssignmentComponent {
       DriverFirstName: "",
       BookingCategory: "",
       BookingFor: "",
+      Remarks:""
     });
 
     this.AssignmentSearchForm = this.formBuilder.group({
@@ -440,7 +441,8 @@ export class AssignmentComponent {
           vehicleID: d.vehicleID,
           DriverId: d.DriverId,
           DriverFirstName: d.DriverFirstName,
-          vehicleRegNo: d.vehicleRegNo
+          vehicleRegNo: d.vehicleRegNo,
+          Remarks:d.Remarks
         });
 
         console.log(d.PickupName, "driverr patched");
@@ -825,9 +827,9 @@ export class AssignmentComponent {
             doc.text("CDO.PT_______________", 140, 55);
             doc.text(d.BookingNo + "/"+ d.tripNumber, 155, 55);
 
-            doc.text("Date In: " + d.FromDateTime, 140, 64);
+            doc.text("Date In: ", 140, 64);
             doc.line(153, 64, 180, 64);
-            doc.text("Date Out:" + d.ToDateTime, 140, 73);
+            doc.text("Date Out:", 140, 73);
             doc.line(157, 73, 180, 73);
             doc.text("Time", 180, 64);
             doc.line(190, 64, 200, 64);
@@ -848,10 +850,16 @@ export class AssignmentComponent {
             doc.text("Kms Driven", 136, 99);
 
             doc.setFont("helvetica", "bold");
-            doc.setFontSize(14);
+            doc.setFontSize(11);
             doc.text("SERVICE INSTRUCTIONS", 105, 110, { align: "center" }, null);
             doc.rect(10, 115, 190, 60); // Rectangle for Service Instructions
+            const remarks = d.Remarks; // Replace with actual data
+            const textHeight = 10; // Approximate height of text, adjust as necessary
+            const rectangleHeight = 60;
+            const verticalPadding = (rectangleHeight - textHeight) / 2;
             
+            // Add remarks text centered horizontally and vertically
+            doc.text(remarks, 105, 125 + verticalPadding, { align: "center" });
 
             doc.rect(10, 180, 110, 90);
             // Expenses Table header

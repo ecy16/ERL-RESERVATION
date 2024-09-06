@@ -37,7 +37,6 @@ export class TripsServicesService {
     }
 
     findTripsService(id: number) {
-        console.log(id)
         return this.tripservicesRepo.findOne({ where: { ServiceId: id } });
     }
 

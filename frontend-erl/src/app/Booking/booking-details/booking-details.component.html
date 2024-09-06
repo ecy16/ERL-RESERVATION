@@ -250,6 +250,8 @@
                 <th>Pick Up Address</th>
                 <th>Drop Address</th>
                 <th>Pick Up Contacts</th>
+                <th>Description</th>
+
                 <th class="text-center">Action</th>
               </tr>
             </thead>
@@ -263,13 +265,13 @@
                 <td><span>{{ trip.ArrivalFlightNo }}</span></td>
                 <td><span>{{ trip.ArrivalFlightDateTime }}</span></td>
                 <td><span>{{ trip.DepartureFlightNo }}</span></td>
-
                 <td><span>{{ trip.DepartureFlightDateTime }}</span></td>
-
-                <td class="whitespace-nowrap"><span>{{ trip.Airline }}</span></td>
+                <td><span>{{ trip.Airline }}</span></td>
                 <td><span>{{ trip.PickupAddress }}</span></td>
                 <td><span>{{ trip.DropAddress }}</span></td>
                 <td><span>{{ trip.PickupContactNo }}</span></td>
+                <td><span>{{ trip.Remarks }}</span></td>
+
                 <td class="text-center w-24">
                   <button class="action-button" (click)="openTripEdit(editTrip)" (click)="fetchTrip(trip.TripId)">
                     <mat-icon>edit</mat-icon>
@@ -286,7 +288,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -689,7 +691,6 @@
                     <div class="modal-body">
                       <form [formGroup]="tripServicesForm" id="tripServicesForm">
                         <div class="tripServicesForm grid grid-cols-2 gap-2">
-                          <div class="text-sm" [formGroup]="tripServicesForm">
                             <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" >
                               <label>BookingNo</label>
                               <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
@@ -711,7 +712,6 @@
                             <label>TripId</label>
                             <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
                               formControlName="TripId" />
-                          </div>
                           </div>
                           <div class="text-sm" [formGroup]="tripServicesForm">
                             <label for="serviceName">Service Name</label>
@@ -1165,7 +1165,7 @@
                   <label>Tripssss</label>
                   <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" >
                     <label>BookingNo</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" value="ReservationId"
                       formControlName="BookingNo" />
                   </div>
 
@@ -1222,10 +1222,7 @@
                     <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
                       {{ status.category_Options }}
                     </option>
-                    <!-- <option *ngFor="let TripServiceStatus of serviceStatusList"
-                      value="{{ TripServiceStatus.category_Options }}">
-                      {{ TripServiceStatus.category_Options }}
-                    </option> -->
+                
                   </select>
                 </div>
 
@@ -1406,7 +1403,7 @@
 
     <div class="m-1 p-2" *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">
       <ng-container *ngIf="BookingData && BookingData.length > 0">
-        <button (click)="open(driversInfo)"
+        <button (click)="open(driversInfo)" (click)="fetchDriverInfo()"
           class="button border-1 border-red-700  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">
           <p>Add Drivers</p>
         </button>
@@ -1448,15 +1445,15 @@
         <div class="modal-body">
           <form class="grid grid-cols-2 text-sm" [formGroup]="driverForm">
 
-            <div class="m-2 text-sm gap-2" [formGroup]="driverForm" hidden>
+            <div class="m-2 text-sm gap-2" [formGroup]="driverForm" hidden >
               <label>reservationId</label>
               <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
                 formControlName="ReservationId" />
             </div>
             <div class="m-2" [formGroup]="driverForm">
-              <label>Driver First Name</label>
+              <label>Drivers Name</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="DriverFirstName" id="DriverFirstName" required />
+                formControlName="DriverFirstName" id="DriverFirstName"  />
               <div *ngIf="
                               (driverForm.get('DriverFirstName')?.invalid &&
                                 driverForm.get('DriverFirstName')?.errors &&
@@ -1469,7 +1466,7 @@
               </div>
             </div>
 
-            <div class="m-2" [formGroup]="driverForm">
+            <!-- <div class="m-2" [formGroup]="driverForm">
               <label>Driver Last Name</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="DriverLastName" id="DriverLastName" />
@@ -1483,7 +1480,7 @@
                   is
                   required</small>
               </div>
-            </div>
+            </div> -->
             <div class="m-2" [formGroup]="driverForm">
               <label>Driver DOB</label>
               <div class="input-group border rounded-md">
@@ -1642,10 +1639,10 @@
               <label>ContactNo</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="ContactNo" id="ContactNo" list="dialingCode" placeholder="Type to search..." />
-              <datalist id="dialingCode">
+              <!-- <datalist id="dialingCode">
                 <option value="" disabled selected>Select Country</option>
                 <option *ngFor="let data of countries" [value]="data.name">{{ data.name }}</option>
-              </datalist>
+              </datalist> -->
 
               <div *ngIf="
                               (driverForm.get('ContactNo')?.invalid &&
