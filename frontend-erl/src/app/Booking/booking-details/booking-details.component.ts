@@ -334,6 +334,7 @@ export class BookingDetailsComponent {
       serviceName: "",
       tripNumber: "",
       Stocklink: "",
+      BookingNo:""
       
     });
 
@@ -378,6 +379,8 @@ export class BookingDetailsComponent {
       ReservationId: this.actRoute.snapshot.params["ReservationId"],
       
     });
+
+    
    
     this.driverForm = this.formBuilder.group({
       DriverFirstName: ["", Validators.required],
@@ -772,18 +775,15 @@ export class BookingDetailsComponent {
     JSON.stringify(
       this.tripServicesForm.value,
       this.ReservationId,
-      this.TripId
+      this.TripId,
     );
     console.log("trips services", this.tripServicesForm.value, this.TripId);
 
     this.apiService.addTripService(this.tripServicesForm.value).subscribe((res) => {
       this.tripServicesList.push(res)
+      console.log(res,'tripservice res')
     })
-
-
-
     this.toastr.success("Service Added Successfully");
-
   }
 
   //-------edit trip service-------//
@@ -1073,6 +1073,15 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
         for (const a of tripNumbers) {
           this.tripReservationList.push(a);
         }
+// for(const dd of this.tripReservationList ){
+//   this.tripServicesForm.patchValue({
+//     tripNumber:dd.tripNumber,
+//     TripId:dd.TripId,
+//     reservationId:dd.reservationId,
+//     BookingNo:dd.BookingNo
+    
+//   })
+// }
         console.log(this.tripReservationList, "....ffffffffffff");
       });
   }
@@ -1106,6 +1115,8 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
       //  this.fetchRelatedTrips(this.reservationId);
     });
   }
+
+
 
   editTripDetails(TripId: any) {
     console.log(TripId);

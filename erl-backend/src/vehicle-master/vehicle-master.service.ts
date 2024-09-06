@@ -64,7 +64,6 @@ export class VehicleMasterService {
                 `select category_Options_2 from _cplItemMaster where item_Name='Vehicle' and category_Options_1=@0`,
                 [Model]
             );
-            console.log('vehicleModel2:', Model);
 
             await fetchType.commitTransaction();
             console.log('vehicleType:', VehicleType);
@@ -74,7 +73,6 @@ export class VehicleMasterService {
             // return VehicleType.length > 0 ? VehicleType[0].category_Options_2 : null;
 
         } catch (e) {
-            console.log('vehicleModel:4', fetchType);
             throw new Error(`Failed to fetch vehicle type: ${e.message}`);
         } 
     }
