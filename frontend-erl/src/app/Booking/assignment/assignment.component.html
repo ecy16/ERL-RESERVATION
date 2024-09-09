@@ -208,6 +208,21 @@
                     <div class="m-2" [formGroup]="tripAssignmentForm">
                         <label> Vehicle Model</label>
                         <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
+                            <option>Select model</option>
+                          <option *ngFor="let vehicleModel of vehicleModelList" [value]="vehicleModel.category_Options_1">
+                            {{ vehicleModel.category_Options_1 }}
+                          </option>
+                        </select>
+                        <div *ngIf="(tripAssignmentForm.get('VehicleModel')?.invalid && tripAssignmentForm.get('VehicleModel')?.errors && tripAssignmentForm.get('VehicleModel')?.dirty) || tripAssignmentForm.get('VehicleModel')?.touched">
+                          <small class="text-red-700" *ngIf="tripAssignmentForm.get('VehicleModel')?.hasError('required')">*This field is required</small>
+                        </div>
+                      </div>
+                      
+                    <!-- <div class="m-2" [formGroup]="tripAssignmentForm">
+                        <label> Vehicle Model</label>
+                        <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel"         
+                        (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
+                        >
                             <option *ngFor="let vehicleModel of vehicleModelList"
                                 value="{{ vehicleModel.category_Options_1 }}">
                                 {{ vehicleModel.category_Options_1 }}
@@ -224,7 +239,7 @@
                                 field
                                 is required</small>
                         </div>
-                    </div>
+                    </div> -->
 
 
 
@@ -236,7 +251,6 @@
                         <label for="VehicleId">Vehicle Registration</label>
                         
                         <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
-                            (click)="getVehicleRegNo(tripAssignmentForm.get('VehicleModel').value)"
                             (change)="onVehicleChange($event)"
                             >
                             <option value="">Select vehicleRegistration</option>

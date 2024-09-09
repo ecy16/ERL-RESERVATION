@@ -350,7 +350,7 @@ export class BookingDetailsComponent {
     this.tripServicesData = [];
     this.tripServicesForm = this.formBuilder.group({
       serviceCode: "",
-      quantity: "",
+      quantity: "1",
       TripCharge: "",
       TripServiceStatus: "InProgress",
       ReservationId: "",

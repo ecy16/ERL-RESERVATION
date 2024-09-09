@@ -80,5 +80,5 @@ export class PhotosService {
       CreatedOn: new Date(),
     });
     return await this.docAttachmentsRepository.save(docAttachment);
-  }
+   }
 }

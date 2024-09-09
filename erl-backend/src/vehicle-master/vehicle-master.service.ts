@@ -66,8 +66,9 @@ export class VehicleMasterService {
             );
 
             await fetchType.commitTransaction();
-            console.log('vehicleType:', VehicleType);
     
+
+
             // Assuming result is an array and we need the first entry
             return VehicleType
             // return VehicleType.length > 0 ? VehicleType[0].category_Options_2 : null;

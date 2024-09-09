@@ -71,6 +71,10 @@ export class TripsController {
     fetchRelatedTrips(@Param('reservationId') reservationId: string) {
         return this.tripService.findRelatedTrips(parseInt(reservationId));
     }
+    @Get('Asstrip/:id')
+    findAssignmentTrips(@Param('id') id: string) {
+        return this.tripService.findRelatedTrips(parseInt(id));
+    }
     @Post('/sorted')
     fetchSortedTrips() {
         return this.tripService.fetchSortedTrips();

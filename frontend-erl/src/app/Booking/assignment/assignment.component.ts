@@ -211,6 +211,20 @@ export class AssignmentComponent {
       console.log("Filtered reservations:", this.filteredReservations);
       this.assignmentData = [...this.filteredReservations];
     });
+    const selectedVehicleModel = this.tripAssignmentForm.get('VehicleModel').value;
+
+    // Fetch vehicle details based on the pre-selected model if it exists
+    if (selectedVehicleModel) {
+      this.getVehicleRegNo(selectedVehicleModel);
+    }
+
+    // Optionally, subscribe to model changes if you want to refetch data when the model changes
+    this.tripAssignmentForm.get('VehicleModel').valueChanges.subscribe((model: string) => {
+      if (model) {
+        this.getVehicleRegNo(model);
+      }
+    });
+  
 
     //   this.filteredReservations = data.filter(reservation => {
     //     return reservation.BookingStatus === 'InProgress';
@@ -320,15 +334,12 @@ export class AssignmentComponent {
   searching() { }
 
   fetchModels(VehicleMake: any) {
-    // console.log(vehicleMake, "vehiclemake");
-
-    // this.apiService.getVehicleModel(vehicleMake)
     this.apiService.getVehicleModel(VehicleMake).subscribe((VehicleModel) => {
       this.vehicleModelList = [];
       for (const g of VehicleModel) {
         this.vehicleModelList.push(g);
       }
-      console.log(VehicleMake, "eric");
+      console.log(VehicleModel, "vehiclechanges");
     });
   }
 
@@ -457,76 +468,38 @@ export class AssignmentComponent {
   }
 
 
+  
+
+
+
+
+  navigateTo(page: string) {
+    this.router.navigate([page]);
+    console.log("navigationss", page);
+  }
+
+
+
 
   getVehicleRegNo(vehicleModel: string) {
     if (vehicleModel) {
       this.apiService.assignVehicle(vehicleModel).subscribe((res) => {
         this.fetchedVehicleList = res;
+        // Only fetching the vehicle list; assignment logic should be elsewhere
       });
     }
-
   }
+  
   onVehicleChange(event: any) {
     const vehicleID = event.target.value;
     const vehicleRegNo = event.target.selectedOptions[0].getAttribute('data-regno').toString();
     const FromDateTime = this.tripAssignmentForm.get('FromDateTime')?.value;
     const ToDateTime = this.tripAssignmentForm.get('ToDateTime')?.value;
-
+  
     this.checkVehicleAssignment(vehicleID, vehicleRegNo, FromDateTime, ToDateTime);
-}
-
-
-
-
-
-
-
-  checkVehicleAssignments(vehicleID: Number, vehicleRegNo: string,FromDateTime: any, ToDateTime: any) {
-    console.log("myvehicleid", vehicleID, FromDateTime, ToDateTime,vehicleRegNo);
-    // this.vehicleAssignedError = "";
-
-    const vehicleDetails = {
-      vehicleID:Number(vehicleID),
-      vehicleRegNo:String(vehicleRegNo),
-      FromDateTime: moment(FromDateTime).format("YYYY-MM-DD HH:mm"),
-      ToDateTime: moment(ToDateTime).format("YYYY-MM-DD HH:mm"),
-    };
-
-
-    console.log(vehicleDetails, 'vehicle DDDdetails');
-    this.apiService.validateVehicle(vehicleDetails).subscribe((res) => {
-      console.log("ResponsfroValidateVehicle:", res);
-
-
-      if (res && res.length > 0) {
-        const confirmProceed = window.confirm(
-          `This Vehicle has already been assigned to TripNo: ${res[0].TripId}. Do you wish to proceed?`
-        );
-        if (!confirmProceed) {
-          this.vehicleAssignedError = "This vehicle is already assigned.";
-        } else {
-          this.tripAssignmentForm.get('vehicleID').setValue(vehicleID);
-          this.tripAssignmentForm.patchValue({vehicleID:vehicleID})
-          this.tripAssignmentForm.get('vehicleRegNo').setValue(vehicleRegNo);
-          this.tripAssignmentForm.patchValue({vehicleRegNo:vehicleRegNo})
-          this.tripAssignmentForm.get('TripStatus').setValue('Scheduled');
-
-          this.isVehicleAssigned = true;
-
-        }
-      } else {
-        // If no conflict, proceed with assignment
-        this.tripAssignmentForm.get('vehicleID').setValue(vehicleID);
-        this.tripAssignmentForm.get('vehicleRegNo').setValue(vehicleRegNo);
-        this.tripAssignmentForm.get('TripStatus').setValue('Scheduled');
-
-        this.isVehicleAssigned = true;
-
-      }
-    });
-    console.log(this.tripAssignmentForm.value,'afterVehicle')
   }
-  checkVehicleAssignment(vehicleID: Number, vehicleRegNo: string, FromDateTime: any, ToDateTime: any) {
+  
+  checkVehicleAssignment(vehicleID: number, vehicleRegNo: string, FromDateTime: any, ToDateTime: any) {
     const vehicleDetails = {
       vehicleID: Number(vehicleID),
       vehicleRegNo: String(vehicleRegNo),
@@ -541,36 +514,28 @@ export class AssignmentComponent {
         );
         if (!confirmProceed) {
           this.vehicleAssignedError = "This vehicle is already assigned.";
-          this.isVehicleAssigned = false;
         } else {
-          this.tripAssignmentForm.patchValue({
-            vehicleID: vehicleID,
-            vehicleRegNo: vehicleRegNo,
-            TripStatus: 'Scheduled'
-          });
+          this.assignVehicleToTrip(vehicleID, vehicleRegNo); // Centralized assignment logic
         }
-      } else {
-        // No conflict, proceed with assignment
-        this.tripAssignmentForm.patchValue({
-          vehicleID: vehicleID,
-          vehicleRegNo: vehicleRegNo,
-          TripStatus: 'Scheduled'
-        });
-        this.isVehicleAssigned = true;
       }
-  
-      console.log('Vehicle assigned:', this.isVehicleAssigned);
     });
+  
+  }
+  
+  assignVehicleToTrip(vehicleID: number, vehicleRegNo: string) {
+    // Only assign the vehicle once
+    this.tripAssignmentForm.patchValue({
+      vehicleID: vehicleID,
+      vehicleRegNo: vehicleRegNo,
+      TripStatus: 'Scheduled'
+    });
+  
+    console.log('Vehicle assigned:', vehicleRegNo);
   }
   
 
 
 
-
-  navigateTo(page: string) {
-    this.router.navigate([page]);
-    console.log("navigationss", page);
-  }
 
   checkDriverAssignment(driver: any, FromDateTime: any, ToDateTime: any) {
     console.log("drivervalidation success", FromDateTime, ToDateTime, driver);
@@ -635,12 +600,9 @@ export class AssignmentComponent {
     this.apiService.editTrip(TripId, this.tripAssignmentForm.value).subscribe((assign) => {
       console.log(assign, ".......trip ass");
 
-      for (const r of assign) {
-        this.assignmentAllTrips.push(r)
-      }
-      this.isVehicleAssigned = true;
-
-
+      // for (const r of assign) {
+        this.assignmentAllTrips.push(assign)
+      // }
     });
     const isChauffeurDriven = this.tripAssignmentForm.value.BookingCategory === 'ChaufferDriven' ;
 
@@ -1175,3 +1137,69 @@ export class AssignmentComponent {
 
 
 }
+
+
+
+
+
+
+
+// getVehicleRegNo(vehicleModel: string) {
+//   if (vehicleModel) {
+//     this.apiService.assignVehicle(vehicleModel).subscribe((res) => {
+//       this.fetchedVehicleList = res;
+//     });
+//   }
+
+// }
+// onVehicleChange(event: any) {
+//   const vehicleID = event.target.value;
+//   const vehicleRegNo = event.target.selectedOptions[0].getAttribute('data-regno').toString();
+//   const FromDateTime = this.tripAssignmentForm.get('FromDateTime')?.value;
+//   const ToDateTime = this.tripAssignmentForm.get('ToDateTime')?.value;
+
+//   this.checkVehicleAssignment(vehicleID, vehicleRegNo, FromDateTime, ToDateTime);
+// }
+
+
+
+
+
+
+
+// checkVehicleAssignment(vehicleID: Number, vehicleRegNo: string, FromDateTime: any, ToDateTime: any) {
+//   const vehicleDetails = {
+//     vehicleID: Number(vehicleID),
+//     vehicleRegNo: String(vehicleRegNo),
+//     FromDateTime: moment(FromDateTime).format("YYYY-MM-DD HH:mm"),
+//     ToDateTime: moment(ToDateTime).format("YYYY-MM-DD HH:mm"),
+//   };
+
+//   this.apiService.validateVehicle(vehicleDetails).subscribe((res) => {
+//     if (res && res.length > 0) {
+//       const confirmProceed = window.confirm(
+//         `This Vehicle has already been assigned to TripNo: ${res[0].TripId}. Do you wish to proceed?`
+//       );
+//       if (!confirmProceed) {
+//         this.vehicleAssignedError = "This vehicle is already assigned.";
+//         this.isVehicleAssigned = false;
+//       } else {
+//         this.tripAssignmentForm.patchValue({
+//           vehicleID: vehicleID,
+//           vehicleRegNo: vehicleRegNo,
+//           TripStatus: 'Scheduled'
+//         });
+//       }
+//     } else {
+//       // No conflict, proceed with assignment
+//       this.tripAssignmentForm.patchValue({
+//         vehicleID: vehicleID,
+//         vehicleRegNo: vehicleRegNo,
+//         TripStatus: 'Scheduled'
+//       });
+//     }
+
+//     console.log('Vehicle assigned:', vehicleRegNo);
+//   });
+//   this.assignmentAllTrips()
+// }

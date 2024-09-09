@@ -146,11 +146,35 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,ArrivalFlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID 
+                `select TOP 1 b.companyName,a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,ArrivalFlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate 
+                from _cplReservationTrips  a 
+                left join _cplReservations b on a.ReservationId = b.ReservationId 
+                left join _cplVehicles c on a.VehicleId = c.vehicleID 
 				left join _cplChaufferDrivers d on a.DriverId = d.DriverId
 				where a.TripId=@0  ` , [reservationId],
             );
             await trip.commitTransaction();
+            return  tripInfo;
+        } catch (e) {
+            throw new Error(`Failed to find trips: ${e.message}`);
+        }
+    }
+    async findAssignmentTrips(id: number) {
+
+        const trip = this.tripDataSource.createQueryRunner();
+        await trip.connect();
+        try {
+            await trip.startTransaction();
+            const tripInfo = await trip.query(
+                `select DISTINCT b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,ArrivalFlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate 
+                from _cplReservationTrips  a 
+                left join _cplReservations b on a.ReservationId = b.ReservationId 
+                left join _cplVehicles c on a.VehicleId = c.vehicleID 
+				left join _cplChaufferDrivers d on a.DriverId = d.DriverId
+				where a.TripId=@0` , [id],
+            );
+            await trip.commitTransaction();
+            console.log(tripInfo,'tripInfo')
             return tripInfo;
         } catch (e) {
             throw new Error(`Failed to find trips: ${e.message}`);

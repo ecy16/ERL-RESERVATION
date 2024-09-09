@@ -89,7 +89,7 @@ export class ApiService {
   upload = `http://${url}/api/vehicles/upload`;
   filesUrl = `http://${url}/api/photos`;
   vehicleFiles = `http://${url}/api/vehicles/uploadFile`;
-  RaUrl=`http://${url}/api/reservation-documents`
+  RaUrl = `http://${url}/api/reservation-documents`
 
   importVehiclesData = `http://${url}/api/vehicles/uploadBatch`;
 
@@ -347,7 +347,7 @@ export class ApiService {
   getServiceSageInfo(serviceName: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.serviceSageInfo}` + [serviceName]);
   }
-  fetchSageServices(reservationId:number): Observable<any[]> {
+  fetchSageServices(reservationId: number): Observable<any[]> {
     return this.http.post<any[]>(`${this.tripServiceName}`, reservationId);
   }
 
@@ -417,12 +417,12 @@ export class ApiService {
     return this.http.get<any[]>(`${this.vehicleMasterUrl}/` + Make);
   }
   getVehicleMake(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.vehicleMasterUrl}/` );
+    return this.http.get<any[]>(`${this.vehicleMasterUrl}/`);
   }
-  getVehicleType(Model:any): Observable<any[]> {
-    return this.http.get<any[]>(`${this.vehicleMasterUrl}/Types/` + Model );
+  getVehicleType(Model: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.vehicleMasterUrl}/Types/` + Model);
   }
- 
+
   getVehicleMakeAll(): Observable<any[]> {
     return this.http.get<any[]>(`${this.vehicleMasterUrl}`);
   }
@@ -443,6 +443,11 @@ export class ApiService {
   }
 
   getRelatedTrip(TripId: number): Observable<any[]> {
+    return (
+      this.http.get<any[]>(`${this.fetchTripIds}` + TripId)
+    );
+  }
+  getAssgTrip(TripId: number): Observable<any[]> {
     return (
       this.http.get<any[]>(`${this.fetchTripIds}` + TripId)
     );
@@ -472,7 +477,7 @@ export class ApiService {
     return this.http.post<any[]>(`${this.tripUrl}/sorted`, '')
 
   }
-  fetchDeliverTrips(TripId:any): Observable<any[]> {
+  fetchDeliverTrips(TripId: any): Observable<any[]> {
     return this.http.get<any[]>(`${this.tripUrl}/delivered/${TripId}`)
 
   }
@@ -505,8 +510,8 @@ export class ApiService {
   findCurr(): Observable<any> {
     return this.http.get(`${this.chargeUrl}/curr`);
   }
-  assignVehicle(model:any): Observable<any> {
-    return this.http.get(`${this.tripUrl}/assign-car/`+ model);
+  assignVehicle(model: any): Observable<any> {
+    return this.http.get(`${this.tripUrl}/assign-car/` + model);
   }
 
   validateVehicle(vehicleDetails: any): Observable<any> {
@@ -535,24 +540,23 @@ export class ApiService {
   }
 
 
-uploadVehicleFiles(file:any){
-  return this.http.post(`${this.vehicleFiles}`, file)
-}
+  uploadVehicleFiles(file: any) {
+    return this.http.post(`${this.vehicleFiles}`, file)
+  }
 
-uploadResvFile(file:any){
-  return this.http.post(`${this.filesUrl}/UploadFile`,file)
+  uploadResvFile(file: any) {
+    return this.http.post(`${this.filesUrl}/UploadFile`, file)
 
-}
+  }
 
-addVehicleMovement(TripId:any,deliveryForm:any){
-  
-  return this.http.post(`${this.filesUrl}/UploadFile`,deliveryForm)
+  addVehicleMovement(TripId: any, deliveryForm: any) {
+    return this.http.post(`${this.filesUrl}/UploadFile`, deliveryForm)
 
-}
+  }
 
-getRentalAgreement(){
-  return this.http.get<any[]>(`${this.RaUrl}/id`)
-}
+  getRentalAgreement() {
+    return this.http.get<any[]>(`${this.RaUrl}/id`)
+  }
 
 
 
