@@ -280,6 +280,7 @@
                             (change)="checkDriverAssignment(Driver.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
                             <option *ngFor="let driver of chaufferDriversList" [value]="driver.DriverId">{{
                                 driver.DriverFirstName }}</option>
+                              
                         </select>
                         <div *ngIf="driverAssignedError" class="text-red-700">
                         </div>

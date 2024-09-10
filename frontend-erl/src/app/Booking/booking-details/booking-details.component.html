@@ -224,136 +224,161 @@
 
     </div> -->
 
-  
-    
+
+
 
     <div class="tripForm">
       <form class="p-4 text-sm border rounded-lg shadow-lg" [formGroup]="tripForm">
-        
+
         <!-- Reservation Details Group -->
         <fieldset class="mb-2">
           <legend class="text-base font-semibold">Trip Details</legend>
           <div class="grid grid-cols-2 gap-4">
             <div class="hidden">
               <label for="ReservationId">Reservation ID</label>
-              <input type="text" class="rounded-lg border border-gray-300 form-control" id="ReservationId" formControlName="ReservationId" />
+              <input type="text" class="rounded-lg border border-gray-300 form-control" id="ReservationId"
+                formControlName="ReservationId" />
             </div>
-    
+
             <div>
               <label for="FromDateTime">From Date Time</label>
-              <input type="datetime-local" class="form-control rounded-lg border-gray-300" formControlName="FromDateTime" id="FromDateTime" />
-              <small class="text-red-600" *ngIf="tripForm.get('FromDateTime')?.hasError('required')">*This field is required</small>
+              <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                formControlName="FromDateTime" id="FromDateTime" />
+              <small class="text-red-600" *ngIf="tripForm.get('FromDateTime')?.hasError('required')">*This field is
+                required</small>
             </div>
-    
+
             <div>
               <label for="ToDateTime">To Date Time</label>
-              <input type="datetime-local" class="form-control rounded-lg border-gray-300" formControlName="ToDateTime" id="ToDateTime" />
-              <small class="text-red-600" *ngIf="tripForm.get('ToDateTime')?.hasError('required')">*This field is required</small>
+              <input type="datetime-local" class="form-control rounded-lg border-gray-300" formControlName="ToDateTime"
+                id="ToDateTime" />
+              <small class="text-red-600" *ngIf="tripForm.get('ToDateTime')?.hasError('required')">*This field is
+                required</small>
             </div>
-            
+
           </div>
           <div class="mt-2">
             <label>Description</label>
             <input type="text" class="rounded-lg border border-gray-400 form-control h-24 w-max-84"
               formControlName="Remarks" id="Remarks" />
 
-        </div>
+          </div>
         </fieldset>
-    
+
         <!-- Address Details Group -->
         <fieldset class="mb-1">
           <legend class="text-base font-semibold">Address Details</legend>
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven' || BookingData[0]?.BookingCategory === 'DriverOnly'">Pickup Address</label>
+              <label
+                *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven' || BookingData[0]?.BookingCategory === 'DriverOnly'">Pickup
+                Address</label>
               <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Delivery Address</label>
-              <input type="text" class="form-control rounded-lg border-gray-300 h-20" formControlName="PickupAddress" id="PickupAddress" />
-              <small class="text-red-600" *ngIf="tripForm.get('PickupAddress')?.hasError('required')">*This field is required</small>
+              <input type="text" class="form-control rounded-lg border-gray-300 h-20" formControlName="PickupAddress"
+                id="PickupAddress" />
+              <small class="text-red-600" *ngIf="tripForm.get('PickupAddress')?.hasError('required')">*This field is
+                required</small>
             </div>
-    
+
             <div>
               <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Collection Address</label>
               <label *ngIf="BookingData[0]?.BookingCategory !== 'SelfDriven'">Drop Address</label>
-              <input type="text" class="form-control rounded-lg border-gray-300 h-20" formControlName="DropAddress" id="DropAddress" />
-              <small class="text-red-600" *ngIf="tripForm.get('DropAddress')?.hasError('required')">*This field is required</small>
+              <input type="text" class="form-control rounded-lg border-gray-300 h-20" formControlName="DropAddress"
+                id="DropAddress" />
+              <small class="text-red-600" *ngIf="tripForm.get('DropAddress')?.hasError('required')">*This field is
+                required</small>
             </div>
           </div>
         </fieldset>
-    
+
         <!-- Contact Details Group -->
         <fieldset class="mb-1">
           <legend class="text-base font-semibold">Contact Details</legend>
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label for="PickupFirstName">Pickup First Name</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupFirstName" id="PickupFirstName" />
-              <small class="text-red-600" *ngIf="tripForm.get('PickupFirstName')?.hasError('required')">*This field is required</small>
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupFirstName"
+                id="PickupFirstName" />
+              <small class="text-red-600" *ngIf="tripForm.get('PickupFirstName')?.hasError('required')">*This field is
+                required</small>
             </div>
-    
+
             <div>
               <label for="PickupLastName">Pickup Last Name</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupLastName" id="PickupLastName" />
-              <small class="text-red-600" *ngIf="tripForm.get('PickupLastName')?.hasError('required')">*This field is required</small>
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupLastName"
+                id="PickupLastName" />
+              <small class="text-red-600" *ngIf="tripForm.get('PickupLastName')?.hasError('required')">*This field is
+                required</small>
             </div>
-    
+
             <div>
               <label for="PickupContactNo">Pickup Contact No</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupContactNo" id="PickupContactNo" list="countryCodes" (input)="addCountryCode($event)" />
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupContactNo"
+                id="PickupContactNo" list="countryCodes" (input)="addCountryCode($event)" />
               <datalist id="countryCodes"></datalist>
-              <small class="text-red-600" *ngIf="tripForm.get('PickupContactNo')?.hasError('required')">*This field is required</small>
+              <small class="text-red-600" *ngIf="tripForm.get('PickupContactNo')?.hasError('required')">*This field is
+                required</small>
             </div>
-    
+
             <div>
               <label for="PickupEmail">Pickup Email</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupEmail" id="PickupEmail" />
-              <small class="text-red-600" *ngIf="tripForm.get('PickupEmail')?.hasError('required')">*This field is required</small>
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupEmail"
+                id="PickupEmail" />
+              <small class="text-red-600" *ngIf="tripForm.get('PickupEmail')?.hasError('required')">*This field is
+                required</small>
             </div>
           </div>
         </fieldset>
-    
+
         <!-- Flight Details Group -->
         <fieldset class="mb-1">
           <legend class="text-base font-semibold">Flight Details</legend>
           <div class="grid grid-cols-3 gap-4">
             <div>
               <label for="ArrivalFlightNo">Arrival Flight No</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="ArrivalFlightNo" id="ArrivalFlightNo" />
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="ArrivalFlightNo"
+                id="ArrivalFlightNo" />
             </div>
-    
+
             <div>
               <label for="ArrivalFlightDateTime">Arrival Flight Date Time</label>
-              <input type="datetime-local" class="form-control rounded-lg border-gray-300" formControlName="ArrivalFlightDateTime" id="ArrivalFlightDateTime" />
+              <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                formControlName="ArrivalFlightDateTime" id="ArrivalFlightDateTime" />
             </div>
-    
+
             <div>
               <label for="Airline">Arrival Airline</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline" id="Airline" />
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
+                id="Airline" />
             </div>
-    
+
             <div>
               <label for="DepartureFlightNo">Departure Flight No</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="DepartureFlightNo" id="DepartureFlightNo" />
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="DepartureFlightNo"
+                id="DepartureFlightNo" />
             </div>
-    
+
             <div>
               <label for="DepartureFlightDateTime">Departure Flight Date Time</label>
-              <input type="datetime-local" class="form-control rounded-lg border-gray-300" formControlName="DepartureFlightDateTime" id="DepartureFlightDateTime" />
+              <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                formControlName="DepartureFlightDateTime" id="DepartureFlightDateTime" />
             </div>
-    
+
             <div>
               <label for="Airline">Departure Airline</label>
-              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline" id="Airline" />
+              <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
+                id="Airline" />
             </div>
           </div>
         </fieldset>
-    
+
         <!-- Vehicle Details Group -->
         <fieldset>
           <legend class="text-base font-semibold">Vehicle Details</legend>
           <div class="grid grid-cols-3 gap-4">
             <div class="" [formGroup]="tripForm">
               <label> Vehicle Make </label>
-              <select  class="form-control rounded-lg border-gray-300" id="VehicleMake" formControlName="VehicleMake"
+              <select class="form-control rounded-lg border-gray-300" id="VehicleMake" formControlName="VehicleMake"
                 (change)="fetchModels(tripForm.get('VehicleMake')?.value)">
                 <option *ngFor="let vehicleMake of  vehicleMakeList" value="{{ vehicleMake.category_Options }}">
                   {{ vehicleMake.category_Options }}
@@ -375,9 +400,9 @@
                   required</small>
               </div>
             </div>
-            <div  [formGroup]="tripForm">
+            <div [formGroup]="tripForm">
               <label>Vehicle Model</label>
-              <select  class="form-control rounded-lg border-gray-300" id="VehicleModel" formControlName="VehicleModel">
+              <select class="form-control rounded-lg border-gray-300" id="VehicleModel" formControlName="VehicleModel">
                 <option *ngFor="let vehicleModel of vehicleModelList" [value]="vehicleModel.category_Options_1">
                   {{ vehicleModel.category_Options_1 }}
                 </option>
@@ -395,7 +420,7 @@
 
             <div class="vehicleType text-sm" [formGroup]="tripForm">
               <label>Vehicle Type</label>
-              <select id="vehicleType" formControlName="vehicleType" class="form-control rounded-lg border-gray-300" >
+              <select id="vehicleType" formControlName="vehicleType" class="form-control rounded-lg border-gray-300">
                 <option *ngFor="let vehicleType of vehicleTypeList" [value]="vehicleType.category_Options_2">
                   {{ vehicleType.category_Options_2 }}
                 </option>
@@ -403,14 +428,14 @@
             </div>
             <div [formGroup]="tripForm" class="text-sm">
               <label> Driver Service Status</label>
-              <select  class="form-control rounded-lg border-gray-300" formControlName="DriverServiceStatus"
+              <select class="form-control rounded-lg border-gray-300" formControlName="DriverServiceStatus"
                 id=" DriverServiceStatus">
                 <option *ngFor="
                 let DriverServiceStatus of driverServiceStatusList
               " value="{{ DriverServiceStatus.category_Options }}">
                   {{ DriverServiceStatus.category_Options }}
                 </option>
-                                     </select>
+              </select>
               <div *ngIf="
               (tripForm.get('DriverServiceStatus')?.invalid &&
                 tripForm.get('DriverServiceStatus')?.errors &&
@@ -426,7 +451,8 @@
             </div>
             <div class=" text-sm gap-2" [formGroup]="tripForm">
               <label>Trip Status</label>
-              <select readonly  class="form-control rounded-lg border-gray-300"  formControlName="TripStatus" id="TripStatus">
+              <select readonly class="form-control rounded-lg border-gray-300" formControlName="TripStatus"
+                id="TripStatus">
                 <option selected value="Scheduled">Scheduled</option>
                 <option *ngFor="let TripStatus of tripStatusList" value="{{ TripStatus.category_Options }}">
                   {{ TripStatus.category_Options }}
@@ -445,22 +471,22 @@
               </div>
             </div>
             <div></div>
-           
-        
+
+
           </div>
-          
-        <button type="button" class="text-sm float-right p-2 m-2 w-24 rounded-md border-2 border-green-700"
-        (click)="saveTrip()">
-        Save
-      </button>
+
+          <button type="button" class="text-sm float-right p-2 m-2 w-24 rounded-md border-2 border-green-700"
+            (click)="saveTrip()">
+            Save
+          </button>
         </fieldset>
-       
+
       </form>
     </div>
-    
 
-    
-    
+
+
+
 
     <div class="trip-container m-2">
       <div class="tripTable  p-2">
@@ -523,7 +549,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -544,21 +570,28 @@
         <div class="addtripmodal">
           <ng-template #addTrips let-modal>
             <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">Add Trip</h4>
-            </div>
+              <h4 class="modal-title" id="modal-basic-title">
+                Add Trip: {{ tripForm.get('BookingNo')?.value }}
+              </h4>
+                          </div>
             <div class="modal-body">
               <div class="tripForm">
                 <form class="m-2 text-sm border rounded-md " [formGroup]="tripForm">
                   <div class="m-2   grid grid-cols-3 " [formGroup]="tripForm">
-
                     <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden>
+                      <label>BookingNo</label>
+                      <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                        formControlName="BookingNo" />
+                    </div>
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden >
                       <label>reservationId</label>
                       <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
                         formControlName="ReservationId" />
                     </div>
+                 
+                  
 
 
-                    <!-- <div class="vehicleDetails grid grid-cols-2 mb-2"> -->
 
 
                     <div class="m-2">
@@ -861,7 +894,7 @@
                       " value="{{ DriverServiceStatus.category_Options }}">
                           {{ DriverServiceStatus.category_Options }}
                         </option>
-                                             </select>
+                      </select>
                       <div *ngIf="
                       (tripForm.get('DriverServiceStatus')?.invalid &&
                         tripForm.get('DriverServiceStatus')?.errors &&
@@ -910,42 +943,42 @@
                   </button>
                 </form>
                 <!-- *ngIf="showServicesInTrips" -->
-                <div class="servicesInTrips" >
+                <div class="servicesInTrips">
                   <button
                     class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
                     (click)="viewTripModal(content)">
-                    Add Trip Services
+                    Add Trip Service
                   </button>
                   <ng-template #content let-modal>
                     <div class="modal-header">
-                      <h4 class="modal-title">Add Trip Services</h4>
+                      <h4 class="modal-title">Add</h4>
                       <button type="button" class="btn-close" aria-label="Close"
                         (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <div class="modal-body">
                       <form [formGroup]="tripServicesForm" id="tripServicesForm">
                         <div class="tripServicesForm grid grid-cols-2 gap-2">
-                            <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" >
-                              <label>BookingNo</label>
-                              <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
-                                formControlName="BookingNo" />
-                            </div>
-                            <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm"  hidden>
-                              <label>reservationId</label>
-                              <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                                formControlName="ReservationId" />
-                            </div>
-                           
-                            <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                              <label>TripNo</label>
-                              <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" readonly
-                                formControlName="tripNumber" />
-                            </div>
-                         
+                          <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                            <label>BookingNo</label>
+                            <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                              formControlName="BookingNo" />
+                          </div>
+                          <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                            <label>reservationId</label>
+                            <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                              formControlName="ReservationId" />
+                          </div>
+
+                          <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                            <label>TripNo</label>
+                            <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber"
+                              readonly formControlName="tripNumber" />
+                          </div>
+
                           <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
                             <label>TripId</label>
-                            <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
-                              formControlName="TripId" />
+                            <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
+                              readonly formControlName="TripId" />
                           </div>
                           <div class="text-sm" [formGroup]="tripServicesForm">
                             <label for="serviceName">Service Name</label>
@@ -1049,9 +1082,7 @@
 
 
 
-            <div class="modal-footer">
 
-            </div>
           </ng-template>
         </div>
         <!-- /////edit trip -->
@@ -1387,95 +1418,15 @@
 
       <!-- trip servicees -->
       <div>
-        <ng-template #content let-modal>
-          <div class="modal-header">
-            <h4 class="modal-title">Add Services</h4>
-            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-          </div>
-          <div class="modal-body">
-            <form [formGroup]="tripServicesForm" id="tripServicesForm">
-              <div class="tripServicesForm grid grid-cols-2 gap-2">
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label>Tripssss</label>
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" >
-                    <label>BookingNo</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" value="ReservationId"
-                      formControlName="BookingNo" />
-                  </div>
 
-                 
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                    <label>TripNo</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" readonly
-                      formControlName="tripNumber" />
-                  </div>
-                </div>
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm"  hidden>
-                  <label>reservationId</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                    formControlName="ReservationId" />
-                </div>
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
-                  <label>TripId</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
-                    formControlName="TripId" />
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label for="serviceName">Service Name</label>
-                  <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
-                    (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
-                    <option value="" disabled selected>Select the Service Name</option>
-                    <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
-                      {{ service.serviceDesc }}
-                    </option>
-                  </select>
-                </div>
-
-                <div class="text-sm">
-                  <label for="serviceCode">Service Code</label>
-                  <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
-                </div>
-
-
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label for="ServiceQuantity">Service Quantity</label>
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
-
-
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label>Service Charge</label>
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="TripCharge" id="TripCharge" />
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label>Service Status</label>
-                  <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
-                    <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
-                      {{ status.category_Options }}
-                    </option>
-                
-                  </select>
-                </div>
-
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" (click)="saveTripService()" (click)="modal.close('Save click')">Save</button>
-          </div>
-        </ng-template>
 
       </div>
     </div>
 
 
+    <!-- <------service Edit ------>
 
     <div class="tripServices-table m-2">
-
-
       <div>
         <ng-template #EditTripService let-modal>
           <div class="modal-header">
@@ -1581,13 +1532,100 @@
         </ng-template>
       </div>
     </div>
+    <!-- <------service Edit ------>
 
+    <!-- <------service outside trips------>
     <div class="servicesInTrips">
       <button class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
-        (click)="viewTripModal(content)">
+        (click)="viewTripModal(content)" >
         Add Services
       </button>
 
+
+      <div>
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">
+              Add Trip Services: {{ tripServicesForm.get('BookingNo')?.value }}
+            </h4>
+                        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="tripServicesForm" id="tripServicesForm">
+              <div class="tripServicesForm grid grid-cols-2 gap-2">
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                  <label>BookingNo</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                    formControlName="BookingNo" />
+                </div>
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" >
+                  <label>reservationId</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                    formControlName="ReservationId" />
+                </div>
+
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                  <label>TripNo</label>
+                  <select class="text-sm form-control" id="TripId" formControlName="TripId"  (click)="getTrips(tripServicesForm.get('ReservationId')?.value)" >
+                    <option readonly selected>Select the Trip Number</option>
+                    <option *ngFor="let trip of tripList" [value]=" trip.TripId">
+                      {{ trip.tripNumber }}
+                    </option>
+                  </select>
+                </div>
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                  <label>TripId</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
+                    formControlName="TripId" />
+                </div>
+                <div class="text-sm" [formGroup]="tripServicesForm">
+                  <label for="serviceName">Service Name</label>
+                  <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
+                    (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
+                    <option value="" disabled selected>Select the Service Name</option>
+                    <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
+                      {{ service.serviceDesc }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="text-sm">
+                  <label for="serviceCode">Service Code</label>
+                  <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                    formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
+                </div>
+
+
+                <div class="text-sm" [formGroup]="tripServicesForm">
+                  <label for="ServiceQuantity">Service Quantity</label>
+                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                    formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
+
+
+                </div>
+                <div class="text-sm" [formGroup]="tripServicesForm">
+                  <label>Service Charge</label>
+                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                    formControlName="TripCharge" id="TripCharge" />
+                </div>
+                <div class="text-sm" [formGroup]="tripServicesForm">
+                  <label>Service Status</label>
+                  <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
+                    <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                      {{ status.category_Options }}
+                    </option>
+
+                  </select>
+                </div>
+
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" (click)="saveTripService()" (click)="modal.close('Save click')">Save</button>
+          </div>
+        </ng-template>
+      </div>
 
       <table datatable class="table table-bordered row-border hover text-sm">
         <thead class="text-sm">
@@ -1633,6 +1671,7 @@
       </table>
     </div>
 
+    <!-- <------service outside trips------>
 
 
     <div class="m-1 p-2" *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">
@@ -1679,7 +1718,7 @@
         <div class="modal-body">
           <form class="grid grid-cols-2 text-sm" [formGroup]="driverForm">
 
-            <div class="m-2 text-sm gap-2" [formGroup]="driverForm" hidden >
+            <div class="m-2 text-sm gap-2" [formGroup]="driverForm" hidden>
               <label>reservationId</label>
               <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
                 formControlName="ReservationId" />
@@ -1687,7 +1726,7 @@
             <div class="m-2" [formGroup]="driverForm">
               <label>Drivers Name</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="DriverFirstName" id="DriverFirstName"  />
+                formControlName="DriverFirstName" id="DriverFirstName" />
               <div *ngIf="
                               (driverForm.get('DriverFirstName')?.invalid &&
                                 driverForm.get('DriverFirstName')?.errors &&

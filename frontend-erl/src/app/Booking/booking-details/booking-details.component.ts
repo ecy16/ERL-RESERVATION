@@ -239,6 +239,7 @@ export class BookingDetailsComponent {
       Remarks: "",
       DepartureFlightNo: "",
       ArrivalFlightNo: "",
+      BookingNo:""
 
 
     });
@@ -304,9 +305,7 @@ export class BookingDetailsComponent {
       Remarks: ["", Validators.required],
     });
 
-    this.tripForm.patchValue({
-      ReservationId: this.actRoute.snapshot.params["ReservationId"],
-    });
+  
  
 
 
@@ -549,7 +548,12 @@ export class BookingDetailsComponent {
         for (const x of reservationsInfo) {
           this.BookingData.push(x);
         }
+for( const d of this.BookingData){
+  this.tripForm.patchValue({
+    BookingNo:d.BookingNo
+  })
 
+}
         console.log(this.BookingData, "bookingData");
       });
     this.apiService.getVehicleRegistration().subscribe((vehicleReg) => {
@@ -633,7 +637,11 @@ export class BookingDetailsComponent {
     this.fetchRelatedReservationTrips(this.reservationId);
 
     this.fetchRelatedDrivers(this.reservationId);
+ 
+ 
+ 
   }
+
 
 
   fetchVehicleTypes(model: string): void {
@@ -803,14 +811,13 @@ export class BookingDetailsComponent {
       this.ReservationId,
       this.TripId,
     );
-    console.log("trips services", this.tripServicesForm.value, this.TripId);
     const { BookingNo, ...newres } =this.tripServicesForm.value ;
     this.apiService.addTripService(newres).subscribe((res) => {
-
       this.tripServicesList.push(res)
       console.log(res,'tripservice res')
     })
     this.toastr.success("Service Added Successfully");
+    this.fetchRelatedTripServices(this.reservationId)
   }
 
   //-------edit trip service-------//
@@ -1085,7 +1092,7 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
         for (const a of tripNumbers) {
           this.tripList.push(a);
         }
-        console.log(this.tripList, ".....................");
+        console.log(this.tripList, "........tripList.............");
       });
   }
 
@@ -1113,6 +1120,20 @@ for(const dd of this.tripReservationList ){
       });
   }
 
+getTrips(reservationId:any){
+  this.tripList=[];
+  console.log('ReservationList', this.tripList)
+
+  this.apiService.getRelatedReservationTrip(reservationId).subscribe((res)=>{
+    for( const s of res){
+      this.tripList.push(s)
+
+    }
+  })
+
+}
+
+
 
 
   saveTrip() {
@@ -1139,8 +1160,8 @@ for(const dd of this.tripReservationList ){
 
       this.toastr.success("Trip Added Successfully");
 
-      //  this.fetchRelatedTrips(this.reservationId);
     });
+    this.tripForm.reset()
   }
 
 

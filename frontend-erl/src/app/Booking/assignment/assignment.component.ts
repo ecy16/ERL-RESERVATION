@@ -156,7 +156,7 @@ export class AssignmentComponent {
       DriverFirstName: "",
       BookingCategory: "",
       BookingFor: "",
-      Remarks:""
+      Remarks: ""
     });
 
     this.AssignmentSearchForm = this.formBuilder.group({
@@ -224,7 +224,7 @@ export class AssignmentComponent {
         this.getVehicleRegNo(model);
       }
     });
-  
+
 
     //   this.filteredReservations = data.filter(reservation => {
     //     return reservation.BookingStatus === 'InProgress';
@@ -453,7 +453,7 @@ export class AssignmentComponent {
           DriverId: d.DriverId,
           DriverFirstName: d.DriverFirstName,
           vehicleRegNo: d.vehicleRegNo,
-          Remarks:d.Remarks
+          Remarks: d.Remarks
         });
 
         console.log(d.PickupName, "driverr patched");
@@ -468,7 +468,7 @@ export class AssignmentComponent {
   }
 
 
-  
+
 
 
 
@@ -489,24 +489,26 @@ export class AssignmentComponent {
       });
     }
   }
-  
+
   onVehicleChange(event: any) {
     const vehicleID = event.target.value;
     const vehicleRegNo = event.target.selectedOptions[0].getAttribute('data-regno').toString();
     const FromDateTime = this.tripAssignmentForm.get('FromDateTime')?.value;
     const ToDateTime = this.tripAssignmentForm.get('ToDateTime')?.value;
-  
+
     this.checkVehicleAssignment(vehicleID, vehicleRegNo, FromDateTime, ToDateTime);
   }
-  
+
   checkVehicleAssignment(vehicleID: number, vehicleRegNo: string, FromDateTime: any, ToDateTime: any) {
     const vehicleDetails = {
       vehicleID: Number(vehicleID),
       vehicleRegNo: String(vehicleRegNo),
       FromDateTime: moment(FromDateTime).format("YYYY-MM-DD HH:mm"),
       ToDateTime: moment(ToDateTime).format("YYYY-MM-DD HH:mm"),
+
+
     };
-  
+    console.log('vehicleDetails',vehicleDetails)
     this.apiService.validateVehicle(vehicleDetails).subscribe((res) => {
       if (res && res.length > 0) {
         const confirmProceed = window.confirm(
@@ -515,24 +517,36 @@ export class AssignmentComponent {
         if (!confirmProceed) {
           this.vehicleAssignedError = "This vehicle is already assigned.";
         } else {
-          this.assignVehicleToTrip(vehicleID, vehicleRegNo); // Centralized assignment logic
+
+          this.tripAssignmentForm.patchValue({
+            vehicleID: vehicleID,
+          vehicleRegNo: vehicleRegNo,
+          TripStatus: 'Scheduled'
+          });
         }
+      }else{
+        this.tripAssignmentForm.patchValue({
+                  vehicleID: vehicleID,
+                  vehicleRegNo: vehicleRegNo,
+                  TripStatus: 'Scheduled'
+                });
       }
     });
-  
+    
+
   }
-  
-  assignVehicleToTrip(vehicleID: number, vehicleRegNo: string) {
-    // Only assign the vehicle once
-    this.tripAssignmentForm.patchValue({
-      vehicleID: vehicleID,
-      vehicleRegNo: vehicleRegNo,
-      TripStatus: 'Scheduled'
-    });
-  
-    console.log('Vehicle assigned:', vehicleRegNo);
-  }
-  
+
+  // assignVehicleToTrip(vehicleID: number, vehicleRegNo: string) {
+  //   // Only assign the vehicle once
+  //   this.tripAssignmentForm.patchValue({
+  //     vehicleID: vehicleID,
+  //     vehicleRegNo: vehicleRegNo,
+  //     TripStatus: 'Scheduled'
+  //   });
+
+  //   console.log('Vehicle assigned:', vehicleRegNo);
+  // }
+
 
 
 
@@ -593,7 +607,7 @@ export class AssignmentComponent {
 
   assignResource(TripId: any) {
 
-    JSON.stringify(this.tripAssignmentForm.value) 
+    JSON.stringify(this.tripAssignmentForm.value)
 
 
 
@@ -601,10 +615,10 @@ export class AssignmentComponent {
       console.log(assign, ".......trip ass");
 
       // for (const r of assign) {
-        this.assignmentAllTrips.push(assign)
+      this.assignmentAllTrips.push(assign)
       // }
     });
-    const isChauffeurDriven = this.tripAssignmentForm.value.BookingCategory === 'ChaufferDriven' ;
+    const isChauffeurDriven = this.tripAssignmentForm.value.BookingCategory === 'ChaufferDriven';
 
     // Show confirmation pop-up only for chauffeur-driven cars
     if (isChauffeurDriven) {
@@ -621,10 +635,10 @@ export class AssignmentComponent {
 
   }
 
-  
 
 
-  
+
+
   fetchVehiclesByModel(Model: any) {
     this.fetchedVehicleList = [];
     this.apiService.getVehicleByModel(Model).subscribe((vehicleModel) => {
@@ -650,7 +664,7 @@ export class AssignmentComponent {
     this.apiService.fetchAllTrips().subscribe((trips) => {
       for (const m of trips) {
         // if (m.TripStatus === 'InProgress') {
-          this.assignmentAllTrips.push(m);
+        this.assignmentAllTrips.push(m);
         // }
       }
     });
@@ -694,7 +708,7 @@ export class AssignmentComponent {
       for (const r of TripInfo) {
 
         this.fetchedCDOData.push(r);
-        console.log('cdo data',this.fetchedCDOData)
+        console.log('cdo data', this.fetchedCDOData)
 
       }
 
@@ -722,212 +736,212 @@ export class AssignmentComponent {
             img2.src = base64Image1;
             const img = new Image();
             img.src = base64Img2;
-        
+
             img.onload = function () {
               doc.addImage(img, 'png', 155, 3, 50, 30,); // Adjust position and size as needed
               doc.addImage(img2, 'png', 8, 3, 50, 30); // Adjust position and size as needed
-        
-            // Header information 
-            doc.setFontSize(8);
-            doc.setFont("arial", "bold");
+
+              // Header information 
+              doc.setFontSize(8);
+              doc.setFont("arial", "bold");
 
 
 
 
 
-            doc.text("Office Line: +254 707 603009 | +254 722 513303", 10, 35);
-            doc.text(
-              "Office Line: +254 797486389",
-              202,
-              35,
-              { align: "right" },
-              null
-            );
-            doc.text("POBox 45757-0100, Nairobi, Kenya", 10, 39);
-            doc.text("JKIA (Airpor)", 202, 39, { align: "right" }, null);
-            doc.text("Office:Off Musa Gitau Road, Waiyaki Way", 10, 43);
-            doc.text(
-              "Airport:Office No.9 Parking silo ,Ground Floor",
-              202,
-              43,
-              { align: "right" },
-              null
-            );
-            doc.text("info@executiverentalsltd.com", 10, 47);
-            doc.text(
-              "hertzkenya@executiverentalsltd.com",
-              202,
-              47,
-              { align: "right" },
-              null
-            );
+              doc.text("Office Line: +254 707 603009 | +254 722 513303", 10, 35);
+              doc.text(
+                "Office Line: +254 797486389",
+                202,
+                35,
+                { align: "right" },
+                null
+              );
+              doc.text("POBox 45757-0100, Nairobi, Kenya", 10, 39);
+              doc.text("JKIA (Airpor)", 202, 39, { align: "right" }, null);
+              doc.text("Office:Off Musa Gitau Road, Waiyaki Way", 10, 43);
+              doc.text(
+                "Airport:Office No.9 Parking silo ,Ground Floor",
+                202,
+                43,
+                { align: "right" },
+                null
+              );
+              doc.text("info@executiverentalsltd.com", 10, 47);
+              doc.text(
+                "hertzkenya@executiverentalsltd.com",
+                202,
+                47,
+                { align: "right" },
+                null
+              );
 
-            // Organization, Client, and Booking details
-            doc.rect(10, 60, 70, 40);
-            doc.setFontSize(9);
-            doc.text("Organization:", 12, 64);
-            doc.text(d.companyName, 12, 70);
-            doc.text("Client Name:", 12, 80);
-            doc.text(d.companyName, 12, 86);
+              // Organization, Client, and Booking details
+              doc.rect(10, 60, 70, 40);
+              doc.setFontSize(9);
+              doc.text("Organization:", 12, 64);
+              doc.text(d.companyName, 12, 70);
+              doc.text("Client Name:", 12, 80);
+              doc.text(d.companyName, 12, 86);
 
-            doc.text("Booked by:", 12, 95);
-            doc.text(d.BookingFor, 12, 98);
-
-
-            doc.text("Veh.Reg: " + d.vehicleRegNo, 81, 64);
-            doc.text("Type: " + d.VehicleModel, 81, 73);
-            doc.text("Pick-up location: " + d.PickupAddress, 81, 84);
-
-            // doc.text("Pick-up location:", 81, 84);
-            // doc.text(d.PickupAddress, 81, 75);
-
-            // doc.line(110, 84, 130, 84);
-            // doc.text("Pick-up time", 81, 93);
-            // doc.text(d.PickupAddress, 81, 83);
+              doc.text("Booked by:", 12, 95);
+              doc.text(d.BookingFor, 12, 98);
 
 
-            doc.text("CDO.PT_______________", 140, 55);
-            doc.text(d.BookingNo + "/"+ d.tripNumber, 155, 55);
+              doc.text("Veh.Reg: " + d.vehicleRegNo, 81, 64);
+              doc.text("Type: " + d.VehicleModel, 81, 73);
+              doc.text("Pick-up location: " + d.PickupAddress, 81, 84);
 
-            doc.text("Date In: ", 140, 64);
-            doc.line(153, 64, 180, 64);
-            doc.text("Date Out:", 140, 73);
-            doc.line(157, 73, 180, 73);
-            doc.text("Time", 180, 64);
-            doc.line(190, 64, 200, 64);
-            doc.text("Time", 180, 73);
-            doc.line(190, 73, 200, 73);
+              // doc.text("Pick-up location:", 81, 84);
+              // doc.text(d.PickupAddress, 81, 75);
 
-            doc.rect(134, 78, 74, 22.5);
-            doc.setFontSize(8);
-            doc.rect(134, 85, 74, 8);
-            doc.line(152, 78, 152, 100);
-            doc.line(161, 78, 161, 100);
-            doc.line(170, 78, 170, 100);
-            doc.line(179, 78, 179, 100);
-            doc.line(188, 78, 188, 100);
-            doc.line(197, 78, 197, 100);
-            doc.text("Kms In", 136, 83);
-            doc.text("Kms Out", 136, 91);
-            doc.text("Kms Driven", 136, 99);
+              // doc.line(110, 84, 130, 84);
+              // doc.text("Pick-up time", 81, 93);
+              // doc.text(d.PickupAddress, 81, 83);
 
-            doc.setFont("helvetica", "bold");
-            doc.setFontSize(11);
-            doc.text("SERVICE INSTRUCTIONS", 105, 110, { align: "center" }, null);
-            doc.rect(10, 115, 190, 60); // Rectangle for Service Instructions
-            const remarks = d.Remarks; // Replace with actual data
-            const textHeight = 10; // Approximate height of text, adjust as necessary
-            const rectangleHeight = 60;
-            const verticalPadding = (rectangleHeight - textHeight) / 2;
-            
-            // Add remarks text centered horizontally and vertically
-            doc.text(remarks, 105, 125 + verticalPadding, { align: "center" });
 
-            doc.rect(10, 180, 110, 90);
-            // Expenses Table header
-            doc.setFontSize(10);
-            doc.text("Imprest", 12, 185);
-            doc.text("Safari Expense", 60, 185);
-            doc.text("Cost", 100, 185);
-            doc.rect(58, 180, 42, 90);
-            doc.line(10, 188, 120, 188);
-            // Expense table imprest row
-            doc.text("ALLOWANCE", 12, 195);
-            doc.line(10, 198, 120, 198);
-            doc.text("FUEL", 12, 205);
-            doc.line(10, 208, 120, 208);
-            doc.text("PARK ENTRY", 12, 215);
-            doc.line(10, 218, 120, 218);
-            doc.text("FUEL", 12, 225);
-            doc.line(10, 228, 120, 228);
-            doc.text("PARKING", 12, 235);
-            doc.line(10, 238, 120, 238);
-            doc.text("EXPRESSWAY", 12, 245);
-            doc.line(10, 248, 120, 248);
-            doc.text("TOTAL", 12, 255);
-            doc.line(10, 258, 120, 258);
-            doc.text("RETURN/REFUNDS", 12, 265);
+              doc.text("CDO.PT_______________", 140, 55);
+              doc.text(d.BookingNo + "/" + d.tripNumber, 155, 55);
 
-            // Fuel information
-            doc.text("Fuel in:", 125, 185);
-            doc.line(137, 185, 200, 185);
-            doc.text("Fuel out:", 125, 195);
-            doc.line(139, 195, 200, 195);
-            doc.text("Driver:", 125, 205);
-            doc.line(136, 205, 200, 205);
-            doc.text("Imprest Kshs:", 125, 215);
-            doc.line(148, 215, 200, 215);
-            doc.text("Additional Imprest Kshs:", 125, 225);
-            doc.line(166, 225, 200, 225);
-            doc.text("Additional Imprest Kshs:", 125, 235);
-            doc.line(166, 235, 200, 235);
-            doc.text("Driver Sign:", 125, 245);
-            doc.line(145, 245, 200, 245);
-            doc.text("Expressway (YES/NO):", 125, 255);
-            doc.line(162, 255, 200, 255);
-            doc.text("Client’s Signature:", 125, 265);
-            doc.line(157, 265, 200, 265);
+              doc.text("Date In: ", 140, 64);
+              doc.line(153, 64, 180, 64);
+              doc.text("Date Out:", 140, 73);
+              doc.line(157, 73, 180, 73);
+              doc.text("Time", 180, 64);
+              doc.line(190, 64, 200, 64);
+              doc.text("Time", 180, 73);
+              doc.line(190, 73, 200, 73);
 
-            // Add a new page
-            doc.addPage();
+              doc.rect(134, 78, 74, 22.5);
+              doc.setFontSize(8);
+              doc.rect(134, 85, 74, 8);
+              doc.line(152, 78, 152, 100);
+              doc.line(161, 78, 161, 100);
+              doc.line(170, 78, 170, 100);
+              doc.line(179, 78, 179, 100);
+              doc.line(188, 78, 188, 100);
+              doc.line(197, 78, 197, 100);
+              doc.text("Kms In", 136, 83);
+              doc.text("Kms Out", 136, 91);
+              doc.text("Kms Driven", 136, 99);
 
-            // Second page content
-            doc.setFontSize(12);
-            doc.text("DRIVER'S LOG SHEET", 80, 10);
-            doc.line(35, 23, 145, 23);
-            doc.setFontSize(10);
-            doc.text("Driver's Name:", 10, 23);
-            doc.text("Veh. No.:", 150, 23);
-            doc.line(163, 23, 190, 23);
-            doc.text("File Ref.:", 150, 33);
-            doc.line(163, 33, 190, 33);
+              doc.setFont("helvetica", "bold");
+              doc.setFontSize(11);
+              doc.text("SERVICE INSTRUCTIONS", 105, 110, { align: "center" }, null);
+              doc.rect(10, 115, 190, 60); // Rectangle for Service Instructions
+              const remarks = d.Remarks; // Replace with actual data
+              const textHeight = 10; // Approximate height of text, adjust as necessary
+              const rectangleHeight = 60;
+              const verticalPadding = (rectangleHeight - textHeight) / 2;
 
-            doc.setLineWidth(0.5);
+              // Add remarks text centered horizontally and vertically
+              doc.text(remarks, 105, 125 + verticalPadding, { align: "center" });
 
-            // Table headers
-            const headers = [
-              "DATE",
-              "FROM",
-              "TO",
-              "SPEEDO OUT",
-              "SPEEDO IN",
-              "KMS DRIVEN",
-              "TIME OUT",
-              "TIME IN",
-            ];
-            let startY = 40;
-            let startX = 6;
-            let cellWidth = 25;
-            let cellHeight = 10;
+              doc.rect(10, 180, 110, 90);
+              // Expenses Table header
+              doc.setFontSize(10);
+              doc.text("Imprest", 12, 185);
+              doc.text("Safari Expense", 60, 185);
+              doc.text("Cost", 100, 185);
+              doc.rect(58, 180, 42, 90);
+              doc.line(10, 188, 120, 188);
+              // Expense table imprest row
+              doc.text("ALLOWANCE", 12, 195);
+              doc.line(10, 198, 120, 198);
+              doc.text("FUEL", 12, 205);
+              doc.line(10, 208, 120, 208);
+              doc.text("PARK ENTRY", 12, 215);
+              doc.line(10, 218, 120, 218);
+              doc.text("FUEL", 12, 225);
+              doc.line(10, 228, 120, 228);
+              doc.text("PARKING", 12, 235);
+              doc.line(10, 238, 120, 238);
+              doc.text("EXPRESSWAY", 12, 245);
+              doc.line(10, 248, 120, 248);
+              doc.text("TOTAL", 12, 255);
+              doc.line(10, 258, 120, 258);
+              doc.text("RETURN/REFUNDS", 12, 265);
 
-            headers.forEach((header, index) => {
-              doc.rect(startX + index * cellWidth, startY, cellWidth, cellHeight);
-              doc.text(header, startX + index * cellWidth + 1, startY + 7);
-            });
+              // Fuel information
+              doc.text("Fuel in:", 125, 185);
+              doc.line(137, 185, 200, 185);
+              doc.text("Fuel out:", 125, 195);
+              doc.line(139, 195, 200, 195);
+              doc.text("Driver:", 125, 205);
+              doc.line(136, 205, 200, 205);
+              doc.text("Imprest Kshs:", 125, 215);
+              doc.line(148, 215, 200, 215);
+              doc.text("Additional Imprest Kshs:", 125, 225);
+              doc.line(166, 225, 200, 225);
+              doc.text("Additional Imprest Kshs:", 125, 235);
+              doc.line(166, 235, 200, 235);
+              doc.text("Driver Sign:", 125, 245);
+              doc.line(145, 245, 200, 245);
+              doc.text("Expressway (YES/NO):", 125, 255);
+              doc.line(162, 255, 200, 255);
+              doc.text("Client’s Signature:", 125, 265);
+              doc.line(157, 265, 200, 265);
 
-            // Table rows
-            const rows = 20;
-            for (let i = 0; i < rows; i++) {
-              for (let j = 0; j < headers.length; j++) {
-                doc.rect(
-                  startX + j * cellWidth,
-                  startY + cellHeight + i * cellHeight,
-                  cellWidth,
-                  cellHeight
-                );
+              // Add a new page
+              doc.addPage();
+
+              // Second page content
+              doc.setFontSize(12);
+              doc.text("DRIVER'S LOG SHEET", 80, 10);
+              doc.line(35, 23, 145, 23);
+              doc.setFontSize(10);
+              doc.text("Driver's Name:", 10, 23);
+              doc.text("Veh. No.:", 150, 23);
+              doc.line(163, 23, 190, 23);
+              doc.text("File Ref.:", 150, 33);
+              doc.line(163, 33, 190, 33);
+
+              doc.setLineWidth(0.5);
+
+              // Table headers
+              const headers = [
+                "DATE",
+                "FROM",
+                "TO",
+                "SPEEDO OUT",
+                "SPEEDO IN",
+                "KMS DRIVEN",
+                "TIME OUT",
+                "TIME IN",
+              ];
+              let startY = 40;
+              let startX = 6;
+              let cellWidth = 25;
+              let cellHeight = 10;
+
+              headers.forEach((header, index) => {
+                doc.rect(startX + index * cellWidth, startY, cellWidth, cellHeight);
+                doc.text(header, startX + index * cellWidth + 1, startY + 7);
+              });
+
+              // Table rows
+              const rows = 20;
+              for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < headers.length; j++) {
+                  doc.rect(
+                    startX + j * cellWidth,
+                    startY + cellHeight + i * cellHeight,
+                    cellWidth,
+                    cellHeight
+                  );
+                }
               }
+
+              // // Convert to Blob and create Object URL
+              // const pdfBlob = doc.output('blob');
+              // const pdfUrl = URL.createObjectURL(pdfBlob);
+
+              // Display in iframe
+              // document.getElementById('pdfFrame').src = pdfUrl;
+
+              doc.save("CDO for " + d.companyName + "-trip-" + d.TripNo + ".pdf");
             }
-
-            // // Convert to Blob and create Object URL
-            // const pdfBlob = doc.output('blob');
-            // const pdfUrl = URL.createObjectURL(pdfBlob);
-
-            // Display in iframe
-            // document.getElementById('pdfFrame').src = pdfUrl;
-
-            doc.save("CDO for " + d.companyName + "-trip-" + d.TripNo + ".pdf");
           }
-        }
           catch (error) {
             console.log('major error !!', error)
           }
@@ -1132,7 +1146,7 @@ export class AssignmentComponent {
       };
 
     })
-  
+
   }
 
 
