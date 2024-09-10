@@ -25,7 +25,6 @@
             </div>
             <div>
                 <label class="text-xs ">Branch</label>
-                <!-- <input type="search" formControlName="Branch" class="rounded-md  border-gray-300 h-8 w-24"> -->
                 <select class="text-sm form-control rounded-md  border-gray-300 h-8 w-24" id=" Branch"
                     formControlName="Branch">
                     <option *ngFor="let branch of bookingBranchData" value="{{ branch.category_Options }}">
@@ -97,9 +96,6 @@
             <ng-container *ngFor="let assignment of assignmentAllTrips">
                 <tr class="text-xs  text-center whitespace-nowrap">
                     <td>{{ assignment.BookingNo }}/{{assignment.tripNumber}}</td>
-                    <!-- <td>{{ assignment.Branch }}</td> -->
-                    <!-- <td>{{ assignment.BookingStatus }}</td> -->
-                    <!-- <td>{{ assignment.BookingDate }}</td> -->
                     <td>{{ assignment.TripStatus }}</td>
                     <td>{{ assignment.PickupAddress }}</td>
                     <td>{{ assignment.DropAddress }}</td>
@@ -130,12 +126,13 @@
                             </a>
                         </button> -->
                         <button *ngIf="assignment.chosenRegNo">
-  <a class="nav-link" [routerLink]="['/delivery', assignment.TripId]" routerLinkActive="active">
-    IN/OUT
-  </a>
-</button>
+                            <a class="nav-link" [routerLink]="['/delivery', assignment.TripId]"
+                                routerLinkActive="active">
+                                IN/OUT
+                            </a>
+                        </button>
 
-                          
+
                     </td>
 
                     <!-- <td>{{ assignment.ReservationId }}</td> -->
@@ -165,8 +162,8 @@
                     </div>
                     <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
                         <label>TripNo</label>
-                        <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" readonly
-                            formControlName="tripNumber" />
+                        <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber"
+                            readonly formControlName="tripNumber" />
                     </div>
 
                     <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
@@ -209,15 +206,19 @@
                         <label> Vehicle Model</label>
                         <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
                             <option>Select model</option>
-                          <option *ngFor="let vehicleModel of vehicleModelList" [value]="vehicleModel.category_Options_1">
-                            {{ vehicleModel.category_Options_1 }}
-                          </option>
+                            <option *ngFor="let vehicleModel of vehicleModelList"
+                                [value]="vehicleModel.category_Options_1">
+                                {{ vehicleModel.category_Options_1 }}
+                            </option>
                         </select>
-                        <div *ngIf="(tripAssignmentForm.get('VehicleModel')?.invalid && tripAssignmentForm.get('VehicleModel')?.errors && tripAssignmentForm.get('VehicleModel')?.dirty) || tripAssignmentForm.get('VehicleModel')?.touched">
-                          <small class="text-red-700" *ngIf="tripAssignmentForm.get('VehicleModel')?.hasError('required')">*This field is required</small>
+                        <div
+                            *ngIf="(tripAssignmentForm.get('VehicleModel')?.invalid && tripAssignmentForm.get('VehicleModel')?.errors && tripAssignmentForm.get('VehicleModel')?.dirty) || tripAssignmentForm.get('VehicleModel')?.touched">
+                            <small class="text-red-700"
+                                *ngIf="tripAssignmentForm.get('VehicleModel')?.hasError('required')">*This field is
+                                required</small>
                         </div>
-                      </div>
-                      
+                    </div>
+
                     <!-- <div class="m-2" [formGroup]="tripAssignmentForm">
                         <label> Vehicle Model</label>
                         <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel"         
@@ -243,18 +244,17 @@
 
 
 
-                    <!-- (change)="checkVehicleAssignment(tripAssignmentForm.get('vehicleID')?.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)"> -->
 
 
 
                     <div class="m-2" [formGroup]="tripAssignmentForm">
                         <label for="VehicleId">Vehicle Registration</label>
-                        
+
                         <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
-                            (change)="onVehicleChange($event)"
-                            >
+                            (change)="onVehicleChange($event)">
                             <option value="">Select vehicleRegistration</option>
-                            <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID' [attr.data-regno]='vehicle.vehicleRegNo'>
+                            <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID'
+                                [attr.data-regno]='vehicle.vehicleRegNo'>
                                 {{ vehicle.vehicleRegNo }}
                             </option>
                         </select>
@@ -280,7 +280,7 @@
                             (change)="checkDriverAssignment(Driver.value,tripAssignmentForm.get('FromDateTime')?.value,tripAssignmentForm.get('ToDateTime')?.value)">
                             <option *ngFor="let driver of chaufferDriversList" [value]="driver.DriverId">{{
                                 driver.DriverFirstName }}</option>
-                              
+
                         </select>
                         <div *ngIf="driverAssignedError" class="text-red-700">
                         </div>
@@ -452,11 +452,11 @@
 
                 </div>
                 <div>
-                    <div class="m-2 text-sm "   [formGroup]="tripAssignmentForm" >
+                    <div class="m-2 text-sm " [formGroup]="tripAssignmentForm">
                         <label>Description</label>
                         <input type="text" class="rounded-md border border-gray-400 form-control h-24 w-max-84"
-                          formControlName="Remarks" id="Remarks" />
-                        </div>                    <!-- <button 
+                            formControlName="Remarks" id="Remarks" />
+                    </div> <!-- <button 
                         class="border rounded-md m-2 p-2 text-center w-24 text-red-700 hover:bg-red-700 hover:text-white"
                         (click)="generateCDO(tripAssignmentForm.get('TripId').value)">
                         CDO

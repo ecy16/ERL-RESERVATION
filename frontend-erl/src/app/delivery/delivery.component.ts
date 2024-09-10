@@ -679,10 +679,13 @@ export class DeliveryComponent {
     JSON.stringify(this.deliveryForm.value);
     console.log("Delivery saved", this.deliveryForm.value)
     this.deliveryList.push(this.deliveryForm.value, 'deliveryList')
-    this.apiService.addVehicleMovement(this.TripId, this.deliveryForm.value).subscribe((res) => {
+    this.apiService.addTransaction(this.deliveryForm.value).subscribe((res) => {
       console.log('AddFuels', res)
-      this.assignmentAllTrips.push(res)
+      this.deliveryList.push(res)
     })
+this.generateRA(this.TripId)
+
+this.toastr.success()
   }
 
 

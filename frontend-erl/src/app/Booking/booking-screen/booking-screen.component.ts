@@ -331,35 +331,21 @@ export class BookingScreenComponent implements OnInit {
     .subscribe((response: any) => {
             console.log('responseBookingInfo',response)
       const ReservationId = response.ReservationId;
-
-    // this.apiService.addReservation(data).subscribe((response: any) => {
-    //   console.log('responseBookingInfo',response)
-
-    //     const ReservationId = response.ReservationId;
-
         this.fetchAllTrips();
        
             this.router.navigate([`BookingDetails/${ReservationId}`]);
-       
 
         this.toastr.success("Booking Added Successfully");
       });
 
-      console.log('BookingInformation2',this.bookingForm.value)
 
+      console.log('BookingInformation2',this.bookingForm.value)
+      
 
     this.bookingForm.reset();
-
   }
   
-  // getTodayDate(): string {
-  //   console.log(Date,'Date')
-  //   const today = new Date();
-  //   const day = String(today.getDate()).padStart(2, '0');
-  //   const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-  //   const year = today.getFullYear();
-  //   return `${year}-${month}-${day}`;
-  // }
+ 
 
   open(dates: any) {
     this.modalService.open(dates, { ariaLabelledBy: 'modal-basic-title' });

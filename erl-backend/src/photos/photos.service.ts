@@ -47,9 +47,9 @@ export class PhotosService {
   }
 
   private validateFile(file: Express.Multer.File) {
-    if (this.allowedMimeTypes.includes(file.mimetype)) {
-      throw new BadRequestException(`Invalid file type: ${file.mimetype}. Only JPEG and PNG are allowed.`);
-    }
+    // if (this.allowedMimeTypes.includes(file.mimetype)) {
+    //   throw new BadRequestException(`Invalid file type: ${file.mimetype}. Only JPEG and PNG are allowed.`);
+    // }
     if (file.size > this.maxFileSize) {
       throw new BadRequestException(`File size exceeds the maximum allowed size of 5MB.`);
     }

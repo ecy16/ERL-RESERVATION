@@ -8,7 +8,7 @@ export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
   @Post('/create')
-  create(@Body() createTransactionDto: CreateTransactionDto) {
+  addTransaction(@Body() createTransactionDto: CreateTransactionDto) {
     return this.transactionsService.createTransaction(createTransactionDto);
   }
 

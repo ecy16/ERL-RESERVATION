@@ -113,6 +113,13 @@ export class ApiService {
 
 
   ///Auth
+
+
+  // <-----Tranactions-------------->
+  
+transactionsUrl=`http://${url}/api/transactions`
+
+
   authUrl = `http://${url}/api/auth`
 
 
@@ -549,10 +556,15 @@ export class ApiService {
 
   }
 
-  addVehicleMovement(TripId: any, deliveryForm: any) {
-    return this.http.post(`${this.filesUrl}/UploadFile`, deliveryForm)
+  // addVehicleMovement(TripId: any, deliveryForm: any) {
+  //   return this.http.post(`${this.filesUrl}/UploadFile`, deliveryForm)
+
+  // }
+  addTransaction(deliveryForm:any) {
+    return this.http.post(`${this.transactionsUrl}/create`, deliveryForm)
 
   }
+
 
   getRentalAgreement() {
     return this.http.get<any[]>(`${this.RaUrl}/id`)
