@@ -1,0 +1,30 @@
+import { TripsService } from './trips.service';
+import { AddTripDto } from '../dto/add-trip.dto';
+import { UpdateTripDto } from '../dto/update-trip.dto';
+import { VehicleValidationDto } from 'src/dto/vehicleValidation.dto';
+import { DriverValidationDto } from 'src/dto/driverValidation.dto';
+import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
+export declare class TripsController {
+    private tripService;
+    constructor(tripService: TripsService);
+    fetchTrips(id: number): Promise<any>;
+    getOneTrip(id: number): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
+    getAllTrips(): Promise<any>;
+    fetchFuelLevel(): Promise<any>;
+    fetchDriverServiceStatus(): Promise<any>;
+    fetchTripStatus(): Promise<any>;
+    addNewTrip(body: AddTripDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
+    updateTripById(id: string, body: UpdateTripDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
+    fetchRelatedTrips(reservationId: string): Promise<any>;
+    findAssignmentTrips(id: string): Promise<any>;
+    fetchSortedTrips(): Promise<any>;
+    addVehicleMovement(TripId: string, body: VehicleMovementDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
+    fetchDeliverTrips(TripId: string): Promise<any>;
+    fetchAllTrips(): Promise<any>;
+    fetchLastRelatedTrips(reservationId: string): Promise<any>;
+    getRelatedReservationTrip(reservationId: string): Promise<any>;
+    assignVehicle(model: any): Promise<any>;
+    validateVehicle(body: VehicleValidationDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
+    validateDriver(body: DriverValidationDto): Promise<any>;
+    searchResourcesValue(Body: any): Promise<any>;
+}

@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { MailService } from 'src/mail/mail.service';
-import { ForgotPasswordDto } from '../dto/forgot-Password.dto'
+import { ForgotPasswordDto } from '../dto/forgot-password.dto'
 import * as crypto from 'crypto';
 
 @Controller('forgot-password')

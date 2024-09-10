@@ -1,0 +1,33 @@
+export declare class CreateTransactionDto {
+    TripId: number;
+    ReservationId: number;
+    DriverId: number;
+    DriverFirstName: string;
+    VehicleId: number;
+    TripStatus: string;
+    MileageIN: number;
+    MileageOUT: number;
+    FuelIN: number;
+    FuelOUT: number;
+    tripNumber: number;
+    vehicleRegNo: string;
+    VehicleMake: string;
+    VehicleModel: string;
+    Destination: string;
+    Time: number;
+    DeliveredBy: string;
+    CollectedBy: string;
+    IncidentsType: string;
+    IncidentDate: string;
+    Remarks: string;
+    ReportedBy: string;
+    BookingFor: string;
+    PickupContactNo: string;
+    PickupEmail: string;
+    Collection: string;
+    Transaction: string;
+    PickupAddress: string;
+    FromDate: string;
+    FromTime: string;
+    BookingNo: string;
+}
