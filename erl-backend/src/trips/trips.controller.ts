@@ -119,8 +119,7 @@ export class TripsController {
 
     @Post('/validateVehicle')
     validateVehicle(@Body(ValidationPipe) body: VehicleValidationDto) {
-        // console.log(Body);
-        // return body;
+        console.log(body);
         return this.tripService.assignReg(body)
     }
 

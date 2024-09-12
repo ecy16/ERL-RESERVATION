@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ApiService } from '../api.services';
@@ -51,6 +51,7 @@ export class ScheduledTripsComponent {
   DriversNameList: any;
   fetchedDriversNameList: any;
   assignmentAllTrips: any;
+  AllTransactions:any
   dtOptions: DataTables.Settings = {};
   rentalAgreement: any;
   vehicleAssignedError: any;
@@ -58,8 +59,8 @@ export class ScheduledTripsComponent {
   bookingStatusData: any;
   bookingCategoriesData: any;
   bookingBranchData:any;
-
-
+  selectedTransaction:any;
+  deliveryForm:any
 
 
 
@@ -74,6 +75,7 @@ export class ScheduledTripsComponent {
   ) {
     this.assignmentData = [];
     this.assignmentAllTrips = [];
+    this.AllTransactions=[]
     this.tripAssignmentData = [];
     this.fetchedTripList = [];
     this.fetchedCDOData = [];
@@ -139,7 +141,45 @@ export class ScheduledTripsComponent {
       BookingCategory: "",
       BookingFor:""
     });
+    this.deliveryForm = this.formBuilder.group({
+      tripNumber: ['', Validators.required],
+      TripId: ['', Validators.required],
+      VehicleMake: ['', Validators.required],
+      VehicleModel: ['', Validators.required],
+      vehicleRegNo: ['', Validators.required],
+      Destination: ['', Validators.required],
+      Time: ['', Validators.required],
+      DeliveredBy: ['', Validators.required],
+      CollectedBy: ['', Validators.required],
+      FuelIN: ['', Validators.required],
+      FuelOUT: ['', Validators.required],
+      MileageIN: ['', Validators.required],
+      MileageOUT: ['', Validators.required],
+      IncidentsType: ['', Validators.required],
+      IncidentDate: ['', Validators.required],
+      Remarks: ['', Validators.required],
+      ReportedBy: ['', Validators.required],
+      BookingFor: ['', Validators.required],
+      vehicleIN: [''],
+      vehicleOUT: [''],
+      PickupContactNo: [''],
+      PickupEmail: [''],
+      Collection: [''],
+      Transaction: [''],
+      BookingDate: [''],
+      PickupAddress: [''],
+      DriverFirstName: [''],
+      FromDate: [''],
+      FromTime: [''],
+      BookingNo: ['']
+
+    });
+    this.deliveryForm.patchValue({
+      TripId: this.actRoute.snapshot.params["TripId"],
+    });
+  
   }
+  
 
   ngOnInit() {
     this.apiService.getReservations().subscribe((reservations: any[]) => {
@@ -149,8 +189,8 @@ export class ScheduledTripsComponent {
       console.log("Filtered trips scheduled:", this.filteredReservations);
       this.assignmentData = [...this.filteredReservations];
     });
-
-
+   
+    this.fetchTransactions()
 
     this.assignmentData = [];
     this.assignmentData.push(this.filteredAssignment);
@@ -237,12 +277,50 @@ export class ScheduledTripsComponent {
 
  
   }
+
+
+
+
+  fetchTransactions(){
+    this.AllTransactions = [];
+    this.apiService.fetchAllTransactions().subscribe((res:any)=>{
+      console.log(res,'the  vehicleouts/in')
+  
+  
+  
+  for(const t of res){
+  this.AllTransactions.push(t)
+  }
+      })
+
+
+
+
+
+  }
+ 
+
+
+
   filteredAssignment(filteredAssignment: any) {
     throw new Error('Method not implemented.');
   }
 
 
+  addDelivery() {
+    this.AllTransactions=[]
+    JSON.stringify(this.deliveryForm.value);
+    console.log("Delivery saved", this.deliveryForm.value)
+    this.apiService.addTransaction(this.deliveryForm.value).subscribe((res) => {
+      console.log('AddFuels', res)
+      this.AllTransactions.push(res)
+    })
 
+
+    this.deliveryForm.get('TripStatus').setValue('Scheduled');
+
+this.toastr.success()
+  }
 
 
 
@@ -300,7 +378,7 @@ export class ScheduledTripsComponent {
 
     }
 
-    getallTrips() {
+    getallTripss() {
       this.assignmentAllTrips = [];
       this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
         for (const m of trips) {
@@ -309,6 +387,17 @@ export class ScheduledTripsComponent {
           }
         }
         console.log(this.assignmentAllTrips, "Scheduled trips");
+      });
+    }
+    getallTrips() {
+      this.AllTransactions = [];
+      this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
+        for (const m of trips) {
+          if (m.Transaction !== null) {  
+            this.AllTransactions.push(m);
+          }
+        }
+        console.log(this.AllTransactions, "Scheduled trips");
       });
     }
     
@@ -361,6 +450,48 @@ export class ScheduledTripsComponent {
         console.log(res,'these are my scheduled results',res)
       },
       (error) => {
+      }
+    );
+  }
+  vehicleMovement(TripId: any) {
+    console.log('TripId', TripId)
+
+    this.apiService.fetchDeliverTrips(TripId).subscribe((res) => {
+      console.log('vehiclemovementresponse', res)
+
+      for (const dd of res) {
+        this.deliveryForm.patchValue({
+          BookingNo: dd.BookingNo,
+          tripNumber: dd.tripNumber,
+          BookingFor: dd.BookingFor,
+          PickupContactNo: dd.PickupContactNo,
+          PickupEmail: dd.PickupEmail,
+          VehicleModel: dd.VehicleModel,
+          VehicleMake: dd.VehicleMake,
+          vehicleRegNo: dd.vehicleRegNo,
+          BookingDate: dd.BookingDate,
+          PickupAddress: dd.PickupAddress,
+          DriverFirstName: dd.DriverFirstName,
+          FromDate: dd.FromDate,
+          FromTime: dd.FromTime,
+          vehicleIN: dd.vehicleIN,
+          vehicleOUT: dd.vehicleOUT,
+          TripId:dd.TripId
+        })
+        console.log('vehiclemovementpatched', this.tripAssignmentForm.value)
+
+      }
+
+    })
+
+  }
+  openForm(delivery: TemplateRef<any>) {
+    this.modalService.open(delivery, { size: "lg" }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
   }

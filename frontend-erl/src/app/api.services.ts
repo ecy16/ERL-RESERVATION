@@ -564,6 +564,10 @@ transactionsUrl=`http://${url}/api/transactions`
     return this.http.post(`${this.transactionsUrl}/create`, deliveryForm)
 
   }
+  
+  fetchAllTransactions() {
+    return this.http.get(`${this.transactionsUrl}`);
+  }
 
 
   getRentalAgreement() {

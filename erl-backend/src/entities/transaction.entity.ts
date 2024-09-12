@@ -11,7 +11,7 @@ export class TransactionEntity {
     @Column({ nullable: false })
     BookingNo: string;
     @Column({ nullable: false })
-     tripNumber: number;
+    tripNumber: number;
     @Column({ nullable: true })
     DriverId: number;
     @Column({ nullable: true })
@@ -104,10 +104,16 @@ export class TransactionEntity {
     InvoiceLineNo: number;
     @Column('date', { nullable: true })
     InvoiceDate: string;
+    @Column({ nullable: true })
+    BookingCategory: string;
+    @Column({ nullable: true })
+    companyName: string;
 
 
+    constructor(transactions: Partial<TransactionEntity>) {
+        Object.assign(this, transactions);
+    }
 
-   
 
 
 }

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,16 +13,16 @@ export class TransactionsService {
   constructor(
     @InjectRepository(TransactionEntity)
     private transactionRepo: Repository<TransactionEntity>,
-    private readonly transactionEnity: EntityManager,
+    private readonly transactionEntity: EntityManager,
     private readonly transactionDatasource: DataSource,
 ) {}
 
 async createTransaction(createTransactionDto: CreateTransactionDto) {
-  const transaction = new TransactionEntity();
+  const transaction = new TransactionEntity(createTransactionDto);
   Object.assign(transaction, createTransactionDto);
       try {
       console.log('Transactioncreate',transaction)
-        return await this.transactionEnity.save(transaction);
+        return await this.transactionEntity.save(transaction);
     } catch (err) {
         throw new BadRequestException(
             `SOMETHING WENT WRONG: ${err.message}`,
@@ -30,16 +30,44 @@ async createTransaction(createTransactionDto: CreateTransactionDto) {
     }
 }
   
+async fetchTransactionsById(id:number) {
 
-  // async create(createTransactionDto: CreateTransactionDto) {
-  //   const transaction= new TransactionEntity(createTransactionDto);
-
-  //   return 'This action adds a new transaction';
-  // }
-
-  findAll() {
-    return `This action returns all transactions`;
+  try {
+    return this.transactionRepo.findOne({ where: { TransactionId: id } });
+} catch (e) {
+    throw new Error(`Failed to find Trannsactions: ${e.message}`);
+}
   }
+
+
+async findAllTransactions() {
+
+  const transactionsQuery = await this.transactionDatasource.createQueryRunner();
+  await transactionsQuery.connect();
+  try {
+    await transactionsQuery.startTransaction();
+    const transactions = await transactionsQuery.query(
+      `
+select a.TripId,a.tripNumber,a.ReservationId,a.FromDateTime,a.ToDateTime,a.PickupAddress,a.DropAddress,a.PickupContactNo,a.PickupEmail,a.vehicleID,a.VehicleMake,
+a.VehicleModel,a.PickupFirstName + ' ' + a.PickupLastName AS [PickupName],format(a.FromDateTime,'dd-MM-yyyy HH:mm') [TripFromDateTime],a.ArrivalFlightDateTime
+,a.ArrivalFlightNo,a.DepartureFlightDateTime,a.DepartureFlightNo,a.Remarks,t.vehicleRegNo,
+format(a.ToDateTime,'dd-MM-yyyy HH:mm') [TripToDateTime], b.BookingFor,b.BookingStatus,b.Branch,b.BookingNo,b.BookingCategory,b.BookingType,b.Source,b.companyName, d.DriverFirstName+' '+d.DriverLastName [DriverName] ,t.TransactionId,t.MileageIN,t.MileageOUT,t.FuelIN,t.FuelOUT,t.[Transaction] from _cplreservationtrips a 
+                                join _cplReservations b on a.ReservationId=b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID left join _cplChaufferDrivers d on a.DriverId = d.DriverId left join _cplTransactions t on t.TripId = a.TripId where TransactionId is NOT NULL
+
+
+                `,
+
+
+    );
+    await transactionsQuery.commitTransaction();
+    return transactions;
+  }
+  catch (e) {
+    throw new Error(`Failed to find any transactions: ${e.message}`);
+  }
+}
+
+
 
   findOne(id: number) {
     return `This action returns a #${id} transaction`;
@@ -48,6 +76,15 @@ async createTransaction(createTransactionDto: CreateTransactionDto) {
   update(id: number, updateTransactionDto: UpdateTransactionDto) {
     return `This action updates a #${id} transaction`;
   }
+
+  async updateTransaction(id: number, attrs: Partial<TransactionEntity>) {
+    const transaction = await this.fetchTransactionsById(id);
+    if (!transaction) {
+        throw new NotFoundException('transactions not found');
+    }
+    Object.assign(transaction, attrs);
+    return this.transactionRepo.save(transaction);
+}
 
   remove(id: number) {
     return `This action removes a #${id} transaction`;

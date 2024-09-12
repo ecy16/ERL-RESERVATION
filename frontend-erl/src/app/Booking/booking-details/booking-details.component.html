@@ -239,6 +239,11 @@
               <input type="text" class="rounded-lg border border-gray-300 form-control" id="ReservationId"
                 formControlName="ReservationId" />
             </div>
+            <div class="hidden" hidden>
+              <label for="ReservationId">BookingNo</label>
+              <input type="text" class="rounded-lg border border-gray-300 form-control" id="BookingNo" readonly
+                formControlName="BookingNo" />
+            </div>
 
             <div>
               <label for="FromDateTime">From Date Time</label>
@@ -571,29 +576,23 @@
           <ng-template #addTrips let-modal>
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title">
-                Add Trip: {{ tripForm.get('BookingNo')?.value }}
+                Add Trip For: {{ tripForm.get('BookingNo')?.value }}
               </h4>
-                          </div>
+            </div>
             <div class="modal-body">
               <div class="tripForm">
                 <form class="m-2 text-sm border rounded-md " [formGroup]="tripForm">
                   <div class="m-2   grid grid-cols-3 " [formGroup]="tripForm">
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden>
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
                       <label>BookingNo</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                      <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" readonly
                         formControlName="BookingNo" />
                     </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden >
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden>
                       <label>reservationId</label>
                       <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
                         formControlName="ReservationId" />
                     </div>
-                 
-                  
-
-
-
-
                     <div class="m-2">
                       <label>From Date Time</label>
                       <div class="input-group border rounded-md" [formGroup]="tripForm">
@@ -951,7 +950,7 @@
                   </button>
                   <ng-template #content let-modal>
                     <div class="modal-header">
-                      <h4 class="modal-title">Add</h4>
+                      <h4 class="modal-title">Add Services For:{{ tripForm.get('BookingNo')?.value }}</h4>
                       <button type="button" class="btn-close" aria-label="Close"
                         (click)="modal.dismiss('Cross click')"></button>
                     </div>
@@ -960,8 +959,8 @@
                         <div class="tripServicesForm grid grid-cols-2 gap-2">
                           <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
                             <label>BookingNo</label>
-                            <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
-                              formControlName="BookingNo" />
+                            <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" placeholder="{{ tripForm.get('BookingNo')?.value }}"
+                              formControlName="BookingNo" /> 
                           </div>
                           <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
                             <label>reservationId</label>
@@ -1537,7 +1536,7 @@
     <!-- <------service outside trips------>
     <div class="servicesInTrips">
       <button class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
-        (click)="viewTripModal(content)" >
+        (click)="viewTripModal(content)">
         Add Services
       </button>
 
@@ -1546,19 +1545,20 @@
         <ng-template #content let-modal>
           <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">
-              Add Trip Services: {{ tripServicesForm.get('BookingNo')?.value }}
+
+              Add Trip Services For: {{ tripForm.get('BookingNo')?.value }}
             </h4>
-                        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
           </div>
           <div class="modal-body">
             <form [formGroup]="tripServicesForm" id="tripServicesForm">
               <div class="tripServicesForm grid grid-cols-2 gap-2">
                 <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
                   <label>BookingNo</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
-                    formControlName="BookingNo" />
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"  placeholder="{{ tripForm.get('BookingNo')?.value }}"
+                    formControlName="BookingNo" /> 
                 </div>
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" >
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
                   <label>reservationId</label>
                   <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
                     formControlName="ReservationId" />
@@ -1566,7 +1566,8 @@
 
                 <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
                   <label>TripNo</label>
-                  <select class="text-sm form-control" id="TripId" formControlName="TripId"  (click)="getTrips(tripServicesForm.get('ReservationId')?.value)" >
+                  <select class="text-sm form-control" id="TripId" formControlName="TripId"
+                    (click)="getTrips(tripServicesForm.get('ReservationId')?.value)">
                     <option readonly selected>Select the Trip Number</option>
                     <option *ngFor="let trip of tripList" [value]=" trip.TripId">
                       {{ trip.tripNumber }}

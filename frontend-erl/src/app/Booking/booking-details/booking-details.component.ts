@@ -1074,7 +1074,8 @@ this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
   for(const g of res){
     this.tripServicesForm.patchValue({
       TripId:g.TripId,
-      tripNumber:g.tripNumber
+      tripNumber:g.tripNumber,
+      BookingNo:g.BookingNo
     })
   }
 })
@@ -1140,6 +1141,7 @@ getTrips(reservationId:any){
     console.log('eric');
     JSON.stringify(this.tripForm.value, this.ReservationId, this.tripNumber);
     console.log("string for strinfied", this.tripForm.value, this.tripNumber);
+
     this.apiService.addTrip(this.tripForm.value).subscribe(() => {
       console.log("string for response", this.tripForm.value);
 

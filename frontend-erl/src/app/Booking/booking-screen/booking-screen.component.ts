@@ -331,6 +331,10 @@ export class BookingScreenComponent implements OnInit {
     .subscribe((response: any) => {
             console.log('responseBookingInfo',response)
       const ReservationId = response.ReservationId;
+
+      
+
+
         this.fetchAllTrips();
        
             this.router.navigate([`BookingDetails/${ReservationId}`]);
@@ -343,6 +347,9 @@ export class BookingScreenComponent implements OnInit {
       
 
     this.bookingForm.reset();
+
+
+
   }
   
  

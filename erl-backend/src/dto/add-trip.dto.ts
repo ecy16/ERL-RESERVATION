@@ -10,6 +10,8 @@ export class AddTripDto {
     @IsOptional()
     DriverId: number;
     @IsOptional()
+    BookingNo: string;
+    @IsOptional()
     DriverFirstName: string;
     @IsOptional()
     VehicleRemarks: string;

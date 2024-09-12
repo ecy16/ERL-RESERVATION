@@ -11,7 +11,7 @@ export class CreateTransactionDto {
     @IsOptional()
     DriverFirstName: string;
     @IsOptional()
-    VehicleId: number;
+    vehicleID: number;
     @IsOptional()
     TripStatus: string;
     @IsOptional()
@@ -64,5 +64,7 @@ export class CreateTransactionDto {
     FromTime: string;
     @IsOptional()
     BookingNo: string;
+    @IsOptional()
+    BookingCategory: string;
     
 }

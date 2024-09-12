@@ -125,12 +125,10 @@
                                 IN/OUT
                             </a>
                         </button> -->
-                        <button *ngIf="assignment.chosenRegNo">
-                            <a class="nav-link" [routerLink]="['/delivery', assignment.TripId]"
-                                routerLinkActive="active">
-                                IN/OUT
-                            </a>
-                        </button>
+                        <button (click)="openForm(delivery)" (click)="vehicleMovement(assignment.TripId)"
+      class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">
+      Trip Start
+    </button>
 
 
                     </td>
@@ -155,7 +153,7 @@
                         <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
                             readonly formControlName="BookingNo" />
                     </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm" hidden>
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm" >
                         <label>TripId</label>
                         <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
                             formControlName="TripId" />
@@ -293,7 +291,6 @@
                     </div>
 
 
-                    <!-- <div class="tripDetails-container  border-gray-50 mb-2"> -->
                     <div class="m-2 ">
                         <label>From Date Time</label>
                         <div class="input-group border rounded-md" [formGroup]="tripAssignmentForm">
@@ -466,15 +463,182 @@
 
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')"
-                        (click)="assignResource(tripAssignmentForm.get('TripId').value)">Save</button>
+                    <button (click)="clicked()">Cancel</button>
+                    <button type="button" class="btn btn-outline-dark" 
+                        (click)="assignResource(tripAssignmentForm.get('TripId').value)" (click)="modal.close('Save click')">Save</button>
                 </div>
             </form>
         </div>
 
     </ng-template>
 
+    <ng-template #delivery let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Delivery</h4>
+        </div>
+  
+        <div class="modal-body">
+          <form class="grid grid-cols-2 text-sm" [formGroup]="deliveryForm">
+            <div class="m-2 text-sm" [formGroup]="deliveryForm">
+              <label>ReservationNo</label>
+              <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                  readonly formControlName="BookingNo" />
+          </div>
+            <div class="m-2" [formGroup]="deliveryForm" hidden>
+              <label>TripId</label>
+              <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" formControlName="TripId" readonly
+                value="{{ tripNumber }} " />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>TripNo</label>
+              <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" formControlName="tripNumber" readonly
+                value="{{ tripNumber }} " />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Transaction</label>
+                         <select class="form-control text-sm" [(ngModel)]="selectedTransaction" formControlName="Transaction">
+                <option value="">Select transaction</option>
+                <option  value="OUT">VehicleOUT</option>
+              </select>
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Name</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="BookingFor" id="name" required />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Phone</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="PickupContactNo" id="PickupContactNo" required />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Email</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="PickupEmail" id="PickupEmail" required />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Vehicle Make</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="VehicleMake" id="VehicleMake" required />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Vehicle Model</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="VehicleModel" id="VehicleModel" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>RegNo</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="vehicleRegNo" id="vehicleRegNo" required />
+            </div>
+  
+  
+  
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Date</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="FromDate" id="FromDate" />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Time</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="FromTime"
+                id="FromTime"  />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+              <label>Delivered by</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="DriverFirstName" id="DriverFirstName" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+              <label>Collected by</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="DriverFirstName" id="DriverFirstName" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction === 'IN'">
+              <label>Fuel In</label>
+              <input type="number" class="text-sm form-control rounded-md border border-gray-400" formControlName="FuelIN"
+                id="FuelIN" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+              <label>Fuel Out</label>
+              <input type="number" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="FuelOUT" id="FuelOUT" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+              <label>Mileage In</label>
+              <input type="number" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="MileageIN" id="MileageIN" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+              <label>Mileage Out</label>
+              <input type="number" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="MileageOUT" id="MileageOUT" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+              <label>Incidents Type</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="IncidentsType" id="IncidentsType" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+              <label>Incident Date</label>
+              <input type="date" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="IncidentDate" id="IncidentDate" required />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Destination</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="PickupAddress" id="PickupAddress" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm">
+              <label>Remarks</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="Remarks"
+                id="Remarks" required />
+            </div>
+  
+            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+              <label>Reported by</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="ReportedBy" id="ReportedBy" required />
+            </div>
+            <div class="m-2 border-red-700" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+              <button class="border-red-700" (click)="generateRA(deliveryForm.get('TripId')?.value)">Print Rental
+                Agreement</button>
+            </div>
+            <div class="m-2 text-sm gap-2" [formGroup]="deliveryForm">
+                <label>Trip Status</label>
+                <select readonly class="text-sm form-control" formControlName="TripStatus" id="TripStatus">
+                    <option *ngFor="let TripStatus of tripStatusList" value="{{ TripStatus.category_Options }}">
+                        {{ TripStatus.category_Options }}
+                    </option>
+                </select>
 
+               
+            </div>
+  
+            <div class="modal-footer">
+              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDelivery()"
+                (click)="modal.dismiss('Cross click')" (click)="modal.dismiss('Cross click')">
+                Save
+              </button>
+            </div>
+          </form>
+  
+  
+        </div>
+  
+  
+      </ng-template>
 
 
 </div>

@@ -82,7 +82,7 @@ export class VehiclesService {
 
     async importVehicles(file: any): Promise<string[]> {
 
-        const csvDocPath = process.cwd() + '/' + file.path;
+        // const csvDocPath = process.cwd() + '/' + file.path;
         const batchSize = 500; // Start with a base batch size
         const maxParameters = 2100; // SQL Server max parameters
         const maxColumns = 20; // Number of columns in your vehicle table, adjust if needed
@@ -94,7 +94,7 @@ export class VehiclesService {
         var message;
         var vehicleArray;
         try {
-            vehicleArray = await csv().fromFile(csvDocPath);
+            // vehicleArray = await csv().fromFile();
             console.log('Parsed Vehicle Array:', vehicleArray);
 
             // Adjust based on your needs

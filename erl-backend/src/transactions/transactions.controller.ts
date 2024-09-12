@@ -12,21 +12,23 @@ export class TransactionsController {
     return this.transactionsService.createTransaction(createTransactionDto);
   }
 
-  @Get()
-  findAll() {
-    return this.transactionsService.findAll();
+  @Get('/ById/:id')
+  fetchTrnasactions(@Param('id') id: number){
+    return this.transactionsService.fetchTransactionsById((id));
   }
-
+  @Get()
+  findAllTransactions() {
+    return this.transactionsService.findAllTransactions();
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.transactionsService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateTransactionDto: UpdateTransactionDto) {
-    return this.transactionsService.update(+id, updateTransactionDto);
+  @Patch('update/:id')
+  updateTransaction(@Param('id') id: string, @Body() body: UpdateTransactionDto) {
+    return this.transactionsService.updateTransaction(parseInt(id), body)
   }
-
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.transactionsService.remove(+id);
