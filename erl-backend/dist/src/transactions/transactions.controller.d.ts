@@ -4,7 +4,7 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 export declare class TransactionsController {
     private readonly transactionsService;
     constructor(transactionsService: TransactionsService);
-    create(createTransactionDto: CreateTransactionDto): Promise<import("../entities/transaction.entity").TransactionEntity>;
+    create(createTransactionDto: CreateTransactionDto): Promise<import("src/entities/transaction.entity").TransactionEntity>;
     findAll(): string;
     findOne(id: string): string;
     update(id: string, updateTransactionDto: UpdateTransactionDto): string;
