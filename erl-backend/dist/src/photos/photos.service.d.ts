@@ -1,4 +1,4 @@
-/// <reference types="Multer" />
+/// <reference types="multer" />
 import { Repository } from 'typeorm';
 import { DocAttachmentsEntity } from 'src/entities/docAttachments.entity';
 export declare class PhotosService {
