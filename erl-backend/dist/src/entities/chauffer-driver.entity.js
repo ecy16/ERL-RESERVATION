@@ -28,6 +28,10 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
+], ChaufferDriverEntity.prototype, "DriverMiddleName", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
 ], ChaufferDriverEntity.prototype, "DriverLastName", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'date', nullable: true }),
@@ -155,10 +159,6 @@ __decorate([
 ], ChaufferDriverEntity.prototype, "ModifiedOn", void 0);
 exports.ChaufferDriverEntity = ChaufferDriverEntity = __decorate([
     (0, typeorm_1.Entity)('_cplChaufferDrivers'),
-    (0, typeorm_1.Index)(['DriverFirstName', 'DriverLastName'], { unique: true }),
-    (0, typeorm_1.Unique)(['IDPP']),
-    (0, typeorm_1.Unique)(['Email']),
-    (0, typeorm_1.Unique)(['ContactNo']),
     __metadata("design:paramtypes", [Object])
 ], ChaufferDriverEntity);
 //# sourceMappingURL=chauffer-driver.entity.js.map

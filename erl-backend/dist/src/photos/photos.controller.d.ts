@@ -1,4 +1,4 @@
-/// <reference types="Multer" />
+/// <reference types="multer" />
 import { HttpStatus } from '@nestjs/common';
 import { PhotosService } from './photos.service';
 export declare class PhotosController {

@@ -1,3 +1,4 @@
+/// <reference types="multer" />
 import { CreateChaufferDriverDto } from './dto/create-chauffer-driver.dto';
 import { UpdateChaufferDriverDto } from './dto/update-chauffer-driver.dto';
 import { DataSource, Repository } from 'typeorm';
@@ -15,6 +16,10 @@ export declare class ChaufferDriversService {
     addChauffer(addDriversDto: AddDriversDto): Promise<ChaufferDriverEntity>;
     fetchChaufferById(DriverFirstName: any): Promise<any>;
     searchView(searchDriversDto: SearchDriversDto): Observable<ChaufferDriverEntity[]>;
+    uploadDrivers(file: Express.Multer.File): Promise<{
+        message: string;
+        data: (AddDriversDto & ChaufferDriverEntity)[];
+    }>;
     findOne(id: number): string;
     update(id: number, updateChaufferDriverDto: UpdateChaufferDriverDto): string;
     remove(id: number): string;

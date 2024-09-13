@@ -1,6 +1,7 @@
 export declare class AddDriversDto {
     ReservationId: number;
     DriverFirstName: string;
+    DriverMiddleName: string;
     DriverLastName: string;
     DriverDOB: Date;
     DriverLicenseNo: string;
