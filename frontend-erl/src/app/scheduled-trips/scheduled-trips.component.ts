@@ -307,12 +307,11 @@ export class ScheduledTripsComponent {
   }
 
 
-  addDelivery() {
+  completeTrip(TripId:any) {
     this.AllTransactions=[]
-    JSON.stringify(this.deliveryForm.value);
-    console.log("Delivery saved", this.deliveryForm.value)
-    this.apiService.addTransaction(this.deliveryForm.value).subscribe((res) => {
-      console.log('AddFuels', res)
+    console.log("TrIPFinish", this.deliveryForm.value)
+    this.apiService.updateTransactions(TripId).subscribe((res) => {
+      console.log('TripFinihResponse', res)
       this.AllTransactions.push(res)
     })
 

@@ -436,7 +436,8 @@ export class AssignmentComponent {
           VehicleModel: dd.VehicleModel,
           VehicleMake: dd.VehicleMake,
           vehicleRegNo: dd.vehicleRegNo,
-          BookingDate: dd.BookingDate
+          BookingDate: dd.BookingDate,
+          TripStatus:dd.TripStatus
         })
         console.log('deliverysxh', this.deliveryForm.value)
 
@@ -781,7 +782,8 @@ export class AssignmentComponent {
           FromTime: dd.FromTime,
           vehicleIN: dd.vehicleIN,
           vehicleOUT: dd.vehicleOUT,
-          TripId:dd.TripId
+          TripId:dd.TripId,
+          TripStatus:dd.TripStatus
         })
         console.log('vehiclemovementpatched', this.tripAssignmentForm.value)
 

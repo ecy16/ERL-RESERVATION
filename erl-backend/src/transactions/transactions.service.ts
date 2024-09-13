@@ -21,7 +21,6 @@ async createTransaction(createTransactionDto: CreateTransactionDto) {
   const transaction = new TransactionEntity(createTransactionDto);
   Object.assign(transaction, createTransactionDto);
       try {
-      console.log('Transactioncreate',transaction)
         return await this.transactionEntity.save(transaction);
     } catch (err) {
         throw new BadRequestException(

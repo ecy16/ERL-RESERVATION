@@ -568,6 +568,9 @@ transactionsUrl=`http://${url}/api/transactions`
   fetchAllTransactions() {
     return this.http.get(`${this.transactionsUrl}`);
   }
+  updateTransactions(id:any): Observable<any[]> {
+    return this.http.patch<any[]>(`${this.transactionsUrl}/update/`, id);
+  }
 
 
   getRentalAgreement() {

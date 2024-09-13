@@ -151,12 +151,10 @@
                 value="{{ tripNumber }} " />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm">
-              <label>Transaction</label>
-              <select class="form-control text-sm" [(ngModel)]="selectedTransaction" formControlName="Transaction">
-                <option value="">Select transaction</option>
-                <option value="IN">VehicleIN</option>
-              </select>
+                       <div class="m-2" [formGroup]="deliveryForm">
+                <label>Transaction</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400" value="TripFinish">
+                
             </div>
             <div class="m-2" [formGroup]="deliveryForm">
               <label>Name</label>
@@ -209,13 +207,13 @@
                 formControlName="DriverFirstName" id="DriverFirstName" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+            <div class="m-2" [formGroup]="deliveryForm" >
               <label>Collected by</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="DriverFirstName" id="DriverFirstName" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction === 'IN'">
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Fuel In</label>
               <input type="number" class="text-sm form-control rounded-md border border-gray-400" formControlName="FuelIN"
                 id="FuelIN" required />
@@ -227,7 +225,7 @@
                 formControlName="FuelOUT" id="FuelOUT" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Mileage In</label>
               <input type="number" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="MileageIN" id="MileageIN" required />
@@ -239,13 +237,13 @@
                 formControlName="MileageOUT" id="MileageOUT" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Incidents Type</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="IncidentsType" id="IncidentsType" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Incident Date</label>
               <input type="date" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="IncidentDate" id="IncidentDate" required />
@@ -262,7 +260,7 @@
                 id="Remarks" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Reported by</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="ReportedBy" id="ReportedBy" required />
@@ -280,7 +278,7 @@
           </div>
   
             <div class="modal-footer">
-              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDelivery()"
+              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="completeTrip(deliveryForm.get('TripId')?.value)"
                 (click)="modal.dismiss('Cross click')" (click)="modal.dismiss('Cross click')">
                 Save
               </button>

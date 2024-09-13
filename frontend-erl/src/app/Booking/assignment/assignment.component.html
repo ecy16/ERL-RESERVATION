@@ -497,10 +497,8 @@
   
             <div class="m-2" [formGroup]="deliveryForm">
               <label>Transaction</label>
-                         <select class="form-control text-sm" [(ngModel)]="selectedTransaction" formControlName="Transaction">
-                <option value="">Select transaction</option>
-                <option  value="OUT">VehicleOUT</option>
-              </select>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400" value="TripStart">
+
             </div>
             <div class="m-2" [formGroup]="deliveryForm">
               <label>Name</label>
@@ -547,7 +545,7 @@
                 id="FromTime"  />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+            <div class="m-2" [formGroup]="deliveryForm" >
               <label>Delivered by</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="DriverFirstName" id="DriverFirstName" required />
@@ -565,7 +563,7 @@
                 id="FuelIN" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Fuel Out</label>
               <input type="number" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="FuelOUT" id="FuelOUT" required />
@@ -577,7 +575,7 @@
                 formControlName="MileageIN" id="MileageIN" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+            <div class="m-2" [formGroup]="deliveryForm" >
               <label>Mileage Out</label>
               <input type="number" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="MileageOUT" id="MileageOUT" required />
@@ -606,11 +604,11 @@
                 id="Remarks" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
+            <!-- <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='IN'">
               <label>Reported by</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="ReportedBy" id="ReportedBy" required />
-            </div>
+            </div> -->
             <div class="m-2 border-red-700" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
               <button class="border-red-700" (click)="generateRA(deliveryForm.get('TripId')?.value)">Print Rental
                 Agreement</button>
