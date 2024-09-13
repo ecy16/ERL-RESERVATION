@@ -6,13 +6,20 @@ import {
   Param,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
   ValidationPipe,
 } from '@nestjs/common';
 import { ChaufferDriversService } from './chauffer-drivers.service';
 import { CreateChaufferDriverDto } from './dto/create-chauffer-driver.dto';
 import { UpdateChaufferDriverDto } from './dto/update-chauffer-driver.dto';
 import { AddDriversDto } from 'src/dto/add-drivers.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import * as multer from 'multer';
 
+
+@ApiTags('chauffer-drivers')
 @Controller('chauffer-drivers')
 export class ChaufferDriversController {
   constructor(private readonly chaufferDriversService: ChaufferDriversService) { }
@@ -26,10 +33,10 @@ export class ChaufferDriversController {
     return this.chaufferDriversService.addChauffer(body);
   }
 
-@Get('chauffers/:DriverFirstName')
-getDriver(@Param('DriverFirstName') DriverFirstName:string){
-  return this.chaufferDriversService.fetchChaufferById(DriverFirstName)
-}
+  @Get('chauffers/:DriverFirstName')
+  getDriver(@Param('DriverFirstName') DriverFirstName: string) {
+    return this.chaufferDriversService.fetchChaufferById(DriverFirstName)
+  }
 
 
 
@@ -54,7 +61,22 @@ getDriver(@Param('DriverFirstName') DriverFirstName:string){
     return this.chaufferDriversService.remove(+id);
   }
   @Post('search/chauffer')
-  searchChauffer(@Body() Body:any) {
-      return this.chaufferDriversService.searchView(Body)
+  searchChauffer(@Body() Body: any) {
+    return this.chaufferDriversService.searchView(Body)
+  }
+
+  // Upload Excel file and save drivers in DB
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file', {
+    storage: multer.memoryStorage(),
+    fileFilter: (req, file, cb) => {
+      if (!file.originalname.match(/\.(xls|xlsx)$/)) {
+        return cb(new Error('Only Excel files are allowed!'), false);
+      }
+      cb(null, true);
+    }
+  }))
+  async uploadChaufferDataFile(@UploadedFile() file: Express.Multer.File) {
+    return this.chaufferDriversService.uploadDrivers(file);
   }
 }

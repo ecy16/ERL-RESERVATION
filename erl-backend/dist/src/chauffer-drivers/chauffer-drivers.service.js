@@ -18,6 +18,7 @@ const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
 const chauffer_driver_entity_1 = require("../entities/chauffer-driver.entity");
 const rxjs_1 = require("rxjs");
+const XLSX = require("xlsx");
 let ChaufferDriversService = class ChaufferDriversService {
     constructor(chaufferRepo, chaufferDriversDataSource) {
         this.chaufferRepo = chaufferRepo;
@@ -74,6 +75,24 @@ let ChaufferDriversService = class ChaufferDriversService {
             }
         });
         return (0, rxjs_1.from)(query.getMany());
+    }
+    async uploadDrivers(file) {
+        const workBook = XLSX.read(file.buffer, { type: 'buffer' });
+        const sheetName = workBook.SheetNames[0];
+        const workSheet = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
+        const drivers = workSheet.map((row) => {
+            const fullName = row['Full name']?.split(' ') || [];
+            const firstName = fullName[0] || '';
+            const middleName = fullName.length > 2 ? fullName.slice(1, fullName.length - 1).join(' ') : '';
+            const lastName = fullName[fullName.length - 1] || '';
+            return {
+                DriverFirstName: firstName,
+                DriverMiddleName: middleName,
+                DriverLastName: lastName
+            };
+        });
+        const savedDrivers = await this.chaufferRepo.save(drivers);
+        return { message: 'Drivers successfully uploaded and saved!', data: savedDrivers };
     }
     findOne(id) {
         return `This action returns a #${id} chaufferDriver`;

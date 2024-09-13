@@ -25,6 +25,10 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
+], AddDriversDto.prototype, "DriverMiddleName", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
 ], AddDriversDto.prototype, "DriverLastName", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),

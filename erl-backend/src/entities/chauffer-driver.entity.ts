@@ -1,15 +1,17 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from 'typeorm';
 @Entity('_cplChaufferDrivers')
-@Index(['DriverFirstName', 'DriverLastName'], { unique: true })
-@Unique(['IDPP'])
+// @Index(['DriverFirstName', 'DriverLastName'], { unique: true })
+// @Unique(['IDPP'])
 // @Unique(['DriverLicenseIssue'])
-@Unique(['Email'])
-@Unique(['ContactNo'])
+// @Unique(['Email'])
+// @Unique(['ContactNo'])
 export class ChaufferDriverEntity {
     @PrimaryGeneratedColumn()
     DriverId: number;
     @Column({ nullable: true })
     DriverFirstName: string;
+    @Column({ nullable: true })
+    DriverMiddleName: string;
     @Column({ nullable: true })
     DriverLastName: string;
     @Column({ type: 'date', nullable: true })

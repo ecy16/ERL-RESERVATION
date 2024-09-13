@@ -1,6 +1,7 @@
 export declare class ChaufferDriverEntity {
     DriverId: number;
     DriverFirstName: string;
+    DriverMiddleName: string;
     DriverLastName: string;
     DriverDOB: Date;
     DriverLicenseNo: string;

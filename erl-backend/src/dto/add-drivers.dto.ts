@@ -7,6 +7,8 @@ export class AddDriversDto {
     @IsOptional()
     DriverFirstName: string;
     @IsOptional()
+    DriverMiddleName: string;
+    @IsOptional()
     DriverLastName: string;
     @IsOptional()
     DriverDOB: Date;

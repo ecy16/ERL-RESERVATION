@@ -1,3 +1,4 @@
+/// <reference types="multer" />
 import { ChaufferDriversService } from './chauffer-drivers.service';
 import { UpdateChaufferDriverDto } from './dto/update-chauffer-driver.dto';
 import { AddDriversDto } from 'src/dto/add-drivers.dto';
@@ -12,4 +13,8 @@ export declare class ChaufferDriversController {
     update(id: string, updateChaufferDriverDto: UpdateChaufferDriverDto): string;
     remove(id: string): string;
     searchChauffer(Body: any): import("rxjs").Observable<import("../entities/chauffer-driver.entity").ChaufferDriverEntity[]>;
+    uploadChaufferDataFile(file: Express.Multer.File): Promise<{
+        message: string;
+        data: (AddDriversDto & import("../entities/chauffer-driver.entity").ChaufferDriverEntity)[];
+    }>;
 }
