@@ -33,7 +33,7 @@ export class ScheduledTripsComponent {
   tripNumber: any;
   filteredReservations: any[] = [];
   scheduleSearchForm: FormGroup;
-
+  TransactionId:any;
 
   vehicleRegistrationList: any;
   chaufferDriversList: any;
@@ -61,7 +61,7 @@ export class ScheduledTripsComponent {
   bookingBranchData:any;
   selectedTransaction:any;
   deliveryForm:any
-
+  transactionList:any
 
 
 
@@ -171,7 +171,8 @@ export class ScheduledTripsComponent {
       DriverFirstName: [''],
       FromDate: [''],
       FromTime: [''],
-      BookingNo: ['']
+      BookingNo: [''],
+      TransactionId:['']
 
     });
     this.deliveryForm.patchValue({
@@ -209,6 +210,7 @@ export class ScheduledTripsComponent {
     this.dtOptions = {
       order: [[10, "desc"]],
     };
+
     this.apiService.getBookingStatus().subscribe((status: any) => {
       for (const d of status) {
         this.bookingStatusData.push(d);
@@ -307,19 +309,8 @@ export class ScheduledTripsComponent {
   }
 
 
-  completeTrip(TripId:any) {
-    this.AllTransactions=[]
-    console.log("TrIPFinish", this.deliveryForm.value)
-    this.apiService.updateTransactions(TripId).subscribe((res) => {
-      console.log('TripFinihResponse', res)
-      this.AllTransactions.push(res)
-    })
+  
 
-
-    this.deliveryForm.get('TripStatus').setValue('Scheduled');
-
-this.toastr.success()
-  }
 
 
 
@@ -345,7 +336,7 @@ this.toastr.success()
           FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
           ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
           FlightNo: d.FlightNo,
-          FlightDateTime: moment(d.FlightDateTime).format("YYYY-MM-DD HH:mm"),
+          // FlightDateTime: moment(d.FlightDateTime).format("YYYY-MM-DD HH:mm"),
           Airline: d.Airline,
           PickupAddress: d.PickupAddress,
           PickupContactNo: d.PickupContactNo,
@@ -452,38 +443,102 @@ this.toastr.success()
       }
     );
   }
-  vehicleMovement(TripId: any) {
-    console.log('TripId', TripId)
 
-    this.apiService.fetchDeliverTrips(TripId).subscribe((res) => {
-      console.log('vehiclemovementresponse', res)
-
-      for (const dd of res) {
+  vehicleMovement(TransactionId: any) {
+    console.log('TransactionId', TransactionId)
+    this.transactionList=[]
+    this.apiService.fetchTransactionsById(TransactionId).subscribe((res:any) => {
+      console.log('TransactionIdRESPONSE', res)
         this.deliveryForm.patchValue({
-          BookingNo: dd.BookingNo,
-          tripNumber: dd.tripNumber,
-          BookingFor: dd.BookingFor,
-          PickupContactNo: dd.PickupContactNo,
-          PickupEmail: dd.PickupEmail,
-          VehicleModel: dd.VehicleModel,
-          VehicleMake: dd.VehicleMake,
-          vehicleRegNo: dd.vehicleRegNo,
-          BookingDate: dd.BookingDate,
-          PickupAddress: dd.PickupAddress,
-          DriverFirstName: dd.DriverFirstName,
-          FromDate: dd.FromDate,
-          FromTime: dd.FromTime,
-          vehicleIN: dd.vehicleIN,
-          vehicleOUT: dd.vehicleOUT,
-          TripId:dd.TripId
+          BookingNo: res.BookingNo,
+          tripNumber: res.tripNumber,
+          BookingFor: res.BookingFor,
+          PickupContactNo: res.PickupContactNo,
+          PickupEmail: res.PickupEmail,
+          VehicleModel: res.VehicleModel,
+          VehicleMake: res.VehicleMake,
+          vehicleRegNo: res.vehicleRegNo,
+          BookingDate: res.BookingDate,
+          PickupAddress: res.PickupAddress,
+          DriverFirstName: res.DriverFirstName,
+          FromDate: res.FromDate,
+          FromTime: res.FromTime,
+          vehicleIN: res.vehicleIN,
+          vehicleOUT: res.vehicleOUT,
+          TripId:res.TripId,
+          TransactionId:res.TransactionId
         })
-        console.log('vehiclemovementpatched', this.tripAssignmentForm.value)
-
-      }
-
-    })
+        console.log('Response', this.deliveryForm.value)
+      })
 
   }
+
+
+  completeTrip(TransactionId: any) {
+    console.log('completeTrip', TransactionId);
+    
+    // Fetch the transaction by ID
+    this.apiService.fetchTransactionsById(TransactionId).subscribe((res: any) => {
+      console.log('Fetched Transaction:', res);
+  
+      // Patch the form with the response (res)
+      this.deliveryForm.patchValue({
+        BookingNo: res.BookingNo,
+        tripNumber: res.tripNumber,
+        BookingFor: res.BookingFor,
+        PickupContactNo: res.PickupContactNo,
+        PickupEmail: res.PickupEmail,
+        VehicleModel: res.VehicleModel,
+        VehicleMake: res.VehicleMake,
+        vehicleRegNo: res.vehicleRegNo,
+        BookingDate: res.BookingDate,
+        PickupAddress: res.PickupAddress,
+        DriverFirstName: res.DriverFirstName,
+        FromDate: res.FromDate,
+        FromTime: res.FromTime,
+        vehicleIN: res.vehicleIN,
+        vehicleOUT: res.vehicleOUT,
+        TripId: res.TripId,
+        TransactionId: res.TransactionId,
+        FuelIN:res.FuelIN,
+        FuelOUT:res.FuelOUT,
+        MileageOUT:res.MileageOUT,
+        MileageIN:res.MileageIN
+      });
+  
+      console.log('Updated Form Data:', this.deliveryForm.value);
+  
+      this.apiService.updateTransactions(TransactionId, this.deliveryForm.value).subscribe((updateRes: any) => {
+        console.log('Update Transaction Response:', updateRes);
+  
+        this.AllTransactions.push(updateRes);
+      });
+    });
+  }
+  
+
+  completeTrip2(TransactionId:any) {
+    console.log('completestrip',TransactionId)
+    this.apiService.fetchTransactionsById(TransactionId).subscribe((res)=>{
+console.log(res,'second')   
+ })
+    console.log("TrIPFinish", this.deliveryForm.value)
+    this.apiService.updateTransactions(TransactionId,this.deliveryForm).subscribe((res) => {
+      console.log('TripFinihResponse', res)
+      this.AllTransactions.push(res)
+    })
+
+this.toastr.success()
+  }
+
+  
+  
+
+
+
+
+
+
   openForm(delivery: TemplateRef<any>) {
     this.modalService.open(delivery, { size: "lg" }).result.then(
       (result) => {

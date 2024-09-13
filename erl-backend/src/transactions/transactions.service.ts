@@ -29,7 +29,7 @@ async createTransaction(createTransactionDto: CreateTransactionDto) {
     }
 }
   
-async fetchTransactionsById(id:number) {
+async fetchTransactionsById1(id:number) {
 
   try {
     return this.transactionRepo.findOne({ where: { TransactionId: id } });
@@ -37,6 +37,43 @@ async fetchTransactionsById(id:number) {
     throw new Error(`Failed to find Trannsactions: ${e.message}`);
 }
   }
+  async fetchTransactionsById(id: number) {
+    const queryRunner = this.transactionDatasource.createQueryRunner();
+    await queryRunner.connect();
+    try {
+      await queryRunner.startTransaction();
+      const transaction = await queryRunner.query(
+        `
+        SELECT 
+          a.TripId, a.tripNumber, a.ReservationId, a.FromDateTime, a.ToDateTime, a.PickupAddress, 
+          a.DropAddress, a.PickupContactNo, a.PickupEmail, a.vehicleID, a.VehicleMake, a.VehicleModel,
+          a.PickupFirstName + ' ' + a.PickupLastName AS [PickupName], 
+          FORMAT(a.FromDateTime, 'dd-MM-yyyy HH:mm') AS [TripFromDateTime], 
+          a.ArrivalFlightDateTime, a.ArrivalFlightNo, a.DepartureFlightDateTime, a.DepartureFlightNo, 
+          a.Remarks, t.vehicleRegNo, FORMAT(a.ToDateTime, 'dd-MM-yyyy HH:mm') AS [TripToDateTime], 
+          b.BookingFor, b.BookingStatus, b.Branch, b.BookingNo, b.BookingCategory, b.BookingType, 
+          b.Source, b.companyName, d.DriverFirstName + ' ' + d.DriverLastName AS [DriverName], 
+          t.TransactionId, t.MileageIN, t.MileageOUT, t.FuelIN, t.FuelOUT, t.[Transaction]
+        FROM _cplreservationtrips a
+        JOIN _cplReservations b ON a.ReservationId = b.ReservationId
+        LEFT JOIN _cplVehicles c ON a.VehicleId = c.vehicleID
+        LEFT JOIN _cplChaufferDrivers d ON a.DriverId = d.DriverId
+        LEFT JOIN _cplTransactions t ON t.TripId = a.TripId
+        WHERE t.TransactionId = @0
+      `,
+      [id] // Pass the transaction ID as a parameter
+    );
+    
+    await queryRunner.commitTransaction();
+    return transaction.length ? transaction[0] : null;
+  } catch (e) {
+    await queryRunner.rollbackTransaction();
+    throw new Error(`Failed to find Transaction: ${e.message}`);
+  } finally {
+    await queryRunner.release();
+  }
+}
+  
 
 
 async findAllTransactions() {
@@ -72,9 +109,9 @@ format(a.ToDateTime,'dd-MM-yyyy HH:mm') [TripToDateTime], b.BookingFor,b.Booking
     return `This action returns a #${id} transaction`;
   }
 
-  update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    return `This action updates a #${id} transaction`;
-  }
+  // update(id: number, updateTransactionDto: UpdateTransactionDto) {
+  //   return `This action updates a #${id} transaction`;
+  // }
 
   async updateTransaction(id: number, attrs: Partial<TransactionEntity>) {
     const transaction = await this.fetchTransactionsById(id);

@@ -118,6 +118,8 @@ export class ApiService {
   // <-----Tranactions-------------->
   
 transactionsUrl=`http://${url}/api/transactions`
+transactionsUrlUpdate=`http://${url}/api/transactions/update/`
+
 
 
   authUrl = `http://${url}/api/auth`
@@ -568,10 +570,15 @@ transactionsUrl=`http://${url}/api/transactions`
   fetchAllTransactions() {
     return this.http.get(`${this.transactionsUrl}`);
   }
-  updateTransactions(id:any): Observable<any[]> {
-    return this.http.patch<any[]>(`${this.transactionsUrl}/update/`, id);
+  updateTransactions(id:any,deliveryForm:any): Observable<any[]> {
+    return this.http.patch<any[]>(`${this.transactionsUrlUpdate}`+ id,deliveryForm);
   }
-
+  // updateTripById(TripId: any, tripForm: any): Observable<any> {
+  //   return this.http.patch<any[]>(`${this.updateTrip}` + TripId, tripForm);
+  // }
+  fetchTransactionsById(TransactionId: any) {
+    return this.http.get(`${this.transactionsUrl}/ById/`+ TransactionId);
+  }
 
   getRentalAgreement() {
     return this.http.get<any[]>(`${this.RaUrl}/id`)

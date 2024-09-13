@@ -23,8 +23,8 @@ export class UpdateTripDto {
     FlightNo: string;
     @IsOptional()
     Airline: string;
-    @IsOptional()
-    FlightDateTime: string;
+    // @IsOptional()
+    // FlightDateTime: string;
     @IsOptional()
     PickupAddress: string;
     @IsOptional()

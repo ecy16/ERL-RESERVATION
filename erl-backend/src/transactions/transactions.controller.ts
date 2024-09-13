@@ -13,7 +13,7 @@ export class TransactionsController {
   }
 
   @Get('/ById/:id')
-  fetchTrnasactions(@Param('id') id: number){
+  fetchTransactionsById(@Param('id') id: number){
     return this.transactionsService.fetchTransactionsById((id));
   }
   @Get()

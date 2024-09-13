@@ -503,7 +503,7 @@ export class AssignmentComponent {
           FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
           ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
           FlightNo: d.FlightNo,
-          FlightDateTime: moment(d.FlightDateTime).format("YYYY-MM-DD HH:mm"),
+          // FlightDateTime: moment(d.FlightDateTime).format("YYYY-MM-DD HH:mm"),
           Airline: d.Airline,
           PickupAddress: d.PickupAddress,
           PickupContactNo: d.PickupContactNo,

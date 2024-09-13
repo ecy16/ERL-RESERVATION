@@ -18,7 +18,6 @@ import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DataTableDirective, DataTablesModule } from "angular-datatables";
-
 import { DatePipe } from '@angular/common';
 
 
@@ -48,6 +47,7 @@ import { data, error } from "jquery";
 import { Config } from 'datatables.net';
 
 import * as moment from "moment";
+import { ModalService } from "src/app/Modal.service";
 
 export interface Reservation {
   BookingNo: string;
@@ -168,7 +168,7 @@ export class BookingScreenComponent implements OnInit {
     private apiService: ApiService,
     private toastr: ToastrService,
     private actRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
 
   ) {
 
@@ -347,6 +347,8 @@ export class BookingScreenComponent implements OnInit {
       
 
     this.bookingForm.reset();
+
+    this.modalService.open('addTrip'); 
 
 
 

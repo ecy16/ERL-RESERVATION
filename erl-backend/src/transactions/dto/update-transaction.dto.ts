@@ -5,7 +5,8 @@ import { IsOptional } from 'class-validator';
 export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {
 
 
-
+    @IsOptional()
+    TransactionId: number;
     @IsOptional()
     TripId: number;
     @IsOptional()

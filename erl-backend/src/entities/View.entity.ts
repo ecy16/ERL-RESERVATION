@@ -3,7 +3,6 @@ import { Entity, ViewEntity, ViewColumn } from 'typeorm';
 @ViewEntity({
     expression: `
         SELECT 
-            c.vehicleRegNo,
             a.*, 
             d.DriverFirstName + ' ' + d.DriverLastName AS DriverName,
             b.BookingFor,
@@ -15,7 +14,6 @@ import { Entity, ViewEntity, ViewColumn } from 'typeorm';
             END AS companyName,
             b.BookingCategory,
             b.BookingNo,
-            FORMAT(FlightDateTime, 'dd-MM-yyyy HH:mm') AS FlightDate,
             FORMAT(FromDateTime, 'dd-MM-yyyy') AS FromDate,
             FORMAT(ToDateTime, 'dd-MM-yyyy') AS ToDate,
             FORMAT(FromDateTime, 'HH:mm:ss') AS FromTime,

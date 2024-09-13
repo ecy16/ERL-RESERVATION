@@ -26,6 +26,7 @@ import {
 import { ToastrService } from "ngx-toastr";
 import { ActivatedRoute } from "@angular/router";
 import { HttpEventType } from "@angular/common/http";
+import { ModalService } from "src/app/Modal.service";
 
 @Component({
   standalone: true,
@@ -57,7 +58,6 @@ export class BookingDetailsComponent {
     { name: 'United Kingdom' },
   ];
 
-  private modalService = inject(NgbModal);
   @Input() showOption: string = "";
   @ViewChild('rentalAgreement')
   rentalAgreement: any = ElementRef<any>;
@@ -172,6 +172,8 @@ export class BookingDetailsComponent {
   showServicesInTrips: boolean = false;
   rest: any;
   resvList: any;
+  private modalService = inject(NgbModal)
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -180,6 +182,7 @@ export class BookingDetailsComponent {
     private actRoute: ActivatedRoute,
     private router: Router,
     private readonly renderer: Renderer2,
+    private modal: NgbModal,
   ) {
     this.DriverList = [];
     this.resvList=[];
@@ -251,7 +254,7 @@ export class BookingDetailsComponent {
       FromDateTime: "",
       ToDateTime: "",
       FlightNo: "",
-      FlightDateTime: "",
+      // FlightDateTime: "",
       Airline: "",
       PickupAddress: "",
       PickupContactNo: "",
@@ -638,11 +641,23 @@ for( const d of this.BookingData){
 
     this.fetchRelatedDrivers(this.reservationId);
  
- 
+    
+     // Subscribe to the modal trigger observable
+    
+
  
   }
 
-
+  addTripModal(addTrip: any) {
+    this.modalService.open(addTrip, { size: "lg" }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
 
   fetchVehicleTypes(model: string): void {
     this.apiService.getVehicleType(model).subscribe((vehicleTypes) => {
@@ -971,16 +986,7 @@ for( const d of this.BookingData){
 
 
 
-  addTripModal(addTrip: any) {
-    this.modalService.open(addTrip, { size: "lg" }).result.then(
-      (result) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
-  }
+ 
   viewBookings(Details: any) {
     this.modalService.open(Details, { size: "lg" }).result.then(
       (result) => {
@@ -1020,9 +1026,9 @@ for( const d of this.BookingData){
           FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
           ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
           FlightNo: d.FlightNo,
-          FlightDateTime: moment(d.FlightDateTime).format(
-            "YYYY-MM-DD HH:mm"
-          ),
+          // FlightDateTime: moment(d.FlightDateTime).format(
+          //   "YYYY-MM-DD HH:mm"
+          // ),
           Airline: d.Airline,
           PickupAddress: d.PickupAddress,
           PickupContactNo: d.PickupContactNo,
