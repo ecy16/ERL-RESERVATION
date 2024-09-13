@@ -1,0 +1,36 @@
+import { ReservationTripEntity } from '../entities/reservationTrip.entity';
+import { DataSource, EntityManager, Repository } from 'typeorm';
+import { AddTripDto } from '../dto/add-trip.dto';
+import { VehicleValidationDto } from '../dto/vehicleValidation.dto';
+import { DriverValidationDto } from 'src/dto/driverValidation.dto';
+import { SearchResourcesDto } from 'src/dto/search-resources.dto';
+import { ReservationDetailsViewEntity } from 'src/entities/View.entity';
+import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
+export declare class TripsService {
+    private readonly tripsRepo;
+    private readonly reservationDetailsRepo;
+    private readonly tripsEntity;
+    private readonly tripDataSource;
+    constructor(tripsRepo: Repository<ReservationTripEntity>, reservationDetailsRepo: Repository<ReservationDetailsViewEntity>, tripsEntity: EntityManager, tripDataSource: DataSource);
+    createTrip(addTripsDto: AddTripDto): Promise<ReservationTripEntity>;
+    findAllTrips(): Promise<any>;
+    findTrips(id: number): Promise<any>;
+    findTrips1(id: number): Promise<ReservationTripEntity>;
+    updateTrip(id: number, attrs: Partial<ReservationTripEntity>): Promise<ReservationTripEntity>;
+    findRelatedTrips(reservationId: number): Promise<any>;
+    findAssignmentTrips(id: number): Promise<any>;
+    findRelatedReservationTrips(reservationId: number): Promise<any>;
+    fetchSortedTrips(): Promise<any>;
+    fetchDeliverTrips(TripId: number): Promise<any>;
+    findLastRelatedTrips(reservationId: number): Promise<any>;
+    fetchFuelLevel(): Promise<any>;
+    driverService(): Promise<any>;
+    tripStatus(): Promise<any>;
+    assignVehicle(model: string): Promise<any>;
+    assignReg(vehicleValidationDto: VehicleValidationDto): Promise<ReservationTripEntity>;
+    assignDriver(driverValidationDto: DriverValidationDto): Promise<any>;
+    addVehicleMovement(TripId: any, vehicleMovementDto: VehicleMovementDto): Promise<ReservationTripEntity>;
+    searchResources(searchResourcesDto: SearchResourcesDto): Promise<any>;
+    searchReservation(searchParams: any): Promise<ReservationDetailsViewEntity[]>;
+    searchTripsSchedules(searchParams: any): Promise<ReservationDetailsViewEntity[]>;
+}

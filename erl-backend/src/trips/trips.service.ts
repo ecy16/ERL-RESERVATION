@@ -230,7 +230,7 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [DriverName] ,b.BookingFor,e.ContractId,d.email,
+                `select c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [DriverName] ,b.BookingFor,e.ContractId,d.email,
 				case when b.companyName=' ' then e.companyName else b.companyName end [companyName],
 				b.BookingCategory,b.BookingNo,
 				format(FromDateTime,'dd-MM-yyyy ') as FromDate,format(ToDateTime,'dd-MM-yyyy ') as ToDate ,

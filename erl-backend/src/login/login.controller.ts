@@ -17,7 +17,7 @@ export class LoginController {
     return this.loginService.findAll();
   }
 
-  @Get(':id')
+  @Get(':id') 
   findOne(@Param('id') id: string) {
     return this.loginService.findOne(+id);
   }

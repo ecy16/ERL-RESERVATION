@@ -10,7 +10,7 @@ export class ModalService {
   modalTrigger$ = this.modalTriggerSource.asObservable();
 
   // Method to trigger the modal
-  open(modalRef: any) {
-    this.modalTriggerSource.next(modalRef);
+  open(addTrips: any) {
+    this.modalTriggerSource.next(addTrips);
   }
 }

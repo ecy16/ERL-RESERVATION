@@ -3,6 +3,7 @@ import { Entity, ViewEntity, ViewColumn } from 'typeorm';
 @ViewEntity({
     expression: `
         SELECT 
+
             a.*, 
             d.DriverFirstName + ' ' + d.DriverLastName AS DriverName,
             b.BookingFor,
@@ -14,6 +15,7 @@ import { Entity, ViewEntity, ViewColumn } from 'typeorm';
             END AS companyName,
             b.BookingCategory,
             b.BookingNo,
+            FORMAT(CONVERT(DATE, '2024-09-10', 120), 'dd-MM-yyyy HH:mm') AS FlightDate,
             FORMAT(FromDateTime, 'dd-MM-yyyy') AS FromDate,
             FORMAT(ToDateTime, 'dd-MM-yyyy') AS ToDate,
             FORMAT(FromDateTime, 'HH:mm:ss') AS FromTime,
@@ -26,8 +28,8 @@ import { Entity, ViewEntity, ViewColumn } from 'typeorm';
     `,
 })
 export class ReservationDetailsViewEntity {
-    @ViewColumn()
-    vehicleRegNo: string;
+    // @ViewColumn()
+    // vehicleRegNo: string;
 
     @ViewColumn()
     ReservationId: number;

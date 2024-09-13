@@ -41,15 +41,17 @@ import { ApiService } from "src/app/api.services";
 import { MatIconModule } from "@angular/material/icon";
 import { Router, RouterModule } from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
-import dt4Config  from 'datatables.net';
+import dt4Config from 'datatables.net';
 import { data, error } from "jquery";
 
 import { Config } from 'datatables.net';
 
 import * as moment from "moment";
 import { ModalService } from "src/app/Modal.service";
+import { BookingDetailsComponent } from "../booking-details/booking-details.component";
 
 export interface Reservation {
+
   BookingNo: string;
   BookingDate: string;
   BookingCategory: string;
@@ -92,6 +94,8 @@ export interface Reservation {
 
 })
 export class BookingScreenComponent implements OnInit {
+  @ViewChild('addTrips') addTrips: any;
+
   dateVal = new Date();
 
   isCollapsed = false;
@@ -141,6 +145,7 @@ export class BookingScreenComponent implements OnInit {
   bookingSourceData: any;
   bookingStatusData: any;
   contractsData: any;
+  closeResult: string | undefined;
 
 
   @ViewChild(DataTableDirective, { static: false })
@@ -169,7 +174,7 @@ export class BookingScreenComponent implements OnInit {
     private toastr: ToastrService,
     private actRoute: ActivatedRoute,
     private router: Router,
-
+    private modal: NgbModal
   ) {
 
     this.BookingData = [];
@@ -195,7 +200,7 @@ export class BookingScreenComponent implements OnInit {
       BookingStatus: ["InProgress", Validators.required],
       BookingType: ["", Validators.required],
       Branch: ["", Validators.required],
-      BookingCategory:["",Validators.required]
+      BookingCategory: ["", Validators.required]
 
     })
 
@@ -219,13 +224,13 @@ export class BookingScreenComponent implements OnInit {
       PayeeCompanyName: ["", Validators.required],
       Remarks: ["", Validators.required],
       ContractNo: ["", Validators.required],
-      BookingDate:["",Validators.required]
+      BookingDate: ["", Validators.required]
       // BookingDate: [{ value: this.getTodayDate(), disabled: true }, Validators.required],
 
 
     });
-    
-   
+
+
   }
 
 
@@ -239,7 +244,7 @@ export class BookingScreenComponent implements OnInit {
     }
 
 
-   
+
     this.companyDetails = this.formBuilder.group({});
 
     this.apiService.getReservations().subscribe(
@@ -326,43 +331,56 @@ export class BookingScreenComponent implements OnInit {
 
   saveBookingData() {
     const data = JSON.stringify(this.bookingForm.value);
-    console.log('BookingInformation',this.bookingForm.value)
+    console.log('BookingInformation', this.bookingForm.value)
     this.apiService.addReservation(this.bookingForm.value)
-    .subscribe((response: any) => {
-            console.log('responseBookingInfo',response)
-      const ReservationId = response.ReservationId;
+      .subscribe((response: any) => {
+        console.log('responseBookingInfo', response)
+        const ReservationId = response.ReservationId;
 
-      
+
 
 
         this.fetchAllTrips();
-       
-            this.router.navigate([`BookingDetails/${ReservationId}`]);
+
+        this.router.navigate([`BookingDetails/${ReservationId}`]);
+
 
         this.toastr.success("Booking Added Successfully");
       });
 
 
-      console.log('BookingInformation2',this.bookingForm.value)
-      
+    console.log('BookingInformation2', this.bookingForm.value)
+
 
     this.bookingForm.reset();
-
-    this.modalService.open('addTrip'); 
-
-
-
+    this.modalService.open('modal',this.addTrips);
   }
-  
- 
+  addTripModal() {
+    // and use the reference from the component itself
+    this.modalService.open(this.addTrips).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      console.log(reason);
+    });
+  }
 
+
+  
   open(dates: any) {
     this.modalService.open(dates, { ariaLabelledBy: 'modal-basic-title' });
   }
 
 
+  // addTripModals(addTrip: any) {
 
+  //   this.modalService.open(addTrip, { size: "lg" });
+  // }
 
+  // callModal() {
+  //   const modalRef = this.modalService.open(BookingDetailsComponent,
+  //     { size: 'xl', backdrop: 'static', keyboard: false, windowClass:'my-modal' 
+  //     });
+  // }
 
   searching() {
     this.filteredReservations = [];
@@ -386,8 +404,8 @@ export class BookingScreenComponent implements OnInit {
 
 
 
- 
-  maxDate(){
+
+  maxDate() {
     const today = new Date();
     return today.toISOString().split('T')[0];
   }
@@ -439,14 +457,14 @@ export class BookingScreenComponent implements OnInit {
   getRelatedContract(): void {
     this.contractsData = [];
     this.apiService.findDemandContracts().subscribe((res: any) => {
-   
+
       for (const g of res) {
         this.contractsData.push(g)
       }
       // this.contractsData=contracts;
     });
   }
-  
+
 
 
 
