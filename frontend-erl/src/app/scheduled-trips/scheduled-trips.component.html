@@ -1,5 +1,5 @@
 <div class="scheduledTrips">
-    <h1 class="text-center m-2 font-bold text-xl">Vehicle IN/OUT</h1>
+    <h1 class="text-center m-2 font-bold text-xl">Trip Finish</h1>
 
     <div class="searches" [formGroup]="scheduleSearchForm " class=" rounded-md border m-2">
         <form [formGroup]="scheduleSearchForm" class="flex m-2 font-medium gap-1">
@@ -61,7 +61,7 @@
                 <th>ReservationNo</th>
                 <th>FromDateTime</th>
                 <th>ToDateTime</th>
-                <th>Vehicle IN/OUT</th>
+                <th class="text-center">BookingFor</th>
                 <th>MileageOUT</th>
                 <th>MileageIN</th>
                 <th>FuelIN</th>
@@ -87,7 +87,7 @@
                     <td>{{transaction.BookingNo}}/{{transaction.tripNumber}}</td>
                     <td>{{transaction.TripFromDateTime}}</td>
                     <td>{{transaction.TripToDateTime}}</td>
-                    <td>{{transaction.Transaction}}</td>
+                    <td>{{transaction.PickupName}}</td>
                     <td>{{transaction.MileageOUT}}</td>
                     <td>{{transaction.MileageIN}}</td>
                     <td>{{transaction.FuelIN}}</td>
@@ -113,7 +113,7 @@
                             </button>
                         </td>
                             <td>
-                            <button (click)="openForm(delivery)" (click)="vehicleMovement(transaction.TripId)" 
+                            <button (click)="openForm(delivery)" (click)="vehicleMovement(transaction.TransactionId)" 
                             class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">
                             Trip Finish
                           </button>
@@ -130,7 +130,7 @@
 
     <ng-template #delivery let-modal>
         <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Delivery</h4>
+          <h4 class="modal-title" id="modal-basic-title">Trip Finish</h4>
         </div>
   
         <div class="modal-body">
@@ -156,11 +156,11 @@
                 value="{{ tripNumber }} " />
             </div>
   
-                       <div class="m-2" [formGroup]="deliveryForm">
+                       <!-- <div class="m-2" [formGroup]="deliveryForm">
                 <label>Transaction</label>
                 <input type="text" class="text-sm form-control rounded-md border border-gray-400" value="TripFinish">
                 
-            </div>
+            </div> -->
             <div class="m-2" [formGroup]="deliveryForm">
               <label>Name</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
@@ -206,15 +206,15 @@
                 id="FromTime"  />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+            <!-- <div class="m-2" [formGroup]="deliveryForm" >
               <label>Delivered by</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400" readonly
                 formControlName="DriverFirstName" id="DriverFirstName" required />
-            </div>
+            </div> -->
   
             <div class="m-2" [formGroup]="deliveryForm" >
               <label>Collected by</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400" 
                 formControlName="DriverFirstName" id="DriverFirstName" required />
             </div>
   
@@ -224,9 +224,9 @@
                 id="FuelIN" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Fuel Out</label>
-              <input type="number" class="text-sm form-control rounded-md border border-gray-400"
+              <input type="number" class="text-sm form-control rounded-md border border-gray-400" readonly
                 formControlName="FuelOUT" id="FuelOUT" required />
             </div>
   
@@ -236,9 +236,9 @@
                 formControlName="MileageIN" id="MileageIN" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
+            <div class="m-2" [formGroup]="deliveryForm" >
               <label>Mileage Out</label>
-              <input type="number" class="text-sm form-control rounded-md border border-gray-400"
+              <input type="number" class="text-sm form-control rounded-md border border-gray-400" readonly
                 formControlName="MileageOUT" id="MileageOUT" required />
             </div>
   
@@ -259,7 +259,7 @@
                 formControlName="PickupAddress" id="PickupAddress" required />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm">
+            <div class="m-2" [formGroup]="deliveryForm" >
               <label>Remarks</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="Remarks"
                 id="Remarks" required />

@@ -108,7 +108,8 @@ export class TransactionEntity {
     BookingCategory: string;
     @Column({ nullable: true })
     companyName: string;
-
+    @Column({ nullable: true })
+    BookingFor: string;
 
     constructor(transactions: Partial<TransactionEntity>) {
         Object.assign(this, transactions);

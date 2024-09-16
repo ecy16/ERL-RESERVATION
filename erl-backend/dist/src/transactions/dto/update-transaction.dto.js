@@ -146,10 +146,71 @@ __decorate([
 ], UpdateTransactionDto.prototype, "FromTime", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UpdateTransactionDto.prototype, "BookingNo", void 0);
+], UpdateTransactionDto.prototype, "FromDateTime", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "ToDateTime", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "DropAddress", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateTransactionDto.prototype, "BookingCategory", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "PickupName", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "TripFromDateTime", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "ArrivalFlightDateTime", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "ArrivalFlightNo", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "DepartureFlightDateTime", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "DepartureFlightNo", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "TripToDateTime", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "BookingStatus", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "Branch", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "BookingType", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "Source", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "companyName", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateTransactionDto.prototype, "DriverName", void 0);
 //# sourceMappingURL=update-transaction.dto.js.map

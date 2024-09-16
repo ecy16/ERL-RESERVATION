@@ -353,7 +353,6 @@ export class BookingScreenComponent implements OnInit {
 
 
     this.bookingForm.reset();
-    this.modalService.open('modal',this.addTrips);
   }
   addTripModal() {
     // and use the reference from the component itself

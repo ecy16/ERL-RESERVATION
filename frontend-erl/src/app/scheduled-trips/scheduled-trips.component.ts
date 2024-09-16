@@ -466,7 +466,9 @@ export class ScheduledTripsComponent {
           vehicleIN: res.vehicleIN,
           vehicleOUT: res.vehicleOUT,
           TripId:res.TripId,
-          TransactionId:res.TransactionId
+          TransactionId:res.TransactionId,
+          MileageOUT:res.MileageOUT,
+          FuelOUT:res.FuelOUT
         })
         console.log('Response', this.deliveryForm.value)
       })
@@ -474,11 +476,11 @@ export class ScheduledTripsComponent {
   }
 
 
-  completeTrip(TransactionId: any) {
-    console.log('completeTrip', TransactionId);
+  completeTrip(TripId: any) {
+    console.log('completeTrip', TripId);
     
     // Fetch the transaction by ID
-    this.apiService.fetchTransactionsById(TransactionId).subscribe((res: any) => {
+    this.apiService.fetchTransactionsById(TripId).subscribe((res: any) => {
       console.log('Fetched Transaction:', res);
   
       // Patch the form with the response (res)
@@ -508,7 +510,7 @@ export class ScheduledTripsComponent {
   
       console.log('Updated Form Data:', this.deliveryForm.value);
   
-      this.apiService.updateTransactions(TransactionId, this.deliveryForm.value).subscribe((updateRes: any) => {
+      this.apiService.updateTransactions(this.TransactionId, this.deliveryForm.value).subscribe((updateRes: any) => {
         console.log('Update Transaction Response:', updateRes);
   
         this.AllTransactions.push(updateRes);
@@ -517,19 +519,19 @@ export class ScheduledTripsComponent {
   }
   
 
-  completeTrip2(TransactionId:any) {
-    console.log('completestrip',TransactionId)
-    this.apiService.fetchTransactionsById(TransactionId).subscribe((res)=>{
-console.log(res,'second')   
- })
-    console.log("TrIPFinish", this.deliveryForm.value)
-    this.apiService.updateTransactions(TransactionId,this.deliveryForm).subscribe((res) => {
-      console.log('TripFinihResponse', res)
-      this.AllTransactions.push(res)
-    })
+//   completeTrip2(TransactionId:any) {
+//     console.log('completestrip',TransactionId)
+//     this.apiService.fetchTransactionsById(TransactionId).subscribe((res)=>{
+// console.log(res,'second')   
+//  })
+//     console.log("TrIPFinish", this.deliveryForm.value)
+//     this.apiService.updateTransactions(TransactionId,this.deliveryForm).subscribe((res) => {
+//       console.log('TripFinihResponse', res)
+//       this.AllTransactions.push(res)
+//     })
 
-this.toastr.success()
-  }
+// this.toastr.success()
+//   }
 
   
   

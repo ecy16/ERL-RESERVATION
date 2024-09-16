@@ -52,5 +52,6 @@ export declare class TransactionEntity {
     InvoiceDate: string;
     BookingCategory: string;
     companyName: string;
+    BookingFor: string;
     constructor(transactions: Partial<TransactionEntity>);
 }

@@ -68,9 +68,40 @@ export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {
     @IsOptional()
     FromTime: string;
     @IsOptional()
-    BookingNo: string;
+    @IsOptional()
+    FromDateTime: string;
+    @IsOptional()
+    ToDateTime: string;
+    @IsOptional()
+    DropAddress: string;
     @IsOptional()
     BookingCategory: string;
+    @IsOptional()
+    PickupName: string;
+    @IsOptional()
+    TripFromDateTime: string;
+    @IsOptional()
+    ArrivalFlightDateTime: string;
+    @IsOptional()
+    ArrivalFlightNo: string;
+    @IsOptional()
+    DepartureFlightDateTime: string;
+    @IsOptional()
+    DepartureFlightNo: string;
+    @IsOptional()
+    TripToDateTime: string;
+    @IsOptional()
+    BookingStatus: string;
+    @IsOptional()
+    Branch: string;
+    @IsOptional()
+    BookingType: string;
+    @IsOptional()
+    Source: string;
+    @IsOptional()
+    companyName: string;
+    @IsOptional()
+    DriverName: string;
     
 
 

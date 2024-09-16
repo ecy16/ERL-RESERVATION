@@ -32,7 +32,22 @@ export declare class UpdateTransactionDto extends UpdateTransactionDto_base {
     PickupAddress: string;
     FromDate: string;
     FromTime: string;
-    BookingNo: string;
+    FromDateTime: string;
+    ToDateTime: string;
+    DropAddress: string;
     BookingCategory: string;
+    PickupName: string;
+    TripFromDateTime: string;
+    ArrivalFlightDateTime: string;
+    ArrivalFlightNo: string;
+    DepartureFlightDateTime: string;
+    DepartureFlightNo: string;
+    TripToDateTime: string;
+    BookingStatus: string;
+    Branch: string;
+    BookingType: string;
+    Source: string;
+    companyName: string;
+    DriverName: string;
 }
 export {};

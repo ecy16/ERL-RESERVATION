@@ -570,14 +570,14 @@ transactionsUrlUpdate=`http://${url}/api/transactions/update/`
   fetchAllTransactions() {
     return this.http.get(`${this.transactionsUrl}`);
   }
-  updateTransactions(id:any,deliveryForm:any): Observable<any[]> {
-    return this.http.patch<any[]>(`${this.transactionsUrlUpdate}`+ id,deliveryForm);
+  updateTransactions(TransactionId:any,deliveryForm:any): Observable<any[]> {
+    return this.http.patch<any[]>(`${this.transactionsUrlUpdate}`+ TransactionId,deliveryForm);
   }
   // updateTripById(TripId: any, tripForm: any): Observable<any> {
   //   return this.http.patch<any[]>(`${this.updateTrip}` + TripId, tripForm);
   // }
-  fetchTransactionsById(TransactionId: any) {
-    return this.http.get(`${this.transactionsUrl}/ById/10`);
+  fetchTransactionsById(TripId: any) {
+    return this.http.get(`${this.transactionsUrl}/ById/`+TripId);
   }
 
   getRentalAgreement() {

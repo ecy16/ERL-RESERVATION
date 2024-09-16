@@ -229,6 +229,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], TransactionEntity.prototype, "companyName", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], TransactionEntity.prototype, "BookingFor", void 0);
 exports.TransactionEntity = TransactionEntity = __decorate([
     (0, typeorm_1.Entity)('_cplTransactions'),
     __metadata("design:paramtypes", [Object])
