@@ -67,8 +67,8 @@ export class TripsController {
     //     return this.tripService.findAllTrips_ds();
     // }
 
-    @Get('trip/:reservationId')
-    fetchRelatedTrips(@Param('reservationId') reservationId: string) {
+    @Get('trip/:TripId')
+    fetchRelatedTrips(@Param('TripId') reservationId: string) {
         return this.tripService.findRelatedTrips(parseInt(reservationId));
     }
     @Get('Asstrip/:id')

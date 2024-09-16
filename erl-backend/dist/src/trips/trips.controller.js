@@ -142,8 +142,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TripsController.prototype, "updateTripById", null);
 __decorate([
-    (0, common_1.Get)('trip/:reservationId'),
-    __param(0, (0, common_1.Param)('reservationId')),
+    (0, common_1.Get)('trip/:TripId'),
+    __param(0, (0, common_1.Param)('TripId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)

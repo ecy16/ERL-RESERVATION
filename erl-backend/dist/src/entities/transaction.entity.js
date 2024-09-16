@@ -52,10 +52,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], TransactionEntity.prototype, "DriverRemarks", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
 ], TransactionEntity.prototype, "TripStatus", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
@@ -88,10 +84,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], TransactionEntity.prototype, "Airline", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
 ], TransactionEntity.prototype, "PickupAddress", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
@@ -108,14 +100,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], TransactionEntity.prototype, "RouteCode", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "ReqVehicleType", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
 ], TransactionEntity.prototype, "VehicleMake", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
@@ -125,10 +109,6 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], TransactionEntity.prototype, "VehicleModel", void 0);
-__decorate([
-    (0, typeorm_1.Column)('float', { nullable: true }),
-    __metadata("design:type", Number)
-], TransactionEntity.prototype, "MileageCap", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true, default: 0 }),
     __metadata("design:type", Number)
@@ -147,37 +127,6 @@ __decorate([
 ], TransactionEntity.prototype, "FuelOUT", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "CheckOUTBy", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "CheckINBy", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "CreatedBy", void 0);
-__decorate([
-    (0, typeorm_1.Column)('datetime', { nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "CreatedOn", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "ModifiedBy", void 0);
-__decorate([
-    (0, typeorm_1.Column)('datetime', { nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "ModifiedOn", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "PickupFirstName", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "PickupLastName", void 0);
-__decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], TransactionEntity.prototype, "Remarks", void 0);
@@ -185,18 +134,6 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", Number)
 ], TransactionEntity.prototype, "vehicleID", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "Transaction", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", Number)
-], TransactionEntity.prototype, "ServiceId", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], TransactionEntity.prototype, "serviceName", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
@@ -233,6 +170,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], TransactionEntity.prototype, "BookingFor", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], TransactionEntity.prototype, "Transaction", void 0);
 exports.TransactionEntity = TransactionEntity = __decorate([
     (0, typeorm_1.Entity)('_cplTransactions'),
     __metadata("design:paramtypes", [Object])

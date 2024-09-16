@@ -90,7 +90,7 @@ export class AssignmentComponent {
   bookingBranchData: any;
   deliveryForm: any
   deliveryList: any
-  AllTransactions:any;
+  AllTransactions: any;
   fetchedRAData: any;
 
 
@@ -127,7 +127,7 @@ export class AssignmentComponent {
     this.bookingCategoriesData = [];
     this.bookingBranchData = [];
     this.fetchedRAData = [];
-    this.AllTransactions=[]
+    this.AllTransactions = []
 
 
 
@@ -241,7 +241,8 @@ export class AssignmentComponent {
       DriverFirstName: [''],
       FromDate: [''],
       FromTime: [''],
-      BookingNo: ['']
+      BookingNo: [''],
+      BookingCategory: ['']
 
     });
     this.deliveryForm.patchValue({
@@ -250,13 +251,17 @@ export class AssignmentComponent {
   }
 
   ngOnInit() {
-    this.apiService.getReservations().subscribe((reservations: any[]) => {
-      console.log("Filtered reservations:", reservations);
-      this.filteredReservations = reservations.filter(
-        (reservation) => reservation.BookingStatus === "InProgress"
-      );
+
+
+
+
+    this.apiService.getAllTrip().subscribe((res: any[]) => {
+      console.log("Filtered reservations:", res);
       this.assignmentData = [...this.filteredReservations];
     });
+
+
+
     const selectedVehicleModel = this.tripAssignmentForm.get('VehicleModel').value;
 
     // Fetch vehicle details based on the pre-selected model if it exists
@@ -437,7 +442,8 @@ export class AssignmentComponent {
           VehicleMake: dd.VehicleMake,
           vehicleRegNo: dd.vehicleRegNo,
           BookingDate: dd.BookingDate,
-          TripStatus:dd.TripStatus
+          TripStatus: dd.TripStatus,
+          BookingCategory: dd.BookingCategory
         })
         console.log('deliverysxh', this.deliveryForm.value)
 
@@ -521,7 +527,8 @@ export class AssignmentComponent {
           DriverId: d.DriverId,
           DriverFirstName: d.DriverFirstName,
           vehicleRegNo: d.vehicleRegNo,
-          Remarks: d.Remarks
+          Remarks: d.Remarks,
+          
         });
 
         console.log(d.PickupName, "driverr patched");
@@ -689,24 +696,21 @@ export class AssignmentComponent {
     const isChauffeurDriven = this.tripAssignmentForm.value.BookingCategory === 'ChaufferDriven';
 
     // Show confirmation pop-up only for chauffeur-driven cars
-    // if (isChauffeurDriven) {
-    //   const confirmProceed = window.confirm('Do you wish to generate a CDO?');
-    //   if (confirmProceed) {
-    //     this.generateCDO(TripId);
-    //   }
-    // }
+    if (isChauffeurDriven) {
+      const confirmProceed = window.confirm('Do you wish to generate a CDO?');
+      if (confirmProceed) {
+        this.generateCDO(TripId);
+      }
+    }
     this.getallTrips()
 
 
     console.log('Assignment', this.tripAssignmentForm.value)
+    this.toastr.success(" Resource Assigned  successfully");
 
 
   }
 
-  clicked()
-{
-  console.log('cancel button')
-}
 
 
   fetchVehiclesByModel(Model: any) {
@@ -782,8 +786,9 @@ export class AssignmentComponent {
           FromTime: dd.FromTime,
           vehicleIN: dd.vehicleIN,
           vehicleOUT: dd.vehicleOUT,
-          TripId:dd.TripId,
-          TripStatus:dd.TripStatus
+          TripId: dd.TripId,
+          TripStatus: dd.TripStatus,
+          BookingCategory:dd.BookingCategory
         })
         console.log('vehiclemovementpatched', this.tripAssignmentForm.value)
 
@@ -794,7 +799,8 @@ export class AssignmentComponent {
   }
 
   addDelivery() {
-    this.AllTransactions=[]
+    console.log('delivery clicked')
+    this.AllTransactions = []
     JSON.stringify(this.deliveryForm.value);
     console.log("Delivery saved", this.deliveryForm.value)
     // this.AllTransactions.push(this.deliveryForm.value, 'deliveryList')
@@ -802,15 +808,26 @@ export class AssignmentComponent {
       console.log('AddFuels', res)
       this.AllTransactions.push(res)
     })
-  
 
 
-this.generateRA(this.TripId)
+    const isSelfDriven = this.deliveryForm.value.BookingCategory === 'SelfDriven';
 
 
 
-this.toastr.success()
+    if (isSelfDriven) {
+      const confirmProceed = window.confirm('Do you wish to generate a RentalAgreement?');
+      if (confirmProceed) {
+        this.generateRA(this.TripId)
+      }
+    }
+
+
+
+    this.toastr.success(" Mileage & Fuel Added successfully");
+
   }
+
+
 
 
   openForm(delivery: TemplateRef<any>) {
@@ -827,7 +844,6 @@ this.toastr.success()
   generateRA(TripId: any) {
     this.fetchedRAData = [];
 
-    // const { jsPDF } = window.jspdf;
 
     this.apiService.getRelatedTrip(TripId).subscribe((TripDetails) => {
       console.log(TripDetails, "TripDetails");

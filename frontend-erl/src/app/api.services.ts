@@ -477,6 +477,7 @@ transactionsUrlUpdate=`http://${url}/api/transactions/update/`
       this.http.post<any[]>(`${this.tripUrl}/all`, "")
     )
   }
+  
 
   getAllTrip(): Observable<any[]> {
     return this.http.get<any[]>(`${this.tripUrl}`)

@@ -29,10 +29,8 @@ export class ReservationsController {
     }
 
     @Get()
-    // @UseGuards(RolesGuard)
-    // @Roles('Admin')
+
     fetchAllReservation() {
-        // return ('hello world')
         return this.reservationsService.findAllReservations();
     }
 

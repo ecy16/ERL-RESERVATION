@@ -111,29 +111,17 @@
                     <td>{{assignment.TripToDateTime}}</td>
                     <td>{{ assignment.BookingCategory }}</td>
 
-                    <td><button (click)="openEditAssignment(editAssignment)"
+                    <td><button (click)="openEditAssignment(editAssignment)" class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2"
                             (click)="fetchTrip(assignment.TripId)">AssignResource</button>
 
                     </td>
                     <td>
-
-                        <!-- <button>
-                            <a class="nav-link" href="delivery" [routerLink]="[
-                            '/delivery',
-                            assignment.TripId
-                          ]" routerLinkActive="active">
-                                IN/OUT
-                            </a>
-                        </button> -->
-                        <button (click)="openForm(delivery)" (click)="vehicleMovement(assignment.TripId)"
+                        
+                        <button (click)="openForm(delivery)" (click)="vehicleMovement(assignment.TripId)" 
       class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">
       Trip Start
     </button>
-
-
                     </td>
-
-                    <!-- <td>{{ assignment.ReservationId }}</td> -->
                 </tr>
 
             </ng-container>
@@ -463,7 +451,6 @@
 
 
                 <div class="modal-footer">
-                    <button (click)="clicked()">Cancel</button>
                     <button type="button" class="btn btn-outline-dark" 
                         (click)="assignResource(tripAssignmentForm.get('TripId').value)" (click)="modal.close('Save click')">Save</button>
                 </div>
@@ -474,7 +461,7 @@
 
     <ng-template #delivery let-modal>
         <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Delivery</h4>
+          <h4 class="modal-title" id="modal-basic-title">Trip Start</h4>
         </div>
   
         <div class="modal-body">
@@ -495,15 +482,10 @@
                 value="{{ tripNumber }} " />
             </div>
   
-            <div class="m-2" [formGroup]="deliveryForm">
-              <label>Transaction</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400" value="TripStart">
-
-            </div>
-            <div class="m-2" [formGroup]="deliveryForm">
-              <label>Name</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="BookingFor" id="name" required />
+            <div class="m-2 text-sm gap-2" [formGroup]="deliveryForm">
+                <label>ReservationCategory</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingCategory"
+                    readonly formControlName="BookingCategory" />
             </div>
             <div class="m-2" [formGroup]="deliveryForm">
               <label>Phone</label>
@@ -609,8 +591,8 @@
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="ReportedBy" id="ReportedBy" required />
             </div> -->
-            <div class="m-2 border-red-700" [formGroup]="deliveryForm" *ngIf="selectedTransaction ==='OUT'">
-              <button class="border-red-700" (click)="generateRA(deliveryForm.get('TripId')?.value)">Print Rental
+            <div class="m-2 border-red-700" [formGroup]="deliveryForm" >
+              <button class="border border-red-700" (click)="generateRA(deliveryForm.get('TripId')?.value)">Print Rental
                 Agreement</button>
             </div>
             <div class="m-2 text-sm gap-2" [formGroup]="deliveryForm">
@@ -625,7 +607,7 @@
             </div>
   
             <div class="modal-footer">
-              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDelivery()"
+              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDelivery()" (click)="generateRA(deliveryForm.get('TripId')?.value)"
                 (click)="modal.dismiss('Cross click')" (click)="modal.dismiss('Cross click')">
                 Save
               </button>

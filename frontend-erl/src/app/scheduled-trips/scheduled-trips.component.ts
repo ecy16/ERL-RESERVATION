@@ -6,16 +6,16 @@ import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
-import { CommonModule,NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Router, RouterModule } from "@angular/router";
 
 
 @Component({
-  standalone:true,
+  standalone: true,
   selector: 'app-scheduled-trips',
   templateUrl: './scheduled-trips.component.html',
   styleUrls: ['./scheduled-trips.component.css'],
-  imports:[DataTablesModule,ReactiveFormsModule,CommonModule,NgFor,RouterModule]
+  imports: [DataTablesModule, ReactiveFormsModule, CommonModule, NgFor, RouterModule]
 })
 export class ScheduledTripsComponent {
   trip: any;
@@ -33,7 +33,7 @@ export class ScheduledTripsComponent {
   tripNumber: any;
   filteredReservations: any[] = [];
   scheduleSearchForm: FormGroup;
-  TransactionId:any;
+  TransactionId: any;
 
   vehicleRegistrationList: any;
   chaufferDriversList: any;
@@ -51,17 +51,17 @@ export class ScheduledTripsComponent {
   DriversNameList: any;
   fetchedDriversNameList: any;
   assignmentAllTrips: any;
-  AllTransactions:any
+  AllTransactions: any
   dtOptions: DataTables.Settings = {};
   rentalAgreement: any;
   vehicleAssignedError: any;
   driverAssignedError: any;
   bookingStatusData: any;
   bookingCategoriesData: any;
-  bookingBranchData:any;
-  selectedTransaction:any;
-  deliveryForm:any
-  transactionList:any
+  bookingBranchData: any;
+  selectedTransaction: any;
+  deliveryForm: any
+  transactionList: any
 
 
 
@@ -75,7 +75,7 @@ export class ScheduledTripsComponent {
   ) {
     this.assignmentData = [];
     this.assignmentAllTrips = [];
-    this.AllTransactions=[]
+    this.AllTransactions = []
     this.tripAssignmentData = [];
     this.fetchedTripList = [];
     this.fetchedCDOData = [];
@@ -139,7 +139,7 @@ export class ScheduledTripsComponent {
       DriverId: "",
       DriverFirstName: "",
       BookingCategory: "",
-      BookingFor:""
+      BookingFor: ""
     });
     this.deliveryForm = this.formBuilder.group({
       tripNumber: ['', Validators.required],
@@ -172,15 +172,15 @@ export class ScheduledTripsComponent {
       FromDate: [''],
       FromTime: [''],
       BookingNo: [''],
-      TransactionId:['']
+      TransactionId: ['']
 
     });
     this.deliveryForm.patchValue({
       TripId: this.actRoute.snapshot.params["TripId"],
     });
-  
+
   }
-  
+
 
   ngOnInit() {
     this.apiService.getReservations().subscribe((reservations: any[]) => {
@@ -190,12 +190,12 @@ export class ScheduledTripsComponent {
       console.log("Filtered trips scheduled:", this.filteredReservations);
       this.assignmentData = [...this.filteredReservations];
     });
-   
+
     this.fetchTransactions()
 
     this.assignmentData = [];
     this.assignmentData.push(this.filteredAssignment);
- 
+
 
     console.log("Bookings:");
 
@@ -277,30 +277,30 @@ export class ScheduledTripsComponent {
 
     const BookingDateSX = moment(new Date()).format("YYYY-MM-DD");
 
- 
+
   }
 
 
 
 
-  fetchTransactions(){
+  fetchTransactions() {
     this.AllTransactions = [];
-    this.apiService.fetchAllTransactions().subscribe((res:any)=>{
-      console.log(res,'the  vehicleouts/in')
-  
-  
-  
-  for(const t of res){
-  this.AllTransactions.push(t)
-  }
-      })
+    this.apiService.fetchAllTransactions().subscribe((res: any) => {
+      console.log(res, 'the  vehicleouts/in')
+
+
+
+      for (const t of res) {
+        this.AllTransactions.push(t)
+      }
+    })
 
 
 
 
 
   }
- 
+
 
 
 
@@ -309,7 +309,6 @@ export class ScheduledTripsComponent {
   }
 
 
-  
 
 
 
@@ -318,7 +317,8 @@ export class ScheduledTripsComponent {
 
 
 
-  
+
+
   fetchTrip(TripId: any) {
     this.fetchedTripList = [];
     this.BookingData = [];
@@ -352,7 +352,7 @@ export class ScheduledTripsComponent {
           VehicleId: d.VehicleId,
           DriverId: d.DriverId,
           DriverFirstName: d.DriverFirstName,
-          BookingFor:d.BookingFor,
+          BookingFor: d.BookingFor,
         });
 
         console.log(d.DriverFirstName, "driverr patched");
@@ -360,57 +360,57 @@ export class ScheduledTripsComponent {
         this.fetchVehiclesByModel(d.VehicleModel);
 
         // console.log(d,ve)
-           // this.BookingCategory = 'ChaufferDriven'; 
-    // this.BookingCategory = 'SelfDriven'; 
+        // this.BookingCategory = 'ChaufferDriven'; 
+        // this.BookingCategory = 'SelfDriven'; 
       }
-     
+
     });
 
-    }
+  }
 
-    getallTripss() {
-      this.assignmentAllTrips = [];
-      this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
-        for (const m of trips) {
-          if (m.Transaction !== null) {  
-            this.assignmentAllTrips.push(m);
-          }
+  getallTripss() {
+    this.assignmentAllTrips = [];
+    this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
+      for (const m of trips) {
+        if (m.Transaction !== null) {
+          this.assignmentAllTrips.push(m);
         }
-        console.log(this.assignmentAllTrips, "Scheduled trips");
-      });
-    }
-    getallTrips() {
-      this.AllTransactions = [];
-      this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
-        for (const m of trips) {
-          if (m.Transaction !== null) {  
-            this.AllTransactions.push(m);
-          }
+      }
+      console.log(this.assignmentAllTrips, "Scheduled trips");
+    });
+  }
+  getallTrips() {
+    this.AllTransactions = [];
+    this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
+      for (const m of trips) {
+        if (m.Transaction !== null) {
+          this.AllTransactions.push(m);
         }
-        console.log(this.AllTransactions, "Scheduled trips");
+      }
+      console.log(this.AllTransactions, "Scheduled trips");
+    });
+  }
+
+
+
+  editTripAssignment(TripId: any) {
+    console.log(TripId, "friday");
+    this.tripAssignmentList = [];
+
+    JSON.stringify(this.tripAssignmentForm.value);
+
+    console.log(this.tripAssignmentForm.value, ".......trip assignment");
+
+    this.apiService
+      .editTrip(TripId, this.tripAssignmentForm.value)
+      .subscribe(() => {
+        console.log(this.tripAssignmentForm.value, ".......trip ass");
+        // this.getRelatedTrips(this.tripAssignmentForm.value.ReservationId)
       });
-    }
-    
+    console.log('ovcwyey');
+    this.getallTrips()
+  }
 
-
-    editTripAssignment(TripId: any) {
-      console.log(TripId, "friday");
-      this.tripAssignmentList = [];
-  
-      JSON.stringify(this.tripAssignmentForm.value);
-  
-      console.log(this.tripAssignmentForm.value, ".......trip assignment");
-  
-      this.apiService
-        .editTrip(TripId, this.tripAssignmentForm.value)
-        .subscribe(() => {
-          console.log(this.tripAssignmentForm.value, ".......trip ass");
-          // this.getRelatedTrips(this.tripAssignmentForm.value.ReservationId)
-        });
-        console.log('ovcwyey');
-        this.getallTrips()
-    }
-    
   openEditAssignment(editAssignment: any) {
     console.log("hhhhhhhhhhhhhhhhhhhhhhhhheeeeeeeeeeeeeeeeeey");
 
@@ -430,14 +430,14 @@ export class ScheduledTripsComponent {
     throw new Error('Method not implemented.');
   }
 
-  searchScheduled(){
+  searchScheduled() {
     this.filteredReservations = [];
-      console.log(this.scheduleSearchForm.value, 'form schedules values');
+    console.log(this.scheduleSearchForm.value, 'form schedules values');
 
     this.apiService.searchAss(this.scheduleSearchForm.value).subscribe(
       (res: any[]) => {
         this.filteredReservations = res;
-        console.log(res,'these are my scheduled results',res)
+        console.log(res, 'these are my scheduled results', res)
       },
       (error) => {
       }
@@ -446,95 +446,77 @@ export class ScheduledTripsComponent {
 
   vehicleMovement(TransactionId: any) {
     console.log('TransactionId', TransactionId)
-    this.transactionList=[]
-    this.apiService.fetchTransactionsById(TransactionId).subscribe((res:any) => {
+    this.transactionList = []
+    this.apiService.fetchTransactionsById(TransactionId).subscribe((res: any) => {
       console.log('TransactionIdRESPONSE', res)
-        this.deliveryForm.patchValue({
-          BookingNo: res.BookingNo,
-          tripNumber: res.tripNumber,
-          BookingFor: res.BookingFor,
-          PickupContactNo: res.PickupContactNo,
-          PickupEmail: res.PickupEmail,
-          VehicleModel: res.VehicleModel,
-          VehicleMake: res.VehicleMake,
-          vehicleRegNo: res.vehicleRegNo,
-          BookingDate: res.BookingDate,
-          PickupAddress: res.PickupAddress,
-          DriverFirstName: res.DriverFirstName,
-          FromDate: res.FromDate,
-          FromTime: res.FromTime,
-          vehicleIN: res.vehicleIN,
-          vehicleOUT: res.vehicleOUT,
-          TripId:res.TripId,
-          TransactionId:res.TransactionId,
-          MileageOUT:res.MileageOUT,
-          FuelOUT:res.FuelOUT
-        })
-        console.log('Response', this.deliveryForm.value)
-      })
-
-  }
-
-
-  completeTrip(TripId: any) {
-    console.log('completeTrip', TripId);
-    
-    // Fetch the transaction by ID
-    this.apiService.fetchTransactionsById(TripId).subscribe((res: any) => {
-      console.log('Fetched Transaction:', res);
-  
-      // Patch the form with the response (res)
       this.deliveryForm.patchValue({
-        // BookingNo: res.BookingNo,
-        // tripNumber: res.tripNumber,
-        // BookingFor: res.BookingFor,
-        // PickupContactNo: res.PickupContactNo,
-        // PickupEmail: res.PickupEmail,
-        // VehicleModel: res.VehicleModel,
-        // VehicleMake: res.VehicleMake,
-        // vehicleRegNo: res.vehicleRegNo,
-        // BookingDate: res.BookingDate,
-        // PickupAddress: res.PickupAddress,
-        // DriverFirstName: res.DriverFirstName,
-        // FromDate: res.FromDate,
-        // FromTime: res.FromTime,
-        // vehicleIN: res.vehicleIN,
-        // vehicleOUT: res.vehicleOUT,
+        BookingNo: res.BookingNo,
+        tripNumber: res.tripNumber,
+        BookingFor: res.BookingFor,
+        PickupContactNo: res.PickupContactNo,
+        PickupEmail: res.PickupEmail,
+        VehicleModel: res.VehicleModel,
+        VehicleMake: res.VehicleMake,
+        vehicleRegNo: res.vehicleRegNo,
+        BookingDate: res.BookingDate,
+        PickupAddress: res.PickupAddress,
+        DriverFirstName: res.DriverFirstName,
+        FromDate: res.FromDate,
+        FromTime: res.FromTime,
+        vehicleIN: res.vehicleIN,
+        vehicleOUT: res.vehicleOUT,
         TripId: res.TripId,
         TransactionId: res.TransactionId,
-        FuelIN:res.FuelIN,
-        FuelOUT:res.FuelOUT,
-        MileageOUT:res.MileageOUT,
-        MileageIN:res.MileageIN
-      });
-  
-      console.log('Updated Form Data:', this.deliveryForm.value);
-  
-      this.apiService.updateTransactions(this.TransactionId, this.deliveryForm.value).subscribe((updateRes: any) => {
-        console.log('Update Transaction Response:', updateRes);
-  
-        this.AllTransactions.push(updateRes);
+        MileageOUT: res.MileageOUT,
+        FuelOUT: res.FuelOUT
+      })
+      console.log('Response', this.deliveryForm.value)
+    })
+
+  }
+
+
+  completeTrip(TransactionId: any) {
+    console.log('completeTrip', TransactionId);
+
+    this.apiService.fetchTransactionsById(TransactionId).subscribe((res: any) => {
+      console.log('Fetched Transaction:', res);
+      this.deliveryForm.patchValue({
+        TripId: res.TripId,
+        TransactionId: res.TransactionId,
+        FuelIN: res.FuelIN,
+        FuelOUT: res.FuelOUT,
+        MileageOUT: res.MileageOUT,
+        MileageIN: res.MileageIN
       });
     });
+
+      console.log('Updated Form Data:', this.deliveryForm.value);
+
+      this.apiService.updateTransactions(TransactionId, this.deliveryForm.value).subscribe((updateRes: any) => {
+        console.log('Update Transaction Response:', updateRes);
+
+        this.AllTransactions.push(updateRes);
+      });
   }
-  
 
-//   completeTrip2(TransactionId:any) {
-//     console.log('completestrip',TransactionId)
-//     this.apiService.fetchTransactionsById(TransactionId).subscribe((res)=>{
-// console.log(res,'second')   
-//  })
-//     console.log("TrIPFinish", this.deliveryForm.value)
-//     this.apiService.updateTransactions(TransactionId,this.deliveryForm).subscribe((res) => {
-//       console.log('TripFinihResponse', res)
-//       this.AllTransactions.push(res)
-//     })
 
-// this.toastr.success()
-//   }
+  //   completeTrip2(TransactionId:any) {
+  //     console.log('completestrip',TransactionId)
+  //     this.apiService.fetchTransactionsById(TransactionId).subscribe((res)=>{
+  // console.log(res,'second')   
+  //  })
+  //     console.log("TrIPFinish", this.deliveryForm.value)
+  //     this.apiService.updateTransactions(TransactionId,this.deliveryForm).subscribe((res) => {
+  //       console.log('TripFinihResponse', res)
+  //       this.AllTransactions.push(res)
+  //     })
 
-  
-  
+  // this.toastr.success()
+  //   }
+
+
+
 
 
 

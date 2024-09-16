@@ -19,8 +19,6 @@ export class TransactionEntity {
     @Column({ nullable: true })
     DriverServiceStatus: string;
     @Column({ nullable: true })
-    DriverRemarks: string;
-    @Column({ nullable: true })
     TripStatus: string;
     @Column({ nullable: true })
     VehicleRemarks: string;
@@ -36,8 +34,7 @@ export class TransactionEntity {
     ArrivalFlightDateTime: string;
     @Column({ nullable: true })
     DepartureFlightDateTime: string;
-    @Column({ nullable: true })
-    Airline: string;
+
     @Column({ nullable: true })
     PickupAddress: string;
     @Column({ nullable: true })
@@ -46,18 +43,13 @@ export class TransactionEntity {
     PickupEmail: string;
     @Column({ nullable: true })
     DropAddress: string;
-    @Column({ nullable: true })
-    RouteCode: string;
-    @Column({ nullable: true })
-    ReqVehicleType: string;
+
     @Column({ nullable: true })
     VehicleMake: string;
     @Column({ nullable: true })
     vehicleRegNo: string;
     @Column({ nullable: true })
     VehicleModel: string;
-    @Column('float', { nullable: true })
-    MileageCap: number;
     @Column({ nullable: true, default: 0 })
     MileageIN: number;
     @Column({ nullable: true, default: 0 })
@@ -67,31 +59,13 @@ export class TransactionEntity {
     @Column({ nullable: true, default: 0 })
     FuelOUT: number;
     @Column({ nullable: true })
-    CheckOUTBy: string;
-    @Column({ nullable: true })
-    CheckINBy: string;
-    @Column({ nullable: true })
-    CreatedBy: string;
-    @Column('datetime', { nullable: true })
-    CreatedOn: string;
-    @Column({ nullable: true })
-    ModifiedBy: string;
-    @Column('datetime', { nullable: true })
-    ModifiedOn: string;
-    @Column({ nullable: true })
-    PickupFirstName: string;
-    @Column({ nullable: true })
-    PickupLastName: string;
+
     @Column({ nullable: true })
     Remarks: string;
     @Column({ nullable: true })
     vehicleID: number;
-    @Column({ nullable: true })
-    Transaction: string;
-    @Column({ nullable: true })
-    ServiceId: number;
-    @Column({ nullable: true })
-    serviceName: string;
+
+
     @Column({ nullable: true })
     serviceCode: string;
     @Column('float', { nullable: true })
@@ -110,7 +84,8 @@ export class TransactionEntity {
     companyName: string;
     @Column({ nullable: true })
     BookingFor: string;
-
+    @Column({ nullable: true })
+    Transaction: string;
     constructor(transactions: Partial<TransactionEntity>) {
         Object.assign(this, transactions);
     }
