@@ -505,13 +505,18 @@
   
                 <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
                   <label>TripNo</label>
-                  <select class="text-sm form-control" id="TripId" formControlName="TripId"
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                    <label>TripNo</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber"
+                      readonly formControlName="tripNumber" />
+                  </div>
+                  <!-- <select class="text-sm form-control" id="TripId" formControlName="TripId"
                     (click)="getTrips(tripServicesForm.get('ReservationId')?.value)">
                     <option readonly selected>Select the Trip Number</option>
                     <option *ngFor="let trip of tripList" [value]=" trip.TripId">
                       {{ trip.tripNumber }}
                     </option>
-                  </select>
+                  </select> -->
                 </div>
                 <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
                   <label>TripId</label>

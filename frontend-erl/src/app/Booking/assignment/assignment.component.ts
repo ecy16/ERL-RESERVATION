@@ -251,10 +251,10 @@ export class AssignmentComponent {
 
   ngOnInit() {
     this.apiService.getReservations().subscribe((reservations: any[]) => {
+      console.log("Filtered reservations:", reservations);
       this.filteredReservations = reservations.filter(
         (reservation) => reservation.BookingStatus === "InProgress"
       );
-      console.log("Filtered reservations:", this.filteredReservations);
       this.assignmentData = [...this.filteredReservations];
     });
     const selectedVehicleModel = this.tripAssignmentForm.get('VehicleModel').value;
