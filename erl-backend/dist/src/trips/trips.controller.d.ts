@@ -8,23 +8,23 @@ export declare class TripsController {
     private tripService;
     constructor(tripService: TripsService);
     fetchTrips(id: number): Promise<any>;
-    getOneTrip(id: number): Promise<import("src/entities/reservationTrip.entity").ReservationTripEntity>;
+    getOneTrip(id: number): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
     getAllTrips(): Promise<any>;
     fetchFuelLevel(): Promise<any>;
     fetchDriverServiceStatus(): Promise<any>;
     fetchTripStatus(): Promise<any>;
-    addNewTrip(body: AddTripDto): Promise<import("src/entities/reservationTrip.entity").ReservationTripEntity>;
-    updateTripById(id: string, body: UpdateTripDto): Promise<import("src/entities/reservationTrip.entity").ReservationTripEntity>;
+    addNewTrip(body: AddTripDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
+    updateTripById(id: string, body: UpdateTripDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
     fetchRelatedTrips(reservationId: string): Promise<any>;
     findAssignmentTrips(id: string): Promise<any>;
     fetchSortedTrips(): Promise<any>;
-    addVehicleMovement(TripId: string, body: VehicleMovementDto): Promise<import("src/entities/reservationTrip.entity").ReservationTripEntity>;
+    addVehicleMovement(TripId: string, body: VehicleMovementDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
     fetchDeliverTrips(TripId: string): Promise<any>;
     fetchAllTrips(): Promise<any>;
     fetchLastRelatedTrips(reservationId: string): Promise<any>;
     getRelatedReservationTrip(reservationId: string): Promise<any>;
     assignVehicle(model: any): Promise<any>;
-    validateVehicle(body: VehicleValidationDto): Promise<import("src/entities/reservationTrip.entity").ReservationTripEntity>;
+    validateVehicle(body: VehicleValidationDto): Promise<import("../entities/reservationTrip.entity").ReservationTripEntity>;
     validateDriver(body: DriverValidationDto): Promise<any>;
     searchResourcesValue(Body: any): Promise<any>;
 }

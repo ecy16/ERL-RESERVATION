@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReservationTripEntity = void 0;
 const typeorm_1 = require("typeorm");
+const reservation_entity_1 = require("./reservation.entity");
 let ReservationTripEntity = class ReservationTripEntity {
     constructor(trips) {
         Object.assign(this, trips);
@@ -181,6 +182,10 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], ReservationTripEntity.prototype, "Transaction", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => reservation_entity_1.ReservationEntity, (reservation) => reservation.reservationTrips),
+    __metadata("design:type", reservation_entity_1.ReservationEntity)
+], ReservationTripEntity.prototype, "reservationId", void 0);
 exports.ReservationTripEntity = ReservationTripEntity = __decorate([
     (0, typeorm_1.Entity)('_cplReservationTrips'),
     __metadata("design:paramtypes", [Object])

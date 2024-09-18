@@ -5,6 +5,6 @@ export declare class FileUploadController {
     constructor(fileUploadService: FileUploadService);
     uploadFile(file: Express.Multer.File, VehicleId: number, createdBy: string): Promise<{
         message: string;
-        attachment: import("src/entities/vehicleAttachments.entity").VehicleAttachmentsEntity;
+        attachment: import("./entities/vehicleAttachments.entity").VehicleAttachmentsEntity;
     }>;
 }

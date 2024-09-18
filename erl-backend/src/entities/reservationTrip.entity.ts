@@ -1,8 +1,10 @@
 import {
     Column,
     Entity,
+    ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ReservationEntity } from './reservation.entity';
 
 
 @Entity('_cplReservationTrips')
@@ -93,6 +95,10 @@ export class ReservationTripEntity {
 
     @Column({ nullable: true })
     Transaction: string;
+
+    // added foreign key
+    @ManyToOne(()=>ReservationEntity,(reservation)=>reservation.reservationTrips)
+    reservationId: ReservationEntity
 
     constructor(trips: Partial<ReservationTripEntity>) {
         Object.assign(this, trips);

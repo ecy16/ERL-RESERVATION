@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReservationEntity = void 0;
 const typeorm_1 = require("typeorm");
+const reservationTrip_entity_1 = require("./reservationTrip.entity");
 let ReservationEntity = class ReservationEntity {
     constructor(reservations) {
         Object.assign(this, reservations);
@@ -101,6 +102,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'datetime', nullable: true }),
     __metadata("design:type", String)
 ], ReservationEntity.prototype, "ModifiedOn", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => reservationTrip_entity_1.ReservationTripEntity, (reservation) => reservation.reservationId),
+    __metadata("design:type", Array)
+], ReservationEntity.prototype, "reservationTrips", void 0);
 exports.ReservationEntity = ReservationEntity = __decorate([
     (0, typeorm_1.Entity)('_cplReservations'),
     __metadata("design:paramtypes", [Object])

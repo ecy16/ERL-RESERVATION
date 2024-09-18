@@ -32,7 +32,7 @@ export class ReservationEntity {
     ChargeType: string;
     @Column({ nullable: true })
     ChargeCurr: string;
-    
+
     // @Column('decimal', { nullable: true })
     // TotalAmount: number;
     // @Column('decimal', { nullable: true })
@@ -43,7 +43,7 @@ export class ReservationEntity {
     Source: string;
     @Column({ nullable: true })
     SourceRefNo: string;
-    @Column({ nullable: true  })
+    @Column({ nullable: true })
     ContractId: number;
     @Column({ nullable: true, default: 'Admin' })
     CreatedBy: string;
@@ -54,7 +54,9 @@ export class ReservationEntity {
     ModifiedBy: string;
     @Column({ type: 'datetime', nullable: true })
     ModifiedOn: string;
-    reservationTrips: any;
+    // reservationTrips: any;
+    @OneToMany(() => ReservationTripEntity, (reservation) => reservation.reservationId)
+    reservationTrips: ReservationTripEntity[]
 
     constructor(reservations: Partial<ReservationEntity>) {
         Object.assign(this, reservations);

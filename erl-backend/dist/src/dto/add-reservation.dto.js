@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddReservationDto = void 0;
+const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 class AddReservationDto {
 }
@@ -19,50 +20,83 @@ __decorate([
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "BookingNo", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: '2024-09-12',
+        description: 'The date of the reservation'
+    }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "BookingDate", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'The category of the booking',
+        example: 'self driven'
+    }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "BookingCategory", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'This is the booking type',
+        example: 'Complimentary'
+    }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "BookingType", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'JKIA', description: 'This is the booking branch' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "Branch", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'InProgress', description: 'The status of the booking' }),
     (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "BookingStatus", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'John Doe', description: 'The target client' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "BookingFor", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'KQ1234', description: 'This is the company code' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "CompanyCode", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'Safaricom', description: 'This is the payee company name' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "PayeeCompanyName", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'Sample remarks text', description: 'Remarks about the reservation' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "Remarks", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'Jane Doe', description: 'Reservation creator' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "Source", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'Ref001', description: 'Source reference' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], AddReservationDto.prototype, "SourceRefNo", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: '1', description: 'Contract is' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], AddReservationDto.prototype, "ContractId", void 0);

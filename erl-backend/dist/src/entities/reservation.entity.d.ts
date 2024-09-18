@@ -1,3 +1,4 @@
+import { ReservationTripEntity } from './reservationTrip.entity';
 export declare class ReservationEntity {
     ReservationId: number;
     BookingNo: string;
@@ -20,6 +21,6 @@ export declare class ReservationEntity {
     CreatedOn: string;
     ModifiedBy: string;
     ModifiedOn: string;
-    reservationTrips: any;
+    reservationTrips: ReservationTripEntity[];
     constructor(reservations: Partial<ReservationEntity>);
 }

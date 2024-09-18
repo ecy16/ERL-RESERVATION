@@ -1,3 +1,4 @@
+import { ReservationEntity } from './reservation.entity';
 export declare class ReservationTripEntity {
     TripId: number;
     tripNumber: number;
@@ -40,5 +41,6 @@ export declare class ReservationTripEntity {
     vehicleID: number;
     vehicleRegNo: string;
     Transaction: string;
+    reservationId: ReservationEntity;
     constructor(trips: Partial<ReservationTripEntity>);
 }
