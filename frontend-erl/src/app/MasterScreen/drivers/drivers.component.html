@@ -736,13 +736,13 @@
 
   <table datatable class="table row-border hover display w-full text-sm ">
     <thead>
-      <tr>
+      <tr class="text-center">
         <th>First Name</th>
         <th>Last Name</th>
-        <th>License Expiry</th>
+        <!-- <th>License Expiry</th>
         <th>Drivers Date of Birth</th>
         <th>Driver License</th>
-        <th>Contacts</th>
+        <th>Contacts</th> -->
         <th>Action</th>
 
       </tr>
@@ -751,10 +751,10 @@
       <tr *ngFor="let driver of DriversList" class="text-center">
         <td>{{ driver.DriverFirstName }}</td>
         <td>{{ driver.DriverLastName }}</td>
-        <td>{{ driver.DriverLicenseExpiry }}</td>
+        <!-- <td>{{ driver.DriverLicenseExpiry }}</td>
         <td>{{ driver.DriverDOB }}</td>
         <td>{{ driver.DriverLicenseNo }}</td>
-        <td>{{ driver.ContactNo }}</td>
+        <td>{{ driver.ContactNo }}</td> -->
         <td><button class="p-2 w-24 hover:text-red-700 hover:border border-red-700 rounded-md " (click)="openEdit(Driver)">Edit</button></td>
 
       </tr>

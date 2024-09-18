@@ -4,6 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor } from "@angular/common";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from "ngx-toastr";
+import { MatIconModule } from "@angular/material/icon";
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 @Component({
@@ -15,8 +19,10 @@ import { ToastrService } from "ngx-toastr";
     CommonModule,
     NgFor,
     ReactiveFormsModule,
-    FormsModule
-
+    FormsModule,
+MatIconModule,
+NgbAccordionModule,
+NgbModule
   ],
 })
 export class BillingDetailsComponent {
@@ -26,6 +32,8 @@ export class BillingDetailsComponent {
   bookingInfo: any ='';
   tripInfo: any ;
   serviceInfo: any ='';
+  modalService: any;
+  closeResult='';
 
 
   constructor(
@@ -125,4 +133,16 @@ export class BillingDetailsComponent {
 
   }
 
+
+
+  openEditAssignment(editAssignment: any) {
+    console.log("openeditTripAssignment");
+
+    this.modalService.open(editAssignment, { size: "lg" }).result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+   
+    );
+  }
 }

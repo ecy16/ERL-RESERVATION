@@ -121,16 +121,6 @@ WHERE
     async FetchBillDetailsById(reservationId) {
         const billsQuery = await this.BillingDataSource.createQueryRunner();
         await billsQuery.connect();
-        try {
-            await billsQuery.startTransaction();
-            const bills = await billsQuery.query(` exec _cplBillingInfo @bookingID = @0;
-          `, [reservationId]);
-            await billsQuery.commitTransaction();
-            return JSON.parse(bills[0].responseJson);
-        }
-        catch (e) {
-            throw new Error(`Failed to find any bills: ${e.message}`);
-        }
     }
 };
 exports.BillingService = BillingService;

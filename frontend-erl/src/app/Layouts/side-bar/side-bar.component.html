@@ -80,15 +80,15 @@
 
         </li>
         <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
-          <button class="sidebar-btn">
+          <button class="sidebar-btn" >
             <a class="nav-link" href="Chauffer" routerLink="/Chauffer" routerLinkActive="active">Enquiries</a>
           </button>
           <hr>
 
         </li>
         <li class="hover:shadow-md hover:m-1 hover:shadow-red-200 hover:rounded-md ">
-          <button class="sidebar-btn">
-            <a class="nav-link" href="Billing" routerLink="/Billing" routerLinkActive="active">Billing</a>
+          <button class="sidebar-btn" (click)="navigateTo('Billing')">Billing
+            <!-- <a class="nav-link" href="Billing" routerLink="/Billing" routerLinkActive="active">Billing</a> -->
           </button>
           <hr>
 

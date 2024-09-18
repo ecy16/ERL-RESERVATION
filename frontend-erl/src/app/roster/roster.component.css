@@ -1,0 +1,39 @@
+.dutyRoster-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #f9fafb;
+  }
+
+  .sleek-table {
+    border-spacing: 0;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .sleek-table th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+    padding: 12px;
+  }
+
+  .sleek-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .sleek-table tr:hover {
+    background-color: #f1f5f9;
+  }
+
+  ul {
+    padding-left: 0;
+  }
+
+  ul li {
+    margin: 4px 0;
+  }
+
+  ul li p {
+    margin: 0;
+    font-size: 14px;
+  }

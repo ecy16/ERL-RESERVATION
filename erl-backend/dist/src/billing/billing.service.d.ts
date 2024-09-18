@@ -14,5 +14,5 @@ export declare class BillingService {
     remove(id: number): string;
     findAllBillings(): Promise<any>;
     FindBillDetailsById(reservationId: number): Promise<any>;
-    FetchBillDetailsById(reservationId: number): Promise<any>;
+    FetchBillDetailsById(reservationId: number): Promise<void>;
 }

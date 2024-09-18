@@ -8,7 +8,7 @@ export declare class BillingController {
     fetchAllBills(): Promise<any>;
     findBill(id: string): Promise<any>;
     fetchBillDetails(id: number): Promise<any>;
-    fetchBillDetailsTrips(id: string): Promise<any>;
+    fetchBillDetailsTrips(id: string): Promise<void>;
     findOne(id: string): string;
     update(id: string, updateBillingDto: UpdateBillingDto): string;
     remove(id: string): string;

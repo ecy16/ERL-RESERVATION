@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiService } from '../api.services';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router,RouterModule } from '@angular/router';
 import { CommonModule, JsonPipe, NgFor } from "@angular/common";
 import { Config } from 'datatables.net';
 import { DataTablesModule } from 'angular-datatables';
+import { MatIconModule } from "@angular/material/icon";
 
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -21,8 +22,9 @@ import { DataTablesModule } from 'angular-datatables';
     NgFor,
     JsonPipe,
     DataTablesModule,
-    RouterModule
-
+    RouterModule,
+MatIconModule,
+ReactiveFormsModule
 
   ]
 })
@@ -33,14 +35,49 @@ export class BillingComponent {
 
   dtOptions: DataTables.Settings = {};
   completedBillings: any;
-
+  modalService: any;
+  closeResult='';
+  bookingInfo: any ='';
+  billingDetails: any = {};
+  ReservationId: any;
+  billingForm: FormGroup;
+  tripInfo: any ;
+  serviceInfo: any ='';
+  formBuilder: any;
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
     private actRoute: ActivatedRoute,
     private router: Router
 
-  ) { }
+  ) {
+    this.billingDetails = []
+    this.tripInfo =[]
+    this.billingForm=this.formBuilder
+    // this.billingForm = this.formBuilder.group({
+    //   BookingNo: [''], // Initialize with appropriate form controls based on your needs
+    //   Date: [''],
+    //   BillingTo: this.formBuilder.group({
+    //     BookingFor: [''],
+    //     CompanyName: [''],
+    //     CompanyCode: [''],
+    //     ContractId: [''],
+    //     PickUpAddress: [''],
+    //     DropAddress: [''],
+    //     FromDateTime: [''],
+    //     ToDateTime: ['']
+    //   }),
+    //   Summary: [[]], // Initialize as an array since ngFor expects an array
+    //   TripDetails: [[]], // Initialize as an array since ngFor expects an array
+    //   TripServices: [[]], // Initialize as an array since ngFor expects an array
+    //   Subtotal: [''],
+    //   Tax: [''],
+    //   Total: ['']
+    // });
+
+
+  }
+
 
   ngOnInit() {
     this.dtOptions = {
@@ -87,5 +124,20 @@ export class BillingComponent {
   viewBill(){
     console.log("sucesss");
 
+  }
+  show(){
+    this.toastr.success("Billing is successful.Proceed to Print invoice");
+  }
+
+  
+  openBill() {
+    console.log("openeditTripAssignment");
+
+    this.modalService.open('', { size: "lg" }).result.then(
+      (result: any) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+   
+    );
   }
 }
