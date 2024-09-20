@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ApiService } from '../api.services';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, NgFor } from "@angular/common";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from "ngx-toastr";
 import { MatIconModule } from "@angular/material/icon";
-import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordion, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-
+import { NgbAccordionItem } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   standalone: true,
@@ -20,21 +20,25 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgFor,
     ReactiveFormsModule,
     FormsModule,
-MatIconModule,
-NgbAccordionModule,
-NgbModule
+    MatIconModule,
+    NgbAccordionModule,
+    NgbModule,
+    
   ],
 })
 export class BillingDetailsComponent {
   billingDetails: any = {};
   ReservationId: any;
   billingForm: FormGroup;
-  bookingInfo: any ='';
-  tripInfo: any ;
-  serviceInfo: any ='';
+  bookingInfo: any = '';
+  bilingTrip:any;
+  tripInfo: any;
+  serviceInfo: any = '';
   modalService: any;
-  closeResult='';
-
+  closeResult = '';
+  TransactionId: any;
+  assignmentAllTrips: any;
+  dateVal = new Date();
 
   constructor(
     private actRoute: ActivatedRoute,
@@ -45,13 +49,15 @@ export class BillingDetailsComponent {
   ) {
 
     this.billingDetails = []
-    this.tripInfo =[]
+    this.tripInfo = []
+this.bilingTrip=[]
     this.billingForm = this.formBuilder.group({
       BookingNo: [''], // Initialize with appropriate form controls based on your needs
       Date: [''],
       BillingTo: this.formBuilder.group({
         BookingFor: [''],
-        CompanyName: [''],
+        BookingNo:[''],
+        companyName: [''],
         CompanyCode: [''],
         ContractId: [''],
         PickUpAddress: [''],
@@ -77,19 +83,37 @@ export class BillingDetailsComponent {
     console.log('billingdetailsView');
 
     this.ReservationId = this.actRoute.snapshot.params["ReservationId"];
+    this.TransactionId = this.actRoute.snapshot.params["TransactionId"];
+
+
+
+    this.apiService.fetchResvTrip(this.ReservationId).subscribe((res) => {
+      console.log(res, 'this is myreposne')
+
+      for (const f of res) {
+        this.billingForm.patchValue({
+          BookingFor:f.BookingFor,
+          BookingNo:f.BookingNo,
+          companyName:f.companyName,
+        })
+
+        
+        console.log(this.billingForm.value, 'this is tripInfo')
+this.bilingTrip.push(f)
+      }
+    })
 
     this.apiService.GetBillById(this.ReservationId).subscribe((res) => {
       this.billingDetails = res;
       // this.billingDetails.push(res)
       this.tripInfo = []
-      this.bookingInfo = this.billingDetails.Booking;
       this.tripInfo = this.billingDetails.tripDetails;
 
       // for x in this.billingDetails.tripDetails
       // for (const c of this.billingDetails.tripDetails) {
       //   this.tripInfo.push(c);
       // }
-      
+
       this.serviceInfo = this.billingDetails.services;
 
       console.log('bookingInfo', this.bookingInfo);
@@ -97,7 +121,10 @@ export class BillingDetailsComponent {
       console.log('serviceInfo', this.serviceInfo);
     });
   }
-  show(){
+
+
+  
+  show() {
     this.toastr.success("Billing is successful.Proceed to Print invoice");
   }
 
@@ -110,7 +137,7 @@ export class BillingDetailsComponent {
       Date: data.Date,
       BillingTo: {
         BookingFor: data.BillingTo.BookingFor,
-        CompanyName: data.BillingTo.CompanyName,
+        companyName: data.BillingTo.companyName,
         CompanyCode: data.BillingTo.CompanyCode,
         ContractId: data.BillingTo.ContractId,
         DropAddress: data.BillingTo.DropAddress,
@@ -142,7 +169,17 @@ export class BillingDetailsComponent {
       (result: any) => {
         this.closeResult = `Closed with: ${result}`;
       },
-   
+
     );
+  }
+  @ViewChildren(NgbAccordion)
+  accordions!: QueryList<NgbAccordion>;
+
+  // Method to toggle accordion by index or ID
+  toggleAccordion(index: number) {
+    const accordion = this.accordions.toArray()[index];
+    if (accordion) {
+      accordion.toggle(`panel-${index}`);
+    }
   }
 }

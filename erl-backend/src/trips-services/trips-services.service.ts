@@ -69,7 +69,7 @@ JOIN
 WHERE
     l.reservationId = @0;
 
-`,
+`, 
                 [reservationId],
             );
             await trip.commitTransaction();

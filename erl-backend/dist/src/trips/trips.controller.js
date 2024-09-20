@@ -73,6 +73,9 @@ let TripsController = class TripsController {
     getRelatedReservationTrip(reservationId) {
         return this.tripService.findRelatedReservationTrips(parseInt(reservationId));
     }
+    fetchResvTrip(reservationId) {
+        return this.tripService.fetchResvTrip(parseInt(reservationId));
+    }
     assignVehicle(model) {
         return this.tripService.assignVehicle(model);
     }
@@ -196,6 +199,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], TripsController.prototype, "getRelatedReservationTrip", null);
+__decorate([
+    (0, common_1.Get)('fetchResvTrip/:reservationId'),
+    __param(0, (0, common_1.Param)('reservationId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], TripsController.prototype, "fetchResvTrip", null);
 __decorate([
     (0, common_1.Get)('assign-car/:model'),
     __param(0, (0, common_1.Param)('model')),

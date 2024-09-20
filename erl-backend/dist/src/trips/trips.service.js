@@ -135,6 +135,35 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
             throw new Error(`Failed to find trips: ${e.message}`);
         }
     }
+    async fetchResvTrip(reservationId) {
+        const trip = this.tripDataSource.createQueryRunner();
+        await trip.connect();
+        try {
+            await trip.startTransaction();
+            const tripInfo = await trip.query(`SELECT 
+          a.TripId, a.tripNumber, a.ReservationId, a.FromDateTime, a.ToDateTime, a.PickupAddress, 
+          a.DropAddress, a.PickupContactNo, a.PickupEmail, a.vehicleID, a.VehicleMake, a.VehicleModel,h.serviceCode,h.serviceName,
+          a.PickupFirstName + ' ' + a.PickupLastName AS [PickupName], 
+          FORMAT(a.FromDateTime, 'dd-MM-yyyy HH:mm') AS [TripFromDateTime], 
+          a.ArrivalFlightDateTime, a.ArrivalFlightNo, a.DepartureFlightDateTime, a.DepartureFlightNo, 
+          a.Remarks, t.vehicleRegNo, FORMAT(a.ToDateTime, 'dd-MM-yyyy HH:mm') AS [TripToDateTime], 
+          b.BookingFor, b.BookingStatus, b.Branch, b.BookingNo, b.BookingCategory, b.BookingType, 
+          b.Source, b.companyName, d.DriverFirstName + ' ' + d.DriverLastName AS [DriverName], 
+          t.TransactionId, t.MileageIN, t.MileageOUT, t.FuelIN, t.FuelOUT, t.[Transaction]
+        FROM _cplreservationtrips a
+        JOIN _cplReservations b ON a.ReservationId = b.ReservationId
+        LEFT JOIN _cplVehicles c ON a.VehicleId = c.vehicleID
+		LEFT JOIN _cplTripServices h ON a.TripId = h.TripId
+        LEFT JOIN _cplChaufferDrivers d ON a.DriverId = d.DriverId
+        LEFT JOIN _cplTransactions t ON t.TripId = a.TripId
+        WHERE a.ReservationId=@0`, [reservationId]);
+            await trip.commitTransaction();
+            return tripInfo;
+        }
+        catch (e) {
+            throw new Error(`Failed to find trips: ${e.message}`);
+        }
+    }
     async fetchSortedTrips() {
         const trip = this.tripDataSource.createQueryRunner();
         await trip.connect();

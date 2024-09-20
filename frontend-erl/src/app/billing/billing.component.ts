@@ -44,6 +44,8 @@ export class BillingComponent {
   tripInfo: any ;
   serviceInfo: any ='';
   formBuilder: any;
+    getDismissReason: any;
+
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
@@ -129,15 +131,18 @@ export class BillingComponent {
     this.toastr.success("Billing is successful.Proceed to Print invoice");
   }
 
-  
-  openBill() {
-    console.log("openeditTripAssignment");
+  openBill(viewBilling: any) {
+    console.log("viewBilling");
 
-    this.modalService.open('', { size: "lg" }).result.then(
+    this.modalService.open(viewBilling, { size: "lg" }).result.then(
       (result: any) => {
         this.closeResult = `Closed with: ${result}`;
       },
-   
+      (reason: any) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
     );
   }
+  
+ 
 }

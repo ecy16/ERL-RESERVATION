@@ -23,6 +23,7 @@ export declare class TripsController {
     fetchAllTrips(): Promise<any>;
     fetchLastRelatedTrips(reservationId: string): Promise<any>;
     getRelatedReservationTrip(reservationId: string): Promise<any>;
+    fetchResvTrip(reservationId: string): Promise<any>;
     assignVehicle(model: any): Promise<any>;
     validateVehicle(body: VehicleValidationDto): Promise<import("src/entities/reservationTrip.entity").ReservationTripEntity>;
     validateDriver(body: DriverValidationDto): Promise<any>;

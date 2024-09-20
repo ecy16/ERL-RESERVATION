@@ -528,7 +528,7 @@ export class AssignmentComponent {
           DriverFirstName: d.DriverFirstName,
           vehicleRegNo: d.vehicleRegNo,
           Remarks: d.Remarks,
-          
+
         });
 
         console.log(d.PickupName, "driverr patched");
@@ -631,11 +631,13 @@ export class AssignmentComponent {
     const driverDetails = {
       DriverId: driver,
       DriverFirstName: "",
+      DriverLastName: "",
       FromDateTime: "",
       ToDateTime: "",
     };
     driverDetails.DriverId = driver;
     driverDetails.DriverFirstName = driver;
+    driverDetails.DriverLastName = driver;
     driverDetails.FromDateTime = FromDateTime;
     driverDetails.ToDateTime = ToDateTime;
     console.log(driverDetails, "drivers wako?");
@@ -788,7 +790,7 @@ export class AssignmentComponent {
           vehicleOUT: dd.vehicleOUT,
           TripId: dd.TripId,
           TripStatus: dd.TripStatus,
-          BookingCategory:dd.BookingCategory
+          BookingCategory: dd.BookingCategory
         })
         console.log('vehiclemovementpatched', this.tripAssignmentForm.value)
 
@@ -1346,10 +1348,9 @@ export class AssignmentComponent {
             img2.src = base64Image1;
             const img = new Image();
             img.src = base64Img2;
-
             img.onload = function () {
-              doc.addImage(img, 'png', 155, 3, 50, 30,); // Adjust position and size as needed
-              doc.addImage(img2, 'png', 8, 3, 50, 30); // Adjust position and size as needed
+              doc.addImage(img, 'png', 155, 3, 50, 30,);
+              doc.addImage(img2, 'png', 8, 3, 50, 30);
 
               // Header information 
               doc.setFontSize(8);
@@ -1386,13 +1387,18 @@ export class AssignmentComponent {
                 null
               );
 
+
               // Organization, Client, and Booking details
               doc.rect(10, 60, 70, 40);
               doc.setFontSize(9);
+
+
               doc.text("Organization:", 12, 64);
-              doc.text(d.companyName, 12, 70);
+              let companyName = d.companyName;
+              let maxWidth = 65;
+              doc.text(companyName, 12, 70, { maxWidth: maxWidth });
               doc.text("Client Name:", 12, 80);
-              doc.text(d.companyName, 12, 86);
+              doc.text(d.companyName, 12, 86, { maxWidth: maxWidth });
 
               doc.text("Booked by:", 12, 95);
               doc.text(d.BookingFor, 12, 98);
@@ -1409,18 +1415,21 @@ export class AssignmentComponent {
               // doc.text("Pick-up time", 81, 93);
               // doc.text(d.PickupAddress, 81, 83);
 
+              doc.text("CDO.PT:", 140, 55);
+              doc.text("________________", 160, 55);
+              doc.text(d.BookingNo + "/" + d.tripNumber, 162, 55);
 
-              doc.text("CDO.PT_______________", 140, 55);
-              doc.text(d.BookingNo + "/" + d.tripNumber, 155, 55);
+              doc.text("Date Time Out:", 140, 73);
+              doc.text("_________________", 160, 73);
+              doc.text(d.FromDate, 162, 73);
+              doc.text("Date Time In:", 140, 64);
+              doc.text("_________________", 160, 64);
 
-              doc.text("Date In: ", 140, 64);
-              doc.line(153, 64, 180, 64);
-              doc.text("Date Out:", 140, 73);
-              doc.line(157, 73, 180, 73);
-              doc.text("Time", 180, 64);
-              doc.line(190, 64, 200, 64);
-              doc.text("Time", 180, 73);
-              doc.line(190, 73, 200, 73);
+
+              // doc.text("Time", 180, 64);
+              // doc.line(190, 64, 200, 64);
+              // doc.text("Time", 180, 73);
+              // doc.line(190, 73, 200, 73);
 
               doc.rect(134, 78, 74, 22.5);
               doc.setFontSize(8);
@@ -1479,6 +1488,7 @@ export class AssignmentComponent {
               doc.line(139, 195, 200, 195);
               doc.text("Driver:", 125, 205);
               doc.line(136, 205, 200, 205);
+              doc.text(d.DriverFirstName + " " + d.DriverLastName, 150, 205);
               doc.text("Imprest Kshs:", 125, 215);
               doc.line(148, 215, 200, 215);
               doc.text("Additional Imprest Kshs:", 125, 225);
@@ -1513,8 +1523,8 @@ export class AssignmentComponent {
                 "DATE",
                 "FROM",
                 "TO",
-                "SPEEDO OUT",
-                "SPEEDO IN",
+                "MILEAGE OUT",
+                "MILEAGE IN",
                 "KMS DRIVEN",
                 "TIME OUT",
                 "TIME IN",
@@ -1541,13 +1551,131 @@ export class AssignmentComponent {
                   );
                 }
               }
+              doc.addPage();
+              //Thirdpage
 
-              // // Convert to Blob and create Object URL
-              // const pdfBlob = doc.output('blob');
-              // const pdfUrl = URL.createObjectURL(pdfBlob);
 
-              // Display in iframe
-              // document.getElementById('pdfFrame').src = pdfUrl;
+// Set font size for the header
+doc.setFontSize(14);
+doc.setTextColor(255, 0, 0); // Red for company name
+doc.setFont("helvetica", "bold");
+doc.text("EXECUTIVE RENTAL LTD", 70, 10); // Centered company name
+
+// Line below the company name
+
+// Reset font color and set font size for the transport voucher title
+doc.setTextColor(0, 0, 0); // Black for other text
+doc.setFontSize(12);
+doc.setFont("helvetica", "bold");
+let Width = 65
+doc.text(d.companyName + " TRANSPORT VOUCHER", 70, 20,{maxWidth:Width}); // Centered transport voucher title
+
+
+
+// Set font size for the date and labels
+doc.setFontSize(10);
+doc.text("DATE:……………………………", 140, 35); // Date label
+
+// KILOMETERS OUT and PICK-UP TIME
+doc.text("KILOMETERS OUT:…………………………. ", 10, 40);
+doc.text("PICK-UP TIME:………………….. ", 120, 40); // Align with kilometers out
+
+// KILOMETERS IN and DROP OFF TIME
+doc.text("KILOMETERS IN:…………………………….. ", 10, 50);
+doc.text("DROP OFF TIME:………………….. ", 120, 50); // Align with kilometers in
+
+// DESTINATION
+doc.text("DESTINATION:…………………………………………………………………………….. ", 10, 60);
+
+// NAMES
+doc.text("NAMES:……………………………………………………………………………………….. ", 10, 70);
+doc.text("………………………………………………………………………………………………….. ", 10, 80); // Additional line for names
+
+// CHARGE CODE
+doc.text("CHARGE CODE……………………………………………………………………………… ", 10, 90);
+
+// FM NO
+doc.text("FM NO:……………………………………………………………………………………….. ", 10, 100);
+
+// REG NO and TYPE
+doc.text("REG NO:…………………………………………….. ", 10, 110);
+doc.text("TYPE:…………………………….. ", 140, 110); // Align with REG NO
+
+// DRIVER
+doc.text("DRIVER:……………………………………………………………………………………… ", 10, 120);
+
+// SIGNATURE
+doc.text("SIGNATURE:………………………………………………………………………………. ", 10, 130);
+
+// RATE, WAITING CHARGES, TOTAL
+doc.text("RATE:………………….. ", 10, 140);
+doc.text("WAITING CHARGES:………………….. ", 140, 140);
+doc.text("TOTAL:………………….. ", 10, 150); // Adjusted position for total
+
+
+              
+//               doc.setFontSize(12);
+// // Set font size and color for the company name
+// doc.setFontSize(14); // Set a larger font size
+// doc.setTextColor(255, 0, 0); // Set text color to red
+// doc.setFont("helvetica", "bold"); // Set font to bold
+// doc.text("EXECUTIVE RENTAL LTD", 80, 10, { align: 'center' }); // Centered company name
+
+// // Draw a line below the company name
+// doc.line(35, 23, 145, 23);
+
+// // Reset font color and size for the transport voucher title
+// doc.setTextColor(0, 0, 0); // Reset text color to black
+// doc.setFontSize(12); // Adjust font size if needed
+// doc.setFont("helvetica", "bold"); // Set font to bold
+// doc.text(d.companyName + " TRANSPORT VOUCHER", 70, 20); // Centered transport voucher title
+
+
+// doc.setFontSize(10);
+// doc.text("DATE:", 145, 26); // Label for the date
+// doc.line(153, 26, 190, 26); // Line for date 
+
+
+// // KILOMETERS OUT and PICK-UP TIME
+// doc.text("KILOMETERS OUT:…………………………. ", 10, 30);
+// doc.text("PICK-UP TIME:………………….. ", 140, 30);
+
+// // KILOMETERS IN and DROP OFF TIME
+// doc.text("KILOMETERS IN:…………………………….. ", 10, 40);
+// doc.text("DROP OFF TIME:………………….. ", 140, 40);
+
+// // DESTINATION
+// doc.text("DESTINATION:…………………………………………………………………………….. ", 10, 50);
+
+// // NAMES
+// doc.text("NAMES:……………………………………………………………………………………….. ", 10, 60);
+// doc.text("………………………………………………………………………………………………….. ", 10, 70); // Additional line for names
+
+// // CHARGE CODE
+// doc.text("CHARGE CODE……………………………………………………………………………… ", 10, 80);
+
+// // FM NO
+// doc.text("FM NO:……………………………………………………………………………………….. ", 10, 90);
+
+// // REG NO, TYPE
+// doc.text("REG NO:…………………………………………….. ", 10, 100);
+// doc.text("TYPE:…………………………….. ", 140, 100);
+
+// // DRIVER
+// doc.text("DRIVER:……………………………………………………………………………………… ", 10, 110);
+
+// // SIGNATURE
+// doc.text("SIGNATURE:………………………………………………………………………………. ", 10, 120);
+
+// // RATE, WAITING CHARGES, TOTAL
+// doc.text("RATE:………………….. ", 10, 130);
+// doc.text("WAITING CHARGES:………………….. ", 140, 130);
+// doc.text("TOTAL:………………….. ", 10, 140); // You can adjust the total position as needed
+
+
+
+              doc.setLineWidth(0.5);
+
 
               doc.save("CDO for " + d.companyName + "-trip-" + d.TripNo + ".pdf");
             }
@@ -1754,6 +1882,7 @@ export class AssignmentComponent {
           console.log('major error !!', error)
         }
       };
+
 
     })
 

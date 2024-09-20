@@ -18,7 +18,6 @@ export class BillingController {
 
 
 
-
   @Post()
   create(@Body() createBillingDto: CreateBillingDto) {
     return this.billingService.create(createBillingDto);
@@ -26,7 +25,6 @@ export class BillingController {
    @Get()
   // @UsePipes(ValidationPipe)
   // @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('Admin')
   fetchAllBills() {
 
     return this.billingService.findAllBillings();

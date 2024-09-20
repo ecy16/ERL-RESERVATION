@@ -17,7 +17,6 @@ const common_1 = require("@nestjs/common");
 const billing_service_1 = require("./billing.service");
 const create_billing_dto_1 = require("./dto/create-billing.dto");
 const update_billing_dto_1 = require("./dto/update-billing.dto");
-const roles_decorator_1 = require("../roles.decorator");
 let BillingController = class BillingController {
     constructor(billingService) {
         this.billingService = billingService;
@@ -57,7 +56,6 @@ __decorate([
 ], BillingController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, roles_decorator_1.Roles)('Admin'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)

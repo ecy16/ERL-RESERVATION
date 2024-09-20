@@ -38,6 +38,8 @@ export class ApiService {
   // tripIncident = `http://${url}/api/trips-incidents`;
   fetchTripIds = `http://${url}/api/trips/trip/`;
   fetchRelatedReservationTrip = `http://${url}/api/trips/findTrip/`;
+  fetchResvTripUrl = `http://${url}/api/trips/fetchResvTrip/`;
+
   fetchFuelLevel = `http://${url}/api/trips/fuelLevel`;
   driverServiceStatus = `http://${url}/api/trips/driverService`;
   tripStatus = `http://${url}/api/trips/tripStatus`;
@@ -470,6 +472,13 @@ transactionsUrlUpdate=`http://${url}/api/transactions/update/`
   fetchLastRelatedTrips(reservationId: number): Observable<any[]> {
     return (
       this.http.get<any[]>(`${this.fetchRelatedReservationTrip}` + reservationId)
+    );
+  }
+
+  // <-----fetch the whole resv plus transaction---->
+  fetchResvTrip(reservationId: number): Observable<any[]> {
+    return (
+      this.http.get<any[]>(`${this.fetchResvTripUrl}` + reservationId)
     );
   }
   fetchAllTrips(): Observable<any[]> {

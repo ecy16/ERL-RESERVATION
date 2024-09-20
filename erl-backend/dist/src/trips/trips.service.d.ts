@@ -20,6 +20,7 @@ export declare class TripsService {
     findRelatedTrips(reservationId: number): Promise<any>;
     findAssignmentTrips(id: number): Promise<any>;
     findRelatedReservationTrips(reservationId: number): Promise<any>;
+    fetchResvTrip(reservationId: number): Promise<any>;
     fetchSortedTrips(): Promise<any>;
     fetchDeliverTrips(TripId: number): Promise<any>;
     findLastRelatedTrips(reservationId: number): Promise<any>;

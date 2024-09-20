@@ -105,6 +105,10 @@ export class TripsController {
     getRelatedReservationTrip(@Param('reservationId') reservationId: string){
         return this.tripService.findRelatedReservationTrips(parseInt(reservationId));
     }
+    @Get('fetchResvTrip/:reservationId')
+    fetchResvTrip(@Param('reservationId') reservationId: string){
+        return this.tripService.fetchResvTrip(parseInt(reservationId));
+    }
 
     @Get('assign-car/:model')
     assignVehicle(@Param('model') model: any) {

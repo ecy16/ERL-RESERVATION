@@ -1,74 +1,75 @@
 <div class="billing-page">
-    <h1 class="text-lg text-center font-medium">BILLINGS</h1>
-    <div class="billing-container">
-        <div class="billing-table">
-                <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display">
+  <h1 class="text-lg text-center font-medium">BILLINGS</h1>
+  <div class="billing-container">
+    <div class="billing-table">
+      <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display">
 
-                <thead class="text-sm">
-                    <tr>
-                        <th>BookingNo</th>
-                        <th>ReservationId</th>
-                        <th>Category</th>
-                        <th>Status</th>
-                        <th>Source</th>
-                        <th>CompanyDetails</th>
-                        <!-- <th>ContractID</th> -->
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm">
-                    <tr *ngFor="let billing of completedBillings">
-                        <td> <span>{{ billing.BookingNo }}</span>
-                        </td>
-                        <td> <span>{{ billing.ReservationId }}</span>
-                        </td>
-                        <td> <span>{{ billing.BookingCategory }}</span>
-                        </td>
-                        <td> <span>{{ billing.BookingStatus }}</span>
-                        </td>
-                        <td> <span>{{ billing.Source }}</span>
-                        </td>
-                        <td> <span>{{ billing.companyName }}</span>
-                        </td>
-                        <!-- <td> <span>{{ billing.ContractId }}</span>
+        <thead class="text-sm">
+          <tr>
+            <th>BookingNo</th>
+            <th>ReservationId</th>
+            <!-- <th>TransactionId</th> -->
+            <th>Status</th>
+            <th>Source</th>
+            <th>CompanyDetails</th>
+            <!-- <th>ContractID</th> -->
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody class="text-sm">
+          <tr *ngFor="let billing of completedBillings">
+            <td> <span>{{ billing.BookingNo }}</span>
+            </td>
+            <td> <span>{{ billing.ReservationId }}</span>
+            </td>
+            <!-- <td> <span>{{ billing.TransactionId }}</span>
+            </td> -->
+            <!-- <td> <span>{{ billing.BookingCategory }}</span>
+            </td> -->
+            <td> <span>{{ billing.BookingStatus }}</span>
+            </td>
+            <td> <span>{{ billing.Source }}</span>
+            </td>
+            <td> <span>{{ billing.companyName }}</span>
+            </td>
+            <!-- <td> <span>{{ billing.ContractId }}</span>
                         </td> -->
-                        <!-- <td> <span>{{ billing.BillingDay }}</span>
+            <!-- <td> <span>{{ billing.BillingDay }}</span>
                         </td> -->
-                        <td>
-                            <button (click)="openBill()" class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2"
-                            >View</button>
-                              <button (click)="viewBill()">
+            <td>
+              <!-- <button (click)="openBill(viewBilling)"
+                class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">View</button> -->
+
+
+              <button (click)="viewBill()">
                                 <a class="nav-link" href="BillingDetails" [routerLink]="[
                                     '/BillingDetails',
                                      billing.ReservationId
                                   ]" routerLinkActive="active">View
                                 </a>
                               </button>
-                          </td>
+            </td>
 
-                    </tr>
-                </tbody>
+          </tr>
+        </tbody>
 
-            </table>
-        </div>
-
-
-
-<ng-template #viewBilling let-modal>
+      </table>
+    </div>
 
 
-    <div class="bill-details text-sm font-sans leading-normal tracking-normal">
+
+    <ng-template #viewBilling let-modal>
+      <div class="bill-details text-sm font-sans leading-normal tracking-normal">
         <div class="container mx-auto p-6">
-          <div class="bg-white p-8 rounded-lg shadow-lg" *ngIf="tripInfo" id="billingDetails">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Billing Details</h4>
+          </div>
+          <div class=" modal-body bg-white p-8 rounded-lg shadow-lg" id="billingDetails">
             <form [formGroup]="billingForm" id="billingForm">
-      
-      
-      
-              
               <div class="flex justify-between items-center mb-8">
                 <div>
                   <h2 class="text-2xl text-center font-bold">Bill Details</h2>
-      
+
                   <p class="text-gray-600">Reservation No: #{{bookingInfo.BookingNo}}</p>
                 </div>
                 <div>
@@ -88,7 +89,7 @@
                 <!-- <h3 class="text-lg font-semibold mb-2 m-2">TripNo:</h3> -->
                 <table class="min-w-full bg-white">
                   <thead>
-                    <tr class="w-full bg-gray-200 text-gray-600  text-sm leading-normal">
+                    <tr class="w-full bg-gray-200 text-gray-600  text-sm p-4">
                       <th class="">TripNo</th>
                       <th class="p-1">FromDateTime</th>
                       <th class="">ToDateTime</th>
@@ -99,28 +100,28 @@
                       <th class="">Excl</th>
                       <th class="">Incl</th>
                       <th class="">View</th>
-                   
-      
-      
+
+
+
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="border-b border-gray-200 hover:bg-gray-100" >
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
                       <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
-                       <td class="py-3 px-6 text-center">{{bookingInfo.BookingCost }}</td>
-                      <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
-                      <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
+                      <td class="py-3 px-6 text-center">{{bookingInfo.BookingCost }}</td>
                       <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
                       <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
                       <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
                       <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
-      
+                      <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
+                      <td class="py-3 px-6 text-center">{{bookingInfo.Description}}</td>
+
                     </tr>
                   </tbody>
                 </table>
               </div>
-      
-      
+
+
               <!-- <div class="mb-8 border" *ngFor="let item of tripInfo">
                 <h3 class="text-lg font-semibold mb-2">Trip Details</h3>
       
@@ -150,16 +151,17 @@
                 </table>
       
               </div> -->
-             
-      
-      
-              
-             
-              <div ngbAccordion  >
-                <div ngbAccordionItem class="ng" >
+
+
+
+
+
+              <div ngbAccordion>
+                <div ngbAccordionItem class="ng">
                   <h2 ngbAccordionHeader>
-                    <button ngbAccordionButton><mat-icon class="submenu-icon">add_circle</mat-icon><span><h3 class="text-sm font-semibold mb-1">Trip Services</h3>
-                    </span>
+                    <button ngbAccordionButton><mat-icon class="submenu-icon">add_circle</mat-icon><span>
+                        <h3 class="text-sm font-semibold mb-1">Trip Services</h3>
+                      </span>
                     </button>
                   </h2>
                   <div ngbAccordionCollapse>
@@ -176,12 +178,13 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr class="border-b border-gray-200 hover:bg-gray-100 text-center" *ngFor="let tripService of serviceInfo">
+                              <tr class="border-b border-gray-200 hover:bg-gray-100 text-center"
+                                *ngFor="let tripService of serviceInfo">
                                 <td class="py-3 px-6  "> {{ tripService.ServiceItem }}</td>
                                 <td class="py-3 px-6 "> {{ tripService.TripCharge }}</td>
-                
-                
-                
+
+
+
                               </tr>
                             </tbody>
                           </table>
@@ -191,27 +194,28 @@
                   </div>
                 </div>
               </div>
-          
-            
+
+
               <div class="flex justify-between items-center mt-8">
                 <div>
-                  <button
-                    class="border-1 border-red-700 rounded-md text-red-700 p-2 hover:bg-red-700 hover:text-white" (onclick)="show()">Finalize
+                  <button class="border-1 border-red-700 rounded-md text-red-700 p-2 hover:bg-red-700 hover:text-white"
+                    (onclick)="show()">Finalize
                     Billing</button>
                 </div>
                 <div class="text-right">
                   <p class="text-gray-600">Subtotal: {{bookingInfo.BookingCost }}</p>
-                  <p class="text-gray-600">Tax (16%): {{bookingInfo.BookingCost * 0.16  }}</p>
-                  <p class="text-xl font-bold">Total: {{bookingInfo.BookingCost +(bookingInfo.BookingCost * 0.16 ) }}</p>
+                  <p class="text-gray-600">Tax (16%): {{bookingInfo.BookingCost * 0.16 }}</p>
+                  <p class="text-xl font-bold">Total: {{bookingInfo.BookingCost +(bookingInfo.BookingCost * 0.16 ) }}
+                  </p>
                 </div>
               </div>
             </form>
-      
+
           </div>
         </div>
       </div>
-</ng-template>
+    </ng-template>
 
 
-    </div>
+  </div>
 </div>

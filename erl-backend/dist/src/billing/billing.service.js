@@ -89,7 +89,7 @@ let BillingService = class BillingService {
     a.PickupAddress AS "PickUpAddress",
     a.DropAddress AS "DropAddress",
     a.FromDateTime AS "From DateTime",
-	                          format([FromDateTime],'dd-MM-yyyy HH:mm') as [FromDateTime],
+	 format([FromDateTime],'dd-MM-yyyy HH:mm') as [FromDateTime],
 							  format([ToDateTime],'dd-MM-yyyy HH:mm') as [ToDateTime],
 
     d.ServiceId,
