@@ -7,7 +7,7 @@
         <thead class="text-sm">
           <tr>
             <th>BookingNo</th>
-            <th>ReservationId</th>
+            <!-- <th>ReservationId</th> -->
             <!-- <th>TransactionId</th> -->
             <th>Status</th>
             <th>Source</th>
@@ -20,13 +20,13 @@
           <tr *ngFor="let billing of completedBillings">
             <td> <span>{{ billing.BookingNo }}</span>
             </td>
-            <td> <span>{{ billing.ReservationId }}</span>
-            </td>
+            <!-- <td> <span>{{ billing.ReservationId }}</span>
+            </td> -->
             <!-- <td> <span>{{ billing.TransactionId }}</span>
             </td> -->
             <!-- <td> <span>{{ billing.BookingCategory }}</span>
             </td> -->
-            <td> <span>{{ billing.BookingStatus }}</span>
+            <td> <span>{{ billing.TripStatus }}</span>
             </td>
             <td> <span>{{ billing.Source }}</span>
             </td>
