@@ -33,9 +33,18 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { FileUploadService } from './FileUpload.service';
 import { CountriesModule } from './countries/countries.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { S3Module } from './s3/s3.module';
+
+
 
 @Module({
     imports: [
+        ServeStaticModule.forRoot({
+            rootPath: join(__dirname, '..', 'uploads'),
+            serveRoot: '/uploads/',
+        }),
         VehiclesModule,
         ReservationsModule,
         TypeOrmModule.forRootAsync(typeOrmConfigAsync),
@@ -62,10 +71,12 @@ import { TransactionsModule } from './transactions/transactions.module';
         BillingModule,
         PhotosModule,
         CountriesModule,
-        TransactionsModule
+        TransactionsModule,
+        S3Module
         // AccessControlModule.forRoles(Role)
     ],
     controllers: [AppController],
-    providers: [AppService, MailService] ,
+    providers: [AppService, MailService],
 })
+
 export class AppModule { }

@@ -7,3 +7,4 @@ node_modules
 frontend-erl/node_modules
 erl-backend/node_modules
 .env.local
+/dist
