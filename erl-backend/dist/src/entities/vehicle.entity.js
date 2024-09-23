@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.VehiclesEntity = void 0;
 const typeorm_1 = require("typeorm");
 let VehiclesEntity = class VehiclesEntity {
-    constructor(vehicles) {
-        Object.assign(this, vehicles);
+    constructor(partial) {
+        Object.assign(this, partial);
     }
 };
 exports.VehiclesEntity = VehiclesEntity;
@@ -124,7 +124,11 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], VehiclesEntity.prototype, "File", void 0);
+], VehiclesEntity.prototype, "image", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], VehiclesEntity.prototype, "document", void 0);
 exports.VehiclesEntity = VehiclesEntity = __decorate([
     (0, typeorm_1.Entity)('_cplVehicles'),
     __metadata("design:paramtypes", [Object])

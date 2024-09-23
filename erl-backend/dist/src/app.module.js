@@ -36,12 +36,18 @@ const billing_module_1 = require("./billing/billing.module");
 const photos_module_1 = require("./photos/photos.module");
 const countries_module_1 = require("./countries/countries.module");
 const transactions_module_1 = require("./transactions/transactions.module");
+const serve_static_1 = require("@nestjs/serve-static");
+const path_1 = require("path");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: (0, path_1.join)(__dirname, '..', 'uploads'),
+                serveRoot: '/uploads/',
+            }),
             vehicles_module_1.VehiclesModule,
             reservations_module_1.ReservationsModule,
             typeorm_1.TypeOrmModule.forRootAsync(typeorm_config_1.typeOrmConfigAsync),

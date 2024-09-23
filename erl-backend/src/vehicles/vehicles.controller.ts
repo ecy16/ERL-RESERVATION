@@ -6,16 +6,18 @@ import {
     Patch,
     Post,
     UploadedFile,
+    UploadedFiles,
     UseInterceptors,
     ValidationPipe,
 } from '@nestjs/common';
 import { VehiclesService } from './vehicles.service';
 import { AddVehicleDto } from '../dto/add-vehicle.dto';
 import { UpdateVehicleDto } from '../dto/update-vehicle.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor, FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
 import { diskStorage } from 'multer';
 import * as moment from "moment";
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
 
 @Controller('vehicles')
 export class VehiclesController {
@@ -39,8 +41,25 @@ export class VehiclesController {
     // }))
 
     @Post('/create')
-    addNewVehicle(@Body(ValidationPipe) body: AddVehicleDto) {
-        return this.vehicleService.addVehicle(body);
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({ type: AddVehicleDto })
+    @UseInterceptors(FileFieldsInterceptor([
+      { name: 'image', maxCount: 1 },
+      { name: 'document', maxCount: 1 },
+    ], {
+      storage: diskStorage({
+        destination: './uploads/vehicles',
+        filename: (req, file, cb) => {
+          const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }))
+    async addNewVehicle(
+      @Body(ValidationPipe) body: AddVehicleDto,
+      @UploadedFiles() files: { image?: Express.Multer.File[], document?: Express.Multer.File[] },
+    ) {
+      return this.vehicleService.addVehicle(body, files);
     }
 
     @Get('/:id')
@@ -72,8 +91,8 @@ export class VehiclesController {
         storage: diskStorage({
             destination: './csv',
             filename: (req, file, cb) => {
-                const randomName = 'Vehicle_Importation_File'+moment()
-                .format("DDMMYYYY_HHmmss")
+                const randomName = 'Vehicle_Importation_File' + moment()
+                    .format("DDMMYYYY_HHmmss")
                 cb(null, `${randomName}${extname(file.originalname)}`)
             }
         })
@@ -82,6 +101,6 @@ export class VehiclesController {
         this.vehicleService.importVehicles(file);
     }
 
-    
-    
+
+
 }

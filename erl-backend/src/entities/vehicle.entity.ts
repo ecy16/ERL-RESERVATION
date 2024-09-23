@@ -5,7 +5,7 @@ import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 export class VehiclesEntity {
     @PrimaryGeneratedColumn()
     vehicleID: number;
-    @Column({ nullable: true, unique:true})
+    @Column({ nullable: true, unique: true })
     vehicleRegNo: string;
     @Column({ nullable: true })
     vehicleDescription: string;
@@ -13,7 +13,7 @@ export class VehiclesEntity {
     commissionDate: string;
     @Column({ nullable: true })
     vehicleOwner: string;
-    @Column({ nullable: true , unique: true})
+    @Column({ nullable: true, unique: true })
     chassisNumber: string;
     @Column({ nullable: true })
     vehicleStatus: string;
@@ -52,12 +52,17 @@ export class VehiclesEntity {
     @Column({ nullable: true })
     CreatedOn: string;
     @Column({ nullable: true })
-    ModifiedBy: string;   
+    ModifiedBy: string;
     @Column({ nullable: true })
     ModifiedOn: string;
+
     @Column({ nullable: true })
-    File: string;
-    constructor(vehicles: Partial<VehiclesEntity>) {
-        Object.assign(this, vehicles);
+    image: string;
+
+    @Column({ nullable: true })
+    document: string;
+
+    constructor(partial: Partial<VehiclesEntity>) {
+        Object.assign(this, partial);
     }
 }

@@ -1,3 +1,4 @@
+/// <reference types="multer" />
 export declare class AddVehicleDto {
     vehicleRegNo: string;
     vehicleDescription: string;
@@ -19,10 +20,6 @@ export declare class AddVehicleDto {
     lastOdometerReading: number;
     CreatedBy: string;
     CreatedOn: string;
-    VehicleMake: string;
-    VehicleModel: string;
-    vehicleInspectionDate: string;
-    vehicleInsuranceDate: string;
-    vehiclePSVDueDate: string;
-    File: string;
+    image: Express.Multer.File;
+    document: Express.Multer.File;
 }

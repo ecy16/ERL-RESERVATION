@@ -1,3 +1,4 @@
+/// <reference types="multer" />
 import { VehiclesEntity } from '../entities/vehicle.entity';
 import { DataSource, Repository } from 'typeorm';
 import { AddVehicleDto } from '../dto/add-vehicle.dto';
@@ -8,7 +9,10 @@ export declare class VehiclesService {
     private vehicleDataSource;
     constructor(vehicleRepo: Repository<VehiclesEntity>, vehicleDataSource: DataSource);
     fetchAllVehicles(): Promise<VehiclesEntity[]>;
-    addVehicle(addVehicleDto: AddVehicleDto): Promise<VehiclesEntity>;
+    addVehicle(addVehicleDto: AddVehicleDto, files: {
+        image?: Express.Multer.File[];
+        document?: Express.Multer.File[];
+    }): Promise<VehiclesEntity>;
     findOne(id: number): Promise<VehiclesEntity>;
     fetchVehicleByModel(vehicleModel: string): Promise<any>;
     updateVehicle(id: number, attrs: Partial<VehiclesEntity>): Promise<VehiclesEntity>;

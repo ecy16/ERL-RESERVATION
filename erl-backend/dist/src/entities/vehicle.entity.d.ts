@@ -25,6 +25,7 @@ export declare class VehiclesEntity {
     CreatedOn: string;
     ModifiedBy: string;
     ModifiedOn: string;
-    File: string;
-    constructor(vehicles: Partial<VehiclesEntity>);
+    image: string;
+    document: string;
+    constructor(partial: Partial<VehiclesEntity>);
 }

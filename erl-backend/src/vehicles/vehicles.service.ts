@@ -23,9 +23,12 @@ export class VehiclesService {
         return await this.vehicleRepo.find();
     }
 
-    async addVehicle(addVehicleDto: AddVehicleDto) {
-        const vehicle = new VehiclesEntity(addVehicleDto);
-        // this.reservationEntity.create(reservation);
+    async addVehicle(addVehicleDto: AddVehicleDto, files: { image?: Express.Multer.File[], document?: Express.Multer.File[] }) {       
+        const vehicle = new VehiclesEntity({
+            ...addVehicleDto,
+            image: files?.image && files.image.length > 0 ? `${process.env.BASE_URL}/uploads/${files.image[0].filename}` : null,
+            document: files?.document && files.document.length > 0 ? `${process.env.BASE_URL}/uploads/${files.document[0].filename}` : null,
+        });
 
         try {
             return await this.vehicleRepo.save(vehicle);
@@ -33,6 +36,7 @@ export class VehiclesService {
             throw new BadRequestException(err);
         }
     }
+
     findOne(id: number) {
         return this.vehicleRepo.findOne({ where: { vehicleID: id } });
     }

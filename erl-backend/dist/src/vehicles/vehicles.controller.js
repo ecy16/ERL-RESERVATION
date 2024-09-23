@@ -21,6 +21,7 @@ const platform_express_1 = require("@nestjs/platform-express");
 const path_1 = require("path");
 const multer_1 = require("multer");
 const moment = require("moment");
+const swagger_1 = require("@nestjs/swagger");
 let VehiclesController = class VehiclesController {
     constructor(vehicleService) {
         this.vehicleService = vehicleService;
@@ -28,8 +29,8 @@ let VehiclesController = class VehiclesController {
     getAllVehicles() {
         return this.vehicleService.fetchAllVehicles();
     }
-    addNewVehicle(body) {
-        return this.vehicleService.addVehicle(body);
+    async addNewVehicle(body, files) {
+        return this.vehicleService.addVehicle(body, files);
     }
     findVehicle(id) {
         return this.vehicleService.findOne(parseInt(id));
@@ -59,10 +60,25 @@ __decorate([
 ], VehiclesController.prototype, "getAllVehicles", null);
 __decorate([
     (0, common_1.Post)('/create'),
+    (0, swagger_1.ApiConsumes)('multipart/form-data'),
+    (0, swagger_1.ApiBody)({ type: add_vehicle_dto_1.AddVehicleDto }),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileFieldsInterceptor)([
+        { name: 'image', maxCount: 1 },
+        { name: 'document', maxCount: 1 },
+    ], {
+        storage: (0, multer_1.diskStorage)({
+            destination: './uploads/vehicles',
+            filename: (req, file, cb) => {
+                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
+                cb(null, `${randomName}${(0, path_1.extname)(file.originalname)}`);
+            },
+        }),
+    })),
     __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
+    __param(1, (0, common_1.UploadedFiles)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [add_vehicle_dto_1.AddVehicleDto]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:paramtypes", [add_vehicle_dto_1.AddVehicleDto, Object]),
+    __metadata("design:returntype", Promise)
 ], VehiclesController.prototype, "addNewVehicle", null);
 __decorate([
     (0, common_1.Get)('/:id'),

@@ -26,8 +26,12 @@ let VehiclesService = class VehiclesService {
     async fetchAllVehicles() {
         return await this.vehicleRepo.find();
     }
-    async addVehicle(addVehicleDto) {
-        const vehicle = new vehicle_entity_1.VehiclesEntity(addVehicleDto);
+    async addVehicle(addVehicleDto, files) {
+        const vehicle = new vehicle_entity_1.VehiclesEntity({
+            ...addVehicleDto,
+            image: files?.image && files.image.length > 0 ? `${process.env.BASE_URL}/uploads/${files.image[0].filename}` : null,
+            document: files?.document && files.document.length > 0 ? `${process.env.BASE_URL}/uploads/${files.document[0].filename}` : null,
+        });
         try {
             return await this.vehicleRepo.save(vehicle);
         }
