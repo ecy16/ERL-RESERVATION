@@ -31,16 +31,27 @@ constructor(
 }
 
 ngOnInit(){
-  this.apiService.getSortedTrips().subscribe((res) => {
-    console.log(res, "These days sorted trips ");
-    for (const r of res) {
-      this.dutiesList.push(r)
-    }
-    })
+  // this.apiService.getSortedTrips().subscribe((res) => {
+  //   console.log(res, "These days sorted trips ");
+  //   for (const r of res) {
+  //     this.dutiesList.push(r)
+  //   }
+  //   })
     this.dtOptions = {
       order: [[4, 'desc']]
 
     };
+
+
+    this.apiService.fetchAllTransactions().subscribe((res: any) => {
+      console.log(res, 'the vehicleouts/in');
+      for (const t of res) {
+        if (t.MileageIN >0 && t.FuelIN >0)  {
+          this.dutiesList.push(t);
+        }
+      }
+    });
+  
 }
 
 

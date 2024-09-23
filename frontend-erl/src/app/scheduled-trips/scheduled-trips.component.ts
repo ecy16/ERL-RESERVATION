@@ -172,7 +172,8 @@ export class ScheduledTripsComponent {
       FromDate: [''],
       FromTime: [''],
       BookingNo: [''],
-      TransactionId: ['']
+      TransactionId: [''],
+      TripStatus:['']
 
     });
     this.deliveryForm.patchValue({
@@ -183,15 +184,24 @@ export class ScheduledTripsComponent {
 
 
   ngOnInit() {
-    this.apiService.getReservations().subscribe((reservations: any[]) => {
-      this.filteredReservations = reservations.filter(
-        (reservation) => reservation.BookingStatus === "Scheduled"
-      );
-      console.log("Filtered trips scheduled:", this.filteredReservations);
-      this.assignmentData = [...this.filteredReservations];
-    });
+    // this.apiService.getReservations().subscribe((reservations: any[]) => {
+    //   this.filteredReservations = reservations.filter(
+    //     (reservation) => reservation.BookingStatus === "Scheduled"
+    //   );
+    //   console.log("Filtered trips scheduled:", this.filteredReservations);
+    //   this.assignmentData = [...this.filteredReservations];
+    // });
 
-    this.fetchTransactions()
+      this.apiService.fetchAllTransactions().subscribe((res: any) => {
+        console.log(res, 'the vehicleouts/in');
+        for (const t of res) {
+          if (t.MileageOUT >0 && t.FuelOUT >0)  {
+            this.AllTransactions.push(t);
+          }
+        }
+      });
+    
+
 
     this.assignmentData = [];
     this.assignmentData.push(this.filteredAssignment);
@@ -279,27 +289,31 @@ export class ScheduledTripsComponent {
 
 
   }
-
-
-
-
   fetchTransactions() {
     this.AllTransactions = [];
     this.apiService.fetchAllTransactions().subscribe((res: any) => {
-      console.log(res, 'the  vehicleouts/in')
-
-
-
+      console.log(res, 'the vehicleouts/in');
       for (const t of res) {
-        this.AllTransactions.push(t)
+        if (t.MileageOUT && t.FuelOUT) {
+          this.AllTransactions.push(t);
+        }
       }
-    })
-
-
-
-
-
+    });
   }
+  
+
+
+
+  // fetchTransactions() {
+  //   this.AllTransactions = [];
+  //   this.apiService.fetchAllTransactions().subscribe((res: any) => {
+  //     console.log(res, 'the  vehicleouts/in')
+
+  //     for (const t of res) {
+  //       this.AllTransactions.push(t)
+  //     }
+  //   })
+  // }
 
 
 
@@ -319,54 +333,54 @@ export class ScheduledTripsComponent {
 
 
 
-  fetchTrip(TripId: any) {
-    this.fetchedTripList = [];
-    this.BookingData = [];
-    this.apiService.getRelatedTrip(TripId).subscribe((relatedTrip) => {
-      console.log(relatedTrip, "fttyfty");
-      for (const r of relatedTrip) {
-        this.fetchedTripList.push(r);
-      }
+  // fetchTrip(TripId: any) {
+  //   this.fetchedTripList = [];
+  //   this.BookingData = [];
+  //   this.apiService.getRelatedTrip(TripId).subscribe((relatedTrip) => {
+  //     console.log(relatedTrip, "fttyfty");
+  //     for (const r of relatedTrip) {
+  //       this.fetchedTripList.push(r);
+  //     }
 
-      for (const d of this.fetchedTripList) {
-        this.tripAssignmentForm.patchValue({
-          DriverServiceStatus: d.DriverServiceStatus,
-          TripStatus: d.TripStatus,
-          VehicleMarks: d.VehicleMarks,
-          FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
-          ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
-          FlightNo: d.FlightNo,
-          // FlightDateTime: moment(d.FlightDateTime).format("YYYY-MM-DD HH:mm"),
-          Airline: d.Airline,
-          PickupAddress: d.PickupAddress,
-          PickupContactNo: d.PickupContactNo,
-          PickupEmail: d.PickupEmail,
-          DropAddress: d.DropAddress,
-          VehicleMake: d.VehicleMake,
-          VehicleModel: d.VehicleModel,
-          BookingNo: d.BookingNo,
-          ReservationId: d.ReservationId,
-          tripNumber: d.tripNumber,
-          TripId: d.TripId,
-          BookingCategory: d.BookingCategory,
-          VehicleId: d.VehicleId,
-          DriverId: d.DriverId,
-          DriverFirstName: d.DriverFirstName,
-          BookingFor: d.BookingFor,
-        });
+  //     for (const d of this.fetchedTripList) {
+  //       this.tripAssignmentForm.patchValue({
+  //         DriverServiceStatus: d.DriverServiceStatus,
+  //         TripStatus: d.TripStatus,
+  //         VehicleMarks: d.VehicleMarks,
+  //         FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
+  //         ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
+  //         FlightNo: d.FlightNo,
+  //         // FlightDateTime: moment(d.FlightDateTime).format("YYYY-MM-DD HH:mm"),
+  //         Airline: d.Airline,
+  //         PickupAddress: d.PickupAddress,
+  //         PickupContactNo: d.PickupContactNo,
+  //         PickupEmail: d.PickupEmail,
+  //         DropAddress: d.DropAddress,
+  //         VehicleMake: d.VehicleMake,
+  //         VehicleModel: d.VehicleModel,
+  //         BookingNo: d.BookingNo,
+  //         ReservationId: d.ReservationId,
+  //         tripNumber: d.tripNumber,
+  //         TripId: d.TripId,
+  //         BookingCategory: d.BookingCategory,
+  //         VehicleId: d.VehicleId,
+  //         DriverId: d.DriverId,
+  //         DriverFirstName: d.DriverFirstName,
+  //         BookingFor: d.BookingFor,
+  //       });
 
-        console.log(d.DriverFirstName, "driverr patched");
-        this.fetchModels(d.VehicleMake);
-        this.fetchVehiclesByModel(d.VehicleModel);
+  //       console.log(d.DriverFirstName, "driverr patched");
+  //       this.fetchModels(d.VehicleMake);
+  //       this.fetchVehiclesByModel(d.VehicleModel);
 
-        // console.log(d,ve)
-        // this.BookingCategory = 'ChaufferDriven'; 
-        // this.BookingCategory = 'SelfDriven'; 
-      }
+  //       // console.log(d,ve)
+  //       // this.BookingCategory = 'ChaufferDriven'; 
+  //       // this.BookingCategory = 'SelfDriven'; 
+  //     }
 
-    });
+  //   });
 
-  }
+  // }
 
   getallTripss() {
     this.assignmentAllTrips = [];
@@ -468,7 +482,9 @@ export class ScheduledTripsComponent {
         TripId: res.TripId,
         TransactionId: res.TransactionId,
         MileageOUT: res.MileageOUT,
-        FuelOUT: res.FuelOUT
+        FuelOUT: res.FuelOUT,
+        TripStatus:res.TripStatus
+
       })
       console.log('Response', this.deliveryForm.value)
     })
@@ -487,7 +503,8 @@ export class ScheduledTripsComponent {
         FuelIN: res.FuelIN,
         FuelOUT: res.FuelOUT,
         MileageOUT: res.MileageOUT,
-        MileageIN: res.MileageIN
+        MileageIN: res.MileageIN,
+        TripStatus:res.TripStatus
       });
     });
 

@@ -91,15 +91,26 @@ export class BillingComponent {
 
     }
     this.completedBillings=[]
-    this.apiService.getAllBillings().subscribe((billing: any) => {
-      console.log(billing,'billings')
-      // this.completedBillings.push(billing)
-    for (const c of billing) {
-      this.completedBillings.push(c);
-    }
+    // this.apiService.getAllBillings().subscribe((billing: any) => {
+    //   console.log(billing,'billings')
+    //   // this.completedBillings.push(billing)
+    // for (const c of billing) {
+    //   this.completedBillings.push(c);
+    // }
 
-      console.log('CompletedBillings', this.completedBillings)
-    })
+    //   console.log('CompletedBillings', this.completedBillings)
+    // })
+
+      this.apiService.fetchAllTransactions().subscribe((res: any) => {
+        console.log(res, 'the vehicleouts/in');
+        for (const t of res) {
+          if (t.MileageIN>0 && t.FuelIN>0) {
+            this.completedBillings.push(t);
+          }
+        }
+      });
+    
+
 
     // reservationData: any[] = [];
 
