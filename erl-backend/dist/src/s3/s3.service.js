@@ -31,7 +31,6 @@ let S3Service = class S3Service {
         const params = {
             Bucket: this.configService.get('S3_BUCKET_NAME'),
             Key: `${folder}/${file.originalname}`,
-            Body: file.buffer,
             ContentType: file.mimetype,
         };
         console.log(params);
