@@ -12,12 +12,13 @@ const vehicles_controller_1 = require("./vehicles.controller");
 const vehicles_service_1 = require("./vehicles.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const vehicle_entity_1 = require("../entities/vehicle.entity");
+const s3_module_1 = require("../s3/s3.module");
 let VehiclesModule = class VehiclesModule {
 };
 exports.VehiclesModule = VehiclesModule;
 exports.VehiclesModule = VehiclesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([vehicle_entity_1.VehiclesEntity])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([vehicle_entity_1.VehiclesEntity]), s3_module_1.S3Module],
         controllers: [vehicles_controller_1.VehiclesController],
         providers: [vehicles_service_1.VehiclesService],
     })

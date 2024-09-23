@@ -35,6 +35,7 @@ import { CountriesModule } from './countries/countries.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { S3Module } from './s3/s3.module';
 
 
 
@@ -70,7 +71,8 @@ import { join } from 'path';
         BillingModule,
         PhotosModule,
         CountriesModule,
-        TransactionsModule
+        TransactionsModule,
+        S3Module
         // AccessControlModule.forRoles(Role)
     ],
     controllers: [AppController],

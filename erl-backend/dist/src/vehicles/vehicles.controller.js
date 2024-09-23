@@ -22,15 +22,36 @@ const path_1 = require("path");
 const multer_1 = require("multer");
 const moment = require("moment");
 const swagger_1 = require("@nestjs/swagger");
+const vehicle_entity_1 = require("../entities/vehicle.entity");
+const s3_service_1 = require("../s3/s3.service");
 let VehiclesController = class VehiclesController {
-    constructor(vehicleService) {
+    constructor(vehicleService, s3Service) {
         this.vehicleService = vehicleService;
+        this.s3Service = s3Service;
     }
     getAllVehicles() {
         return this.vehicleService.fetchAllVehicles();
     }
-    async addNewVehicle(body, files) {
-        return this.vehicleService.addVehicle(body, files);
+    async addVehicle(files, addVehicleDto) {
+        let imageUrl = null;
+        let documentUrl = null;
+        if (files.image && files.image.length > 0) {
+            imageUrl = await this.s3Service.uploadFile(files.image[0], 'vehicles');
+        }
+        if (files.document && files.document.length > 0) {
+            documentUrl = await this.s3Service.uploadFile(files.document[0], 'documents');
+        }
+        const vehicle = new vehicle_entity_1.VehiclesEntity({
+            ...addVehicleDto,
+            image: imageUrl,
+            document: documentUrl,
+        });
+        try {
+            return await this.vehicleService.addVehicle(addVehicleDto, { image: files.image, document: files.document });
+        }
+        catch (err) {
+            throw new common_1.BadRequestException(err);
+        }
     }
     findVehicle(id) {
         return this.vehicleService.findOne(parseInt(id));
@@ -66,20 +87,14 @@ __decorate([
         { name: 'image', maxCount: 1 },
         { name: 'document', maxCount: 1 },
     ], {
-        storage: (0, multer_1.diskStorage)({
-            destination: './uploads/vehicles',
-            filename: (req, file, cb) => {
-                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-                cb(null, `${randomName}${(0, path_1.extname)(file.originalname)}`);
-            },
-        }),
+        storage: (0, multer_1.memoryStorage)(),
     })),
-    __param(0, (0, common_1.Body)(common_1.ValidationPipe)),
-    __param(1, (0, common_1.UploadedFiles)()),
+    __param(0, (0, common_1.UploadedFiles)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [add_vehicle_dto_1.AddVehicleDto, Object]),
+    __metadata("design:paramtypes", [Object, add_vehicle_dto_1.AddVehicleDto]),
     __metadata("design:returntype", Promise)
-], VehiclesController.prototype, "addNewVehicle", null);
+], VehiclesController.prototype, "addVehicle", null);
 __decorate([
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id')),
@@ -136,6 +151,6 @@ __decorate([
 ], VehiclesController.prototype, "uploadCsv", null);
 exports.VehiclesController = VehiclesController = __decorate([
     (0, common_1.Controller)('vehicles'),
-    __metadata("design:paramtypes", [vehicles_service_1.VehiclesService])
+    __metadata("design:paramtypes", [vehicles_service_1.VehiclesService, s3_service_1.S3Service])
 ], VehiclesController);
 //# sourceMappingURL=vehicles.controller.js.map

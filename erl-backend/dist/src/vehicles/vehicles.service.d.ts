@@ -4,10 +4,12 @@ import { DataSource, Repository } from 'typeorm';
 import { AddVehicleDto } from '../dto/add-vehicle.dto';
 import { searchVehicleDto } from 'src/dto/searchVehicle.dto';
 import { Observable } from 'rxjs';
+import { S3Service } from 'src/s3/s3.service';
 export declare class VehiclesService {
     private vehicleRepo;
     private vehicleDataSource;
-    constructor(vehicleRepo: Repository<VehiclesEntity>, vehicleDataSource: DataSource);
+    private s3Service;
+    constructor(vehicleRepo: Repository<VehiclesEntity>, vehicleDataSource: DataSource, s3Service: S3Service);
     fetchAllVehicles(): Promise<VehiclesEntity[]>;
     addVehicle(addVehicleDto: AddVehicleDto, files: {
         image?: Express.Multer.File[];

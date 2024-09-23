@@ -18,19 +18,23 @@ const typeorm_1 = require("@nestjs/typeorm");
 const vehicle_entity_1 = require("../entities/vehicle.entity");
 const typeorm_2 = require("typeorm");
 const rxjs_1 = require("rxjs");
+const s3_service_1 = require("../s3/s3.service");
 let VehiclesService = class VehiclesService {
-    constructor(vehicleRepo, vehicleDataSource) {
+    constructor(vehicleRepo, vehicleDataSource, s3Service) {
         this.vehicleRepo = vehicleRepo;
         this.vehicleDataSource = vehicleDataSource;
+        this.s3Service = s3Service;
     }
     async fetchAllVehicles() {
         return await this.vehicleRepo.find();
     }
     async addVehicle(addVehicleDto, files) {
+        const imageUrl = files?.image && files.image.length > 0 ? await this.s3Service.uploadFile(files.image[0], 'vehicles') : null;
+        const documentUrl = files?.document && files.document.length > 0 ? await this.s3Service.uploadFile(files.document[0], 'documents') : null;
         const vehicle = new vehicle_entity_1.VehiclesEntity({
             ...addVehicleDto,
-            image: files?.image && files.image.length > 0 ? `${process.env.BASE_URL}/uploads/${files.image[0].filename}` : null,
-            document: files?.document && files.document.length > 0 ? `${process.env.BASE_URL}/uploads/${files.document[0].filename}` : null,
+            image: imageUrl,
+            document: documentUrl,
         });
         try {
             return await this.vehicleRepo.save(vehicle);
@@ -111,6 +115,7 @@ exports.VehiclesService = VehiclesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(vehicle_entity_1.VehiclesEntity)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.DataSource])
+        typeorm_2.DataSource,
+        s3_service_1.S3Service])
 ], VehiclesService);
 //# sourceMappingURL=vehicles.service.js.map

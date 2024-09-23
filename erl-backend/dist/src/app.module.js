@@ -38,6 +38,7 @@ const countries_module_1 = require("./countries/countries.module");
 const transactions_module_1 = require("./transactions/transactions.module");
 const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
+const s3_module_1 = require("./s3/s3.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -74,7 +75,8 @@ exports.AppModule = AppModule = __decorate([
             billing_module_1.BillingModule,
             photos_module_1.PhotosModule,
             countries_module_1.CountriesModule,
-            transactions_module_1.TransactionsModule
+            transactions_module_1.TransactionsModule,
+            s3_module_1.S3Module
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, mail_service_1.MailService],

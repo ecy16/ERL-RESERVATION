@@ -11,31 +11,38 @@ import { searchVehicleDto } from 'src/dto/searchVehicle.dto';
 import { Observable, catchError, from } from 'rxjs';
 import { constants } from 'fs/promises';
 import * as csv from 'csvtojson';
+import { S3Service } from 'src/s3/s3.service';
 
 @Injectable()
 export class VehiclesService {
     constructor(
         @InjectRepository(VehiclesEntity)
         private vehicleRepo: Repository<VehiclesEntity>,
-        private vehicleDataSource: DataSource
+        private vehicleDataSource: DataSource,
+        private s3Service: S3Service,
     ) { }
     async fetchAllVehicles() {
         return await this.vehicleRepo.find();
     }
 
-    async addVehicle(addVehicleDto: AddVehicleDto, files: { image?: Express.Multer.File[], document?: Express.Multer.File[] }) {       
+    async addVehicle(addVehicleDto: AddVehicleDto, files: { image?: Express.Multer.File[], document?: Express.Multer.File[] }) {
+        const imageUrl = files?.image && files.image.length > 0 ? await this.s3Service.uploadFile(files.image[0], 'vehicles') : null;
+        const documentUrl = files?.document && files.document.length > 0 ? await this.s3Service.uploadFile(files.document[0], 'documents') : null;
+    
         const vehicle = new VehiclesEntity({
             ...addVehicleDto,
-            image: files?.image && files.image.length > 0 ? `${process.env.BASE_URL}/uploads/${files.image[0].filename}` : null,
-            document: files?.document && files.document.length > 0 ? `${process.env.BASE_URL}/uploads/${files.document[0].filename}` : null,
+            image: imageUrl,
+            document: documentUrl,
         });
-
+    
         try {
             return await this.vehicleRepo.save(vehicle);
         } catch (err) {
             throw new BadRequestException(err);
         }
     }
+    
+    
 
     findOne(id: number) {
         return this.vehicleRepo.findOne({ where: { vehicleID: id } });
