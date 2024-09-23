@@ -13,6 +13,8 @@ async function bootstrap() {
     }))
     app.useStaticAssets(join(__dirname, '..', 'uploads'));
     app.enableCors(); // Enable CORS
+
+    app.setGlobalPrefix('api');
     const config = new DocumentBuilder()
         .setTitle('Erl')
         .setDescription('The Erl API description')
@@ -21,7 +23,7 @@ async function bootstrap() {
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document);
-    app.setGlobalPrefix('api');
+    
     
     await app.listen(3000);
 }
