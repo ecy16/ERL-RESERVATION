@@ -8,3 +8,5 @@ frontend-erl/node_modules
 erl-backend/node_modules
 .env.local
 /dist
+.angular/
+dist/
