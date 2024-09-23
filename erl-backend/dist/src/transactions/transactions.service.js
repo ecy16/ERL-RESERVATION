@@ -88,8 +88,6 @@ a.VehicleModel,a.PickupFirstName + ' ' + a.PickupLastName AS [PickupName],format
 format(a.FromDateTime,'dd-MM-yyyy ') as FromDate,format(a.ToDateTime,'dd-MM-yyyy ') as ToDate ,
 				format(a.FromDateTime,' HH:mm:ss') as FromTime,format(a.ToDateTime,'HH:mm:ss') as ToTime,
 
-
-
 format(a.ToDateTime,'dd-MM-yyyy HH:mm') [TripToDateTime], b.BookingFor,b.BookingStatus,b.Branch,b.BookingNo,b.BookingCategory,b.BookingType,b.Source,b.companyName, d.DriverFirstName+' '+d.DriverLastName [DriverName] ,t.TransactionId,t.MileageIN,t.MileageOUT,t.FuelIN,t.FuelOUT,t.[Transaction] from _cplreservationtrips a 
                                 join _cplReservations b on a.ReservationId=b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID left join _cplChaufferDrivers d on a.DriverId = d.DriverId left join _cplTransactions t on t.TripId = a.TripId where TransactionId is NOT NULL
 

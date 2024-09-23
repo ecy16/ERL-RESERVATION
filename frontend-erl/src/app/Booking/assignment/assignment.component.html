@@ -4,80 +4,71 @@
     <div class="searches" [formGroup]="AssignmentSearchForm " class=" rounded-md border m-2 bg-red-50 w-full">
         <form [formGroup]="AssignmentSearchForm" class="flex m-2 font-medium w-32 gap-1">
             <div>
-                <label class="text-xs">ReservationNo</label>
-                <input type="search" formControlName="BookingNo" class="rounded-md border-gray-300 h-8 w-24">
-            </div>
-            <div [formGroup]="AssignmentSearchForm">
-                <label class="text-xs">Reservation Status</label>
-                <select class="text-sm form-control h-8 w-32" formControlName="BookingStatus" id="BookingStatus">
-                    <option selected *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
-                        {{ status.category_Options }}
-                    </option>
-                </select>
-            </div>
-            <div [formGroup]="AssignmentSearchForm">
-                <label class="text-xs">Reservation Category</label>
-                <select class="text-sm form-control w-32" id=" BookingCategory" formControlName="BookingCategory">
-                    <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
-                        {{ category.category_Options }}
-                    </option>
-                </select>
+              <label class="text-xs">ReservationNo</label>
+              <input type="search" formControlName="BookingNo" class="rounded-md border-gray-300 h-8 w-24">
             </div>
             <div>
-                <label class="text-xs ">Branch</label>
-                <select class="text-sm form-control rounded-md  border-gray-300 h-8 w-24" id=" Branch"
-                    formControlName="Branch">
-                    <option *ngFor="let branch of bookingBranchData" value="{{ branch.category_Options }}">
-                        {{ branch.category_Options }}
-                    </option>
-                </select>
-            </div>
-            <div class="">
-                <label class="text-xs">VehicleMake</label>
-                <input type="text" formControlName="vehicleMake" class="rounded-md  border-gray-300 h-8 w-24">
-            </div>
-            <div class="">
-                <label class="text-xs">RegNo</label>
-                <input type="text" formControlName="VehicleId" class="rounded-md  border-gray-300 h-8 w-24">
-            </div>
-            <div class="">
-                <div class="flex gap-2">
-                    <div>
-                        <label for="fromDate" class="text-xs">From Date Time</label>
-                        <input type="datetime-local" id="FromDateTime" formControlName="FromDateTime"
-                            class="rounded-md border-gray-300 text-sm h-8 w-32">
-                    </div>
-                    <div>
-                        <label for="toDate" class="text-xs">To Date Time</label>
-                        <input type="datetime-local" id="ToDateTime" formControlName="ToDateTime"
-                            class="rounded-md border-gray-300 text-sm h-8 w-32">
-                    </div>
-                </div>
+              <label class="text-xs">Reservation Status</label>
+              <select class="text-sm form-control h-8 w-32" formControlName="BookingStatus">
+                <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                  {{ status.category_Options }}
+                </option>
+              </select>
             </div>
             <div>
-                <button (click)="resourceSearching()"
-                    class="float-left mt-4 rounded-md p-2 text-white text-xs bg-red-700 " type="button">Search</button>
+              <label class="text-xs">Reservation Category</label>
+              <select class="text-sm form-control w-32" formControlName="BookingCategory">
+                <option *ngFor="let category of bookingCategoriesData" value="{{ category.category_Options }}">
+                  {{ category.category_Options }}
+                </option>
+              </select>
             </div>
-        </form>
+            <div>
+              <label class="text-xs">Branch</label>
+              <select class="text-sm form-control rounded-md border-gray-300 h-8 w-24" formControlName="Branch">
+                <option *ngFor="let branch of bookingBranchData" value="{{ branch.category_Options }}">
+                  {{ branch.category_Options }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs">VehicleModel</label>
+              <input type="text" formControlName="vehicleModel" class="rounded-md border-gray-300 h-8 w-24">
+            </div>
+            <div>
+              <label class="text-xs">RegNo</label>
+              <input type="text" formControlName="VehicleId" class="rounded-md border-gray-300 h-8 w-24">
+            </div>
+            <div class="flex gap-2">
+              <div>
+                <label for="FromDateTime" class="text-xs">From Date Time</label>
+                <input type="datetime-local" id="FromDateTime" formControlName="FromDateTime" class="rounded-md border-gray-300 text-sm h-8 w-32">
+              </div>
+              <div>
+                <label for="ToDateTime" class="text-xs">To Date Time</label>
+                <input type="datetime-local" id="ToDateTime" formControlName="ToDateTime" class="rounded-md border-gray-300 text-sm h-8 w-32">
+              </div>
+            </div>
+            <div>
+              <button (click)="resourceSearching()" class="float-left mt-4 rounded-md p-2 text-white text-xs bg-red-700" type="button">Search</button>
+            </div>
+          </form> 
+         
+          
 
 
     </div>
 
 <div class="resourceAssignmnet  p-1 bg-white rounded-lg shadow-md">
-
     <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display">
         <thead class=" text-sm bg-red-50">
             <tr>
                 <th class="text-center">ReservationNo</th>
-                <!-- <th>Branch</th> -->
-                <!-- <th>BookingStatus</th> -->
-                <!-- <th>Booking Date</th> -->
-                <th class="text-center">TripStatus</th>
+                         <th class="text-center">TripStatus</th>
                 <th class="text-center">PickUp Address</th>
                 <th class="text-center">Drop Address</th>
                 <th class="text-center">Branch</th>
                 <th class="text-center">Company Name</th>
-                <!-- <th class="text-center">BookingFor</th> -->
                 <th class="text-center">PickupName</th>
                 <th class="text-center">Driver</th>
                 <th class="text-center">vehicleMake</th>
@@ -112,7 +103,8 @@
                     <td>{{ assignment.BookingCategory }}</td>
 
                     <td><button (click)="openEditAssignment(editAssignment)" class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2"
-                            (click)="fetchTrip(assignment.TripId)">AssignResource</button>
+                            (click)="fetchTrip(assignment.TripId)"
+                            >AssignResource</button>
 
                     </td>
                     <td>
@@ -239,7 +231,7 @@
                         <label for="VehicleId">Vehicle Registration</label>
 
                         <select #vehicleID class="text-sm form-control" formControlName="vehicleID" id="vehicleID"
-                            (change)="onVehicleChange($event)">
+                            (change)="onVehicleChange($event)" >
                             <option value="">Select vehicleRegistration</option>
                             <option *ngFor="let vehicle of fetchedVehicleList" [value]='vehicle.vehicleID'
                                 [attr.data-regno]='vehicle.vehicleRegNo'>
@@ -494,6 +486,11 @@
                 formControlName="PickupContactNo" id="PickupContactNo" required />
             </div>
             <div class="m-2" [formGroup]="deliveryForm">
+              <label>PickupName</label>
+              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                formControlName="BookingFor" id="BookingFor" required />
+            </div>
+            <div class="m-2" [formGroup]="deliveryForm">
               <label>Email</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="PickupEmail" id="PickupEmail" required />
@@ -527,8 +524,7 @@
               <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="FromTime"
                 id="FromTime"  />
             </div>
-  
-            <div class="m-2" [formGroup]="deliveryForm" >
+              <div class="m-2" *ngIf="deliveryForm.get('BookingCategory').value === 'SelfDriven'">
               <label>Delivered by</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="DriverFirstName" id="DriverFirstName" required />
@@ -592,10 +588,7 @@
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="ReportedBy" id="ReportedBy" required />
             </div> -->
-            <div class="m-2 border-red-700" [formGroup]="deliveryForm" >
-              <button class="border border-red-700" (click)="generateRA(deliveryForm.get('TripId')?.value)">Print Rental
-                Agreement</button>
-            </div>
+           
             <div class="m-2 text-sm gap-2" [formGroup]="deliveryForm">
                 <label>Trip Status</label>
                 <select readonly class="text-sm form-control" formControlName="TripStatus" id="TripStatus">
@@ -608,7 +601,7 @@
             </div>
   
             <div class="modal-footer">
-              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDelivery()" (click)="generateRA(deliveryForm.get('TripId')?.value)"
+              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDelivery(deliveryForm.get('TripId').value)" 
                 (click)="modal.dismiss('Cross click')" (click)="modal.dismiss('Cross click')">
                 Save
               </button>

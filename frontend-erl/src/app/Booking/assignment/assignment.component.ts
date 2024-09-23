@@ -45,6 +45,8 @@ export interface Reservation {
   ],
 })
 export class AssignmentComponent {
+
+  
   trip: any;
   TripId: any;
   fetchedTripList: any;
@@ -167,7 +169,8 @@ export class AssignmentComponent {
       BookingFor: "",
       Remarks: ""
     });
-
+  
+  
     this.AssignmentSearchForm = this.formBuilder.group({
       BookingNo: ["", Validators.required],
       BookingDate: ["", Validators.required],
@@ -375,13 +378,58 @@ export class AssignmentComponent {
 
     const BookingDateSX = moment(new Date()).format("YYYY-MM-DD");
 
-    this.AssignmentSearchForm.patchValue({
-      fromDate: BookingDateSX,
-      toDate: BookingDateSX,
-      BookingStatus: "InProgress",
-    });
+    // this.AssignmentSearchForm.patchValue({
+    //   fromDate: BookingDateSX,
+    //   toDate: BookingDateSX,
+    //   BookingStatus: "InProgress",
+    // });
 
   }
+
+
+  resourceSearching() {
+    const searchValues = this.AssignmentSearchForm.value;
+    
+    // Apply filtering based on form values
+    this.assignmentData = this.assignmentAllTrips.filter((assignment: { BookingNo: string | any[]; TripStatus: any; BookingCategory: any; Branch: any; VehicleModel: string | any[]; chosenRegNo: string | any[]; TripFromDateTime: string | number | Date; TripToDateTime: string | number | Date; }) => {
+      console.log(this.AssignmentSearchForm.value,'Search fields')
+
+      return (!searchValues.BookingNo || assignment.BookingNo.includes(searchValues.BookingNo)) &&
+             (!searchValues.BookingStatus || assignment.TripStatus === searchValues.BookingStatus) &&
+             (!searchValues.BookingCategory || assignment.BookingCategory === searchValues.BookingCategory) &&
+             (!searchValues.Branch || assignment.Branch === searchValues.Branch) &&
+             (!searchValues.vehicleModel || assignment.VehicleModel.includes(searchValues.vehicleModel)) &&
+             (!searchValues.VehicleId || assignment.chosenRegNo.includes(searchValues.VehicleId)) &&
+             (!searchValues.FromDateTime || new Date(assignment.TripFromDateTime) >= new Date(searchValues.FromDateTime)) &&
+             (!searchValues.ToDateTime || new Date(assignment.TripToDateTime) <= new Date(searchValues.ToDateTime));
+    });
+  }
+  // ngAfterViewInit(): void {
+  //   $('dtOptions').DataTable();
+  // }
+
+  // resourceSearching(): void {
+  //   const datatable = $('#dtOptions').DataTable();
+
+  //   datatable.column(0).search(this.AssignmentSearchForm.get('BookingNo')?.value).draw();
+  //   datatable.column(1).search(this.AssignmentSearchForm.get('BookingStatus')?.value).draw();
+  //   datatable.column(2).search(this.AssignmentSearchForm.get('BookingCategory')?.value).draw();
+  //   datatable.column(3).search(this.AssignmentSearchForm.get('Branch')?.value).draw();
+  //   datatable.column(4).search(this.AssignmentSearchForm.get('vehicleModel')?.value).draw();
+  //   datatable.column(5).search(this.AssignmentSearchForm.get('VehicleId')?.value).draw();
+
+  //   // Optionally, you could format the date and add searches for the DateTime columns
+  //   const fromDateTime = this.AssignmentSearchForm.get('FromDateTime')?.value;
+  //   const toDateTime = this.AssignmentSearchForm.get('ToDateTime')?.value;
+    
+  //   if (fromDateTime) {
+  //     datatable.column(6).search(fromDateTime).draw();
+  //   }
+  //   if (toDateTime) {
+  //     datatable.column(7).search(toDateTime).draw();
+  //   }
+  //   console.log(this.AssignmentSearchForm.value,'Search fields')
+  // }
   searching() { }
 
   fetchModels(VehicleMake: any) {
@@ -403,30 +451,30 @@ export class AssignmentComponent {
       console.log(DriverFirstName, "DriverFirstName");
     });
   }
-  resourceSearching() {
-    const formValues = this.AssignmentSearchForm.value;
+  // resourceSearching() {
+  //   const formValues = this.AssignmentSearchForm.value;
 
-    if (formValues.FromDateTime) {
-      formValues.FromDateTime = new Date(formValues.FromDateTime).toISOString();
-    }
-    if (formValues.ToDateTime) {
-      formValues.ToDateTime = new Date(formValues.ToDateTime).toISOString();
-    }
+  //   if (formValues.FromDateTime) {
+  //     formValues.FromDateTime = new Date(formValues.FromDateTime).toISOString();
+  //   }
+  //   if (formValues.ToDateTime) {
+  //     formValues.ToDateTime = new Date(formValues.ToDateTime).toISOString();
+  //   }
 
-    this.assignmentAllTrips = [];
-    console.log(formValues, "form searching assignment values");
+  //   this.assignmentAllTrips = [];
+  //   console.log(formValues, "form searching assignment values");
 
-    this.apiService.searchAss(formValues).subscribe(
-      (res) => {
-        this.assignmentAllTrips = res;
-      },
-      (error) => {
-        console.error("Error fetching search results", error);
-      }
-    );
-    console.log(this.assignmentAllTrips, "filtered reservations");
+  //   this.apiService.searchAss(formValues).subscribe(
+  //     (res) => {
+  //       this.assignmentAllTrips = res;
+  //     },
+  //     (error) => {
+  //       console.error("Error fetching search results", error);
+  //     }
+  //   );
+  //   console.log(this.assignmentAllTrips, "filtered reservations");
 
-  }
+  // }
 
   fetchDetails(TripId: any) {
     console.log('WERTYU', TripId)
@@ -531,7 +579,7 @@ export class AssignmentComponent {
 
         });
 
-        console.log(d.PickupName, "driverr patched");
+        console.log(d.BookingFor, "driverr patched");
         this.fetchModels(d.VehicleMake);
         this.fetchVehiclesByModel(d.VehicleModel);
 
@@ -575,13 +623,12 @@ export class AssignmentComponent {
   }
 
   checkVehicleAssignment(vehicleID: number, vehicleRegNo: string, FromDateTime: any, ToDateTime: any) {
+    console.log('checkvehicleassignmnent')
     const vehicleDetails = {
       vehicleID: Number(vehicleID),
       vehicleRegNo: String(vehicleRegNo),
       FromDateTime: moment(FromDateTime).format("YYYY-MM-DD HH:mm"),
       ToDateTime: moment(ToDateTime).format("YYYY-MM-DD HH:mm"),
-
-
     };
     console.log('vehicleDetails', vehicleDetails)
     this.apiService.validateVehicle(vehicleDetails).subscribe((res) => {
@@ -800,11 +847,11 @@ export class AssignmentComponent {
 
   }
 
-  addDelivery() {
-    console.log('delivery clicked')
+  addDelivery(TripId:any) {
+    console.log('delivery clicked',TripId)
     this.AllTransactions = []
-    JSON.stringify(this.deliveryForm.value);
-    console.log("Delivery saved", this.deliveryForm.value)
+    JSON.stringify(this.deliveryForm.value,TripId)
+    console.log("Delivery form", this.deliveryForm.value)
     // this.AllTransactions.push(this.deliveryForm.value, 'deliveryList')
     this.apiService.addTransaction(this.deliveryForm.value).subscribe((res) => {
       console.log('AddFuels', res)
@@ -819,7 +866,7 @@ export class AssignmentComponent {
     if (isSelfDriven) {
       const confirmProceed = window.confirm('Do you wish to generate a RentalAgreement?');
       if (confirmProceed) {
-        this.generateRA(this.TripId)
+        this.generateRA(TripId)
       }
     }
 
@@ -918,13 +965,13 @@ export class AssignmentComponent {
               doc.text(d.PickupAddress, 50, 66); // Adjusted x position for address
 
               // Horizontal line
-              doc.line(10, 68, 107, 68); // Adjusted line position slightly
+              doc.line(10, 68, 107, 68); 
 
               doc.text('Tel:', 12, 72);
-              doc.text(d.PickupContactNo, 50, 72); // Adjusted x position for contact number
+              doc.text(d.PickupContactNo, 50, 72); 
 
               // Horizontal line
-              doc.line(10, 73, 107, 73); // Adjusted line position
+              doc.line(10, 73, 107, 73); 
 
               doc.text('Email:', 12, 77);
               doc.text(d.PickupEmail, 50, 77); // Adjusted x position for email

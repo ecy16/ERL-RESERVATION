@@ -79,6 +79,8 @@ WHERE
         }
     }
 
+    
+
     async fetchServiceStatus() {
         const serviceStatus =
             await this.tripServiceDataSource.createQueryRunner();

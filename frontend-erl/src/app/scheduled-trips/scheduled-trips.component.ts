@@ -385,11 +385,7 @@ export class ScheduledTripsComponent {
   getallTripss() {
     this.assignmentAllTrips = [];
     this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
-      for (const m of trips) {
-        if (m.Transaction !== null) {
-          this.assignmentAllTrips.push(m);
-        }
-      }
+    
       console.log(this.assignmentAllTrips, "Scheduled trips");
     });
   }
@@ -397,9 +393,8 @@ export class ScheduledTripsComponent {
     this.AllTransactions = [];
     this.apiService.fetchAllTrips().subscribe((trips: any[]) => {
       for (const m of trips) {
-        if (m.Transaction !== null) {
           this.AllTransactions.push(m);
-        }
+        
       }
       console.log(this.AllTransactions, "Scheduled trips");
     });

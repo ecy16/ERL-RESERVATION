@@ -46,10 +46,13 @@ ngOnInit(){
     this.apiService.fetchAllTransactions().subscribe((res: any) => {
       console.log(res, 'the vehicleouts/in');
       for (const t of res) {
-        if (t.MileageIN >0 && t.FuelIN >0)  {
+        if (t.MileageIN > 0 && t.FuelIN > 0 && t.MileageOUT > 0 && t.FuelOUT > 0) {
           this.dutiesList.push(t);
         }
+        console.log(res, 'after filter');
+
       }
+      
     });
   
 }

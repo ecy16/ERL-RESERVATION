@@ -62,7 +62,7 @@ __decorate([
     __metadata("design:type", String)
 ], ReservationEntity.prototype, "PayeeCompanyName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true, length: 255 }),
     __metadata("design:type", String)
 ], ReservationEntity.prototype, "Remarks", void 0);
 __decorate([

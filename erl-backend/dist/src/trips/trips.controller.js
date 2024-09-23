@@ -80,7 +80,6 @@ let TripsController = class TripsController {
         return this.tripService.assignVehicle(model);
     }
     validateVehicle(body) {
-        console.log(body);
         return this.tripService.assignReg(body);
     }
     validateDriver(body) {

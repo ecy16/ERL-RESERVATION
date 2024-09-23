@@ -26,7 +26,7 @@ export class ReservationEntity {
     companyName: string;
     @Column({ nullable: true })
     PayeeCompanyName: string;
-    @Column({ nullable: true })
+    @Column({ nullable: true , length: 255})
     Remarks: string;
     @Column({ nullable: true })
     ChargeType: string;

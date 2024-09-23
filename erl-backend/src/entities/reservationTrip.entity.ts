@@ -83,7 +83,8 @@ export class ReservationTripEntity {
     PickupFirstName: string;
     @Column({ nullable: true })
     PickupLastName: string;
-    @Column({ nullable: true })
+    @Column({ nullable: true, length:255})
+    
     Remarks: string;
     @Column({ nullable: true })
     vehicleID: number;
