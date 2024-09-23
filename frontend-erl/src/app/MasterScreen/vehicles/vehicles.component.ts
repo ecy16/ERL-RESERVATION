@@ -17,7 +17,6 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { CommonModule } from "@angular/common";
 import { DataTablesModule } from "angular-datatables";
 import { MatPaginatorModule } from "@angular/material/paginator";
-import { image } from "html2canvas/dist/types/css/types/image";
 import { FileUploadService } from "fileUpload.service";
 import * as moment from "moment";
 
@@ -44,8 +43,7 @@ export class VehiclesComponent {
   private modalService = inject(NgbModal);
   closeResult = "";
   vehicleForm: FormGroup;
-  uploadForm: FormGroup;
-  uploadVehiclesForm: FormGroup;
+  // uploadVehiclesForm: FormGroup;
   vehicleSearchForm: FormGroup;
   vehicleInspectionDate: any;
   docAttachments: any;
@@ -73,12 +71,8 @@ export class VehiclesComponent {
     private fileUploadService: FileUploadService
 
   ) {
-    this.vehicleForm = this.formBuilder.group({});
 
-    this.docAttachments = [];
-    this.uploadForm = this.formBuilder.group({
-      imageFile: [""],
-    });
+
     this.vehicleMakeList = [];
     this.vehicleModelList = [];
     // this.fetchedVehicleList=[];
@@ -90,17 +84,20 @@ export class VehiclesComponent {
       engineCapacity: [""],
       vehicleOwner: [""],
       vehicleStatus: [""],
-      VehicleMake: [""],
-      VehicleModel: [""],
+      vehicleMake: [""],
+      vehicleModel: [""],
       vehicleColor: [""],
+            // vehicleRsl: [""],
       vehicleType: [""],
       vehicleTransmission: [""],
       commissionDate: [""],
       chassisNumber: [""],
-      vehicleInspectionDate: [""],
-      vehicleInsuranceDate: [""],
-      vehiclePSVDueDate: [""],
-      File: [""]
+      inspectionDueDate: [""],
+      insuranceDueDate: [""],
+      psvDueDate: [""],
+      image: [null],
+      document: [null]
+
     });
     this.vehicleSearchForm = this.formBuilder.group({
       vehicleRegNo: [""],
@@ -113,10 +110,10 @@ export class VehiclesComponent {
 
 
     });
-    this.uploadVehiclesForm = this.formBuilder.group({
-      file: [""],
-      fileSource: [""]
-    })
+    // this.uploadVehiclesForm = this.formBuilder.group({
+    //   file: [""],
+    //   fileSource: [""]
+    // })
   }
   ngOnInit() {
     this.fetchAllVehicles()
@@ -151,16 +148,15 @@ export class VehiclesComponent {
   }
 
   saveVehicle() {
-    this.VehicleData = [];
-    JSON.stringify(this.vehicleForm.value);
+    console.log(this.vehicleForm.value, 'stringfied Formvalue');
+
     this.apiService.addVehicle(this.vehicleForm.value).subscribe(() => {
       this.VehicleData.push(this.vehicleForm.value);
     });
-    console.log(this.vehicleForm.value, 'formVehicle');
+    console.log(this.vehicleForm.value, 'formVehicleValue');
     this.fetchAllVehicles();
-    this.uploadDoc()
-    this.uploadImg()
   }
+
   VehicleData: any[] = [];
 
   fetchAllVehicles() {
@@ -210,75 +206,75 @@ export class VehiclesComponent {
     console.log(this.VehiclesData, 'vehicles filetered');
   }
 
-  onFileUpload(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-    }
-    console.log('files uploaded', this.selectedFile)
-  }
+  // onFileUpload(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     this.selectedFile = input.files[0];
+  //   }
+  //   console.log('files uploaded', this.selectedFile)
+  // }
 
 
-  uploadDoc() {
-    if (!this.selectedFile) {
-      console.log('No file selected');
-      return;
-    }
+  // uploadDoc() {
+  //   if (!this.selectedFile) {
+  //     console.log('No file selected');
+  //     return;
+  //   }
 
-    this.fileUploadService.uploadVehicleDoc(this.selectedFile).subscribe(
-      (response) => {
-        console.log('Response:................the file', response);
-        this.isLoading = false;
+  //   this.fileUploadService.uploadVehicleDoc(this.selectedFile).subscribe(
+  //     (response) => {
+  //       console.log('Response:................the file', response);
+  //       this.isLoading = false;
 
-      },
-      err => {
-        console.error('Error:', err);
-      }
-    );
-  }
+  //     },
+  //     err => {
+  //       console.error('Error:', err);
+  //     }
+  //   );
+  // }
 
-  onImageUpload(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-    }
-    console.log('files uploaded', this.selectedFile)
-  }
-
-
-
+  // onImageUpload(event: Event): void {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     this.selectedFile = input.files[0];
+  //   }
+  //   console.log('files uploaded', this.selectedFile)
+  // }
 
 
 
-  uploadImg() {
-    if (!this.selectedFile) {
-      console.log('No file selected');
-      return;
-    }
 
-    this.fileUploadService.uploadVehicleDoc(this.selectedFile).subscribe(
-      response => {
-        console.log('Response:................the file', response);
-      },
-      err => {
-        console.error('Error:', err);
-      }
-    );
 
-  }
 
-  filePath: string | null = null;
+  // uploadImg() {
+  //   if (!this.selectedFile) {
+  //     console.log('No file selected');
+  //     return;
+  //   }
 
-  onFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      this.uploadVehiclesForm.patchValue({
-        fileSource: file
-      });
-      this.filePath = input.value; 
-    }
-  }
+  //   this.fileUploadService.uploadVehicleDoc(this.selectedFile).subscribe(
+  //     response => {
+  //       console.log('Response:................the file', response);
+  //     },
+  //     err => {
+  //       console.error('Error:', err);
+  //     }
+  //   );
+
+  // }
+
+  // filePath: string | null = null;
+
+  // onFileChange(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     const file = input.files[0];
+  //     this.uploadVehiclesForm.patchValue({
+  //       fileSource: file
+  //     });
+  //     this.filePath = input.value; 
+  //   }
+  // }
 
   
   // vehicleFiles(){
@@ -287,7 +283,6 @@ export class VehiclesComponent {
 
   submit() {
     const formData = new FormData();
-    formData.append('csv', this.uploadVehiclesForm.get('fileSource')!.value);
 
     try {
       this.apiService.importVehicles(formData).subscribe((data) => {

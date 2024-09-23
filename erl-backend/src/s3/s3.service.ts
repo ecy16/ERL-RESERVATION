@@ -22,9 +22,11 @@ export class S3Service {
             throw new Error('File buffer is required for upload');
         }
 
+
         const params = {
             Bucket: this.configService.get('S3_BUCKET_NAME'),
             Key: `${folder}/${file.originalname}`,
+            Body:file.buffer,
             ContentType: file.mimetype,
         };
 

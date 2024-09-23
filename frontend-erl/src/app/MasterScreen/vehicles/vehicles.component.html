@@ -51,26 +51,7 @@
   <!-- <div class="container container-table">
     <div class="row vertical-center-row"> -->
   <div class="text-center col-md-4 col-md-offset-4">
-    <form [formGroup]="uploadVehiclesForm" class="" (ngSubmit)="submit()">
-      <div class="form-group float-right m-2">
-        <input formControlName="file" id="csv" type="file"
-          style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;"
-          (change)="onFileChange($event)" multiple />
-        <label for="csv" style="cursor: pointer; padding: 0.5em 1em;  border-radius: 0.25rem;"
-          class="text-sm text-black">
-          <mat-icon style="vertical-align: middle;">upload</mat-icon>
-          Select CSV File
-        </label>
-        <div *ngIf="filePath">
-          <p>File Path: {{ filePath }}</p>
-        </div>
-        <button style="padding: 0.5em 1em;  color: #fff; border: none; border-radius: 0.25rem; cursor: pointer;"
-          type="submit" class="bg-green-700 text-sm">
-          Bulk Upload
-        </button>
-      </div>
-
-    </form>
+   
   </div>
 
   <!-- </div>
@@ -85,7 +66,7 @@
     <div class="modal-body">
       <div class="">
         <div class="forms pb-2">
-          <form [formGroup]="vehicleForm">
+          <form [formGroup]="vehicleForm" enctype="multipart/form-data">
             <h2 class="font-medium text-2xl text-center">
               Vehicle Master Screen
             </h2>
@@ -94,7 +75,7 @@
               <div class="vehicleRegNo text-sm" [formGroup]="vehicleForm">
                 <label>Vehicle Reg Number</label>
                 <input type="text" id="vehicleRegNo" class="rounded-md form-control border text-black"
-                  formControlName="RegNo" />
+                  formControlName="vehicleRegNo" />
               </div>
               <div class="vehicleDescription text-sm" [formGroup]="vehicleForm">
                 <label>Vehicle Description</label>
@@ -111,11 +92,11 @@
                   formControlName="chassisNumber" required />
               </div>
 
-              <div class="vehicleEngine text-sm" [formGroup]="vehicleForm">
+              <!-- <div class="vehicleEngine text-sm" [formGroup]="vehicleForm">
                 <label>Engine Capacity</label>
                 <input type="text" id="vehicleEngine" class="form-control rounded-md border text-black" placeholder=""
                   formControlName=" engineCapacity" required />
-              </div>
+              </div> -->
 
               <div class="VehicleOwner text-sm" [formGroup]="vehicleForm">
                 <label class="text-sm">Vehicle Owner</label>
@@ -137,8 +118,8 @@
 
               <div class="vehicleMake text-sm" [formGroup]="vehicleForm">
                 <label class="text-sm">Vehicle Make</label>
-                <select class="text-sm form-control" id="VehicleMake" formControlName="VehicleMake" (change)="
-                    fetchVehicleModels(vehicleForm.get('VehicleMake')?.value)
+                <select class="text-sm form-control" id="vehicleMake" formControlName="vehicleMake" (change)="
+                    fetchVehicleModels(vehicleForm.get('vehicleMake')?.value)
                   ">
                   <option selected value="toyota">Toyota</option>
                   <option *ngFor="let vehicleMake of vehicleMakeList" value="{{ vehicleMake.category_Options }}">
@@ -158,7 +139,7 @@
 
               <div [formGroup]="vehicleForm">
                 <label class="text-sm"> Vehicle Model</label>
-                <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
+                <select class="text-sm form-control" id="vehicleModel" formControlName="vehicleModel">
                   <option *ngFor="let vehicleModel of vehicleModelList" value="{{ vehicleModel.category_Options_1 }}">
                     {{ vehicleModel.category_Options_1 }}
                   </option>
@@ -209,13 +190,10 @@
                   <option value="2WD">2WD</option>
                 </select>
               </div>
-              <div class="vehicleTransmission text-sm" [formGroup]="vehicleForm">
+              <!-- <div class="vehicleTransmission text-sm" [formGroup]="vehicleForm">
                 <label>Vehicle RSL</label>
                 <input type="text" formControlName="vehicleRsl" class="text-sm rounded-md border form-control" />
-              </div>
-              <!-- </div> -->
-
-              <!-- <div class="datepicker-container grid grid-cols-2 gap-2 m-4"> -->
+              </div> -->
               <div class="relative w-64 text-sm" [formGroup]="vehicleForm">
                 <label>Commision Date</label>
                 <input datepicker type="date" class="text-sm form-control rounded-md border"
@@ -225,14 +203,14 @@
                 <label>Inspection Date</label>
                 <div class="input-group">
                   <input type="date" class="text-sm form-control rounded-md border"
-                    formControlName="vehicleInspectionDate" id="vehicleInspectionDate" />
+                    formControlName="inspectionDueDate" id="inspectionDueDate" />
                 </div>
               </div>
 
               <div class="relative w-64 text-sm" [formGroup]="vehicleForm">
                 <label>Insurance Date</label>
                 <div>
-                  <input id="vehicleInsuranceDate" datepicker type="date" formControlName="vehicleInsuranceDate"
+                  <input id="insuranceDueDate" datepicker type="date" formControlName="insuranceDueDate"
                     class="text-sm rounded-md form-control border" placeholder="Select date" />
                 </div>
               </div>
@@ -240,34 +218,29 @@
               <div class="relative w-64 text-sm" [formGroup]="vehicleForm">
                 <label>PsvDue Date</label>
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"></div>
-                <input id="vehiclePSVDueDate" datepicker type="date" formControlName="vehiclePSVDueDate"
+                <input id="psvDueDate" datepicker type="date" formControlName="psvDueDate"
                   class="text-sm rounded-md form-control border" placeholder="Select date" />
               </div>
               <!-- </div> -->
+            
+              <input type="file" accept=".pdf" formControlName="document" >
+              <input type="image" accept=".png" formControlName="image">
 
-              <!-- <div class="File m-4 grid grid-cols-2" [formGroup]="uploadForm"> -->
+
+
+              <div class="File m-4 grid grid-cols-2 gap-4" [formGroup]="vehicleForm">
                 <div style="margin-bottom: 20px;">
-                  <input type="file" (change)="onFileUpload($event)" [multiple]="true" [accept]="['.pdf']"
-                         style="display: block; margin-bottom: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 100%; box-sizing: border-box;" />
-                  <p *ngIf="selectedFile" style="font-size: 14px; color: #333; margin: 0 0 10px 0;">
-                    File selected: {{ selectedFile.name }}
-                  </p>
-                  <button (click)="uploadDoc()" style="padding: 10px 20px; background-color: rgb(165, 30, 30); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-                    Upload
-                  </button>
+                  <input type="file"  [multiple]="true" [accept]="['.pdf']" formControlName="document"/>
+          
+                
                 </div>
                 <div>
-                  <input type="file" (change)="onImageUpload($event)" [multiple]="true" [accept]="['.png']"
-                         style="display: block; margin-bottom: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 100%; box-sizing: border-box;" />
-                  <p *ngIf="selectedImage" style="font-size: 14px; color: #333; margin: 0 0 10px 0;">
-                    Image selected: {{ selectedImage.name }}
-                  </p>
-                  <button (click)="uploadImg()" style="padding: 10px 20px; background-color:  rgb(165, 30, 30); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
-                    Upload
-                  </button>
+                  <input type="file" [multiple]="true" [accept]="['.png']" formControlName="image" />
+              
+                 
                 </div>
                 
-              <!-- </div> -->
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark" (click)="saveVehicle()" (click)="modal.close()">
@@ -306,6 +279,9 @@
       </tbody>
     </table>
   </div>
+
+
+  <!-- <----------edit vehivle------> -->
   <ng-template #Vehicle let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add Vehicle</h4>
@@ -466,7 +442,7 @@
               </div>
             </div>
 
-            <div class="File m-4 grid grid-cols-2" [formGroup]="uploadForm">
+            <!-- <div class="File m-4 grid grid-cols-2" [formGroup]="uploadForm">
               <div>
                 <input type="file" fo (change)="onFileUpload($event)" [multiple]="true" [accept]="['.pdf']"
                   formControlName="File" />
@@ -483,9 +459,9 @@
                 </p>
                 <button (click)="uploadImg()">Upload</button>
               </div>
-            </div>
+            </div> -->
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-dark" (click)="saveVehicle()" (click)="modal.close()">
+              <button type="button" class="btn btn-outline-dark"(click)="modal.close()">
                 Save
               </button>
             </div>
@@ -494,4 +470,7 @@
       </div>
     </div>
   </ng-template>
+
+
+
 </div>

@@ -6,22 +6,22 @@ import { FileUploadService } from './FileUpload.service';
 export class FileUploadController {
     constructor(private fileUploadService:FileUploadService) {}
 
-    @Post('upload')
-    // @UseInterceptors(FileInterceptor('file')) 
-    async uploadFile(
-        @UploadedFile() file: Express.Multer.File,
-        @Body('vehicleId') VehicleId: number,
-        @Body('createdBy') createdBy: string
-    ) {
-        if (!file) {
-            throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
-        }
+    // @Post('upload')
+    // // @UseInterceptors(FileInterceptor('file')) 
+    // async uploadFile(
+    //     @UploadedFile() file: Express.Multer.File,
+    //     @Body('vehicleId') VehicleId: number,
+    //     @Body('createdBy') createdBy: string
+    // ) {
+    //     if (!file) {
+    //         throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST);
+    //     }
 
-        try {
-            const attachment = await this.fileUploadService.saveAttachment(VehicleId, file, createdBy);
-            return { message: 'File uploaded successfully', attachment };
-        } catch (error) {
-            throw new HttpException('File upload failed', HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //     try {
+    //         const attachment = await this.fileUploadService.saveAttachment(VehicleId, file, createdBy);
+    //         return { message: 'File uploaded successfully', attachment };
+    //     } catch (error) {
+    //         throw new HttpException('File upload failed', HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 }
