@@ -9,5 +9,6 @@ import { UsersService } from 'src/users/users.service';
     imports: [TypeOrmModule.forFeature([ReservationEntity])],
     controllers: [ReservationsController],
     providers: [ReservationsService,UsersService],
+    exports: [TypeOrmModule], 
 })
 export class ReservationsModule {}

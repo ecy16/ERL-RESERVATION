@@ -36,6 +36,7 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { S3Module } from './s3/s3.module';
+import { SearchService } from './search/search.service';
 
 
 
@@ -76,7 +77,7 @@ import { S3Module } from './s3/s3.module';
         // AccessControlModule.forRoles(Role)
     ],
     controllers: [AppController],
-    providers: [AppService, MailService],
+    providers: [AppService, MailService, SearchService],
 })
 
 export class AppModule { }

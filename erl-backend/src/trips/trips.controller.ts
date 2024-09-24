@@ -14,17 +14,19 @@ import { UpdateTripDto } from '../dto/update-trip.dto';
 import { VehicleValidationDto } from 'src/dto/vehicleValidation.dto';
 import { DriverValidationDto } from 'src/dto/driverValidation.dto';
 import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
+import { SearchService } from 'src/search/search.service';
+import { SearchResourceDto } from 'src/dto/SearchResourceDto.dto';
 
 @Controller('trips')
 export class TripsController {
-    constructor(private tripService: TripsService) { }
+    constructor(private tripService: TripsService, private readonly searchService: SearchService) { }
 
     @Get('/:id')
     fetchTrips(@Param('id') id: number) {
         return this.tripService.findTrips((id));
     }
 
-    
+
     @Get('ById/:id')
     getOneTrip(@Param('id') id: number) {
         return this.tripService.findTrips1((id));
@@ -55,7 +57,7 @@ export class TripsController {
     addNewTrip(@Body(ValidationPipe) body: AddTripDto) {
         return this.tripService.createTrip(body);
     }
-    
+
 
     @Patch('update/:id')
     updateTripById(@Param('id') id: string, @Body() body: UpdateTripDto) {
@@ -102,11 +104,11 @@ export class TripsController {
     }
 
     @Get('findTrip/:reservationId')
-    getRelatedReservationTrip(@Param('reservationId') reservationId: string){
+    getRelatedReservationTrip(@Param('reservationId') reservationId: string) {
         return this.tripService.findRelatedReservationTrips(parseInt(reservationId));
     }
     @Get('fetchResvTrip/:reservationId')
-    fetchResvTrip(@Param('reservationId') reservationId: string){
+    fetchResvTrip(@Param('reservationId') reservationId: string) {
         return this.tripService.fetchResvTrip(parseInt(reservationId));
     }
 
@@ -134,11 +136,25 @@ export class TripsController {
         return this.tripService.assignDriver(body)
     }
     @Post('/search')
-    searchResourcesValue(@Body() Body:any) {
+    searchResourcesValue(@Body() Body: any) {
         return this.tripService.searchResources(Body)
     }
 
-    
-    
+    @Post('/resources/search')
+    async searchResources(@Body() searchDto: SearchResourceDto) {
+        return this.searchService.searchResource(
+            searchDto.reservationNo,
+            searchDto.reservationCategory,
+            searchDto.company,
+            searchDto.tripStatus,
+            searchDto.tripDateFrom,
+            searchDto.tripDateTo,
+            searchDto.vehicleModel,
+            searchDto.branchName,
+        )
+    }
+
+
+
 }
 
