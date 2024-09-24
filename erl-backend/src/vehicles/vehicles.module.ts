@@ -9,6 +9,7 @@ import { S3Module } from 'src/s3/s3.module';
     imports: [TypeOrmModule.forFeature([VehiclesEntity]),S3Module],
     controllers: [VehiclesController],
     providers: [VehiclesService],
+    exports: [TypeOrmModule], 
 })
 export class VehiclesModule {
     
