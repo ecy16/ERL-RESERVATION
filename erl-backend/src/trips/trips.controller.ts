@@ -16,7 +16,9 @@ import { DriverValidationDto } from 'src/dto/driverValidation.dto';
 import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
 import { SearchService } from 'src/search/search.service';
 import { SearchResourceDto } from 'src/dto/SearchResourceDto.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('trips')
 @Controller('trips')
 export class TripsController {
     constructor(private tripService: TripsService, private readonly searchService: SearchService) { }

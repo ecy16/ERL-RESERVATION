@@ -4,14 +4,12 @@ import { TripsController } from './trips.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ReservationTripEntity } from '../entities/reservationTrip.entity';
 import { ReservationDetailsViewEntity } from 'src/entities/View.entity';
-import { VehiclesEntity } from 'src/entities/vehicle.entity';
-import { ReservationEntity } from 'src/entities/reservation.entity';
-import { ReservationsModule } from 'src/reservations/reservations.module';
+import { SearchModule } from 'src/search/search.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([ReservationTripEntity,ReservationDetailsViewEntity, VehiclesEntity, ReservationEntity]), ReservationsModule],
+    imports: [TypeOrmModule.forFeature([ReservationTripEntity,ReservationDetailsViewEntity]),SearchModule],
     providers: [TripsService],
     controllers: [TripsController],
-    exports:[TripsService]
+    exports: [TypeOrmModule.forFeature([ReservationTripEntity])],
 })
 export class TripsModule {}

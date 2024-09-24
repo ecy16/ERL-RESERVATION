@@ -16,8 +16,8 @@ export class SearchService {
 
         @InjectRepository(VehiclesEntity)
         private vehiclesRepository: Repository<VehiclesEntity>
+    ) {}
 
-    ) { }
     async searchResource(
         reservationNo?: string,
         reservationCategory?: string,
@@ -30,42 +30,44 @@ export class SearchService {
     ) {
         const queryBuilder = this.reservationTripRepository
             .createQueryBuilder('trip')
-            .leftJoinAndSelect('trip.reservation', 'reservation')
-            .leftJoinAndSelect('trip.vehicle', 'vehicle')
-            .leftJoinAndSelect('reservation.branch', 'branch');
-
+            .leftJoin(ReservationEntity, 'reservation', 'reservation.ReservationId = trip.ReservationId'); // Join with ReservationEntity
+    
+        // Apply filters based on provided optional values
         if (reservationNo) {
             queryBuilder.andWhere('reservation.BookingNo = :reservationNo', { reservationNo });
         }
+    
         if (reservationCategory) {
             queryBuilder.andWhere('reservation.BookingCategory = :reservationCategory', { reservationCategory });
         }
-
+    
         if (company) {
-            queryBuilder.andWhere('reservation.companyName = :company', { company });
+            queryBuilder.andWhere('reservation.CompanyCode = :company', { company });
         }
-
+    
         if (tripStatus) {
             queryBuilder.andWhere('trip.TripStatus = :tripStatus', { tripStatus });
         }
-
+    
         if (tripDateFrom) {
             queryBuilder.andWhere('trip.FromDateTime >= :tripDateFrom', { tripDateFrom });
         }
-
+    
         if (tripDateTo) {
             queryBuilder.andWhere('trip.ToDateTime <= :tripDateTo', { tripDateTo });
         }
-
+    
         if (vehicleModel) {
-            queryBuilder.andWhere('vehicle.VehicleModel = :vehicleModel', { vehicleModel });
+            queryBuilder.andWhere('trip.VehicleModel = :vehicleModel', { vehicleModel });
         }
-
+    
         if (branchName) {
-            queryBuilder.andWhere('reservation.Branch = :branchName', { branchName });
+            queryBuilder.andWhere('reservation.Branch = :branchName', { branchName }); // Filter by Branch
         }
-        const results = queryBuilder.getMany()
+    
+        const results = await queryBuilder.getMany();
         return results;
-
     }
+    
+    
 }

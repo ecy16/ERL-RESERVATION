@@ -37,6 +37,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { S3Module } from './s3/s3.module';
 import { SearchService } from './search/search.service';
+import { SearchModule } from './search/search.module';
 
 
 
@@ -73,7 +74,8 @@ import { SearchService } from './search/search.service';
         PhotosModule,
         CountriesModule,
         TransactionsModule,
-        S3Module
+        S3Module,
+        SearchModule
         // AccessControlModule.forRoles(Role)
     ],
     controllers: [AppController],
