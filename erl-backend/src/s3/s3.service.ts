@@ -17,7 +17,7 @@ export class S3Service {
     }
 
     async uploadFile(file: Express.Multer.File, folder: string): Promise<string> {
-
+       
         if (!file || !file.buffer) {
             throw new Error('File buffer is required for upload');
         }
@@ -25,12 +25,12 @@ export class S3Service {
 
         const params = {
             Bucket: this.configService.get('S3_BUCKET_NAME'),
-            Key: `${folder}/${file.originalname}`,
+            Key: `${folder}/${file.originalname}`, 
             Body:file.buffer,
-            ContentType: file.mimetype,
+            ContentType: file.mimetype,            
         };
 
-        console.log(params);
+        
 
         const data = await this.s3.upload(params).promise();
         return data.Location;
