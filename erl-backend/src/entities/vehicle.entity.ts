@@ -5,7 +5,7 @@ import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 export class VehiclesEntity {
     @PrimaryGeneratedColumn()
     vehicleID: number;
-    @Column({ nullable: true, unique: true })
+    @Column({ nullable: true })
     vehicleRegNo: string;
     @Column({ nullable: true })
     vehicleDescription: string;
@@ -13,7 +13,7 @@ export class VehiclesEntity {
     commissionDate: string;
     @Column({ nullable: true })
     vehicleOwner: string;
-    @Column({ nullable: true, unique: true })
+    @Column({ nullable: true })
     chassisNumber: string;
     @Column({ nullable: true })
     vehicleStatus: string;

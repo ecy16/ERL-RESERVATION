@@ -19,6 +19,7 @@ import { DataTablesModule } from "angular-datatables";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { FileUploadService } from "fileUpload.service";
 import * as moment from "moment";
+import { error } from "jquery";
 
 
 
@@ -61,6 +62,7 @@ export class VehiclesComponent {
   selectedFile: File | null = null;
   selectedImage: File | null = null;
   isLoading: boolean = false;
+  selectedFiles: { [key: string]: File } = {}; // To store selected files
 
 
 
@@ -84,8 +86,8 @@ export class VehiclesComponent {
       engineCapacity: [""],
       vehicleOwner: [""],
       vehicleStatus: [""],
-      vehicleMake: [""],
-      vehicleModel: [""],
+      VehicleMake: [""],
+      VehicleModel: [""],
       vehicleColor: [""],
             // vehicleRsl: [""],
       vehicleType: [""],
@@ -95,8 +97,8 @@ export class VehiclesComponent {
       inspectionDueDate: [""],
       insuranceDueDate: [""],
       psvDueDate: [""],
-      image: [null],
-      document: [null]
+      image: [""],
+      document: [""]
 
     });
     this.vehicleSearchForm = this.formBuilder.group({
@@ -147,15 +149,57 @@ export class VehiclesComponent {
 
   }
 
-  saveVehicle() {
-    console.log(this.vehicleForm.value, 'stringfied Formvalue');
 
-    this.apiService.addVehicle(this.vehicleForm.value).subscribe(() => {
-      this.VehicleData.push(this.vehicleForm.value);
-    });
-    console.log(this.vehicleForm.value, 'formVehicleValue');
-    this.fetchAllVehicles();
+
+  onFileSelected(event: any, field: string) {
+    const file: File = event.target.files[0]; // Get the selected file
+    if (file) {
+      this.selectedFiles[field] = file; // Save the selected file for later use
+    }
   }
+  saveVehicle() {
+    console.log('Clicked')
+    const formData = new FormData();
+
+
+    Object.keys(this.vehicleForm.controls).forEach((key) => {
+      formData.append(key, this.vehicleForm.get(key)?.value);
+    });
+  
+    // Append the files to FormData
+    if (this.selectedFiles['document']) {
+      formData.append('document', this.selectedFiles['document']);
+      console.log('foemdat1',formData)
+
+    }
+
+    if (this.selectedFiles['image']) {
+      formData.append('image', this.selectedFiles['image']);
+      console.log('foemdat2',formData)
+
+    }
+
+    // Send FormData to the API
+    this.apiService.addVehicle(formData).subscribe(() => {
+      this.VehicleData.push(this.vehicleForm.value);
+      console.log('formvalue',this.vehicleForm.value)
+
+      this.fetchAllVehicles(); // Refresh the vehicle list after saving
+    });
+    
+  }
+
+
+
+  // saveVehicles() {
+  //   console.log(this.vehicleForm.value, 'stringfied Formvalue');
+
+  //   this.apiService.addVehicle(this.vehicleForm.value).subscribe(() => {
+  //     this.VehicleData.push(this.vehicleForm.value);
+  //   });
+  //   console.log(this.vehicleForm.value, 'formVehicleValue');
+  //   this.fetchAllVehicles();
+  // }
 
   VehicleData: any[] = [];
 
@@ -206,80 +250,7 @@ export class VehiclesComponent {
     console.log(this.VehiclesData, 'vehicles filetered');
   }
 
-  // onFileUpload(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files.length > 0) {
-  //     this.selectedFile = input.files[0];
-  //   }
-  //   console.log('files uploaded', this.selectedFile)
-  // }
-
-
-  // uploadDoc() {
-  //   if (!this.selectedFile) {
-  //     console.log('No file selected');
-  //     return;
-  //   }
-
-  //   this.fileUploadService.uploadVehicleDoc(this.selectedFile).subscribe(
-  //     (response) => {
-  //       console.log('Response:................the file', response);
-  //       this.isLoading = false;
-
-  //     },
-  //     err => {
-  //       console.error('Error:', err);
-  //     }
-  //   );
-  // }
-
-  // onImageUpload(event: Event): void {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files.length > 0) {
-  //     this.selectedFile = input.files[0];
-  //   }
-  //   console.log('files uploaded', this.selectedFile)
-  // }
-
-
-
-
-
-
-  // uploadImg() {
-  //   if (!this.selectedFile) {
-  //     console.log('No file selected');
-  //     return;
-  //   }
-
-  //   this.fileUploadService.uploadVehicleDoc(this.selectedFile).subscribe(
-  //     response => {
-  //       console.log('Response:................the file', response);
-  //     },
-  //     err => {
-  //       console.error('Error:', err);
-  //     }
-  //   );
-
-  // }
-
-  // filePath: string | null = null;
-
-  // onFileChange(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files.length > 0) {
-  //     const file = input.files[0];
-  //     this.uploadVehiclesForm.patchValue({
-  //       fileSource: file
-  //     });
-  //     this.filePath = input.value; 
-  //   }
-  // }
-
   
-  // vehicleFiles(){
-  //   this.apiService.uploadVehicleFiles
-  // }
 
   submit() {
     const formData = new FormData();

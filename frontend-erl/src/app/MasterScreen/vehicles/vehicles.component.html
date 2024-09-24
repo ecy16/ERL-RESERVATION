@@ -51,7 +51,7 @@
   <!-- <div class="container container-table">
     <div class="row vertical-center-row"> -->
   <div class="text-center col-md-4 col-md-offset-4">
-   
+
   </div>
 
   <!-- </div>
@@ -202,8 +202,8 @@
               <div class="relative w-64 text-sm" [formGroup]="vehicleForm">
                 <label>Inspection Date</label>
                 <div class="input-group">
-                  <input type="date" class="text-sm form-control rounded-md border"
-                    formControlName="inspectionDueDate" id="inspectionDueDate" />
+                  <input type="date" class="text-sm form-control rounded-md border" formControlName="inspectionDueDate"
+                    id="inspectionDueDate" />
                 </div>
               </div>
 
@@ -222,13 +222,20 @@
                   class="text-sm rounded-md form-control border" placeholder="Select date" />
               </div>
               <!-- </div> -->
-            
-              <input type="file" accept=".pdf" formControlName="document" >
-              <input type="image" accept=".png" formControlName="image">
+              <div class="m-2">
+                <label for="document" class="flex text-sm">Upload Document</label>
+                <input type="file" accept=".pdf" (change)="onFileSelected($event, 'document')" id="document">
+              </div>
+              <div class="m-2">
+                <label for="image" class="flex text-sm">Upload Image</label>
+                <input type="file" accept=".png" (change)="onFileSelected($event, 'image')" id="image">
+              </div>
 
 
 
-              <div class="File m-4 grid grid-cols-2 gap-4" [formGroup]="vehicleForm">
+
+
+              <!-- <div class="File m-4 grid grid-cols-2 gap-4" [formGroup]="vehicleForm">
                 <div style="margin-bottom: 20px;">
                   <input type="file"  [multiple]="true" [accept]="['.pdf']" formControlName="document"/>
           
@@ -240,7 +247,7 @@
                  
                 </div>
                 
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark" (click)="saveVehicle()" (click)="modal.close()">
@@ -461,7 +468,7 @@
               </div>
             </div> -->
             <div class="modal-footer">
-              <button type="button" class="btn btn-outline-dark"(click)="modal.close()">
+              <button type="button" class="btn btn-outline-dark" (click)="modal.close()">
                 Save
               </button>
             </div>
