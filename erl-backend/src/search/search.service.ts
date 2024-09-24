@@ -30,9 +30,7 @@ export class SearchService {
     ) {
         const queryBuilder = this.reservationTripRepository
             .createQueryBuilder('trip')
-            .leftJoin(ReservationEntity, 'reservation', 'reservation.ReservationId = trip.ReservationId'); // Join with ReservationEntity
-    
-        // Apply filters based on provided optional values
+            .leftJoin(ReservationEntity, 'reservation', 'reservation.ReservationId = trip.ReservationId'); 
         if (reservationNo) {
             queryBuilder.andWhere('reservation.BookingNo = :reservationNo', { reservationNo });
         }
