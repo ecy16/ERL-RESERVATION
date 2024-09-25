@@ -11,10 +11,14 @@ import { TripsServicesService } from './trips-services.service';
 import { AddTripServicesDto } from '../dto/add-tripServices.dto';
 import { UpdateTripServicesDto } from '../dto/update-tripServices.dto';
 import { DataSource } from 'typeorm';
+import { TripServicesEntity } from 'src/entities/tripServices.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('trips-services')
 @Controller('trips-services')
 export class TripsServicesController {
-    constructor(private tripservicesService: TripsServicesService) {}
+    constructor(private tripservicesService: TripsServicesService) { }
 
     @Get('/:id')
     fetchService(@Param('id') id: string) {
@@ -66,5 +70,11 @@ export class TripsServicesController {
         return this.tripservicesService.fetchTripServiceInfo(
             parseInt(serviceId),
         );
+    }
+    @Get('reservations/:reservationId')
+    async getServicesByReservationId(
+        @Param('reservationId') reservationId: number,
+    ): Promise<TripServicesEntity[]> {
+        return this.tripservicesService.getServicesByReservationId(reservationId)
     }
 }

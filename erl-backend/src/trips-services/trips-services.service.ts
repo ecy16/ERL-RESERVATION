@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TripServicesEntity } from '../entities/tripServices.entity';
 import { DataSource, EntityManager, Repository } from 'typeorm';
 import { AddTripServicesDto } from '../dto/add-tripServices.dto';
+import { ReservationTripEntity } from 'src/entities/reservationTrip.entity';
 
 @Injectable()
 export class TripsServicesService {
@@ -15,7 +16,10 @@ export class TripsServicesService {
         private tripservicesRepo: Repository<TripServicesEntity>,
         private readonly tripservicesEntity: EntityManager,
         private readonly tripServiceDataSource: DataSource,
-    ) {}
+
+        @InjectRepository(ReservationTripEntity)
+        private readonly reservationTripRepository: Repository<ReservationTripEntity>,
+    ) { }
 
     async createTripService(addTripsServicesDto: AddTripServicesDto) {
         const tripServices = new TripServicesEntity(addTripsServicesDto);
@@ -69,7 +73,7 @@ JOIN
 WHERE
     l.reservationId = @0;
 
-`, 
+`,
                 [reservationId],
             );
             await trip.commitTransaction();
@@ -98,7 +102,7 @@ WHERE
         // throw new Error(`Failed to find booking type: ${e.message}`);\
     }
 
-    async fetchSageServices(reservationId:number) {
+    async fetchSageServices(reservationId: number) {
         const sageService =
             await this.tripServiceDataSource.createQueryRunner();
         await sageService.connect();
@@ -118,7 +122,7 @@ WHERE
             //           left join _etblStockCosts e on a.StockLink=e.StockID
             // where c.cCategoryName=@0 and d.StGroup=@1
             // console.log('helleo')
-           
+
             await sageService.commitTransaction();
             return service;
         } catch (e) {
@@ -165,5 +169,15 @@ WHERE
         } catch (e) {
             throw new Error(`Failed to find trips: ${e.message}`);
         }
+    }
+    // fetch services by tripId
+    async getServicesByReservationId(reservationId: number): Promise<TripServicesEntity[]> {
+        const services = this.tripservicesRepo.
+            createQueryBuilder('service')
+            .innerJoin(ReservationTripEntity, 'trip', 'trip.TripId = service.TripId')
+            .where('trip.ReservationId = :reservationId', { reservationId })
+            .getMany();
+
+        return services
     }
 }
