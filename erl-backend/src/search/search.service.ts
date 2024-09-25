@@ -27,7 +27,39 @@ export class SearchService {
     ) {
         const queryBuilder = this.reservationTripRepository
             .createQueryBuilder('trip')
-            .leftJoin(ReservationEntity, 'reservation', 'reservation.ReservationId = trip.ReservationId');
+            .leftJoin(ReservationEntity, 'reservation', 'reservation.ReservationId = trip.ReservationId')
+            .select([
+                // Select all fields from ReservationTripEntity (trip)
+                'trip.TripId',
+                'trip.TripStatus',
+                'trip.FromDateTime',
+                'trip.ToDateTime',
+                'trip.VehicleModel',
+                'trip.DriverId',
+    
+                // Select all fields from ReservationEntity (reservation)
+                'reservation.ReservationId',
+                'reservation.BookingNo',
+                'reservation.BookingDate',
+                'reservation.BookingCategory',
+                'reservation.BookingType',
+                'reservation.Branch',
+                'reservation.BookingStatus',
+                'reservation.BookingFor',
+                'reservation.CompanyCode',
+                'reservation.companyName',
+                'reservation.PayeeCompanyName',
+                'reservation.Remarks',
+                'reservation.ChargeType',
+                'reservation.ChargeCurr',
+                'reservation.Source',
+                'reservation.SourceRefNo',
+                'reservation.ContractId',
+                'reservation.CreatedBy',
+                'reservation.CreatedOn',
+                'reservation.ModifiedBy',
+                'reservation.ModifiedOn'
+            ]);
         if (reservationNo) {
             queryBuilder.andWhere('reservation.BookingNo = :reservationNo', { reservationNo });
         }
