@@ -23,8 +23,8 @@ export class SearchService {
         reservationCategory?: string,
         company?: string,
         tripStatus?: string,
-        tripDateFrom?: string,
-        tripDateTo?: string,
+        tripDateFrom?: Date,
+        tripDateTo?: Date,
         vehicleModel?: string,
         branchName?: string,
     ) {
@@ -40,7 +40,7 @@ export class SearchService {
         }
     
         if (company) {
-            queryBuilder.andWhere('reservation.CompanyCode = :company', { company });
+            queryBuilder.andWhere('reservation.CompanyCod e = :company', { company });
         }
     
         if (tripStatus) {
