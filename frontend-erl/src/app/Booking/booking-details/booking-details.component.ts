@@ -560,6 +560,7 @@ export class BookingDetailsComponent {
         for (const d of this.BookingData) {
           this.tripForm.patchValue({
             BookingNo: d.BookingNo
+            
           })
 
         }
@@ -845,6 +846,8 @@ export class BookingDetailsComponent {
     this.apiService.editTripService(ServiceId, this.tripServicesFormUpdate.value).subscribe((res) => {
       console.log('responsinAFTERPATCH',res)
         this.tripServicesList = (res)
+
+
         this.fetchServicesByResv(this.reservationId)
         
         this.toastr.success("tripService updated");

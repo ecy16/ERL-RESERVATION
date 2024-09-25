@@ -422,6 +422,10 @@ export class BookingScreenComponent implements OnInit {
 
 
   viewBooking() {
+
+
+
+    
   }
 
   onCategoryChange(event: any) {
