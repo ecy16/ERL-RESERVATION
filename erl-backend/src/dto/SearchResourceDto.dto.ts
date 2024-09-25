@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString, IsDateString } from 'class-validator';
-import { Transform } from 'class-transformer';
 
 export class SearchResourceDto {
     @ApiProperty({ example: '001', description: 'Reservation number' })
@@ -26,14 +25,12 @@ export class SearchResourceDto {
     @ApiProperty({ example: '2024-05-09', description: 'Trip start date' })
     @IsOptional()
     @IsDateString()
-    @Transform(({ value }) => value ? new Date(value) : null)
-    tripDateFrom?: Date;  
+    tripDateFrom?: string;
 
     @ApiProperty({ example: '2024-06-10', description: 'Trip end date' })
     @IsOptional()
     @IsDateString()
-    @Transform(({ value }) => value ? new Date(value) : null)
-    tripDateTo?: Date;  
+    tripDateTo?: string;
 
     @ApiProperty({ example: 'prado', description: 'vehicle make' })
     @IsOptional()
