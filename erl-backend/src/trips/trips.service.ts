@@ -146,7 +146,7 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select TOP 1 b.companyName,a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,ArrivalFlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate 
+                `select TOP 1 b.companyName,a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate
                 from _cplReservationTrips  a 
                 left join _cplReservations b on a.ReservationId = b.ReservationId 
                 left join _cplVehicles c on a.VehicleId = c.vehicleID 

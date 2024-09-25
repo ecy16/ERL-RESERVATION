@@ -148,18 +148,35 @@
                     is required</small>
                 </div>
               </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>FM Number</label>
+                <input id="FMNumber" type="text" class="form-control rounded-md border border-gray-400"
+                  formControlName="FMNumber" />
+
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Charge Code</label>
+                <input id="FMNumber" type="text" class="form-control rounded-md border border-gray-400"
+                  formControlName="FMNumber" />
+
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Event Code</label>
+                <input id="eventCode" type="text" class="form-control rounded-md border border-gray-400"
+                  formControlName="eventCode" />
+
+              </div>
+              <div class="m-2" [formGroup]="bookingForm">
+                <label>Course Code</label>
+                <input id="courseCode" type="text" class="form-control rounded-md border border-gray-400"
+                  formControlName="courseCode" />
+
+              </div>
               <div class="m-2 h-auto" [formGroup]="bookingForm">
                 <label for="Remarks">Remarks</label>
                 <textarea id="Remarks" class="form-control rounded-md border border-gray-400" 
                           formControlName="Remarks" rows="4" ></textarea>
-                <div *ngIf="
-                    (bookingForm.get('Remarks')?.invalid &&
-                      bookingForm.get('Remarks')?.errors &&
-                      bookingForm.get('Remarks')?.dirty) ||
-                    bookingForm.get('Remarks')?.touched
-                ">
-                    <small class="text-red-700" *ngIf="bookingForm.get('Remarks')?.hasError('required')">*This field is required</small>
-                </div>
+
             </div>
             
               <div class="company-details border rounded-md m-2 mt-2" *ngIf="selectedOption === 'Corporate'">

@@ -24,12 +24,13 @@ export class SearchResourceDto {
 
     @ApiProperty({ example: '2024-05-09', description: 'vehicleTrip start date' })
     @IsOptional()
-    @IsDateString()
+    @IsString()
+    
     tripDateFrom?: string;
 
     @ApiProperty({ example: '2024-06-10', description: 'Trip end date' })
     @IsOptional()
-    @IsDateString()
+    @IsString()
     tripDateTo?: string;
 
     @ApiProperty({ example: 'prado', description: 'vehicle make' })

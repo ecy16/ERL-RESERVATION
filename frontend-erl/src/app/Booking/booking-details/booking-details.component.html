@@ -580,9 +580,9 @@
                 <th>From DateTime</th>
                 <th>To DateTime</th>
                 <th>ArrivalFlightNo</th>
-                <th>ArrivalFlightDateTime</th>
-                <th>ArrivalFlightNo</th>
-                <th>ArrivalFlightDateTime</th>
+                <!-- <th>ArrivalFlightDateTime</th> -->
+                <th>DepartureFlightNo</th>
+                <!-- <th>DepartureFlightDateTime</th> -->
                 <th>Airline</th>
                 <th>Pick Up Address</th>
                 <th>Drop Address</th>
@@ -600,9 +600,9 @@
                 <td><span>{{ trip.FromDate }}</span></td>
                 <td><span>{{ trip.ToDate }}</span></td>
                 <td><span>{{ trip.ArrivalFlightNo }}</span></td>
-                <td><span>{{ trip.ArrivalFlightDateTime }}</span></td>
+                <!-- <td><span>{{ trip.ArrivalFlightDateTime }}</span></td> -->
                 <td><span>{{ trip.DepartureFlightNo }}</span></td>
-                <td><span>{{ trip.DepartureFlightDateTime }}</span></td>
+                <!-- <td><span>{{ trip.DepartureFlightDateTime }}</span></td> -->
                 <td><span>{{ trip.Airline }}</span></td>
                 <td><span>{{ trip.PickupAddress }}</span></td>
                 <td><span>{{ trip.DropAddress }}</span></td>
@@ -1355,56 +1355,46 @@
                     </div>
                   </div>
 
-                  <div class="flightDetails grid grid-cols-2 mb-2">
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
-                      <label>Flight No</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="FlightNo" id="FlightNo" />
-
-                      <div *ngIf="
-                        (tripFormUpdate.get('FlightNo')?.invalid &&
-                          tripFormUpdate.get('FlightNo')?.errors &&
-                          tripFormUpdate.get('FlightNo')?.dirty) ||
-                        tripFormUpdate.get('FlightNo')?.touched
-                      ">
-                        <small class="text-red-700" *ngIf="tripFormUpdate.get('FlightNo')?.hasError('required')">*This
-                          field is required</small>
+                  <fieldset class="mb-1 m-2">
+                    <legend class="text-base font-semibold">Flight Details</legend>
+                    <div class="grid grid-cols-3 gap-4">
+                      <div>
+                        <label for="ArrivalFlightNo">Arrival Flight No</label>
+                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="ArrivalFlightNo"
+                          id="ArrivalFlightNo" />
+                      </div>
+          
+                      <div>
+                        <label for="ArrivalFlightDateTime">Arrival Flight Date Time</label>
+                        <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                          formControlName="ArrivalFlightDateTime" id="ArrivalFlightDateTime" />
+                      </div>
+          
+                      <div>
+                        <label for="Airline">Arrival Airline</label>
+                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
+                          id="Airline" />
+                      </div>
+          
+                      <div>
+                        <label for="DepartureFlightNo">Departure Flight No</label>
+                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="DepartureFlightNo"
+                          id="DepartureFlightNo" />
+                      </div>
+          
+                      <div>
+                        <label for="DepartureFlightDateTime">Departure Flight Date Time</label>
+                        <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                          formControlName="DepartureFlightDateTime" id="DepartureFlightDateTime" />
+                      </div>
+          
+                      <div>
+                        <label for="Airline">Departure Airline</label>
+                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
+                          id="Airline" />
                       </div>
                     </div>
-                    <div class="m-2">
-                      <label>Flight Date Time</label>
-                      <div class="input-group border rounded-md" [formGroup]="tripFormUpdate">
-                        <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
-                          formControlName="FlightDateTime" id="FlightDateTime" />
-
-                        <div *ngIf="
-                          (tripFormUpdate.get('FlightDate')?.invalid &&
-                            tripFormUpdate.get('FlightDate')?.errors &&
-                            tripFormUpdate.get('FlightDate')?.dirty) ||
-                          tripFormUpdate.get('FlightDate')?.touched
-                        ">
-                          <small class="text-red-700" *ngIf="
-                            tripFormUpdate.get('FlightDate')?.hasError('required')
-                          ">*This field is required</small>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
-                      <label>Airline</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="Airline" id="Airline" />
-                      <div *ngIf="
-                        (tripFormUpdate.get('Airline')?.invalid &&
-                          tripFormUpdate.get('Airline')?.errors &&
-                          tripFormUpdate.get('Airline')?.dirty) ||
-                        tripFormUpdate.get('Airline')?.touched
-                      ">
-                        <small class="text-red-700" *ngIf="tripFormUpdate.get('Airline')?.hasError('required')">*This
-                          field is required</small>
-                      </div>
-                    </div>
-                  </div>
+                  </fieldset>
 
                   <div class="grid grid-cols-2 mb-2">
                     <div class="m-2" [formGroup]="tripFormUpdate">

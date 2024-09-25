@@ -172,16 +172,15 @@ export class AssignmentComponent {
   
   
     this.AssignmentSearchForm = this.formBuilder.group({
-      BookingNo: ["", Validators.required],
-      BookingDate: ["", Validators.required],
-      BookingCategory: ["", Validators.required],
-      FromDateTime: ["", Validators.required],
-      ToDateTime: ["", Validators.required],
-      BookingStatus: ["InProgress", Validators.required],
-      BookingType: ["", Validators.required],
-      Branch: ["", Validators.required],
-      vehicleMake: ["", Validators.required],
-      vehicleID: ["", Validators.required],
+      reservationNo: ["", Validators.required],
+      reservationCategory: ["", Validators.required],
+      tripDateFrom: ["", Validators.required],
+      tripDateTo: ["", Validators.required],
+      tripStatus: ["InProgress", Validators.required],
+      company: ["", Validators.required],
+      branchName: ["", Validators.required],
+      vehicleModel: ["", Validators.required],
+      // vehicleID: ["", Validators.required],
     });
 
     this.tripFormUpdate = this.formBuilder.group({
@@ -387,23 +386,7 @@ export class AssignmentComponent {
   }
 
 
-  resourceSearching() {
-    const searchValues = this.AssignmentSearchForm.value;
-    
-    // Apply filtering based on form values
-    this.assignmentData = this.assignmentAllTrips.filter((assignment: { BookingNo: string | any[]; TripStatus: any; BookingCategory: any; Branch: any; VehicleModel: string | any[]; chosenRegNo: string | any[]; TripFromDateTime: string | number | Date; TripToDateTime: string | number | Date; }) => {
-      console.log(this.AssignmentSearchForm.value,'Search fields')
 
-      return (!searchValues.BookingNo || assignment.BookingNo.includes(searchValues.BookingNo)) &&
-             (!searchValues.BookingStatus || assignment.TripStatus === searchValues.BookingStatus) &&
-             (!searchValues.BookingCategory || assignment.BookingCategory === searchValues.BookingCategory) &&
-             (!searchValues.Branch || assignment.Branch === searchValues.Branch) &&
-             (!searchValues.vehicleModel || assignment.VehicleModel.includes(searchValues.vehicleModel)) &&
-             (!searchValues.VehicleId || assignment.chosenRegNo.includes(searchValues.VehicleId)) &&
-             (!searchValues.FromDateTime || new Date(assignment.TripFromDateTime) >= new Date(searchValues.FromDateTime)) &&
-             (!searchValues.ToDateTime || new Date(assignment.TripToDateTime) <= new Date(searchValues.ToDateTime));
-    });
-  }
   // ngAfterViewInit(): void {
   //   $('dtOptions').DataTable();
   // }
@@ -430,7 +413,12 @@ export class AssignmentComponent {
   //   }
   //   console.log(this.AssignmentSearchForm.value,'Search fields')
   // }
-  searching() { }
+  resourceSearching() { 
+    this.apiService.searchResources(this.AssignmentSearchForm.value).subscribe((res)=>{
+      this.assignmentAllTrips=res
+      console.log('resorceserach',res)
+    })
+  }
 
   fetchModels(VehicleMake: any) {
     this.apiService.getVehicleModel(VehicleMake).subscribe((VehicleModel) => {

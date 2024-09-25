@@ -278,9 +278,10 @@ transactionsUrlUpdate=`http://${url}/api/transactions/update/`
     return this.http.post<any[]>(`${this.searchValueUrl}/search`, Body)
   }
 
-  searchResourcesResults(Body: any): Observable<any[]> {
-    return this.http.post<any[]>(`${this.resvUrl}/search`, Body)
+  searchResources(Body: any): Observable<any[]> {
+    return this.http.post<any[]>(`${this.tripUrl}/resources/search`, Body)
   }
+
   searchAss(Body: any): Observable<any[]> {
     return this.http.post<any[]>(`${this.tripUrl}/search`, Body)
   }
@@ -349,7 +350,9 @@ transactionsUrlUpdate=`http://${url}/api/transactions/update/`
   getRelatedTripServices(reservationId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.getTripServices}` + reservationId);
   }
-
+  fetchService(reservationId:number){
+    return this.http.get<any[]>(`${this.getTripServices}`+ reservationId)
+  }
   //------- fetch related trip services info-------
   getRelatedTripServiceInfo(serviceId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.getTripServiceInfo}` + serviceId);

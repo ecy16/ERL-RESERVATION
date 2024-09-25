@@ -253,8 +253,8 @@ export class BookingDetailsComponent {
       // VehicleMarks: "",
       FromDateTime: "",
       ToDateTime: "",
-      FlightNo: "",
-      // FlightDateTime: "",
+      ArrivalFlightDateTime: "",
+      DepartureFlightDateTime: "",      // FlightDateTime: "",
       Airline: "",
       PickupAddress: "",
       PickupContactNo: "",
@@ -501,14 +501,11 @@ export class BookingDetailsComponent {
       for (const a of categories) {
         this.bookingCategoriesData.push(a);
       }
-      console.log('categories', categories)
     });
     this.apiService.getBookingTypes().subscribe((BookingType: any) => {
       for (const b of BookingType) {
         this.bookingTypesData.push(b);
-        console.log(this.bookingTypesData, "bookingTypesData");
       }
-      console.log(this.types, "bookingTypesData");
     });
 
     this.apiService.getCompanies().subscribe((company: any) => {
@@ -568,7 +565,6 @@ for( const d of this.BookingData){
     this.apiService.getVehicleMake().subscribe((VehicleMake) => {
       for (const j of VehicleMake) {
         this.vehicleMakeList.push(j);
-        console.log("vehivle makes");
       }
       // console.log(vehicleMake, "vvvvvvv");
     });
@@ -644,6 +640,7 @@ for( const d of this.BookingData){
     
      // Subscribe to the modal trigger observable
     
+     this.fetchRelatedTripServices(this.reservationId)
 
  
   }
@@ -829,7 +826,7 @@ for( const d of this.BookingData){
     const { BookingNo, ...newres } =this.tripServicesForm.value ;
     this.apiService.addTripService(newres).subscribe((res) => {
       this.tripServicesList.push(res)
-      console.log(res,'tripservice res')
+      console.log(this.tripServicesList,'tripservice res')
     })
     this.toastr.success("Service Added Successfully");
     this.fetchRelatedTripServices(this.reservationId)
@@ -884,10 +881,8 @@ for( const d of this.BookingData){
 
   //------- fetch trip services-------
   fetchRelatedTripServiceInfo(serviceId: any) {
-    // console.log(TripId, "tripservices");
-
+    console.log(serviceId, "tripservices");
     this.fetchedServicesList = [];
-
     this.apiService
       .getRelatedTripServiceInfo(serviceId)
       .subscribe((serviceName) => {
@@ -1025,10 +1020,8 @@ for( const d of this.BookingData){
           VehicleMarks: d.VehicleMarks,
           FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
           ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
-          FlightNo: d.FlightNo,
-          // FlightDateTime: moment(d.FlightDateTime).format(
-          //   "YYYY-MM-DD HH:mm"
-          // ),
+          ArrivalFlightDateTime: moment(d.ArrivalFlightDateTime).format("YYYY-MM-DD HH:mm"),
+          DepartureFlightDateTime: moment (d.DepartureFlightDateTime).format("YYYY-MM-DD HH:mm"),
           Airline: d.Airline,
           PickupAddress: d.PickupAddress,
           PickupContactNo: d.PickupContactNo,
@@ -1045,8 +1038,14 @@ for( const d of this.BookingData){
         })
         this.fetchModels(d.VehicleMake);
         this.fetchVehiclesByModel(d.VehicleModel);
+        console.log('MY TripFormUpdate', this.tripFormUpdate.value)
+
       }
     })
+this.apiService.updateTripById(TripId,this.tripFormUpdate.value).subscribe((res)=>{
+  console.log('response updated trip',res)
+
+})
 
 
   }
@@ -1175,16 +1174,17 @@ getTrips(reservationId:any){
 
 
   editTripDetails(TripId: any) {
-    console.log(TripId);
-    JSON.stringify(this.tripFormUpdate.value);
-    console.log(this.tripFormUpdate.value);
-    this.apiService
-      .editTrip(TripId, this.tripFormUpdate.value)
-      .subscribe(() => {
-        // console.log("trips", this.tripFormUpdate.value);
+    this.apiService.editTrip(TripId, this.tripFormUpdate.value).subscribe((res)=>{
+      this.tripReservationList=(res)
         this.fetchRelatedTrips(this.reservationId);
-        this.toastr.success("trip updated successfully");
-      });
+
+    })
+      // .subscribe((res) => {
+      //   this.tripReservationList.push(res)
+      //   this.fetchRelatedTrips(this.reservationId);
+      //   this.toastr.success("trip updated successfully");
+      // });
+
   }
 
   // -------------------------Self Drivers-------------------------

@@ -26,6 +26,12 @@ export class UpdateTripDto {
     @IsOptional()
     ArrivalFlightDateTime: string;
     @IsOptional()
+    ArrivalFlightNo: string;
+    @IsOptional()
+    DepartureFlightDateTime: string;
+    @IsOptional()
+    DepartureFlightNo: string;
+    @IsOptional()
     PickupAddress: string;
     @IsOptional()
     PickupContactNo: string;
@@ -60,11 +66,10 @@ export class UpdateTripDto {
     ModifiedOn: string;
     @IsOptional()
     tripNumber: number;
-    @IsOptional()
-    FlightDate: string;
+    
     @IsOptional()
     tripFuelLevel: string;
-       @IsOptional()
+     @IsOptional()
     BookingNo: string;
     @IsOptional()
     TripId: number;

@@ -17,7 +17,7 @@ export class TripsServicesController {
     constructor(private tripservicesService: TripsServicesService) {}
 
     @Get('/:id')
-    fetchService(@Param('id') id: string) {
+    fetchServices(@Param('id') id: string) {
         return this.tripservicesService.findTripsService(parseInt(id));
     }
 
