@@ -1137,7 +1137,7 @@
                       <span>{{ service.ServiceId }}</span>
                     </td> -->
                         <td>
-                          <button (click)="openTripServices(EditTripService)"
+                          <button (click)="openTripServices(EditTripService)" 
                             class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
                             (click)="fetchRelatedTripServiceInfo(service.ServiceId)"> <mat-icon>edit</mat-icon>
                           </button>
@@ -1496,72 +1496,57 @@
       <div>
         <ng-template #EditTripService let-modal>
           <div class="modal-header">
-            <h4 class="modal-title">Edit Trip Services</h4>
-            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            <h4 class="modal-title">Add Services For:{{ tripForm.get('BookingNo')?.value }}</h4>
+            <button type="button" class="btn-close" aria-label="Close"
+              (click)="modal.dismiss('Cross click')"></button>
           </div>
-          <!-- input
-                  hidden
-                  type="text"
-                  id="reservationId"
-                  [value]="tripData[0].TripId" /> -->
           <div class="modal-body">
             <form [formGroup]="tripServicesFormUpdate" id="tripServicesFormUpdate">
               <div class="tripServicesFormUpdate grid grid-cols-2 gap-2">
-                <div class="text-sm" [formGroup]="tripServicesFormUpdate" hidden>
-                  <label>Trip No</label>
-                  <!-- <select class="text-sm form-control" id="TripId" formControlName="TripId">
-                    <option readonly selected>Select the Trip Number</option>
-                    <option *ngFor="let trip of tripList" value="{{ trip.TripNo }}">
-                      {{ trip.TripNo}}
-                    </option>
-                  </select> -->
-
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="number"
-                    formControlName="TripId" id="TripId" />
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
+                  <label>BookingNo</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" placeholder="{{ tripForm.get('BookingNo')?.value }}"
+                    formControlName="BookingNo" /> 
                 </div>
-                <div class="text-sm" [formGroup]="tripServicesFormUpdate" hidden>
-                  <label>Service No</label>
-                  <!-- <select class="text-sm form-control" id="TripId" formControlName="TripId">
-                    <option readonly selected>Select the Trip Number</option>
-                    <option *ngFor="let trip of tripList" value="{{ trip.TripNo }}">
-                      {{ trip.TripNo}}
-                    </option>
-                  </select> -->
-
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="number"
-                    formControlName="ServiceId" id="ServiceId" />
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
+                  <label>reservationId</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                    formControlName="ReservationId" />
                 </div>
-                <div></div>
+
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
+                  <label>TripNo</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" placeholder="tripServicesForm.get('tripNumber')?.value }}"
+                    readonly formControlName="tripNumber" />
+                </div>
+
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
+                  <label>TripId</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
+                    readonly formControlName="TripId" />
+                </div>
                 <div class="text-sm" [formGroup]="tripServicesFormUpdate">
-                  <label for="serviceName  ">Service Name</label>
-
-
+                  <label for="serviceName">Service Name</label>
                   <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
-                    (change)="fetchServiceInfo2(tripServicesFormUpdate.get('serviceName')?.value)">
-                    <option readonly selected>Select the Service Name</option>
-                    <option *ngFor="let serviceName of serviceNameList" value="{{ serviceName.StockLink }}">
-                      {{ serviceName.Description_1 }}
+                    (change)="fetchServiceInfo1(tripServicesFormUpdate.get('serviceName')?.value)">
+                    <option value="" disabled selected>Select the Service Name</option>
+                    <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
+                      {{ service.serviceDesc }}
                     </option>
-                    <option value="flowers">Flowers</option>
                   </select>
                 </div>
-                <div class="text-sm" [formGroup]="tripServicesFormUpdate">
-                  <label for="ServiceCode">Service Code</label>
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="ServiceCode" list="datalistOption" id="serviceCode"
-                    placeholder="Type to search..." />
-                  <datalist id="datalistOption">
-                    <option value="Fl09">Fl09</option>
-                    <option value="Ex899">Ex899</option>
-                    <option value="FCard789">FCard789</option>
-                  </datalist>
+
+                <!-- <div class="text-sm">
+                  <label for="serviceCode">Service Code</label>
+                  <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                    formControlName="serviceCode" id="serviceCode"/>
                 </div>
+ -->
+
                 <div class="text-sm" [formGroup]="tripServicesFormUpdate">
                   <label for="ServiceQuantity">Service Quantity</label>
                   <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="ServiceQuantity" id="serviceCode" placeholder="Type to search..." />
-
-
+                    formControlName="quantity" id="quantity" />
                 </div>
                 <div class="text-sm" [formGroup]="tripServicesFormUpdate">
                   <label>Service Charge</label>
@@ -1570,30 +1555,24 @@
                 </div>
                 <div class="text-sm" [formGroup]="tripServicesFormUpdate">
                   <label>Service Status</label>
-                  <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus"
-                    [(ngModel)]="selectedStatus">
+                  <select class="text-sm form-control" formControlName="TripServiceStatus"
+                    id="TripServiceStatus">
                     <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
                       {{ status.category_Options }}
                     </option>
                     <!-- <option *ngFor="let TripServiceStatus of serviceStatusList"
-                      value="{{ TripServiceStatus.category_Options }}">
-                      {{ TripServiceStatus.category_Options }}
-                    </option> -->
+                    value="{{ TripServiceStatus.category_Options }}">
+                    {{ TripServiceStatus.category_Options }}
+                  </option> -->
                   </select>
                 </div>
-                <div class="Remarks m-2 text-sm h-15" *ngIf="selectedStatus ==='Cancelled'">
-                  <label>Remarks</label>
-                  <input type="text" class="form-control rounded-md border-gray-200" formControlName="Remarks">
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" (click)="editTripServicesDetails(tripServicesFormUpdate.get('ServiceId')?.value)"
-                  (click)="modal.close('Save click')">
-                  Save
-                </button>
-              </div>
 
+              </div>
             </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" (click)="editTripServicesDetails(tripServicesFormUpdate.get('serviceId')?.value)"
+              (click)="modal.close('Save click')">Save</button>
           </div>
         </ng-template>
       </div>
@@ -1728,9 +1707,12 @@
           <span>{{ service.ServiceId }}</span>
         </td> -->
             <td>
-              <button (click)="openTripServices(EditTripService)"
-                class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
+              <button 
+                class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md" (click)="openTripServices(EditTripService)"
                 (click)="fetchRelatedTripServiceInfo(service.ServiceId)"> <mat-icon>edit</mat-icon>
+              </button>
+              <button class="action-button" (click)="copyServices(service.ServiceId)">
+                <mat-icon>content_copy</mat-icon>
               </button>
             </td>
           </tr>

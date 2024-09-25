@@ -9,6 +9,8 @@ export class TripServicesEntity {
     @Column({ nullable: true })
     ReservationId: number;
     @Column({ nullable: true })
+    tripNumber: number;
+    @Column({ nullable: true })
     serviceName: string;
     @Column({ nullable: true })
     serviceCode: string;

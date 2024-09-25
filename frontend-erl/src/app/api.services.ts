@@ -345,11 +345,22 @@ transactionsUrlUpdate=`http://${url}/api/transactions/update/`
       tripServicesForm
     );
   }
+  //-------fetch trip service by reservation 1D-------
+
+  fetchTripServiceByRsv(reservationId: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.tripService}/reservations/` + reservationId);
+  }
 
   //------- fetch related trip services-------
   getRelatedTripServices(reservationId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.getTripServices}` + reservationId);
   }
+  // <------fetchservices----by ID--------->
+
+  fetchServices(serviceId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.tripService}/` + serviceId);
+  }
+
   fetchService(reservationId:number){
     return this.http.get<any[]>(`${this.getTripServices}`+ reservationId)
   }

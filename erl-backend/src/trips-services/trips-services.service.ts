@@ -63,7 +63,7 @@ export class TripsServicesService {
               SELECT
     k.Description_1 AS serviceDesc,
     k.Code,
-    m.TripNo
+        m.TripNo
 FROM
     _cplTripServices l
 JOIN
