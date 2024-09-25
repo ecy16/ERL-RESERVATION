@@ -654,11 +654,11 @@
               <div class="tripForm">
                 <form class="m-2 text-sm border rounded-md  " [formGroup]="tripForm">
                   <div class="m-2   grid grid-cols-3 " [formGroup]="tripForm">
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                    <!-- <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
                       <label>BookingNo</label>
                       <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" readonly
                         formControlName="BookingNo" />
-                    </div>
+                    </div> -->
                     <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden>
                       <label>reservationId</label>
                       <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
@@ -1140,6 +1140,10 @@
                           <button (click)="openTripServices(EditTripService)"
                             class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
                             (click)="fetchRelatedTripServiceInfo(service.ServiceId)"> <mat-icon>edit</mat-icon>
+                          </button>
+                          <button (click)="openTripServices(EditTripService)"
+                            class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
+                            (click)="copyServices(service.ServiceId)"> <mat-icon>Copy</mat-icon>
                           </button>
                         </td>
                       </tr>

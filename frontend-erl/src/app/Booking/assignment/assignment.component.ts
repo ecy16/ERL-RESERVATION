@@ -174,8 +174,8 @@ export class AssignmentComponent {
     this.AssignmentSearchForm = this.formBuilder.group({
       reservationNo: ["", Validators.required],
       reservationCategory: ["", Validators.required],
-      tripDateFrom: ["", Validators.required],
-      tripDateTo: ["", Validators.required],
+      // tripDateFrom: ["", Validators.required],
+      // tripDateTo: ["", Validators.required],
       tripStatus: ["InProgress", Validators.required],
       company: ["", Validators.required],
       branchName: ["", Validators.required],
@@ -387,35 +387,14 @@ export class AssignmentComponent {
 
 
 
-  // ngAfterViewInit(): void {
-  //   $('dtOptions').DataTable();
-  // }
-
-  // resourceSearching(): void {
-  //   const datatable = $('#dtOptions').DataTable();
-
-  //   datatable.column(0).search(this.AssignmentSearchForm.get('BookingNo')?.value).draw();
-  //   datatable.column(1).search(this.AssignmentSearchForm.get('BookingStatus')?.value).draw();
-  //   datatable.column(2).search(this.AssignmentSearchForm.get('BookingCategory')?.value).draw();
-  //   datatable.column(3).search(this.AssignmentSearchForm.get('Branch')?.value).draw();
-  //   datatable.column(4).search(this.AssignmentSearchForm.get('vehicleModel')?.value).draw();
-  //   datatable.column(5).search(this.AssignmentSearchForm.get('VehicleId')?.value).draw();
-
-  //   // Optionally, you could format the date and add searches for the DateTime columns
-  //   const fromDateTime = this.AssignmentSearchForm.get('FromDateTime')?.value;
-  //   const toDateTime = this.AssignmentSearchForm.get('ToDateTime')?.value;
-    
-  //   if (fromDateTime) {
-  //     datatable.column(6).search(fromDateTime).draw();
-  //   }
-  //   if (toDateTime) {
-  //     datatable.column(7).search(toDateTime).draw();
-  //   }
-  //   console.log(this.AssignmentSearchForm.value,'Search fields')
-  // }
+ 
   resourceSearching() { 
+    console.log(this.AssignmentSearchForm.value)   
     this.apiService.searchResources(this.AssignmentSearchForm.value).subscribe((res)=>{
-      this.assignmentAllTrips=res
+      console.log('Resourcesearch',res)
+
+      this.assignmentAllTrips=(res)
+
       console.log('resorceserach',res)
     })
   }

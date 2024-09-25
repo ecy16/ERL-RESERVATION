@@ -75,7 +75,7 @@ export class TripsController {
     fetchRelatedTrips(@Param('TripId') reservationId: string) {
         return this.tripService.findRelatedTrips(parseInt(reservationId));
     }
-        @Get('Asstrip/:id')
+    @Get('Asstrip/:id')
     findAssignmentTrips(@Param('id') id: string) {
         return this.tripService.findRelatedTrips(parseInt(id));
     }

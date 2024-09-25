@@ -1073,6 +1073,11 @@ this.apiService.updateTripById(TripId,this.tripFormUpdate.value).subscribe((res)
   }
 
 
+  copyServices(serviceId:any){
+
+  }
+
+
 fetchTripSId(TripId:any){
 console.log('fetchTripID',TripId)
 this.apiService.getOneTrip(TripId).subscribe((res:any)=>{
