@@ -831,21 +831,19 @@ export class BookingDetailsComponent {
 
     const { BookingNo, ...newres } = this.tripServicesForm.value;
     this.apiService.addTripService(newres).subscribe((res) => {
-      this.tripServicesList.push(res)
+      this.tripServicesList = (res)
       console.log(this.tripServicesList, 'tripservice res')
     })
     this.toastr.success("Service Added Successfully");
-    this.fetchRelatedTripServices(this.reservationId)
 
     this.fetchServicesByResv(this.reservationId)
   }
 
   //-------edit trip service-------//
-  editTripServicesDetails(serviceId: number) {
+  editTripServicesDetails(ServiceId: any) {
 
-
-    this.apiService.editTripService(serviceId, this.tripServicesFormUpdate.value).subscribe((res) => {
-      console.log('responsin',res)
+    this.apiService.editTripService(ServiceId, this.tripServicesFormUpdate.value).subscribe((res) => {
+      console.log('responsinAFTERPATCH',res)
         this.tripServicesList = (res)
         this.fetchServicesByResv(this.reservationId)
         
@@ -892,7 +890,7 @@ export class BookingDetailsComponent {
           console.log(serviceName, "serviceName");
           this.fetchedServicesList.push(serviceName);
           for (const dd of serviceName) {
-            console.log(dd.ServiceId);
+            console.log(dd,'tyuifghuuiuggggggoof');
             this.tripServicesFormUpdate.patchValue({
               serviceCode: dd.serviceCode,
               TripCharge: dd.TripCharge,

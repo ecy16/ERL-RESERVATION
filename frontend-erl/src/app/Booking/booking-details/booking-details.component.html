@@ -1513,7 +1513,12 @@
                   <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
                     formControlName="ReservationId" />
                 </div>
-
+                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" >
+                  <label>ServiceId</label>
+                  <input type="text" class="rounded-md border border-gray-400 form-control" id="ServiceId"
+                    formControlName="ServiceId" />
+                </div>
+                
                 <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
                   <label>TripNo</label>
                   <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" placeholder="tripServicesForm.get('tripNumber')?.value }}"
@@ -1571,7 +1576,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" (click)="editTripServicesDetails(tripServicesFormUpdate.get('serviceId')?.value)"
+            <button type="button" (click)="editTripServicesDetails(tripServicesFormUpdate.get('ServiceId')?.value)"
               (click)="modal.close('Save click')">Save</button>
           </div>
         </ng-template>
