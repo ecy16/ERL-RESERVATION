@@ -13,6 +13,7 @@ import { SearchResourcesDto } from 'src/dto/search-resources.dto';
 import { ReservationEntity } from 'src/entities/reservation.entity';
 import { ReservationDetailsViewEntity } from 'src/entities/View.entity';
 import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
+import { error } from 'console';
 
 // import {ReservationEntity} from "../entities/trips.entity";
 
@@ -38,9 +39,9 @@ export class TripsService {
         );
         reservationTrip.tripNumber = (lastTripNo[0].lastNo);
         try {
-
             return await this.tripsEntity.save(reservationTrip);
         } catch (err) {
+            console.log(err)
             throw new Error(err.message);
         }
     }
@@ -187,7 +188,7 @@ format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,ArrivalFlightDateTime,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID 
+                `select b.companyName,c.vehicleRegNo,c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,ArrivalFlightDateTime from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID 
 				left join _cplChaufferDrivers d on a.DriverId = d.DriverId
 				where a.ReservationId=@0  ` , [reservationId],
             );

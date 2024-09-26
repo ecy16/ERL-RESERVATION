@@ -111,9 +111,10 @@ WHERE
         try {
             await sageService.startTransaction();
             const service = await sageService.manager.query(
-                `  select
-            k.Description_1 as serviceDesc1,k.Description_2 as serviceDesc, k.Code, @0 from 
-                 stkitem k join  _etblStockDetails std on k.stocklink=std.stockid and whseid=0 where std.groupid=10
+                `  
+select
+            k.StockLink,k.code,k.Description_1 as serviceDesc1,k.Description_2 as serviceDesc, k.Code, 1 from 
+                 stkitem k join  _etblStockDetails std on k.stocklink=std.stockid and whseid=0 where std.groupid=10 order by StockLink desc
              `,
                 [reservationId],
             );

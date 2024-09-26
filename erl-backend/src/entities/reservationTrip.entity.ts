@@ -27,17 +27,17 @@ export class ReservationTripEntity {
     TripStatus: string;
     @Column({ nullable: true })
     VehicleRemarks: string;
-    @Column('datetime', { nullable: true })
+    @Column( { nullable: true })
     FromDateTime: string;
-    @Column('datetime', { nullable: true })
+    @Column( { nullable: true })
     ToDateTime: string;
     @Column({ nullable: true })
     ArrivalFlightNo: string;
     @Column({ nullable: true })
     DepartureFlightNo: string;
-    @Column('datetime', { nullable: true })
+    @Column({ nullable: true })
     ArrivalFlightDateTime: string;
-    @Column('datetime', { nullable: true })
+    @Column( { nullable: true })
     DepartureFlightDateTime: string;
     @Column({ nullable: true })
     Airline: string;
@@ -73,11 +73,11 @@ export class ReservationTripEntity {
     CheckINBy: string;
     @Column({ nullable: true })
     CreatedBy: string;
-    @Column('datetime', { nullable: true })
+    @Column( { nullable: true })
     CreatedOn: string;
     @Column({ nullable: true })
     ModifiedBy: string;
-    @Column('datetime', { nullable: true })
+    @Column( { nullable: true })
     ModifiedOn: string;
     @Column({ nullable: true })
     PickupFirstName: string;
@@ -99,6 +99,7 @@ export class ReservationTripEntity {
         Object.assign(this, trips);
     }
 
+    
     // @ManyToOne(
     //     () => ReservationEntity,
     //     (reservation) => reservation.reservationTrips,
