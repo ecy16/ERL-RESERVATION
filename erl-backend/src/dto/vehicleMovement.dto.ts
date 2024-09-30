@@ -24,9 +24,9 @@ export class VehicleMovementDto {
     @IsOptional()
     vehicleMake: string;
     @IsOptional()
-    FromDateTime: string;
+    FromDateTime: Date;
     @IsOptional()
-    ToDateTime: string;
+    ToDateTime: Date;
     @IsOptional()
     Transaction: string;
 
