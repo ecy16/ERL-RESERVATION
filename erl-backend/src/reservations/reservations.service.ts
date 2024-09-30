@@ -89,7 +89,7 @@ export class ReservationsService {
             })
         );
     }
-    
+
     async searchResources(SearchResourcesDto: SearchResourcesDto): Promise<ReservationEntity[]> {
         const query = this.reservationRepo.createQueryBuilder('reservation')
         Object.keys(SearchResourcesDto).forEach(key => {
@@ -107,7 +107,7 @@ export class ReservationsService {
 
     }
 
-   
+
 
 
     async createReservation(addReservationDto: AddReservationDto) {
@@ -177,47 +177,47 @@ export class ReservationsService {
 
 
     async findAllReservations() {
-
-
         const reservationsQuery = await this.reservDataSource.createQueryRunner();
         await reservationsQuery.connect();
+
         try {
             await reservationsQuery.startTransaction();
-            const reservations = await reservationsQuery.query(
-                `
-                SELECT [ReservationId]
-                      ,[BookingNo]
-                      ,format(cast([BookingDate] as date),'dd-MM-yyyy') as [BookingDate]
-                      ,[BookingCategory]
-                      ,[BookingType]
-                      ,[Branch]
-                      ,[BookingStatus]
-                      ,[BookingFor]
-                      ,[CompanyCode]
-                      ,[companyName]
-                      ,[PayeeCompanyName]
-                      ,[Remarks]
-                      ,[ChargeType]
-                      ,[ChargeCurr]
-                      ,[Source]
-                      ,[SourceRefNo]
-                      ,[ContractId]
-                      ,[CreatedBy]
-                      ,[ModifiedBy]
-                      ,format([ModifiedOn],'dd-MM-yyyy') as [ModifiedOn]
-                      ,format([CreatedOn],'dd-MM-yyyy HH:mm') as [CreatedOn]
-                  FROM  [dbo].[_cplReservations] where  BookingDate = format(getdate(),'yyyy-MM-dd') order by CreatedOn desc `,
-            );
+
+            const reservations = await reservationsQuery.query(`
+            SELECT [ReservationId],
+                   [BookingNo],
+                   format(cast([BookingDate] as date), 'dd-MM-yyyy') as [BookingDate],
+                   [BookingCategory],
+                   [BookingType],
+                   [Branch],
+                   [BookingStatus],
+                   [BookingFor],
+                   [CompanyCode],
+                   [companyName],
+                   [PayeeCompanyName],
+                   [Remarks],
+                   [ChargeType],
+                   [ChargeCurr],
+                   [Source],
+                   [SourceRefNo],
+                   [ContractId],
+                   [CreatedBy],
+                   [ModifiedBy],
+                   format([ModifiedOn], 'dd-MM-yyyy') as [ModifiedOn],
+                   format([CreatedOn], 'dd-MM-yyyy HH:mm') as [CreatedOn]
+            FROM [dbo].[_cplReservations]
+            WHERE BookingDate = format(getdate(), 'yyyy-MM-dd')
+            ORDER BY BookingDate ASC, CreatedOn ASC;
+          `);
+
             await reservationsQuery.commitTransaction();
+
             return reservations;
-        }
-        catch (e) {
+        } catch (e) {
             throw new Error(`Failed to find any reservations: ${e.message}`);
         }
-
-
     }
-    
+
 
 
 
@@ -375,6 +375,6 @@ export class ReservationsService {
 
 
 
-    
+
 }
 
