@@ -60,23 +60,21 @@
     </div>
 
 <div class="resourceAssignmnet  p-1 bg-white rounded-lg shadow-md">
-    <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display">
-        <thead class=" text-sm bg-red-50">
+    <table datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display"> 
+             <thead class=" text-sm bg-red-50">
             <tr>
                 <th class="text-center">ReservationNo</th>
-                         <th class="text-center">TripStatus</th>
-                <th class="text-center">PickUp Address</th>
-                <th class="text-center">Drop Address</th>
-                <th class="text-center">Branch</th>
-                <th class="text-center">Company Name</th>
-                <th class="text-center">PickupName</th>
-                <th class="text-center">Driver</th>
-                <th class="text-center">vehicleMake</th>
-                <th class="text-center">vehicleModel</th>
-                <th class="text-center">Reg No</th>
+                <th class="text-center ">PickupName</th>
+                <th class="text-center  whitespace-nowrap">Company Name</th>
+                <th class="text-center">Description</th>
                 <th class="text-center">FromDateTime</th>
                 <th class="text-center">ToDateTime</th>
-                <th>BookingCategory</th>
+                <th class="text-center">vehicleMake</th>
+                <th class="text-center">vehicleModel</th>
+                <th class="text-center  whitespace-nowrap">Reg No</th>
+                <th class="text-center">Category</th>
+                <th class="text-center">Driver</th>
+                <th class="text-center">Status</th>
                 <th class="text-center">Action</th>
                 <th class="text-center">Action</th>
 
@@ -87,20 +85,19 @@
             <ng-container *ngFor="let assignment of assignmentAllTrips">
                 <tr class="text-xs  text-center whitespace-nowrap">
                     <td>{{ assignment.BookingNo }}/{{assignment.tripNumber}}</td>
-                    <td>{{ assignment.TripStatus }}</td>
-                    <td>{{ assignment.PickupAddress }}</td>
-                    <td>{{ assignment.DropAddress }}</td>
-                    <td>{{assignment.Branch}}</td>
-                    <td>{{assignment.companyName}}</td>
-                    <!-- <td>{{assignment.BookingFor}}</td> -->
-                    <td>{{assignment.PickupName}}</td>
-                    <td>{{ assignment.DriverName }}</td>
+                    <td>{{ assignment.PickupName }}</td>
+                    <td>{{ assignment.companyName }}</td>
+                    <td>{{ assignment.Remarks }}</td>
+                    <td>{{assignment.TripFromDateTime}}</td>
+                    <td>{{assignment.TripToDateTime}}</td>
                     <td>{{ assignment.VehicleMake }}</td>
                     <td>{{ assignment.VehicleModel }}</td>
                     <td>{{ assignment.chosenRegNo }}</td>
-                    <td>{{assignment.TripFromDateTime}}</td>
-                    <td>{{assignment.TripToDateTime}}</td>
                     <td>{{ assignment.BookingCategory }}</td>
+                    <td>{{ assignment.DriverName }}</td>
+
+                    <td>{{ assignment.TripStatus }}</td>
+
 
                     <td><button (click)="openEditAssignment(editAssignment)" class="button border-1 border  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2"
                             (click)="fetchTrip(assignment.TripId)"
@@ -118,8 +115,9 @@
 
             </ng-container>
         </tbody>
-    </table>
-</div>
+    </table> -->
+
+  </div>
    
 
     <ng-template #editAssignment let-modal>

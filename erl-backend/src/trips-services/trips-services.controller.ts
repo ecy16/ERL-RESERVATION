@@ -32,9 +32,9 @@ export class TripsServicesController {
 
     @Post('/create')
     addNewService(@Body(ValidationPipe) body: AddTripServicesDto) {
+        console.log(body)
         return this.tripservicesService.createTripService(body);
     }
-
     @Patch('/:id')
     updateService(
         @Param('id') id: string,

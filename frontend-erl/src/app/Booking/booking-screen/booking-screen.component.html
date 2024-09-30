@@ -138,7 +138,7 @@
                 <label>Source Ref No</label>
                 <input id="SourceRefNo" type="text" class="form-control rounded-md border border-gray-400"
                   formControlName="SourceRefNo" />
-                <div *ngIf="
+                <!-- <div *ngIf="
                     (bookingForm.get('SourceRefNo')?.invalid &&
                       bookingForm.get('SourceRefNo')?.errors &&
                       bookingForm.get('SourceRefNo')?.dirty) ||
@@ -146,7 +146,7 @@
                   ">
                   <small class="text-red-700" *ngIf="bookingForm.get('SourceRefNo')?.hasError('required')">*This field
                     is required</small>
-                </div>
+                </div> -->
               </div>
               <div class="m-2" [formGroup]="bookingForm">
                 <label>FM Number</label>
@@ -167,7 +167,7 @@
 
               </div>
               <div class="m-2" [formGroup]="bookingForm">
-                <label>Course Code</label>
+                <label>Cost Centre Code</label>
                 <input id="courseCode" type="text" class="form-control rounded-md border border-gray-400"
                   formControlName="courseCode" />
 
@@ -419,7 +419,7 @@
               </td>
               <td>
                 <span>
-                  <button (click)="viewBooking()">
+                  <button (click)="viewBooking()" >
                     <a class="nav-link" href="BookingDetails" [routerLink]="[
                         '/BookingDetails',
                         reservation.ReservationId

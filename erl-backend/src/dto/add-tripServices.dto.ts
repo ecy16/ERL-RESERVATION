@@ -13,6 +13,7 @@ export class AddTripServicesDto {
 
     @IsOptional()
     serviceName: string;
+    
    
     //@IsNumber()
     @IsOptional()
@@ -42,7 +43,7 @@ export class AddTripServicesDto {
     @IsOptional()
     tripType: string;
     @IsOptional()
-    tripNumber: string;
+    tripNumber: number;
     @IsOptional()
     Stocklink: string;
 }
