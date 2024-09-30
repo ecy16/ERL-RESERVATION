@@ -58,7 +58,7 @@ export class TripsService {
             await trip.startTransaction();
             const tripInfo = await trip.query(
                 ` select a.*,    a.PickupFirstName + ' ' + a.PickupLastName AS [PickupName],
-                format(a.FromDateTime,'dd-MM-yyyy HH:mm') [TripFromDateTime],format(a.ToDateTime,'dd-MM-yyyy HH:mm') [TripToDateTime], b.BookingFor,b.BookingStatus,b.Branch,b.BookingNo,b.BookingCategory,b.BookingType,b.Source,b.companyName, c.VehicleMake as chosenMake,c.VehicleModel as chosenModel,c.vehicleRegNo as chosenRegNo,d.DriverFirstName+' '+d.DriverLastName [DriverName]  from _cplreservationtrips a 
+                 b.BookingFor,b.BookingStatus,b.Branch,b.BookingNo,b.BookingCategory,b.BookingType,b.Source,b.companyName, c.VehicleMake as chosenMake,c.VehicleModel as chosenModel,c.vehicleRegNo as chosenRegNo,d.DriverFirstName+' '+d.DriverLastName [DriverName]  from _cplreservationtrips a 
                                 join _cplReservations b on a.ReservationId=b.ReservationId left join _cplVehicles c on a.VehicleId = c.vehicleID left join _cplChaufferDrivers d on a.DriverId = d.DriverId`
 
 
@@ -84,18 +84,19 @@ export class TripsService {
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select  a.*,b.BookingCategory,b.BookingNo,
-format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,
-                format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate from _cplReservationTrips  a 
+                `select  a.*,b.BookingCategory,b.BookingNo
+from _cplReservationTrips  a 
                 join _cplReservations b on a.ReservationId = b.ReservationId where a.TripId=${(id)}`
 
             );
             await trip.commitTransaction();
             return tripInfo;
         } catch (e) {
+            console.log(e)
             throw new Error(`Failed to find trips: ${e.message}`)
         }
     }
+
 
     // async findRelatedContractDetails(id: number) {
     //     // return this.contractDetailsRepo.find({ where: { ContractId: id } });

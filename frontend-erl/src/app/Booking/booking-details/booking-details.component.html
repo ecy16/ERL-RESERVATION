@@ -230,7 +230,7 @@
     <div class="tripForm">
 
 
-      <div class=" triips form"  >
+      <div class=" triips form">
         <form class="p-4 text-sm border rounded-lg" [formGroup]="tripForm">
 
           <!-- Reservation Details Group -->
@@ -247,32 +247,48 @@
                 <input type="text" class="rounded-lg border border-gray-300 form-control" id="BookingNo" readonly
                   formControlName="BookingNo" />
               </div>
-  
+              <div class="trip-option ">
+                <input type="radio" id="tripCategory" formControlName="tripCategory" value="TripCategory">
+                <label for="airportTransfer" class="m-1">Airport Transfer</label>
+                <select class="trip-select form-control rounded-lg border-gray-300 text-sm"  formControlName="TripSubCategory">
+                  <option value="Arrival">Arrival</option>
+                  <option value="Departure">Departure</option>
+                </select>
+              </div>
+              <div class="trip-option">
+                <input type="radio" id="tripCategory" formControlName="tripCategory" value="TripCategory" >
+                <label for="disposal" class="m-1">Disposal</label>
+                <select class="trip-select form-control rounded-lg border-gray-300 text-sm" formControlName="TripSubCategory">
+                  <option value="FullDay">Full Day</option>
+                  <option value="HalfDay">Half Day</option>
+                  <option value="Dinner">Dinner</option>
+                </select>
+              </div>
               <div>
                 <label for="FromDateTime">From Date Time</label>
-                <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                <input type="datetime-local" class="form-control rounded-lg border-gray-300 text-sm"
                   formControlName="FromDateTime" id="FromDateTime" />
                 <small class="text-red-600" *ngIf="tripForm.get('FromDateTime')?.hasError('required')">*This field is
                   required</small>
               </div>
-  
+
               <div>
                 <label for="ToDateTime">To Date Time</label>
-                <input type="datetime-local" class="form-control rounded-lg border-gray-300" formControlName="ToDateTime"
-                  id="ToDateTime" />
+                <input type="datetime-local" class="form-control rounded-lg border-gray-300 text-sm"
+                  formControlName="ToDateTime" id="ToDateTime" />
                 <small class="text-red-600" *ngIf="tripForm.get('ToDateTime')?.hasError('required')">*This field is
                   required</small>
               </div>
-  
+
             </div>
             <div class="mt-2">
               <label>Description</label>
-              <textarea id="Remarks" class="form-control rounded-md border border-gray-400" 
-                            formControlName="Remarks" rows="4" ></textarea>
-             
+              <textarea id="Remarks" class="form-control rounded-md border border-gray-400" formControlName="Remarks"
+                rows="4"></textarea>
+
             </div>
           </fieldset>
-  
+
           <!-- Address Details Group -->
           <fieldset class="mb-1">
             <legend class="text-base font-semibold">Address Details</legend>
@@ -287,7 +303,7 @@
                 <small class="text-red-600" *ngIf="tripForm.get('PickupAddress')?.hasError('required')">*This field is
                   required</small>
               </div>
-  
+
               <div>
                 <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Collection Address</label>
                 <label *ngIf="BookingData[0]?.BookingCategory !== 'SelfDriven'">Drop Address</label>
@@ -298,7 +314,7 @@
               </div>
             </div>
           </fieldset>
-  
+
           <!-- Contact Details Group -->
           <fieldset class="mb-1">
             <legend class="text-base font-semibold">Contact Details</legend>
@@ -310,7 +326,7 @@
                 <small class="text-red-600" *ngIf="tripForm.get('PickupFirstName')?.hasError('required')">*This field is
                   required</small>
               </div>
-  
+
               <div>
                 <label for="PickupLastName">Pickup Last Name</label>
                 <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupLastName"
@@ -318,7 +334,7 @@
                 <small class="text-red-600" *ngIf="tripForm.get('PickupLastName')?.hasError('required')">*This field is
                   required</small>
               </div>
-  
+
               <div>
                 <label for="PickupContactNo">Pickup Contact No</label>
                 <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupContactNo"
@@ -327,7 +343,7 @@
                 <small class="text-red-600" *ngIf="tripForm.get('PickupContactNo')?.hasError('required')">*This field is
                   required</small>
               </div>
-  
+
               <div>
                 <label for="PickupEmail">Pickup Email</label>
                 <input type="text" class="form-control rounded-lg border-gray-300" formControlName="PickupEmail"
@@ -337,7 +353,7 @@
               </div>
             </div>
           </fieldset>
-  
+
           <!-- Flight Details Group -->
           <fieldset class="mb-1">
             <legend class="text-base font-semibold">Flight Details</legend>
@@ -347,31 +363,31 @@
                 <input type="text" class="form-control rounded-lg border-gray-300" formControlName="ArrivalFlightNo"
                   id="ArrivalFlightNo" />
               </div>
-  
+
               <div>
                 <label for="ArrivalFlightDateTime">Arrival Flight Date Time</label>
                 <input type="datetime-local" class="form-control rounded-lg border-gray-300"
                   formControlName="ArrivalFlightDateTime" id="ArrivalFlightDateTime" />
               </div>
-  
+
               <div>
                 <label for="Airline">Arrival Airline</label>
                 <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
                   id="Airline" />
               </div>
-  
+
               <div>
                 <label for="DepartureFlightNo">Departure Flight No</label>
                 <input type="text" class="form-control rounded-lg border-gray-300" formControlName="DepartureFlightNo"
                   id="DepartureFlightNo" />
               </div>
-  
+
               <div>
                 <label for="DepartureFlightDateTime">Departure Flight Date Time</label>
                 <input type="datetime-local" class="form-control rounded-lg border-gray-300"
                   formControlName="DepartureFlightDateTime" id="DepartureFlightDateTime" />
               </div>
-  
+
               <div>
                 <label for="Airline">Departure Airline</label>
                 <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
@@ -379,7 +395,7 @@
               </div>
             </div>
           </fieldset>
-  
+
           <!-- Vehicle Details Group -->
           <fieldset>
             <legend class="text-base font-semibold">Vehicle Details</legend>
@@ -410,7 +426,8 @@
               </div>
               <div [formGroup]="tripForm">
                 <label>Vehicle Model</label>
-                <select class="form-control rounded-lg border-gray-300" id="VehicleModel" formControlName="VehicleModel">
+                <select class="form-control rounded-lg border-gray-300" id="VehicleModel"
+                  formControlName="VehicleModel">
                   <option *ngFor="let vehicleModel of vehicleModelList" [value]="vehicleModel.category_Options_1">
                     {{ vehicleModel.category_Options_1 }}
                   </option>
@@ -425,7 +442,7 @@
                     field is required</small>
                 </div>
               </div>
-  
+
               <div class="vehicleType text-sm" [formGroup]="tripForm">
                 <label>Vehicle Type</label>
                 <select id="vehicleType" formControlName="vehicleType" class="form-control rounded-lg border-gray-300">
@@ -466,7 +483,7 @@
                     {{ TripStatus.category_Options }}
                   </option>
                 </select>
-  
+
                 <div *ngIf="
                 (tripForm.get('TripStatus')?.invalid &&
                   tripForm.get('TripStatus')?.errors &&
@@ -479,723 +496,727 @@
                 </div>
               </div>
               <div></div>
-  
-  
+
+
             </div>
-  
+
             <button type="button" class="text-sm float-right p-2 m-2 w-24 rounded-md border-2 border-green-700"
               (click)="saveTrip()">
               Save
             </button>
           </fieldset>
-  
+
         </form>
-        
-            <form [formGroup]="tripServicesForm" class="p-4 text-sm border rounded-lg mt-2" id="tripServicesForm">
-              <fieldset>
-                <legend class="text-base font-semibold m-1">Add Trip Services</legend>
-                <div class="tripServicesForm grid grid-cols-2 gap-2">
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                    <label>BookingNo</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"  placeholder="{{ tripForm.get('BookingNo')?.value }}"
-                      formControlName="BookingNo" /> 
-                  </div>
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
-                    <label>reservationId</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                      formControlName="ReservationId" />
-                  </div>
-    
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                    <label>TripNo</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber"
-                        readonly formControlName="tripNumber" />
-                  </div>
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
-                    <label>TripId</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
-                      formControlName="TripId" />
-                  </div>
-                  <div class="text-sm" [formGroup]="tripServicesForm">
-                    <label for="serviceName">Service Name</label>
-                    <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
-                      (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
-                      <option value="" disabled selected>Select the Service Name</option>
-                      <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
-                        {{ service.serviceDesc }}
-                      </option>
-                    </select>
-                  </div>
-    
-                  <div class="text-sm">
-                    <label for="serviceCode">Service Code</label>
-                    <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                      formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
-                  </div>
-    
-    
-                  <div class="text-sm" [formGroup]="tripServicesForm">
-                    <label for="ServiceQuantity">Service Quantity</label>
-                    <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                      formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
-    
-    
-                  </div>
-                  <div class="text-sm" [formGroup]="tripServicesForm">
-                    <label>Service Charge</label>
-                    <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                      formControlName="TripCharge" id="TripCharge" />
-                  </div>
-                  <div class="text-sm" [formGroup]="tripServicesForm">
-                    <label>Service Status</label>
-                    <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
-                      <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
-                        {{ status.category_Options }}
-                      </option>
-    
-                    </select>
-                  </div>
-    
-                </div>
-                <button type="button" (click)="saveTripService()"  class="text-sm float-right p-2 m-2 w-24 rounded-md border-2 border-green-700">Save</button>
-              </fieldset>
-  
-            </form>
-         
-      </div>
-     
+
+        <form [formGroup]="tripServicesForm" class="p-4 text-sm border rounded-lg mt-2" id="tripServicesForm">
+          <fieldset>
+            <legend class="text-base font-semibold m-1">Add Trip Services</legend>
+            <div class="tripServicesForm grid grid-cols-2 gap-2">
+              <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                <label>BookingNo</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                  placeholder="{{ tripForm.get('BookingNo')?.value }}" formControlName="BookingNo" />
+              </div>
+              <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                <label>reservationId</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                  formControlName="ReservationId" />
+              </div>
+
+              <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                <label>TripNo</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" readonly
+                  formControlName="tripNumber" />
+              </div>
+              <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                <label>TripId</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
+                  formControlName="TripId" />
+              </div>
+              <div class="text-sm" [formGroup]="tripServicesForm">
+                <label for="serviceName">Service Name</label>
+                <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
+                  (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
+                  <option value="" disabled selected>Select the Service Name</option>
+                  <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc1">
+                    {{ service.serviceDesc1 }} 
+                  </option>
+                </select>
+              </div>
+
+              <div class="text-sm">
+                <label for="serviceCode">Service Code</label>
+                <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
+              </div>
 
 
+              <div class="text-sm" [formGroup]="tripServicesForm">
+                <label for="ServiceQuantity">Service Quantity</label>
+                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
 
 
+              </div>
+              <div class="text-sm" [formGroup]="tripServicesForm">
+                <label>Service Charge</label>
+                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="TripCharge" id="TripCharge" />
+              </div>
+              <div class="text-sm" [formGroup]="tripServicesForm">
+                <label>Service Status</label>
+                <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
+                  <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                    {{ status.category_Options }}
+                  </option>
 
-    <div class="trip-container m-2">
-      <div class="tripTable  p-2">
-        <button (click)="addTripModal(addTrips)" 
-          class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white">
-          Add Trip
-        </button>
-        <div>
-          <table class="table border border-gray-700  hover sleek-table table-bordered hover">
-            <thead class=" triphead text-sm align-text-top whitespace-nowrap bg-gray-400">
-              <tr>
-                <th>Trip No</th>
-                <th>Driver Status</th>
-                <th>Trip Status</th>
-                <th>From DateTime</th>
-                <th>To DateTime</th>
-                <th>ArrivalFlightNo</th>
-                <!-- <th>ArrivalFlightDateTime</th> -->
-                <th>DepartureFlightNo</th>
-                <!-- <th>DepartureFlightDateTime</th> -->
-                <th>Airline</th>
-                <th>Pick Up Address</th>
-                <th>Drop Address</th>
-                <th>Pick Up Contacts</th>
-                <th>Description</th>
+                </select>
+              </div>
 
-                <th class="text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody class="text-sm whitespace-nowrap ">
-              <tr class="bg-white" *ngFor="let trip of tripReservationList">
-                <td><span>{{ trip.tripNumber }}</span></td>
-                <td><span>{{ trip.DriverServiceStatus }}</span></td>
-                <td><span>{{ trip.TripStatus }}</span></td>
-                <td><span>{{ trip.FromDate }}</span></td>
-                <td><span>{{ trip.ToDate }}</span></td>
-                <td><span>{{ trip.ArrivalFlightNo }}</span></td>
-                <!-- <td><span>{{ trip.ArrivalFlightDateTime }}</span></td> -->
-                <td><span>{{ trip.DepartureFlightNo }}</span></td>
-                <!-- <td><span>{{ trip.DepartureFlightDateTime }}</span></td> -->
-                <td><span>{{ trip.Airline }}</span></td>
-                <td><span>{{ trip.PickupAddress }}</span></td>
-                <td><span>{{ trip.DropAddress }}</span></td>
-                <td><span>{{ trip.PickupContactNo }}</span></td>
-                <td><span>{{ trip.Remarks }}</span></td>
-
-                <td class="text-center w-24">
-                  <button class="action-button" (click)="openTripEdit(editTrip)" (click)="fetchTrip(trip.TripId)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button class="action-button" (click)="copyTrip(trip.TripId)">
-                    <mat-icon>content_copy</mat-icon>
-                  </button>
-                </td>
-              </tr>
-              <tr class="h-10">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-
-
-
-
-
-
-        <!-- Add trip Modal -->
-        <div class="addtripmodal">
-          <ng-template #addTrips let-modal>
-            <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">
-                Add Trip For: {{ tripForm.get('BookingNo')?.value }}
-              </h4>
             </div>
-            <div class="modal-body">
-              <div class="tripForm">
-                <form class="m-2 text-sm border rounded-md  " [formGroup]="tripForm">
-                  <div class="m-2   grid grid-cols-3 " [formGroup]="tripForm">
-                    <!-- <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+            <button type="button" (click)="saveTripService()"
+              class="text-sm float-right p-2 m-2 w-24 rounded-md border-2 border-green-700">Save</button>
+          </fieldset>
+
+        </form>
+
+      </div>
+
+
+
+
+
+
+      <div class="trip-container m-2">
+        <div class="tripTable  p-2">
+          <button (click)="addTripModal(addTrips)"
+            class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white">
+            Add Trip
+          </button>
+          <div>
+            <table class="table border border-gray-700  hover sleek-table table-bordered hover">
+              <thead class=" triphead text-sm align-text-top whitespace-nowrap bg-gray-400">
+                <tr>
+                  <th>Trip No</th>
+                  <th>Driver Status</th>
+                  <th>Trip Status</th>
+                  <th>From DateTime</th>
+                  <th>To DateTime</th>
+                  <th>ArrivalFlightNo</th>
+                  <!-- <th>ArrivalFlightDateTime</th> -->
+                  <th>DepartureFlightNo</th>
+                  <!-- <th>DepartureFlightDateTime</th> -->
+                  <th>Airline</th>
+                  <th>Pick Up Address</th>
+                  <th>Drop Address</th>
+                  <th>Pick Up Contacts</th>
+                  <th>Description</th>
+
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm whitespace-nowrap ">
+                <tr class="bg-white" *ngFor="let trip of tripReservationList">
+                  <td><span>{{ trip.tripNumber }}</span></td>
+                  <td><span>{{ trip.DriverServiceStatus }}</span></td>
+                  <td><span>{{ trip.TripStatus }}</span></td>
+                  <td><span>{{ trip.FromDate }}</span></td>
+                  <td><span>{{ trip.ToDate }}</span></td>
+                  <td><span>{{ trip.ArrivalFlightNo }}</span></td>
+                  <!-- <td><span>{{ trip.ArrivalFlightDateTime }}</span></td> -->
+                  <td><span>{{ trip.DepartureFlightNo }}</span></td>
+                  <!-- <td><span>{{ trip.DepartureFlightDateTime }}</span></td> -->
+                  <td><span>{{ trip.Airline }}</span></td>
+                  <td><span>{{ trip.PickupAddress }}</span></td>
+                  <td><span>{{ trip.DropAddress }}</span></td>
+                  <td><span>{{ trip.PickupContactNo }}</span></td>
+                  <td><span>{{ trip.Remarks }}</span></td>
+
+                  <td class="text-center w-24">
+                    <button class="action-button" (click)="openTripEdit(editTrip)" (click)="fetchTrip(trip.TripId)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button class="action-button" (click)="copyTrip(trip.TripId)">
+                      <mat-icon>content_copy</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr class="h-10">
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+
+
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+
+
+
+
+
+          <!-- Add trip Modal -->
+          <div class="addtripmodal">
+            <ng-template #addTrips let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">
+                  Add Trip For: {{ tripForm.get('BookingNo')?.value }}
+                </h4>
+              </div>
+              <div class="modal-body">
+                <div class="tripForm">
+                  <form class="m-2 text-sm border rounded-md  " [formGroup]="tripForm">
+                    <div class="m-2   grid grid-cols-3 " [formGroup]="tripForm">
+                      <!-- <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
                       <label>BookingNo</label>
                       <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" readonly
                         formControlName="BookingNo" />
                     </div> -->
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden>
-                      <label>reservationId</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                        formControlName="ReservationId" />
-                    </div>
-                    <div class="m-2">
-                      <label>From Date Time</label>
-                      <div class="input-group border rounded-md" [formGroup]="tripForm">
-                        <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
-                          formControlName="FromDateTime" id="FromDateTime" />
-                        <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm" hidden>
+                        <label>reservationId</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                          formControlName="ReservationId" />
+                      </div>
+                      <div class="m-2">
+                        <label>From Date Time</label>
+                        <div class="input-group border rounded-md" [formGroup]="tripForm">
+                          <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
+                            formControlName="FromDateTime" id="FromDateTime" />
+                          <div *ngIf="
                         (tripForm.get('FromDateTime')?.invalid &&
                           tripForm.get('FromDateTime')?.errors &&
                           tripForm.get('FromDateTime')?.dirty) ||
                         tripForm.get('FromDateTime')?.touched
                       ">
-                          <small class="text-red-700" *ngIf="tripForm.get('FromDateTime')?.hasError('required')">*This
-                            field is
-                            required</small>
+                            <small class="text-red-700" *ngIf="tripForm.get('FromDateTime')?.hasError('required')">*This
+                              field is
+                              required</small>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="m-2">
-                      <label>To Date Time</label>
-                      <div class="input-group border rounded-md" [formGroup]="tripForm">
-                        <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
-                          formControlName="ToDateTime" id="ToDateTime" />
+                      <div class="m-2">
+                        <label>To Date Time</label>
+                        <div class="input-group border rounded-md" [formGroup]="tripForm">
+                          <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
+                            formControlName="ToDateTime" id="ToDateTime" />
 
-                        <div *ngIf="
+                          <div *ngIf="
                         (tripForm.get('ToDateTime')?.invalid &&
                           tripForm.get('ToDateTime')?.errors &&
                           tripForm.get('ToDateTime')?.dirty) ||
                         tripForm.get('ToDateTime')?.touched
                       ">
-                          <small class="text-red-700" *ngIf="tripForm.get('ToDateTime')?.hasError('required')">*This
-                            field
-                            is
-                            required</small>
+                            <small class="text-red-700" *ngIf="tripForm.get('ToDateTime')?.hasError('required')">*This
+                              field
+                              is
+                              required</small>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div></div>
+                      <div></div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven'">PickupAddress</label>
-                      <label *ngIf="BookingData[0]?.BookingCategory === 'DriverOnly'">PickupAddress</label>
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven'">PickupAddress</label>
+                        <label *ngIf="BookingData[0]?.BookingCategory === 'DriverOnly'">PickupAddress</label>
 
-                      <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Delivery</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control h-24"
-                        formControlName="PickupAddress" id="PickupAddress" />
-                      <div *ngIf="
+                        <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Delivery</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control h-24"
+                          formControlName="PickupAddress" id="PickupAddress" />
+                        <div *ngIf="
                       (tripForm.get('PickupAddress')?.invalid &&
                         tripForm.get('PickupAddress')?.errors &&
                         tripForm.get('PickupAddress')?.dirty) ||
                       tripForm.get('PickupAddress')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                         tripForm.get('PickupAddress')?.hasError('required')
                       ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Collection</label>
-                      <label *ngIf="BookingData[0]?.BookingCategory === 'DriverOnly'">DropAddress</label>
-                      <label *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven'">DropAddress</label>
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">Collection</label>
+                        <label *ngIf="BookingData[0]?.BookingCategory === 'DriverOnly'">DropAddress</label>
+                        <label *ngIf="BookingData[0]?.BookingCategory === 'ChaufferDriven'">DropAddress</label>
 
-                      <input type="text" class="rounded-md border border-gray-400 form-control h-24"
-                        formControlName="DropAddress" id="DropAddress" />
-                      <div *ngIf="
+                        <input type="text" class="rounded-md border border-gray-400 form-control h-24"
+                          formControlName="DropAddress" id="DropAddress" />
+                        <div *ngIf="
                       (tripForm.get('DropAddress')?.invalid &&
                         tripForm.get('DropAddress')?.errors &&
                         tripForm.get('DropAddress')?.dirty) ||
                       tripForm.get('DropAddress')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="tripForm.get('DropAddress')?.hasError('required')">*This
-                          field
-                          is
-                          required</small>
+                          <small class="text-red-700" *ngIf="tripForm.get('DropAddress')?.hasError('required')">*This
+                            field
+                            is
+                            required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div></div>
+                      <div></div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Pickup FirstName</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="PickupFirstName" id="PickupFirstName" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Pickup FirstName</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupFirstName" id="PickupFirstName" />
+                        <div *ngIf="
                       (tripForm.get('PickupFirstName')?.invalid &&
                         tripForm.get('PickupFirstName')?.errors &&
                         tripForm.get('PickupFirstName')?.dirty) ||
                       tripForm.get('PickupFirstName')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                         tripForm.get('FirstName')?.hasError('required')
                       ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Pickup LastName</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="PickupLastName" id="PickupLastName" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Pickup LastName</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupLastName" id="PickupLastName" />
+                        <div *ngIf="
                       (tripForm.get('PickupLastName')?.invalid &&
                         tripForm.get('PickupLastName')?.errors &&
                         tripForm.get('PickupLastName')?.dirty) ||
                       tripForm.get('PickupLastName')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                         tripForm.get('LastName')?.hasError('required')
                       ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div></div>
+                      <div></div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label for="PickupContactNo">Pickup Contact No</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="PickupContactNo" id="PickupContactNo" list="countryCodes"
-                        (input)="addCountryCode($event)" />
-                      <datalist id="countryCodes">
-                      </datalist>
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label for="PickupContactNo">Pickup Contact No</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupContactNo" id="PickupContactNo" list="countryCodes"
+                          (input)="addCountryCode($event)" />
+                        <datalist id="countryCodes">
+                        </datalist>
+                        <div *ngIf="
                         (tripForm.get('PickupContactNo')?.invalid &&
                           tripForm.get('PickupContactNo')?.errors &&
                           tripForm.get('PickupContactNo')?.dirty) ||
                         tripForm.get('PickupContactNo')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripForm.get('PickupContactNo')?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
 
 
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Pickup Email</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="PickupEmail" id="PickupEmail" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Pickup Email</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupEmail" id="PickupEmail" />
+                        <div *ngIf="
                       (tripForm.get('PickupEmail')?.invalid &&
                         tripForm.get('PickupEmail')?.errors &&
                         tripForm.get('PickupEmail')?.dirty) ||
                       tripForm.get('PickupEmail')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="tripForm.get('PickupEmail')?.hasError('required')">*This
-                          field
-                          is
-                          required</small>
+                          <small class="text-red-700" *ngIf="tripForm.get('PickupEmail')?.hasError('required')">*This
+                            field
+                            is
+                            required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div></div>
-                    <!-- </div> -->
+                      <div></div>
+                      <!-- </div> -->
 
-                    <!-- <div class="flightDetails grid grid-cols-2 mb-2"> -->
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Arrival Flight No</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="ArrivalFlightNo" id="FlightNo" />
+                      <!-- <div class="flightDetails grid grid-cols-2 mb-2"> -->
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Arrival Flight No</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="ArrivalFlightNo" id="FlightNo" />
 
-                      <div *ngIf="
+                        <div *ngIf="
                       (tripForm.get('FlightNo')?.invalid &&
                         tripForm.get('FlightNo')?.errors &&
                         tripForm.get('FlightNo')?.dirty) ||
                       tripForm.get('FlightNo')?.touched
                     ">
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="m-2">
-                      <label>Arrival Flight Date Time</label>
-                      <div class="input-group border rounded-md" [formGroup]="tripForm">
-                        <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
-                          formControlName="ArrivalFlightDateTime" id="FlightDateTime" />
+                      <div class="m-2">
+                        <label>Arrival Flight Date Time</label>
+                        <div class="input-group border rounded-md" [formGroup]="tripForm">
+                          <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
+                            formControlName="ArrivalFlightDateTime" id="FlightDateTime" />
 
-                        <div *ngIf="
+                          <div *ngIf="
                         (tripForm.get('FlightDateTime')?.invalid &&
                           tripForm.get('FlightDateTime')?.errors &&
                           tripForm.get('FlightDateTime')?.dirty) ||
                         tripForm.get('FlightDateTime')?.touched
                       ">
 
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Arrival Airline</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="Airline" id="Airline" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Arrival Airline</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="Airline" id="Airline" />
+                        <div *ngIf="
                       (tripForm.get('Airline')?.invalid &&
                         tripForm.get('Airline')?.errors &&
                         tripForm.get('Airline')?.dirty) ||
                       tripForm.get('Airline')?.touched
                     ">
 
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Departure Flight No</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="DepartureFlightNo" id="FlightNo" />
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Departure Flight No</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="DepartureFlightNo" id="FlightNo" />
 
-                      <div *ngIf="
+                        <div *ngIf="
                       (tripForm.get('FlightNo')?.invalid &&
                         tripForm.get('FlightNo')?.errors &&
                         tripForm.get('FlightNo')?.dirty) ||
                       tripForm.get('FlightNo')?.touched
                     ">
 
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="m-2">
-                      <label> Departure Flight Date Time</label>
-                      <div class="input-group border rounded-md" [formGroup]="tripForm">
-                        <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
-                          formControlName="DepartureFlightDateTime" id="FlightDateTime" />
+                      <div class="m-2">
+                        <label> Departure Flight Date Time</label>
+                        <div class="input-group border rounded-md" [formGroup]="tripForm">
+                          <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
+                            formControlName="DepartureFlightDateTime" id="FlightDateTime" />
 
-                        <div *ngIf="
+                          <div *ngIf="
                         (tripForm.get('FlightDateTime')?.invalid &&
                           tripForm.get('FlightDateTime')?.errors &&
                           tripForm.get('FlightDateTime')?.dirty) ||
                         tripForm.get('FlightDateTime')?.touched
                       ">
 
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Departure Airline</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="Airline" id="Airline" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Departure Airline</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="Airline" id="Airline" />
+                        <div *ngIf="
                       (tripForm.get('Airline')?.invalid &&
                         tripForm.get('Airline')?.errors &&
                         tripForm.get('Airline')?.dirty) ||
                       tripForm.get('Airline')?.touched
                     ">
 
+                        </div>
                       </div>
-                    </div>
-                    <div class="m-2" [formGroup]="tripForm">
-                      <label> Vehicle Make </label>
-                      <select class="text-sm form-control" id="VehicleMake" formControlName="VehicleMake"
-                        (change)="fetchModels(tripForm.get('VehicleMake')?.value)">
-                        <option *ngFor="let vehicleMake of  vehicleMakeList" value="{{ vehicleMake.category_Options }}">
-                          {{ vehicleMake.category_Options }}
-                        </option>
-                      </select>
-                      <div *ngIf="
+                      <div class="m-2" [formGroup]="tripForm">
+                        <label> Vehicle Make </label>
+                        <select class="text-sm form-control" id="VehicleMake" formControlName="VehicleMake"
+                          (change)="fetchModels(tripForm.get('VehicleMake')?.value)">
+                          <option *ngFor="let vehicleMake of  vehicleMakeList"
+                            value="{{ vehicleMake.category_Options }}">
+                            {{ vehicleMake.category_Options }}
+                          </option>
+                        </select>
+                        <div *ngIf="
                                         (tripForm.get('vehicleMake')?.invalid &&
                                           tripForm.get('vehicleMake')?.errors &&
                                           tripForm.get('vehicleMake')?.dirty) ||
                                         tripForm.get('vehicleMake')?.touched
                                       ">
-                        <small class="text-red-700" *ngIf="tripForm.get('vehicleMake')?.hasError('required')">*This
-                          field
-                          is
-                          required</small>
-                        <small class="text-red-700" *ngIf="tripForm.get('vehicleMake')?.hasError('required')">*This
-                          field
-                          is
-                          required</small>
+                          <small class="text-red-700" *ngIf="tripForm.get('vehicleMake')?.hasError('required')">*This
+                            field
+                            is
+                            required</small>
+                          <small class="text-red-700" *ngIf="tripForm.get('vehicleMake')?.hasError('required')">*This
+                            field
+                            is
+                            required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="m-2" [formGroup]="tripForm">
-                      <label>Vehicle Model</label>
-                      <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
-                        <option *ngFor="let vehicleModel of vehicleModelList" [value]="vehicleModel.category_Options_1">
-                          {{ vehicleModel.category_Options_1 }}
-                        </option>
-                      </select>
-                      <div *ngIf="
+                      <div class="m-2" [formGroup]="tripForm">
+                        <label>Vehicle Model</label>
+                        <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
+                          <option *ngFor="let vehicleModel of vehicleModelList"
+                            [value]="vehicleModel.category_Options_1">
+                            {{ vehicleModel.category_Options_1 }}
+                          </option>
+                        </select>
+                        <div *ngIf="
                         (tripForm.get('VehicleModel')?.invalid &&
                         tripForm.get('VehicleModel')?.errors &&
                         tripForm.get('VehicleModel')?.dirty) ||
                         tripForm.get('VehicleModel')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="tripForm.get('VehicleModel')?.hasError('required')">*This
-                          field is required</small>
+                          <small class="text-red-700" *ngIf="tripForm.get('VehicleModel')?.hasError('required')">*This
+                            field is required</small>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="vehicleType text-sm m-2" [formGroup]="tripForm">
-                      <label>Vehicle Type</label>
-                      <select id="vehicleType" formControlName="vehicleType" class="text-sm rounded-md form-control">
-                        <option *ngFor="let vehicleType of vehicleTypeList" [value]="vehicleType.category_Options_2">
-                          {{ vehicleType.category_Options_2 }}
-                        </option>
-                      </select>
-                    </div>
+                      <div class="vehicleType text-sm m-2" [formGroup]="tripForm">
+                        <label>Vehicle Type</label>
+                        <select id="vehicleType" formControlName="vehicleType" class="text-sm rounded-md form-control">
+                          <option *ngFor="let vehicleType of vehicleTypeList" [value]="vehicleType.category_Options_2">
+                            {{ vehicleType.category_Options_2 }}
+                          </option>
+                        </select>
+                      </div>
 
 
-                    <div class="m-2" [formGroup]="tripForm">
-                      <label> Driver Service Status</label>
-                      <select class="text-sm form-control" formControlName="DriverServiceStatus"
-                        id=" DriverServiceStatus">
-                        <option *ngFor="
+                      <div class="m-2" [formGroup]="tripForm">
+                        <label> Driver Service Status</label>
+                        <select class="text-sm form-control" formControlName="DriverServiceStatus"
+                          id=" DriverServiceStatus">
+                          <option *ngFor="
                         let DriverServiceStatus of driverServiceStatusList
                       " value="{{ DriverServiceStatus.category_Options }}">
-                          {{ DriverServiceStatus.category_Options }}
-                        </option>
-                      </select>
-                      <div *ngIf="
+                            {{ DriverServiceStatus.category_Options }}
+                          </option>
+                        </select>
+                        <div *ngIf="
                       (tripForm.get('DriverServiceStatus')?.invalid &&
                         tripForm.get('DriverServiceStatus')?.errors &&
                         tripForm.get('DriverServiceStatus')?.dirty) ||
                       tripForm.get('DriverServiceStatus')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                         tripForm
                           .get('DriverServiceStatus')
                           ?.hasError('required')
                       ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
-                      <label>Trip Status</label>
-                      <select readonly class="text-sm form-control" formControlName="TripStatus" id="TripStatus">
-                        <option selected value="Scheduled">Scheduled</option>
-                        <option *ngFor="let TripStatus of tripStatusList" value="{{ TripStatus.category_Options }}">
-                          {{ TripStatus.category_Options }}
-                        </option>
-                      </select>
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripForm">
+                        <label>Trip Status</label>
+                        <select readonly class="text-sm form-control" formControlName="TripStatus" id="TripStatus">
+                          <option selected value="Scheduled">Scheduled</option>
+                          <option *ngFor="let TripStatus of tripStatusList" value="{{ TripStatus.category_Options }}">
+                            {{ TripStatus.category_Options }}
+                          </option>
+                        </select>
 
-                      <div *ngIf="
+                        <div *ngIf="
                       (tripForm.get('TripStatus')?.invalid &&
                         tripForm.get('TripStatus')?.errors &&
                         tripForm.get('TripStatus')?.dirty) ||
                       tripForm.get('TripStatus')?.touched
                     ">
-                        <small class="text-red-700" *ngIf="tripForm.get('TripStatus')?.hasError('required')">*This field
-                          is
-                          required</small>
+                          <small class="text-red-700" *ngIf="tripForm.get('TripStatus')?.hasError('required')">*This
+                            field
+                            is
+                            required</small>
+                        </div>
                       </div>
+                      <div>
+                        <label>Description</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control h-24 w-max-84"
+                          formControlName="Remarks" id="Remarks" />
+
+                      </div>
+
+                      <!-- </div> -->
                     </div>
-                    <div>
-                      <label>Description</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control h-24 w-max-84"
-                        formControlName="Remarks" id="Remarks" />
+                    <button type="button" class="text-sm p-2 m-2 w-24 rounded-md border-2 border-green-700"
+                      (click)="saveTrip()">
+                      Save
+                    </button>
+                  </form>
+                  <!-- *ngIf="showServicesInTrips" -->
+                  <div class="servicesInTrips">
+                    <button
+                      class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
+                      (click)="viewTripModal(content)">
+                      Add Trip Service
+                    </button>
+                    <ng-template #content let-modal>
+                      <div class="modal-header">
+                        <h4 class="modal-title">Add Services For:{{ tripForm.get('BookingNo')?.value }}</h4>
+                        <button type="button" class="btn-close" aria-label="Close"
+                          (click)="modal.dismiss('Cross click')"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form [formGroup]="tripServicesForm" id="tripServicesForm">
+                          <div class="tripServicesForm grid grid-cols-2 gap-2">
+                            <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                              <label>BookingNo</label>
+                              <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                                placeholder="{{ tripForm.get('BookingNo')?.value }}" formControlName="BookingNo" />
+                            </div>
+                            <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                              <label>reservationId</label>
+                              <input type="text" class="rounded-md border border-gray-400 form-control"
+                                id="ReservationId" formControlName="ReservationId" />
+                            </div>
 
-                    </div>
+                            <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                              <label>TripNo</label>
+                              <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber"
+                                readonly formControlName="tripNumber" />
+                            </div>
 
-                    <!-- </div> -->
-                  </div>
-                  <button type="button" class="text-sm p-2 m-2 w-24 rounded-md border-2 border-green-700"
-                    (click)="saveTrip()">
-                    Save
-                  </button>
-                </form>
-                <!-- *ngIf="showServicesInTrips" -->
-                <div class="servicesInTrips">
-                  <button
-                    class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
-                    (click)="viewTripModal(content)">
-                    Add Trip Service
-                  </button>
-                  <ng-template #content let-modal>
-                    <div class="modal-header">
-                      <h4 class="modal-title">Add Services For:{{ tripForm.get('BookingNo')?.value }}</h4>
-                      <button type="button" class="btn-close" aria-label="Close"
-                        (click)="modal.dismiss('Cross click')"></button>
-                    </div>
-                    <div class="modal-body">
-                      <form [formGroup]="tripServicesForm" id="tripServicesForm">
-                        <div class="tripServicesForm grid grid-cols-2 gap-2">
-                          <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                            <label>BookingNo</label>
-                            <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" placeholder="{{ tripForm.get('BookingNo')?.value }}"
-                              formControlName="BookingNo" /> 
-                          </div>
-                          <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
-                            <label>reservationId</label>
-                            <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                              formControlName="ReservationId" />
-                          </div>
+                            <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                              <label>TripId</label>
+                              <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
+                                readonly formControlName="TripId" />
+                            </div>
+                            <div class="text-sm" [formGroup]="tripServicesForm">
+                              <label for="serviceName">Service Name</label>
+                              <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
+                                (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
+                                <option value="" disabled selected>Select the Service Name</option>
+                                <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
+                                  {{ service.serviceDesc }}
+                                </option>
+                              </select>
+                            </div>
 
-                          <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                            <label>TripNo</label>
-                            <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber"
-                              readonly formControlName="tripNumber" />
-                          </div>
-
-                          <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
-                            <label>TripId</label>
-                            <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
-                              readonly formControlName="TripId" />
-                          </div>
-                          <div class="text-sm" [formGroup]="tripServicesForm">
-                            <label for="serviceName">Service Name</label>
-                            <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
-                              (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
-                              <option value="" disabled selected>Select the Service Name</option>
-                              <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
-                                {{ service.serviceDesc }}
-                              </option>
-                            </select>
-                          </div>
-
-                          <div class="text-sm">
-                            <label for="serviceCode">Service Code</label>
-                            <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                              formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
-                          </div>
+                            <div class="text-sm">
+                              <label for="serviceCode">Service Code</label>
+                              <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                                formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
+                            </div>
 
 
-                          <div class="text-sm" [formGroup]="tripServicesForm">
-                            <label for="ServiceQuantity">Service Quantity</label>
-                            <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                              formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
+                            <div class="text-sm" [formGroup]="tripServicesForm">
+                              <label for="ServiceQuantity">Service Quantity</label>
+                              <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                                formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
 
 
-                          </div>
-                          <div class="text-sm" [formGroup]="tripServicesForm">
-                            <label>Service Charge</label>
-                            <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                              formControlName="TripCharge" id="TripCharge" />
-                          </div>
-                          <div class="text-sm" [formGroup]="tripServicesForm">
-                            <label>Service Status</label>
-                            <select class="text-sm form-control" formControlName="TripServiceStatus"
-                              id="TripServiceStatus">
-                              <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
-                                {{ status.category_Options }}
-                              </option>
-                              <!-- <option *ngFor="let TripServiceStatus of serviceStatusList"
+                            </div>
+                            <div class="text-sm" [formGroup]="tripServicesForm">
+                              <label>Service Charge</label>
+                              <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                                formControlName="TripCharge" id="TripCharge" />
+                            </div>
+                            <div class="text-sm" [formGroup]="tripServicesForm">
+                              <label>Service Status</label>
+                              <select class="text-sm form-control" formControlName="TripServiceStatus"
+                                id="TripServiceStatus">
+                                <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                                  {{ status.category_Options }}
+                                </option>
+                                <!-- <option *ngFor="let TripServiceStatus of serviceStatusList"
                               value="{{ TripServiceStatus.category_Options }}">
                               {{ TripServiceStatus.category_Options }}
                             </option> -->
-                            </select>
+                              </select>
+                            </div>
+
                           </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" (click)="saveTripService()"
+                          (click)="modal.close('Save click')">Save</button>
+                      </div>
+                    </ng-template>
 
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" (click)="saveTripService()"
-                        (click)="modal.close('Save click')">Save</button>
-                    </div>
-                  </ng-template>
-
-                  <table datatable class="table table-bordered row-border hover text-sm">
-                    <thead class="text-sm">
-                      <tr>
-                        <th>Trip No</th>
-                        <th>Service Code</th>
-                        <th>Service Name</th>
-                        <th>Service Charge</th>
-                        <th>Service status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody class="text-sm">
-                      <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                        *ngFor="let service of tripServicesList">
-                        <td>
-                          <span>{{ service.tripNumber }}</span>
-                        </td>
-                        <td>
-                          <span>{{ service.serviceCode }}</span>
-                        </td>
-                        <td>
-                          <span>{{ service.serviceName }}</span>
-                        </td>
-                        <td>
-                          <span>{{ service.TripCharge }}</span>
-                        </td>
-                        <td>
-                          <span>{{ service.TripServiceStatus }}</span>
-                        </td>
-                        <!-- <td>
+                    <table datatable class="table table-bordered row-border hover text-sm">
+                      <thead class="text-sm">
+                        <tr>
+                          <th>Trip No</th>
+                          <th>Service Code</th>
+                          <th>Service Name</th>
+                          <th>Service Charge</th>
+                          <th>Service status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody class="text-sm">
+                        <tr
+                          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          *ngFor="let service of tripServicesList">
+                          <td>
+                            <span>{{ service.tripNumber }}</span>
+                          </td>
+                          <td>
+                            <span>{{ service.serviceCode }}</span>
+                          </td>
+                          <td>
+                            <span>{{ service.serviceName }}</span>
+                          </td>
+                          <td>
+                            <span>{{ service.TripCharge }}</span>
+                          </td>
+                          <td>
+                            <span>{{ service.TripServiceStatus }}</span>
+                          </td>
+                          <!-- <td>
                       <span>{{ service.ServiceId }}</span>
                     </td> -->
-                        <td>
-                          <button (click)="openTripServices(EditTripService)" 
-                            class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
-                            (click)="fetchRelatedTripServiceInfo(service.ServiceId)"> <mat-icon>edit</mat-icon>
-                          </button>
-                          <button (click)="openTripServices(EditTripService)"
-                            class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
-                            (click)="copyServices(service.ServiceId)"> <mat-icon>Copy</mat-icon>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
+                          <td>
+                            <button (click)="openTripServices(EditTripService)"
+                              class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
+                              (click)="fetchRelatedTripServiceInfo(service.ServiceId)"> <mat-icon>edit</mat-icon>
+                            </button>
+                            <button (click)="openTripServices(EditTripService)"
+                              class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
+                              (click)="copyServices(service.ServiceId)"> <mat-icon>Copy</mat-icon>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
 
-                  </table>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
 
 
 
 
-          </ng-template>
-        </div>
-        <!-- /////edit trip -->
-        <div class="edittripmodal">
-          <ng-template #editTrip let-modal>
-            <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">Edit Trip</h4>
-            </div>
-            <div class="modal-body">
-              <div class="tripFormUpdate">
-                <form class="m-2 text-sm border rounded-md" [formGroup]="tripFormUpdate">
+            </ng-template>
+          </div>
+          <!-- /////edit trip -->
+          <div class="edittripmodal">
+            <ng-template #editTrip let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Edit Trip</h4>
+              </div>
+              <div class="modal-body">
+                <div class="tripFormUpdate">
+                  <form class="m-2 text-sm border rounded-md" [formGroup]="tripFormUpdate">
 
-                  <div class="m-2 text-sm" [formGroup]="tripFormUpdate">
-                    <label>Reservation No</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" readonly
-                      formControlName="BookingNo" value="{{BookingNo}}" />
-                  </div>
-                  <div class="m-2" [formGroup]="tripFormUpdate">
-                    <label>Trip No</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
-                      formControlName="TripId" readonly value="{{ tripNumber }} " />
-                  </div>
-
-
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate" hidden>
-                    <label>TripId</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
-                      formControlName="TripId" />
-                  </div>
+                    <div class="m-2 text-sm" [formGroup]="tripFormUpdate">
+                      <label>Reservation No</label>
+                      <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" readonly
+                        formControlName="BookingNo" value="{{BookingNo}}" />
+                    </div>
+                    <div class="m-2" [formGroup]="tripFormUpdate">
+                      <label>Trip No</label>
+                      <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
+                        formControlName="TripId" readonly value="{{ tripNumber }} " />
+                    </div>
 
 
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate" hidden>
+                      <label>TripId</label>
+                      <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
+                        formControlName="TripId" />
+                    </div>
 
-                  <div class="vehicleDetails grid grid-cols-2 mb-2">
-                    <!-- <div class="m-2" [formGroup]="tripFormUpdate">
+
+
+                    <div class="vehicleDetails grid grid-cols-2 mb-2">
+                      <!-- <div class="m-2" [formGroup]="tripFormUpdate">
                       <label> Vehicle Registration </label>
                       <select readonly class="text-sm form-control" formControlName="vehicleRegistration"
                         id=" vehicleRegistration">
@@ -1216,588 +1237,593 @@
                           field is required</small>
                       </div>
                     </div> -->
-                    <div class="m-2" [formGroup]="tripFormUpdate">
-                      <label> Vehicle Make </label>
-                      <select class="text-sm form-control" id="VehicleMake" formControlName="VehicleMake"
-                        (change)="fetchModels(tripFormUpdate.get('VehicleMake')?.value)">
-                        <option *ngFor="let vehicleMake of  vehicleMakeList" value="{{ vehicleMake.category_Options }}">
-                          {{ vehicleMake.category_Options }}
-                        </option>
-                      </select>
-                      <div *ngIf="
+                      <div class="m-2" [formGroup]="tripFormUpdate">
+                        <label> Vehicle Make </label>
+                        <select class="text-sm form-control" id="VehicleMake" formControlName="VehicleMake"
+                          (change)="fetchModels(tripFormUpdate.get('VehicleMake')?.value)">
+                          <option *ngFor="let vehicleMake of  vehicleMakeList"
+                            value="{{ vehicleMake.category_Options }}">
+                            {{ vehicleMake.category_Options }}
+                          </option>
+                        </select>
+                        <div *ngIf="
                         (tripFormUpdate.get('vehicleMake')?.invalid &&
                           tripFormUpdate.get('vehicleMake')?.errors &&
                           tripFormUpdate.get('vehicleMake')?.dirty) ||
                         tripFormUpdate.get('vehicleMake')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripFormUpdate.get('vehicleMake')?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="m-2" [formGroup]="tripFormUpdate">
-                      <label> Vehicle Model</label>
-                      <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
-                        <option *ngFor="let VehicleModel of vehicleModelList"
-                          value="{{ VehicleModel.category_Options_1 }}">
-                          {{ VehicleModel.category_Options_1 }}
-                        </option>
-                      </select>
-                      <div *ngIf="
+                      <div class="m-2" [formGroup]="tripFormUpdate">
+                        <label> Vehicle Model</label>
+                        <select class="text-sm form-control" id="VehicleModel" formControlName="VehicleModel">
+                          <option *ngFor="let VehicleModel of vehicleModelList"
+                            value="{{ VehicleModel.category_Options_1 }}">
+                            {{ VehicleModel.category_Options_1 }}
+                          </option>
+                        </select>
+                        <div *ngIf="
                         (tripFormUpdate.get('vehicleModel')?.invalid &&
                           tripFormUpdate.get('vehicleModel')?.errors &&
                           tripFormUpdate.get('vehicleModel')?.dirty) ||
                         tripFormUpdate.get('vehicleModel')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripFormUpdate.get('vehicleModel')?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
+
+
                     </div>
 
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate" hidden>
+                      <label>reservationId</label>
+                      <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId" />
+                    </div>
 
-                  </div>
-
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate" hidden>
-                    <label>reservationId</label>
-                    <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId" />
-                  </div>
-
-                  <div class="tripDetails-container grid grid-cols-2 border-gray-50 mb-2">
-                    <div class="m-2">
-                      <label>From Date Time</label>
-                      <div class="input-group border rounded-md" [formGroup]="tripFormUpdate">
-                        <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
-                          formControlName="FromDateTime" id="FromDateTime" />
-                        <div *ngIf="
+                    <div class="tripDetails-container grid grid-cols-2 border-gray-50 mb-2">
+                      <div class="m-2">
+                        <label>From Date Time</label>
+                        <div class="input-group border rounded-md" [formGroup]="tripFormUpdate">
+                          <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
+                            formControlName="FromDateTime" id="FromDateTime" />
+                          <div *ngIf="
                           (tripFormUpdate.get('FromDateTime')?.invalid &&
                             tripFormUpdate.get('FromDateTime')?.errors &&
                             tripFormUpdate.get('FromDateTime')?.dirty) ||
                           tripFormUpdate.get('FromDateTime')?.touched
                         ">
-                          <small class="text-red-700"
-                            *ngIf="tripFormUpdate.get('FromDateTime')?.hasError('required')">*This
-                            field is required</small>
+                            <small class="text-red-700"
+                              *ngIf="tripFormUpdate.get('FromDateTime')?.hasError('required')">*This
+                              field is required</small>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="m-2">
-                      <label>To Date Time</label>
-                      <div class="input-group border rounded-md" [formGroup]="tripFormUpdate">
-                        <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
-                          formControlName="ToDateTime" id="ToDateTime" />
+                      <div class="m-2">
+                        <label>To Date Time</label>
+                        <div class="input-group border rounded-md" [formGroup]="tripFormUpdate">
+                          <input type="datetime-local" class="text-sm form-control rounded-md border-gray-50"
+                            formControlName="ToDateTime" id="ToDateTime" />
 
-                        <div *ngIf="
+                          <div *ngIf="
                           (tripFormUpdate.get('ToDateTime')?.invalid &&
                             tripFormUpdate.get('ToDateTime')?.errors &&
                             tripFormUpdate.get('ToDateTime')?.dirty) ||
                           tripFormUpdate.get('ToDateTime')?.touched
                         ">
-                          <small class="text-red-700"
-                            *ngIf="tripFormUpdate.get('ToDateTime')?.hasError('required')">*This
-                            field is required</small>
+                            <small class="text-red-700"
+                              *ngIf="tripFormUpdate.get('ToDateTime')?.hasError('required')">*This
+                              field is required</small>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
-                      <label>Pickup Address</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control h-24"
-                        formControlName="PickupAddress" id="PickupAddress" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
+                        <label>Pickup Address</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control h-24"
+                          formControlName="PickupAddress" id="PickupAddress" />
+                        <div *ngIf="
                         (tripFormUpdate.get('PickupAddress')?.invalid &&
                           tripFormUpdate.get('PickupAddress')?.errors &&
                           tripFormUpdate.get('PickupAddress')?.dirty) ||
                         tripFormUpdate.get('PickupAddress')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripFormUpdate.get('PickupAddress')?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
-                      <label>Drop Address</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control h-24"
-                        formControlName="DropAddress" id="DropAddress" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
+                        <label>Drop Address</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control h-24"
+                          formControlName="DropAddress" id="DropAddress" />
+                        <div *ngIf="
                         (tripFormUpdate.get('DropAddress')?.invalid &&
                           tripFormUpdate.get('DropAddress')?.errors &&
                           tripFormUpdate.get('DropAddress')?.dirty) ||
                         tripFormUpdate.get('DropAddress')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripFormUpdate.get('DropAddress')?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
-                      <label>Pickup Contact No</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="PickupContactNo" id="PickupContactNo" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
+                        <label>Pickup Contact No</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupContactNo" id="PickupContactNo" />
+                        <div *ngIf="
                         (tripFormUpdate.get('PickupContact')?.invalid &&
                           tripFormUpdate.get('PickupContact')?.errors &&
                           tripFormUpdate.get('PickupContact')?.dirty) ||
                         tripFormUpdate.get('PickupContact')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripFormUpdate.get('PickupContact')?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
-                      <label>Pickup Email</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control"
-                        formControlName="PickupEmail" id="PickupEmail" />
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
+                        <label>Pickup Email</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupEmail" id="PickupEmail" />
+                        <div *ngIf="
                         (tripFormUpdate.get('PickupEmail')?.invalid &&
                           tripFormUpdate.get('PickupEmail')?.errors &&
                           tripFormUpdate.get('PickupEmail')?.dirty) ||
                         tripFormUpdate.get('PickupEmail')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripFormUpdate.get('PickupEmail')?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <fieldset class="mb-1 m-2">
-                    <legend class="text-base font-semibold">Flight Details</legend>
-                    <div class="grid grid-cols-3 gap-4">
-                      <div>
-                        <label for="ArrivalFlightNo">Arrival Flight No</label>
-                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="ArrivalFlightNo"
-                          id="ArrivalFlightNo" />
-                      </div>
-          
-                      <div>
-                        <label for="ArrivalFlightDateTime">Arrival Flight Date Time</label>
-                        <input type="datetime-local" class="form-control rounded-lg border-gray-300"
-                          formControlName="ArrivalFlightDateTime" id="ArrivalFlightDateTime" />
-                      </div>
-          
-                      <div>
-                        <label for="Airline">Arrival Airline</label>
-                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
-                          id="Airline" />
-                      </div>
-          
-                      <div>
-                        <label for="DepartureFlightNo">Departure Flight No</label>
-                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="DepartureFlightNo"
-                          id="DepartureFlightNo" />
-                      </div>
-          
-                      <div>
-                        <label for="DepartureFlightDateTime">Departure Flight Date Time</label>
-                        <input type="datetime-local" class="form-control rounded-lg border-gray-300"
-                          formControlName="DepartureFlightDateTime" id="DepartureFlightDateTime" />
-                      </div>
-          
-                      <div>
-                        <label for="Airline">Departure Airline</label>
-                        <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
-                          id="Airline" />
-                      </div>
-                    </div>
-                  </fieldset>
+                    <fieldset class="mb-1 m-2">
+                      <legend class="text-base font-semibold">Flight Details</legend>
+                      <div class="grid grid-cols-3 gap-4">
+                        <div>
+                          <label for="ArrivalFlightNo">Arrival Flight No</label>
+                          <input type="text" class="form-control rounded-lg border-gray-300"
+                            formControlName="ArrivalFlightNo" id="ArrivalFlightNo" />
+                        </div>
 
-                  <div class="grid grid-cols-2 mb-2">
-                    <div class="m-2" [formGroup]="tripFormUpdate">
-                      <label> Driver Service Status</label>
-                      <select class="text-sm form-control" formControlName="DriverServiceStatus"
-                        id=" DriverServiceStatus">
-                        <option *ngFor="
+                        <div>
+                          <label for="ArrivalFlightDateTime">Arrival Flight Date Time</label>
+                          <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                            formControlName="ArrivalFlightDateTime" id="ArrivalFlightDateTime" />
+                        </div>
+
+                        <div>
+                          <label for="Airline">Arrival Airline</label>
+                          <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
+                            id="Airline" />
+                        </div>
+
+                        <div>
+                          <label for="DepartureFlightNo">Departure Flight No</label>
+                          <input type="text" class="form-control rounded-lg border-gray-300"
+                            formControlName="DepartureFlightNo" id="DepartureFlightNo" />
+                        </div>
+
+                        <div>
+                          <label for="DepartureFlightDateTime">Departure Flight Date Time</label>
+                          <input type="datetime-local" class="form-control rounded-lg border-gray-300"
+                            formControlName="DepartureFlightDateTime" id="DepartureFlightDateTime" />
+                        </div>
+
+                        <div>
+                          <label for="Airline">Departure Airline</label>
+                          <input type="text" class="form-control rounded-lg border-gray-300" formControlName="Airline"
+                            id="Airline" />
+                        </div>
+                      </div>
+                    </fieldset>
+
+                    <div class="grid grid-cols-2 mb-2">
+                      <div class="m-2" [formGroup]="tripFormUpdate">
+                        <label> Driver Service Status</label>
+                        <select class="text-sm form-control" formControlName="DriverServiceStatus"
+                          id=" DriverServiceStatus">
+                          <option *ngFor="
                           let DriverServiceStatus of driverServiceStatusList
                         " value="{{ DriverServiceStatus.category_Options }}">
-                          {{ DriverServiceStatus.category_Options }}
-                        </option>
-                        <!-- <option value="completed">Completed</option>
+                            {{ DriverServiceStatus.category_Options }}
+                          </option>
+                          <!-- <option value="completed">Completed</option>
                       <option value="cancelled">Cancelled</option> -->
-                      </select>
-                      <div *ngIf="
+                        </select>
+                        <div *ngIf="
                         (tripFormUpdate.get('DriverServiceStatus')?.invalid &&
                           tripFormUpdate.get('DriverServiceStatus')?.errors &&
                           tripFormUpdate.get('DriverServiceStatus')?.dirty) ||
                         tripFormUpdate.get('DriverServiceStatus')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="
+                          <small class="text-red-700" *ngIf="
                           tripFormUpdate
                             .get('DriverServiceStatus')
                             ?.hasError('required')
                         ">*This field is required</small>
+                        </div>
                       </div>
-                    </div>
-                    <!-- </div> -->
+                      <!-- </div> -->
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
-                      <label>Trip Status</label>
-                      <select readonly class="text-sm form-control" formControlName="TripStatus" id="TripStatus"
-                        [(ngModel)]="selectedStatus">
-                        <option selected value="Scheduled">Scheduled</option>
-                        <option *ngFor="let TripStatus of tripStatusList" value="{{ TripStatus.category_Options }}">
-                          {{ TripStatus.category_Options }}
-                        </option>
-                      </select>
-                      <div *ngIf="
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
+                        <label>Trip Status</label>
+                        <select readonly class="text-sm form-control" formControlName="TripStatus" id="TripStatus"
+                          [(ngModel)]="selectedStatus">
+                          <option selected value="Scheduled">Scheduled</option>
+                          <option *ngFor="let TripStatus of tripStatusList" value="{{ TripStatus.category_Options }}">
+                            {{ TripStatus.category_Options }}
+                          </option>
+                        </select>
+                        <div *ngIf="
                         (tripFormUpdate.get('TripStatus')?.invalid &&
                           tripFormUpdate.get('TripStatus')?.errors &&
                           tripFormUpdate.get('TripStatus')?.dirty) ||
                         tripFormUpdate.get('TripStatus')?.touched
                       ">
-                        <small class="text-red-700" *ngIf="tripFormUpdate.get('TripStatus')?.hasError('required')">*This
-                          field is required</small>
+                          <small class="text-red-700"
+                            *ngIf="tripFormUpdate.get('TripStatus')?.hasError('required')">*This
+                            field is required</small>
+                        </div>
+                      </div>
+                      <div class="Remarks m-2 text-sm h-15">
+                        <label>Remarks</label>
+                        <input type="text" class="form-control rounded-md border-gray-200 h-24 w-max-84"
+                          formControlName="Remarks">
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="text-sm p-2 w-24 rounded-md border-2 border-green-700"
+                          (click)="editTripDetails(tripFormUpdate.get('TripId')?.value)"
+                          (click)="modal.dismiss('Cross click')">
+                          Save
+                        </button>
                       </div>
                     </div>
-                    <div class="Remarks m-2 text-sm h-15">
-                      <label>Remarks</label>
-                      <input type="text" class="form-control rounded-md border-gray-200" formControlName="Remarks">
-                    </div>
-
-                    <div class="modal-footer">
-                      <button type="button" class="text-sm p-2 w-24 rounded-md border-2 border-green-700"
-                        (click)="editTripDetails(tripFormUpdate.get('TripId')?.value)"
-                        (click)="modal.dismiss('Cross click')">
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                </form>
+                  </form>
 
 
 
 
 
 
+                </div>
               </div>
-            </div>
 
-          </ng-template>
+            </ng-template>
 
-          
+
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- trip servicees -->
+        <div>
+
+
         </div>
       </div>
 
 
+      <!-- <------service Edit ------>
 
+      <div class="tripServices-table m-2">
+        <div>
+          <ng-template #EditTripService let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title">Add Services For:{{ tripForm.get('BookingNo')?.value }}</h4>
+              <button type="button" class="btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="tripServicesFormUpdate" id="tripServicesFormUpdate">
+                <div class="tripServicesFormUpdate grid grid-cols-2 gap-2">
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
+                    <label>BookingNo</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                      placeholder="{{ tripForm.get('BookingNo')?.value }}" formControlName="BookingNo" />
+                  </div>
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
+                    <label>reservationId</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                      formControlName="ReservationId" />
+                  </div>
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
+                    <label>ServiceId</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="ServiceId"
+                      formControlName="ServiceId" />
+                  </div>
 
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
+                    <label>TripNo</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber"
+                      placeholder="tripServicesForm.get('tripNumber')?.value }}" readonly
+                      formControlName="tripNumber" />
+                  </div>
 
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
+                    <label>TripId</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
+                      formControlName="TripId" />
+                  </div>
+                  <div class="text-sm" [formGroup]="tripServicesFormUpdate">
+                    <label for="serviceName">Service Name</label>
+                    <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
+                      (change)="fetchServiceInfo1(tripServicesFormUpdate.get('serviceName')?.value)">
+                      <option value="" disabled selected>Select the Service Name</option>
+                      <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
+                        {{ service.serviceDesc }}
+                      </option>
+                    </select>
+                  </div>
 
-
-      <!-- trip servicees -->
-      <div>
-
-
-      </div>
-    </div>
-
-
-    <!-- <------service Edit ------>
-
-    <div class="tripServices-table m-2">
-      <div>
-        <ng-template #EditTripService let-modal>
-          <div class="modal-header">
-            <h4 class="modal-title">Add Services For:{{ tripForm.get('BookingNo')?.value }}</h4>
-            <button type="button" class="btn-close" aria-label="Close"
-              (click)="modal.dismiss('Cross click')"></button>
-          </div>
-          <div class="modal-body">
-            <form [formGroup]="tripServicesFormUpdate" id="tripServicesFormUpdate">
-              <div class="tripServicesFormUpdate grid grid-cols-2 gap-2">
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
-                  <label>BookingNo</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" placeholder="{{ tripForm.get('BookingNo')?.value }}"
-                    formControlName="BookingNo" /> 
-                </div>
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
-                  <label>reservationId</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                    formControlName="ReservationId" />
-                </div>
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" >
-                  <label>ServiceId</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="ServiceId"
-                    formControlName="ServiceId" />
-                </div>
-                
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate">
-                  <label>TripNo</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" placeholder="tripServicesForm.get('tripNumber')?.value }}"
-                    readonly formControlName="tripNumber" />
-                </div>
-
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
-                  <label>TripId</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
-                    readonly formControlName="TripId" />
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesFormUpdate">
-                  <label for="serviceName">Service Name</label>
-                  <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
-                    (change)="fetchServiceInfo1(tripServicesFormUpdate.get('serviceName')?.value)">
-                    <option value="" disabled selected>Select the Service Name</option>
-                    <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
-                      {{ service.serviceDesc }}
-                    </option>
-                  </select>
-                </div>
-
-                <!-- <div class="text-sm">
+                  <!-- <div class="text-sm">
                   <label for="serviceCode">Service Code</label>
                   <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
                     formControlName="serviceCode" id="serviceCode"/>
                 </div>
  -->
 
-                <div class="text-sm" [formGroup]="tripServicesFormUpdate">
-                  <label for="ServiceQuantity">Service Quantity</label>
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="quantity" id="quantity" />
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesFormUpdate">
-                  <label>Service Charge</label>
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="TripCharge" id="TripCharge" />
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesFormUpdate">
-                  <label>Service Status</label>
-                  <select class="text-sm form-control" formControlName="TripServiceStatus"
-                    id="TripServiceStatus">
-                    <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
-                      {{ status.category_Options }}
-                    </option>
-                    <!-- <option *ngFor="let TripServiceStatus of serviceStatusList"
+                  <div class="text-sm" [formGroup]="tripServicesFormUpdate">
+                    <label for="ServiceQuantity">Service Quantity</label>
+                    <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                      formControlName="quantity" id="quantity" />
+                  </div>
+                  <div class="text-sm" [formGroup]="tripServicesFormUpdate">
+                    <label>Service Charge</label>
+                    <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                      formControlName="TripCharge" id="TripCharge" />
+                  </div>
+                  <div class="text-sm" [formGroup]="tripServicesFormUpdate">
+                    <label>Service Status</label>
+                    <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
+                      <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                        {{ status.category_Options }}
+                      </option>
+                      <!-- <option *ngFor="let TripServiceStatus of serviceStatusList"
                     value="{{ TripServiceStatus.category_Options }}">
                     {{ TripServiceStatus.category_Options }}
                   </option> -->
-                  </select>
-                </div>
+                    </select>
+                  </div>
 
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" (click)="editTripServicesDetails(tripServicesFormUpdate.get('ServiceId')?.value)"
-              (click)="modal.close('Save click')">Save</button>
-          </div>
-        </ng-template>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="editTripServicesDetails(tripServicesFormUpdate.get('ServiceId')?.value)"
+                (click)="modal.close('Save click')">Save</button>
+            </div>
+          </ng-template>
+        </div>
       </div>
-    </div>
-    <!-- <------service Edit ------>
+      <!-- <------service Edit ------>
 
-    <!-- <------service outside trips------>
-    <div class="servicesInTrips">
-      <button class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
-        (click)="viewTripModal(content)">
-        Add Services
-      </button>
-
-
-      <div>
-        <ng-template #content let-modal>
-          <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">
-
-              Add Trip Services For: {{ tripForm.get('BookingNo')?.value }}
-            </h4>
-            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-          </div>
-          <div class="modal-body">
-            <form [formGroup]="tripServicesForm" id="tripServicesForm">
-              <div class="tripServicesForm grid grid-cols-2 gap-2">
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                  <label>BookingNo</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"  placeholder="{{ tripForm.get('BookingNo')?.value }}"
-                    formControlName="BookingNo" /> 
-                </div>
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
-                  <label>reservationId</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                    formControlName="ReservationId" />
-                </div>
-
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
-                  <label>TripNo</label>
-                  <select class="text-sm form-control" id="TripId" formControlName="TripId"
-                    (click)="getTrips(tripServicesForm.get('ReservationId')?.value)">
-                    <option readonly selected>Select the Trip Number</option>
-                    <option *ngFor="let trip of tripList" [value]=" trip.TripId">
-                      {{ trip.tripNumber }}
-                    </option>
-                  </select>
-                </div>
-                <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
-                  <label>TripId</label>
-                  <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
-                    formControlName="TripId" />
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label for="serviceName">Service Name</label>
-                  <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
-                    (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
-                    <option value="" disabled selected>Select the Service Name</option>
-                    <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
-                      {{ service.serviceDesc }}
-                    </option>
-                  </select>
-                </div>
-
-                <div class="text-sm">
-                  <label for="serviceCode">Service Code</label>
-                  <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
-                </div>
-
-
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label for="ServiceQuantity">Service Quantity</label>
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
-
-
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label>Service Charge</label>
-                  <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                    formControlName="TripCharge" id="TripCharge" />
-                </div>
-                <div class="text-sm" [formGroup]="tripServicesForm">
-                  <label>Service Status</label>
-                  <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
-                    <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
-                      {{ status.category_Options }}
-                    </option>
-
-                  </select>
-                </div>
-
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" (click)="saveTripService()" (click)="modal.close('Save click')">Save</button>
-          </div>
-        </ng-template>
-      </div>
-
-      <table datatable class="table table-bordered row-border hover text-sm">
-        <thead class="text-sm">
-          <tr>
-            <th>Trip No</th>
-            <th>Service Code</th>
-            <th>Service Name</th>
-            <th>Service Charge</th>
-            <th>Service status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody class="text-sm">
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-            *ngFor="let service of tripServicesList">
-            <td>
-              <span>{{ service.tripNumber }}</span>
-            </td>
-            <td>
-              <span>{{ service.serviceCode }}</span>
-            </td>
-            <td>
-              <span>{{ service.serviceName }}</span>
-            </td>
-            <td>
-              <span>{{ service.TripCharge }}</span>
-            </td>
-            <td>
-              <span>{{ service.TripServiceStatus }}</span>
-            </td>
-            <!-- <td>
-          <span>{{ service.ServiceId }}</span>
-        </td> -->
-            <td>
-              <button 
-                class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md" (click)="openTripServices(EditTripService)"
-                (click)="fetchRelatedTripServiceInfo(service.ServiceId)"> <mat-icon>edit</mat-icon>
-              </button>
-              <button class="action-button" (click)="copyServices(service.ServiceId)">
-                <mat-icon>content_copy</mat-icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-
-      </table>
-    </div>
-
-    <!-- <------service outside trips------>
-
-
-    <div class="m-1 p-2" *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">
-      <ng-container *ngIf="BookingData && BookingData.length > 0">
-        <button (click)="open(driversInfo)" (click)="fetchDriverInfo()"
-          class="button border-1 border-red-700  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">
-          <p>Add Drivers</p>
+      <!-- <------service outside trips------>
+      <div class="servicesInTrips">
+        <button class="button text-red-700 p-2 m-2 border rounded-md border-red-500 hover:bg-red-700 hover:text-white"
+          (click)="viewTripModal(content)">
+          Add Services
         </button>
-      </ng-container>
-      <table datatable class="table-auto w-full  hover sleek-table table-bordered hover">
-        <thead class="text-sm align-text-top whitespace-nowrap ">
-          <tr>
-            <th class="px-4 py-2 text-center">Name</th>
-            <th class="px-4 py-2 text-center">License Expiry Date</th>
-            <th class="px-4 py-2 text-center">Driver's Date of Birth</th>
-            <th class="px-4 py-2 text-center">Driver License</th>
-            <th class="px-4 py-2 text-center">Contact Info</th>
-            <th class="px-4 py-2 text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let driver of fetchedDriverList" class="hover:bg-gray-100 border-b">
-            <td class="px-4 py-2 text-center">{{ driver.DriverFirstName }}</td>
-            <td class="px-4 py-2 text-center">{{ driver.DriverLicenseExpiry }}</td>
-            <td class="px-4 py-2 text-center">{{ driver.DriverDOB }}</td>
-            <td class="px-4 py-2 text-center">{{ driver.DriverLicenseNo }}</td>
-            <td class="px-4 py-2 text-center">{{ driver.ContactNo }}</td>
-            <td class="px-4 py-2 text-center">
-              <button class="px-4 py-2  text-white rounded-md " (click)="openDriver(editDriver)"
-                (click)="fetchDriver(driver.BookingDriverId)"><mat-icon class="text-black">edit</mat-icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
 
-      <ng-template #driversInfo let-modal>
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Add Driver</h4>
+
+        <div>
+          <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">
+
+                Add Trip Services For: {{ tripForm.get('BookingNo')?.value }}
+              </h4>
+              <button type="button" class="btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="tripServicesForm" id="tripServicesForm">
+                <div class="tripServicesForm grid grid-cols-2 gap-2">
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                    <label>BookingNo</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo"
+                      placeholder="{{ tripForm.get('BookingNo')?.value }}" formControlName="BookingNo" />
+                  </div>
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                    <label>reservationId</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                      formControlName="ReservationId" />
+                  </div>
+
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm">
+                    <label>TripNo</label>
+                    <select class="text-sm form-control" id="TripId" formControlName="TripId"
+                      (click)="getTrips(tripServicesForm.get('ReservationId')?.value)">
+                      <option readonly selected>Select the Trip Number</option>
+                      <option *ngFor="let trip of tripList" [value]=" trip.TripId">
+                        {{ trip.tripNumber }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesForm" hidden>
+                    <label>TripId</label>
+                    <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
+                      formControlName="TripId" />
+                  </div>
+                  <div class="text-sm" [formGroup]="tripServicesForm">
+                    <label for="serviceName">Service Name</label>
+                    <select class="text-sm form-control" id="serviceName" formControlName="serviceName"
+                      (change)="fetchServiceInfo1(tripServicesForm.get('serviceName')?.value)">
+                      <option value="" disabled selected>Select the Service Name</option>
+                      <option *ngFor="let service of serviceNameList" [value]="service.serviceDesc">
+                        {{ service.serviceDesc }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="text-sm">
+                    <label for="serviceCode">Service Code</label>
+                    <input readonly class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                      formControlName="serviceCode" id="serviceCode" placeholder="Service Code" />
+                  </div>
+
+
+                  <div class="text-sm" [formGroup]="tripServicesForm">
+                    <label for="ServiceQuantity">Service Quantity</label>
+                    <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                      formControlName="quantity" id="quantity" placeholder="Type to quantity..." />
+
+
+                  </div>
+                  <div class="text-sm" [formGroup]="tripServicesForm">
+                    <label>Service Charge</label>
+                    <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                      formControlName="TripCharge" id="TripCharge" />
+                  </div>
+                  <div class="text-sm" [formGroup]="tripServicesForm">
+                    <label>Service Status</label>
+                    <select class="text-sm form-control" formControlName="TripServiceStatus" id="TripServiceStatus">
+                      <option *ngFor="let status of bookingStatusData" value="{{ status.category_Options }}">
+                        {{ status.category_Options }}
+                      </option>
+
+                    </select>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" (click)="saveTripService()" (click)="modal.close('Save click')">Save</button>
+            </div>
+          </ng-template>
         </div>
 
-        <div class="modal-body">
-          <form class="grid grid-cols-2 text-sm" [formGroup]="driverForm">
+        <table datatable class="table table-bordered row-border hover text-sm">
+          <thead class="text-sm">
+            <tr>
+              <th>Trip No</th>
+              <th>Service Code</th>
+              <th>Service Name</th>
+              <th>Service Charge</th>
+              <th>Service status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              *ngFor="let service of tripServicesList">
+              <td>
+                <span>{{ service.tripNumber }}</span>
+              </td>
+              <td>
+                <span>{{ service.serviceCode }}</span>
+              </td>
+              <td>
+                <span>{{ service.serviceName }}</span>
+              </td>
+              <td>
+                <span>{{ service.TripCharge }}</span>
+              </td>
+              <td>
+                <span>{{ service.TripServiceStatus }}</span>
+              </td>
+              <!-- <td>
+          <span>{{ service.ServiceId }}</span>
+        </td> -->
+              <td>
+                <button class="w-24 p-2 hover:text-red-700 hover:border border-red-700 rounded-md"
+                  (click)="openTripServices(EditTripService)" (click)="fetchRelatedTripServiceInfo(service.ServiceId)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button class="action-button" (click)="copyServices(service.ServiceId)">
+                  <mat-icon>content_copy</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
 
-            <div class="m-2 text-sm gap-2" [formGroup]="driverForm" hidden>
-              <label>reservationId</label>
-              <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                formControlName="ReservationId" />
-            </div>
-            <div class="m-2" [formGroup]="driverForm">
-              <label>Drivers Name</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="DriverFirstName" id="DriverFirstName" />
-              <div *ngIf="
+        </table>
+      </div>
+
+      <!-- <------service outside trips------>
+
+
+      <div class="m-1 p-2" *ngIf="BookingData[0]?.BookingCategory === 'SelfDriven'">
+        <ng-container *ngIf="BookingData && BookingData.length > 0">
+          <button (click)="open(driversInfo)" (click)="fetchDriverInfo()"
+            class="button border-1 border-red-700  rounded-md text-red-700 p-1.5 text-sm hover:bg-red-700 hover:text-white m-2">
+            <p>Add Drivers</p>
+          </button>
+        </ng-container>
+        <table datatable class="table-auto w-full  hover sleek-table table-bordered hover">
+          <thead class="text-sm align-text-top whitespace-nowrap ">
+            <tr>
+              <th class="px-4 py-2 text-center">Name</th>
+              <th class="px-4 py-2 text-center">License Expiry Date</th>
+              <th class="px-4 py-2 text-center">Driver's Date of Birth</th>
+              <th class="px-4 py-2 text-center">Driver License</th>
+              <th class="px-4 py-2 text-center">Contact Info</th>
+              <th class="px-4 py-2 text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let driver of fetchedDriverList" class="hover:bg-gray-100 border-b">
+              <td class="px-4 py-2 text-center">{{ driver.DriverFirstName }}</td>
+              <td class="px-4 py-2 text-center">{{ driver.DriverLicenseExpiry }}</td>
+              <td class="px-4 py-2 text-center">{{ driver.DriverDOB }}</td>
+              <td class="px-4 py-2 text-center">{{ driver.DriverLicenseNo }}</td>
+              <td class="px-4 py-2 text-center">{{ driver.ContactNo }}</td>
+              <td class="px-4 py-2 text-center">
+                <button class="px-4 py-2  text-white rounded-md " (click)="openDriver(editDriver)"
+                  (click)="fetchDriver(driver.BookingDriverId)"><mat-icon class="text-black">edit</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <ng-template #driversInfo let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add Driver</h4>
+          </div>
+
+          <div class="modal-body">
+            <form class="grid grid-cols-2 text-sm" [formGroup]="driverForm">
+
+              <div class="m-2 text-sm gap-2" [formGroup]="driverForm" hidden>
+                <label>reservationId</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                  formControlName="ReservationId" />
+              </div>
+              <div class="m-2" [formGroup]="driverForm">
+                <label>Drivers Name</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="DriverFirstName" id="DriverFirstName" />
+                <div *ngIf="
                               (driverForm.get('DriverFirstName')?.invalid &&
                                 driverForm.get('DriverFirstName')?.errors &&
                                 driverForm.get('DriverFirstName')?.dirty) ||
                               driverForm.get('DriverFirstName')?.touched
                             ">
-                <small class="text-red-700" *ngIf="driverForm.get('DriverFirstName')?.hasError('required')">*This field
-                  is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('DriverFirstName')?.hasError('required')">*This
+                    field
+                    is
+                    required</small>
+                </div>
               </div>
-            </div>
 
-            <!-- <div class="m-2" [formGroup]="driverForm">
+              <!-- <div class="m-2" [formGroup]="driverForm">
               <label>Driver Last Name</label>
               <input type="text" class="text-sm form-control rounded-md border border-gray-400"
                 formControlName="DriverLastName" id="DriverLastName" />
@@ -1812,280 +1838,285 @@
                   required</small>
               </div>
             </div> -->
-            <div class="m-2" [formGroup]="driverForm">
-              <label>Driver DOB</label>
-              <div class="input-group border rounded-md">
-                <input class="form-control border-gray-50" formControlName="DriverDOB" id="DriverDOB" type="date"
-                  placeholder="dd-mm-yyyy " />
-                <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>Driver DOB</label>
+                <div class="input-group border rounded-md">
+                  <input class="form-control border-gray-50" formControlName="DriverDOB" id="DriverDOB" type="date"
+                    placeholder="dd-mm-yyyy " />
+                  <div *ngIf="
                                 (driverForm.get('DriverDOB')?.invalid &&
                                   driverForm.get('DriverDOB')?.errors &&
                                   driverForm.get('DriverDOB')?.dirty) ||
                                 driverForm.get('DriverDOB')?.touched
                               ">
-                  <small class="text-red-700" *ngIf="driverForm.get('DriverDOB')?.hasError('required')">*This field is
-                    required</small>
+                    <small class="text-red-700" *ngIf="driverForm.get('DriverDOB')?.hasError('required')">*This field is
+                      required</small>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="m-2" [formGroup]="driverForm">
-              <label>Driver LicenseNo</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="DriverLicenseNo" id="DriverLicenseNo" />
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>Driver LicenseNo</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="DriverLicenseNo" id="DriverLicenseNo" />
+                <div *ngIf="
                               (driverForm.get('DriverLicenseNo')?.invalid &&
                                 driverForm.get('DriverLicenseNo')?.errors &&
                                 driverForm.get('DriverLicenseNo')?.dirty) ||
                               driverForm.get('DriverLicenseNo')?.touched
                             ">
-                <small class="text-red-700" *ngIf="driverForm.get('DriverLicenseNo')?.hasError('required')">*This field
-                  is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('DriverLicenseNo')?.hasError('required')">*This
+                    field
+                    is
+                    required</small>
+                </div>
               </div>
-            </div>
 
-            <div class="m-2" [formGroup]="driverForm">
-              <label>Driver License Issue</label>
+              <div class="m-2" [formGroup]="driverForm">
+                <label>Driver License Issue</label>
 
-              <div class="input-group border rounded-md">
-                <input class="form-control border-gray-50" formControlName="DriverLicenseIssue" id="LicenseIssue"
-                  type="date" />
-                <div *ngIf="
+                <div class="input-group border rounded-md">
+                  <input class="form-control border-gray-50" formControlName="DriverLicenseIssue" id="LicenseIssue"
+                    type="date" />
+                  <div *ngIf="
                                 (driverForm.get('DriverLicenseIssue')?.invalid &&
                                   driverForm.get('DriverLicenseIssue')?.errors &&
                                   driverForm.get('DriverLicenseIssue')?.dirty) ||
                                 driverForm.get('DriverLicenseIssue')?.touched
                               ">
-                  <small class="text-red-700" *ngIf="driverForm.get('DriverLicenseIssue')?.hasError('required')">*This
-                    field is
-                    required</small>
+                    <small class="text-red-700" *ngIf="driverForm.get('DriverLicenseIssue')?.hasError('required')">*This
+                      field is
+                      required</small>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverForm">
-              <label>Driver License Expiry</label>
+              <div class="m-2" [formGroup]="driverForm">
+                <label>Driver License Expiry</label>
 
-              <div class="input-group border rounded-md">
-                <input class="form-control border-gray-50" formControlName="DriverLicenseExpiry"
-                  id="DriverLicenseExpiry" type="date" />
-              </div>
-              <div *ngIf="
+                <div class="input-group border rounded-md">
+                  <input class="form-control border-gray-50" formControlName="DriverLicenseExpiry"
+                    id="DriverLicenseExpiry" type="date" />
+                </div>
+                <div *ngIf="
                             (driverForm.get('DriverLicenseExpiry')?.invalid &&
                               driverForm.get('DriverLicenseExpiry')?.errors &&
                               driverForm.get('DriverLicenseExpiry')?.dirty) ||
                             driverForm.get('DriverLicenseExpiry')?.touched
                           ">
-                <small class="text-red-700" *ngIf="driverForm.get('DriverLicenseExpiry')?.hasError('required')">*This
-                  field is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('DriverLicenseExpiry')?.hasError('required')">*This
+                    field is
+                    required</small>
+                </div>
               </div>
-            </div>
 
-            <div class="m-2" [formGroup]="driverForm">
-              <label>IDPP</label>
-              <div class="input-group border rounded-md">
-                <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPP"
-                  id="IDPP" />
-                <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>IDPP</label>
+                <div class="input-group border rounded-md">
+                  <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPP"
+                    id="IDPP" />
+                  <div *ngIf="
                                 (driverForm.get('BookingDate')?.invalid &&
                                   driverForm.get('BookingDate')?.errors &&
                                   driverForm.get('BookingDate')?.dirty) ||
                                 driverForm.get('BookingDate')?.touched
                               ">
-                  <small class="text-red-700" *ngIf="driverForm.get('BookingDate')?.hasError('required')">*This field is
-                    required</small>
+                    <small class="text-red-700" *ngIf="driverForm.get('BookingDate')?.hasError('required')">*This field
+                      is
+                      required</small>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverForm">
-              <label>IDPPExpiry</label>
-              <div class="input-group border rounded-md">
-                <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPPExpiry"
-                  id="IDPPExpiry" type="date" />
-                <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>IDPPExpiry</label>
+                <div class="input-group border rounded-md">
+                  <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPPExpiry"
+                    id="IDPPExpiry" type="date" />
+                  <div *ngIf="
                                 (driverForm.get('IDPPExpiry')?.invalid &&
                                   driverForm.get('IDPPExpiry')?.errors &&
                                   driverForm.get('IDPPExpiry')?.dirty) ||
                                 driverForm.get('IDPPExpiry')?.touched
                               ">
-                  <small class="text-red-700" *ngIf="driverForm.get('BookingDate')?.hasError('required')">*This field is
-                    required</small>
+                    <small class="text-red-700" *ngIf="driverForm.get('BookingDate')?.hasError('required')">*This field
+                      is
+                      required</small>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverForm">
-              <label>CountryOfIssue</label>
-              <input class="form-control  rounded-md border border-gray-400 text-sm" type="text" list="datalistOption1"
-                placeholder="Type to search..." />
-              <datalist id="datalistOption1">
-                <option *ngFor="let country of countries" value="{{country.name}}"> {{country.name}}</option>
-              </datalist>
-              <!-- <select name=""  formControlName="CountryOfIssue"
+              <div class="m-2" [formGroup]="driverForm">
+                <label>CountryOfIssue</label>
+                <input class="form-control  rounded-md border border-gray-400 text-sm" type="text"
+                  list="datalistOption1" placeholder="Type to search..." />
+                <datalist id="datalistOption1">
+                  <option *ngFor="let country of countries" value="{{country.name}}"> {{country.name}}</option>
+                </datalist>
+                <!-- <select name=""  formControlName="CountryOfIssue"
                 class="w-48 rounded-md border border-gray-400 text-sm">
                 <option *ngFor="let country of countries" value="{{country.name}}"> {{country.name}}</option>
               </select> -->
-            </div>
+              </div>
 
 
-            <div class="m-2" [formGroup]="driverForm">
-              <label>CountryOfResidence</label>
-              <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                formControlName="CountryOfResidence" list="datalistOption" id="CountryOfResidence"
-                placeholder="Type to search..." />
-              <datalist id="datalistOption">
-                <!-- <option *ngFor="let country of countries" [value]="country.name"> -->
-              </datalist>
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>CountryOfResidence</label>
+                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="CountryOfResidence" list="datalistOption" id="CountryOfResidence"
+                  placeholder="Type to search..." />
+                <datalist id="datalistOption">
+                  <!-- <option *ngFor="let country of countries" [value]="country.name"> -->
+                </datalist>
+                <div *ngIf="
                             (driverForm.get('CountryOfResidence')?.invalid &&
                               driverForm.get('CountryOfResidence')?.errors &&
                               driverForm.get('CountryOfResidence')?.dirty) ||
                             driverForm.get('CountryOfResidence')?.touched
                           ">
-                <small class="text-red-700" *ngIf="driverForm.get('CountryOfResidence')?.hasError('required')">*This
-                  field
-                  is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('CountryOfResidence')?.hasError('required')">*This
+                    field
+                    is
+                    required</small>
+                </div>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverForm">
-              <label>Nationality</label>
-              <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                formControlName="Nationality" list="datalist" id="Nationality" placeholder="Type to search..." />
-              <datalist id="datalist">
-                <!-- <option *ngFor="let country of countries" value="country.name">{{ country?.name }}</option> -->
-              </datalist>
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>Nationality</label>
+                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="Nationality" list="datalist" id="Nationality" placeholder="Type to search..." />
+                <datalist id="datalist">
+                  <!-- <option *ngFor="let country of countries" value="country.name">{{ country?.name }}</option> -->
+                </datalist>
+                <div *ngIf="
                             (driverForm.get('Nationality')?.invalid &&
                               driverForm.get('Nationality')?.errors &&
                               driverForm.get('Nationality')?.dirty) ||
                             driverForm.get('Nationality')?.touched
                           ">
-                <small class="text-red-700" *ngIf="driverForm.get('Nationality')?.hasError('required')">*This field is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('Nationality')?.hasError('required')">*This field is
+                    required</small>
+                </div>
               </div>
-            </div>
 
-            <div class="m-2" [formGroup]="driverForm">
-              <label>ContactNo</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="ContactNo" id="ContactNo" list="dialingCode" placeholder="Type to search..." />
-              <!-- <datalist id="dialingCode">
+              <div class="m-2" [formGroup]="driverForm">
+                <label>ContactNo</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="ContactNo" id="ContactNo" list="dialingCode" placeholder="Type to search..." />
+                <!-- <datalist id="dialingCode">
                 <option value="" disabled selected>Select Country</option>
                 <option *ngFor="let data of countries" [value]="data.name">{{ data.name }}</option>
               </datalist> -->
 
-              <div *ngIf="
+                <div *ngIf="
                               (driverForm.get('ContactNo')?.invalid &&
                                 driverForm.get('ContactNo')?.errors &&
                                 driverForm.get('ContactNo')?.dirty) ||
                               driverForm.get('ContactNo')?.touched
                             ">
-                <small class="text-red-700" *ngIf="driverForm.get('ContactNo')?.hasError('required')">*This field is
-                  required</small>
-              </div>
+                  <small class="text-red-700" *ngIf="driverForm.get('ContactNo')?.hasError('required')">*This field is
+                    required</small>
+                </div>
 
-            </div>
-            <div class="grid grid-cols-1 gap-4 m-2" [formGroup]="driverForm">
-              <!-- Address Line 1 -->
-              <div>
-                <label>Address Line 1</label>
-                <input type="text" id="AddressLine1" formControlName="AddressLine1"
-                  class="text-sm form-control rounded-md border border-gray-400" />
-                <div
-                  *ngIf="(driverForm.get('AddressLine1')?.invalid && driverForm.get('AddressLine1')?.dirty) || driverForm.get('AddressLine1')?.touched">
-                  <small class="text-red-600" *ngIf="driverForm.get('AddressLine1')?.hasError('required')">*This field
-                    is required</small>
+              </div>
+              <div class="grid grid-cols-1 gap-4 m-2" [formGroup]="driverForm">
+                <!-- Address Line 1 -->
+                <div>
+                  <label>Address Line 1</label>
+                  <input type="text" id="AddressLine1" formControlName="AddressLine1"
+                    class="text-sm form-control rounded-md border border-gray-400" />
+                  <div
+                    *ngIf="(driverForm.get('AddressLine1')?.invalid && driverForm.get('AddressLine1')?.dirty) || driverForm.get('AddressLine1')?.touched">
+                    <small class="text-red-600" *ngIf="driverForm.get('AddressLine1')?.hasError('required')">*This field
+                      is required</small>
+                  </div>
+                </div>
+
+                <!-- Button to Add Address Line 2 and 3 -->
+                <div>
+                  <button type="button" (click)="addAdditionalAddress()" class="text-red-700 rounded-md text-sm">
+                    Add Another Address
+                  </button>
+                </div>
+
+                <!-- Address Line 2 (conditionally shown) -->
+                <div *ngIf="showAddressLine2">
+                  <label for="AddressLine2" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+                  <input type="text" id="AddressLine2" formControlName="AddressLine2"
+                    class="text-sm form-control rounded-md border border-gray-400" />
+                  <div
+                    *ngIf="(driverForm.get('AddressLine2')?.invalid && driverForm.get('AddressLine2')?.dirty) || driverForm.get('AddressLine2')?.touched">
+                  </div>
+                </div>
+
+                <!-- Address Line 3 (conditionally shown) -->
+                <div *ngIf="showAddressLine3">
+                  <label for="AddressLine3" class="block text-sm font-medium text-gray-700">Address Line 3</label>
+                  <input type="text" id="AddressLine3" formControlName="AddressLine3"
+                    class="text-sm form-control rounded-md border border-gray-400" />
+                  <div
+                    *ngIf="(driverForm.get('AddressLine3')?.invalid && driverForm.get('AddressLine3')?.dirty) || driverForm.get('AddressLine3')?.touched">
+                  </div>
                 </div>
               </div>
 
-              <!-- Button to Add Address Line 2 and 3 -->
-              <div>
-                <button type="button" (click)="addAdditionalAddress()" class="text-red-700 rounded-md text-sm">
-                  Add Another Address
-                </button>
-              </div>
-
-              <!-- Address Line 2 (conditionally shown) -->
-              <div *ngIf="showAddressLine2">
-                <label for="AddressLine2" class="block text-sm font-medium text-gray-700">Address Line 2</label>
-                <input type="text" id="AddressLine2" formControlName="AddressLine2"
-                  class="text-sm form-control rounded-md border border-gray-400" />
-                <div
-                  *ngIf="(driverForm.get('AddressLine2')?.invalid && driverForm.get('AddressLine2')?.dirty) || driverForm.get('AddressLine2')?.touched">
-                </div>
-              </div>
-
-              <!-- Address Line 3 (conditionally shown) -->
-              <div *ngIf="showAddressLine3">
-                <label for="AddressLine3" class="block text-sm font-medium text-gray-700">Address Line 3</label>
-                <input type="text" id="AddressLine3" formControlName="AddressLine3"
-                  class="text-sm form-control rounded-md border border-gray-400" />
-                <div
-                  *ngIf="(driverForm.get('AddressLine3')?.invalid && driverForm.get('AddressLine3')?.dirty) || driverForm.get('AddressLine3')?.touched">
-                </div>
-              </div>
-            </div>
-
-            <div class="m-2" [formGroup]="driverForm">
-              <label>Email</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="Email"
-                id="Email" />
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>Email</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="Email" id="Email" />
+                <div *ngIf="
                               (driverForm.get('Email')?.invalid &&
                                 driverForm.get('Email')?.errors &&
                                 driverForm.get('Email')?.dirty) ||
                               driverForm.get('Email')?.touched
                             ">
-                <small class="text-red-700" *ngIf="driverForm.get('Email')?.hasError('required')">*This field is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('Email')?.hasError('required')">*This field is
+                    required</small>
+                </div>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverForm">
-              <label>NextOfKinName</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="NextOfKinName" id="NextOfKinName" />
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>NextOfKinName</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="NextOfKinName" id="NextOfKinName" />
+                <div *ngIf="
                               (driverForm.get('NextOfKinName')?.invalid &&
                                 driverForm.get('NextOfKinName')?.errors &&
                                 driverForm.get('NextOfKinName')?.dirty) ||
                               driverForm.get('NextOfKinName')?.touched
                             ">
-                <small class="text-red-700" *ngIf="driverForm.get('NextOfKinName')?.hasError('required')">*This field is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('NextOfKinName')?.hasError('required')">*This field
+                    is
+                    required</small>
+                </div>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverForm">
-              <label>NextOfKinContactNo</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="NextOfKinName" id="NextOfKinContactNo" />
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>NextOfKinContactNo</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="NextOfKinName" id="NextOfKinContactNo" />
+                <div *ngIf="
                               (driverForm.get('NextOfKinName')?.invalid &&
                                 driverForm.get('NextOfKinName')?.errors &&
                                 driverForm.get('NextOfKinName')?.dirty) ||
                               driverForm.get('NextOfKinName')?.touched
                             ">
-                <small class="text-red-700" *ngIf="driverForm.get('NextOfKinName')?.hasError('required')">*This field is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('NextOfKinName')?.hasError('required')">*This field
+                    is
+                    required</small>
+                </div>
               </div>
-            </div>
 
-            <div class="m-2" [formGroup]="driverForm">
-              <label>BookingRemarks</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="BookingRemarks" id="BookingRemarks" />
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverForm">
+                <label>BookingRemarks</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="BookingRemarks" id="BookingRemarks" />
+                <div *ngIf="
                               (driverForm.get('BookingRemarks')?.invalid &&
                                 driverForm.get('BookingRemarks')?.errors &&
                                 driverForm.get('BookingRemarks')?.dirty) ||
                               driverForm.get('BookingRemarks')?.touched
                             ">
-                <small class="text-red-700" *ngIf="driverForm.get('BookingRemarks')?.hasError('required')">*This field
-                  is
-                  required</small>
+                  <small class="text-red-700" *ngIf="driverForm.get('BookingRemarks')?.hasError('required')">*This field
+                    is
+                    required</small>
+                </div>
               </div>
-            </div>
-            <!-- <div>
+              <!-- <div>
               <label for="file">Upload Documents</label>
               <input type="file" (change)="onFileSelected($event)" />
               <button (click)="uploadFile()">Upload</button>
@@ -2094,190 +2125,191 @@
               <p>Upload Progress: {{ uploadProgress }}%</p>
             </div> -->
 
-            <div class="modal-footer">
-              <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDriver()"
-                (click)="modal.close('Save click')">
-                Save
-              </button>
-            </div>
-          </form>
-        </div>
-
-
-      </ng-template>
-
-      <ng-template #editDriver let-modal>
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Driver update</h4>
-          <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-        </div>
-        <div class="modal-body">
-          <form class="grid grid-cols-2 text-sm" [formGroup]="driverFormUpdate">
-            <div class="m-2 text-sm gap-2" [formGroup]="driverFormUpdate" hidden>
-              <label>ReservationId</label>
-              <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
-                formControlName="ReservationId" />
-            </div>
-            <div class="m-2 text-sm gap-2" [formGroup]="driverFormUpdate" hidden>
-              <label>DriverId</label>
-              <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingDriverId"
-                formControlName="BookingDriverId" />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label> First Name</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="DriverFirstName" id="DriverFirstName" required />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label> Last Name</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="DriverLastName" id="DriverLastName" />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>Driver DOB</label>
-              <div class="input-group border rounded-md">
-                <input class="form-control border-gray-50" formControlName="DriverDOB" id="DriverDOB" type="date"
-                  placeholder="dd-mm-yyyy " />
+              <div class="modal-footer">
+                <button type="button" class="button text-white p-2 border rounded-md bg-red-700" (click)="addDriver()"
+                  (click)="modal.close('Save click')">
+                  Save
+                </button>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>Driver LicenseNo</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="DriverLicenseNo" id="DriverLicenseNo" />
-            </div>
+            </form>
+          </div>
 
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>Driver License Issue</label>
 
-              <div class="input-group border rounded-md">
-                <input class="form-control border-gray-50" formControlName="DriverLicenseIssue" id="LicenseIssue"
-                  type="date" />
-              </div>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>Driver License Expiry</label>
+        </ng-template>
 
-              <div class="input-group border rounded-md">
-                <input class="form-control border-gray-50" formControlName="DriverLicenseExpiry"
-                  id="DriverLicenseExpiry" type="date" />
+        <ng-template #editDriver let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Driver update</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+          </div>
+          <div class="modal-body">
+            <form class="grid grid-cols-2 text-sm" [formGroup]="driverFormUpdate">
+              <div class="m-2 text-sm gap-2" [formGroup]="driverFormUpdate" hidden>
+                <label>ReservationId</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="ReservationId"
+                  formControlName="ReservationId" />
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>Nationality</label>
-              <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                formControlName="Nationality" list="datalistOption" id="Nationality" placeholder="Type to search..." />
-              <datalist id="datalistOption">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="KENYA">KENYA</option>
-              </datalist>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>IDPP</label>
-              <div class="input-group border rounded-md">
-                <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPP"
-                  id="IDPP" />
+              <div class="m-2 text-sm gap-2" [formGroup]="driverFormUpdate" hidden>
+                <label>DriverId</label>
+                <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingDriverId"
+                  formControlName="BookingDriverId" />
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>IDPPExpiry</label>
-              <div class="input-group border rounded-md">
-                <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPPExpiry"
-                  id="IDPPExpiry" type="date" />
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label> First Name</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="DriverFirstName" id="DriverFirstName" required />
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>CountryOfIssue</label>
-              <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                formControlName="CountryOfIssue" list="datalistOption" id="CountryOfIssue"
-                placeholder="Type to search..." />
-              <datalist id="datalistOption">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="KENYA">KENYA</option>
-              </datalist>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>CountryOfResidence</label>
-              <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
-                formControlName="CountryOfResidence" list="datalistOption" id="CountryOfResidence"
-                placeholder="Type to search..." />
-              <datalist id="datalistOption">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="KENYA">KENYA</option>
-              </datalist>
-            </div>
-            <div class="m-2">
-              <label>AddressLine1</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="AddressLine1" id="AddressLine1" />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>AddressLine2</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="AddressLine2" id="AddressLine2" />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>AddressLine3</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="AddressLine3" id="AddressLine3" />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>ContactNo</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="ContactNo" id="ContactNo" />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>Email</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400" formControlName="Email"
-                id="Email" />
-              <div *ngIf="
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label> Last Name</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="DriverLastName" id="DriverLastName" />
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>Driver DOB</label>
+                <div class="input-group border rounded-md">
+                  <input class="form-control border-gray-50" formControlName="DriverDOB" id="DriverDOB" type="date"
+                    placeholder="dd-mm-yyyy " />
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>Driver LicenseNo</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="DriverLicenseNo" id="DriverLicenseNo" />
+              </div>
+
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>Driver License Issue</label>
+
+                <div class="input-group border rounded-md">
+                  <input class="form-control border-gray-50" formControlName="DriverLicenseIssue" id="LicenseIssue"
+                    type="date" />
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>Driver License Expiry</label>
+
+                <div class="input-group border rounded-md">
+                  <input class="form-control border-gray-50" formControlName="DriverLicenseExpiry"
+                    id="DriverLicenseExpiry" type="date" />
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>Nationality</label>
+                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="Nationality" list="datalistOption" id="Nationality"
+                  placeholder="Type to search..." />
+                <datalist id="datalistOption">
+                  <option value="USA">USA</option>
+                  <option value="UK">UK</option>
+                  <option value="KENYA">KENYA</option>
+                </datalist>
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>IDPP</label>
+                <div class="input-group border rounded-md">
+                  <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPP"
+                    id="IDPP" />
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>IDPPExpiry</label>
+                <div class="input-group border rounded-md">
+                  <input type="text" class="text-sm form-control rounded-md border-gray-50" formControlName="IDPPExpiry"
+                    id="IDPPExpiry" type="date" />
+                </div>
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>CountryOfIssue</label>
+                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="CountryOfIssue" list="datalistOption" id="CountryOfIssue"
+                  placeholder="Type to search..." />
+                <datalist id="datalistOption">
+                  <option value="USA">USA</option>
+                  <option value="UK">UK</option>
+                  <option value="KENYA">KENYA</option>
+                </datalist>
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>CountryOfResidence</label>
+                <input class="form-control rounded-md border border-gray-400 text-sm" type="text"
+                  formControlName="CountryOfResidence" list="datalistOption" id="CountryOfResidence"
+                  placeholder="Type to search..." />
+                <datalist id="datalistOption">
+                  <option value="USA">USA</option>
+                  <option value="UK">UK</option>
+                  <option value="KENYA">KENYA</option>
+                </datalist>
+              </div>
+              <div class="m-2">
+                <label>AddressLine1</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="AddressLine1" id="AddressLine1" />
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>AddressLine2</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="AddressLine2" id="AddressLine2" />
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>AddressLine3</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="AddressLine3" id="AddressLine3" />
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>ContactNo</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="ContactNo" id="ContactNo" />
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>Email</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="Email" id="Email" />
+                <div *ngIf="
                 (driverFormUpdate.get('Email')?.invalid &&
                 driverFormUpdate.get('Email')?.errors &&
                 driverFormUpdate.get('Email')?.dirty) ||
                 driverFormUpdate.get('Email')?.touched
               ">
-                <small class="text-red-700" *ngIf="
+                  <small class="text-red-700" *ngIf="
               driverFormUpdate.get('Email')?.hasError('required')
                 ">*This field is required</small>
+                </div>
               </div>
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>NextOfKinName</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="NextOfKinName" id="NextOfKinName" />
-            </div>
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>NextOfKinContactNo</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="NextOfKinContactNo" id="NextOfKinContactNo" />
-            </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>NextOfKinName</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="NextOfKinName" id="NextOfKinName" />
+              </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>NextOfKinContactNo</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="NextOfKinContactNo" id="NextOfKinContactNo" />
+              </div>
 
-            <div class="m-2" [formGroup]="driverFormUpdate">
-              <label>BookingRemarks</label>
-              <input type="text" class="text-sm form-control rounded-md border border-gray-400"
-                formControlName="BookingRemarks" id="BookingRemarks" />
-            </div>
-            <div></div>
-            <div class="m-2 modal-footer float-right" [formGroup]="driverFormUpdate">
-              <button type="button" class="btn border " (click)="modal.close('Save click')"
-                (click)="editDriverDetails(driverFormUpdate.get('BookingDriverId')?.value)">
-                Save
-              </button>
-            </div>
-          </form>
-        </div>
+              <div class="m-2" [formGroup]="driverFormUpdate">
+                <label>BookingRemarks</label>
+                <input type="text" class="text-sm form-control rounded-md border border-gray-400"
+                  formControlName="BookingRemarks" id="BookingRemarks" />
+              </div>
+              <div></div>
+              <div class="m-2 modal-footer float-right" [formGroup]="driverFormUpdate">
+                <button type="button" class="btn border " (click)="modal.close('Save click')"
+                  (click)="editDriverDetails(driverFormUpdate.get('BookingDriverId')?.value)">
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
 
-      </ng-template>
+        </ng-template>
+      </div>
+
+
+
+      <button class="m-2 p-4 float-left" (click)="navigateTo('Booking')">Back</button>
+
+      <button class="m-2 p-4 float-right" (click)="navigateTo('Assignment')">Next</button>
+
+
+
     </div>
-
-
-
-    <button class="m-2 p-4 float-left" (click)="navigateTo('Booking')" >Back</button>
-
-<button class="m-2 p-4 float-right" (click)="navigateTo('Assignment')" >Next</button>
-
-
-
-  </div>

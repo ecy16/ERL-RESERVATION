@@ -7,11 +7,10 @@ import { ApiService } from "src/app/api.services";
 import { CommonModule, NgFor } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import * as moment from "moment";
-import { DataTablesModule } from "angular-datatables";
 import { Router } from "@angular/router";
 import { MatIconModule } from "@angular/material/icon";
 import { RouterModule } from "@angular/router";
-
+import { DataTablesModule } from "angular-datatables";
 
 import { jsPDF } from "jspdf";
 
@@ -39,14 +38,16 @@ export interface Reservation {
     NgFor,
     FormsModule,
     ReactiveFormsModule,
-    DataTablesModule,
     RouterModule,
-    MatIconModule
+    MatIconModule,
+    DataTablesModule
   ],
 })
 export class AssignmentComponent {
 
-  
+  // dtOptions: DataTables.Settings = {};
+  assignmentAllTrips: any[] = [];
+  filteredAssignments :any= [];
   trip: any;
   TripId: any;
   fetchedTripList: any;
@@ -82,7 +83,7 @@ export class AssignmentComponent {
   fetchedVehicleList: any;
   DriversNameList: any;
   fetchedDriversNameList: any;
-  assignmentAllTrips: any;
+  // assignmentAllTrips: any;
   dtOptions: DataTables.Settings = {};
   rentalAgreement: any;
   vehicleAssignedError: any;
@@ -94,7 +95,20 @@ export class AssignmentComponent {
   deliveryList: any
   AllTransactions: any;
   fetchedRAData: any;
-
+  searchTerms = {
+    reservationNo: '',
+    pickupName: '',
+    companyName: '',
+    description: '',
+    fromDateTime: '',
+    toDateTime: '',
+    vehicleMake: '',
+    vehicleModel: '',
+    regNo: '',
+    category: '',
+    driver: '',
+    status: ''
+  };
 
 
   filteredAssignment: any[] = [];
@@ -246,18 +260,24 @@ export class AssignmentComponent {
       BookingNo: [''],
       BookingCategory: ['']
 
+      
     });
     this.deliveryForm.patchValue({
       TripId: this.actRoute.snapshot.params["TripId"],
     });
   }
+  
+
 
   ngOnInit() {
 
 
+   
+   
 
 
-    this.apiService.getAllTrip().subscribe((res: any[]) => {
+  
+   this.apiService.getAllTrip().subscribe((res: any[]) => {
       console.log("Filtered reservations:", res);
       this.assignmentData = [...this.filteredReservations];
     });
@@ -383,6 +403,14 @@ export class AssignmentComponent {
     //   BookingStatus: "InProgress",
     // });
 
+  }
+
+  
+  search(inputVal: string) {
+    throw new Error("Method not implemented.");
+  }
+  header(): Document | JQuery.PlainObject<any> | undefined {
+    throw new Error("Method not implemented.");
   }
 
 
@@ -1911,6 +1939,10 @@ doc.text("TOTAL:………………….. ", 10, 150); // Adjusted position for to
 
 
 
+
+function filterData() {
+  throw new Error("Function not implemented.");
+}
 // getVehicleRegNo(vehicleModel: string) {
 //   if (vehicleModel) {
 //     this.apiService.assignVehicle(vehicleModel).subscribe((res) => {

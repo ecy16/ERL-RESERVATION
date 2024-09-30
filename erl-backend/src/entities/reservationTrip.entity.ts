@@ -20,7 +20,7 @@ export class ReservationTripEntity {
     @Column({ nullable: true })
     DriverServiceStatus: string;
     @Column({ nullable: true })
-    DriverRemarks: string;
+    DriverRemarks: string; 
     @Column({ nullable: true })
     // VehicleId: number;
     // @Column({ nullable: true })

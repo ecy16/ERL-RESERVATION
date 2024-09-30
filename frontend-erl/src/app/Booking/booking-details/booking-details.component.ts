@@ -242,7 +242,10 @@ export class BookingDetailsComponent {
       Remarks: "",
       DepartureFlightNo: "",
       ArrivalFlightNo: "",
-      BookingNo: ""
+      BookingNo: "",
+      TripCategory:"",
+      TripSubCategory:""
+
 
 
     });
@@ -917,6 +920,7 @@ export class BookingDetailsComponent {
   //------- trip service info-------//
   // add
   fetchServiceInfo1(serviceName: string) {
+    console.log(serviceName,'this was clicked')
     this.sageServiceInfoList = [];
     console.log(serviceName);
     this.apiService.fetchSageServices(this.reservationId).subscribe((serviceInfo) => {
@@ -1080,7 +1084,8 @@ export class BookingDetailsComponent {
           ReservationId: d.ReservationId,
           tripNumber: d.tripNumber,
           TripId: d.TripId,
-          BookingNo: d.BookingNo
+          BookingNo: d.BookingNo,
+          Remarks:d.Remarks
 
         })
         this.fetchModels(d.VehicleMake);
@@ -1192,11 +1197,9 @@ export class BookingDetailsComponent {
 
 
   saveTrip() {
-    console.log('eric');
-    JSON.stringify(this.tripForm.value, this.ReservationId, this.tripNumber);
-    console.log("string for strinfied", this.tripForm.value, this.tripNumber);
+    console.log("string for strinfied", this.tripForm.value);
 
-    this.apiService.addTrip(this.tripForm.value).subscribe(() => {
+    this.apiService.addTrip(this.tripForm.value).subscribe((res) => {
       console.log("string for response", this.tripForm.value);
 
 
@@ -1208,7 +1211,7 @@ export class BookingDetailsComponent {
       // }
 
 
-      this.tripData.push(this.tripForm.value);
+      this.tripData.push(res);
 
 
       this.fetchRelatedReservationTrips(this.reservationId);
