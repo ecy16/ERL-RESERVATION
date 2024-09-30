@@ -23,7 +23,7 @@ export class AddTripDto {
     ModifiedOn: string;
     @IsOptional()
     Transaction: string;
-    
+
     //@IsString()
     @IsOptional()
     DriverServiceStatus: string;
@@ -98,7 +98,7 @@ export class AddTripDto {
     @IsOptional()
     CheckOUTBy: string;
     //@IsString()
-    
+
     //@IsString()
     @IsOptional()
     CreatedBy: string;
@@ -113,9 +113,9 @@ export class AddTripDto {
     LastName: string;
     @IsOptional()
     tripFuelLevel: string;
-  
+
     @IsOptional()
-    tripNumber: number=1;
+    tripNumber: number = 1;
     @IsOptional()
     VehicleMake: string;
     @IsOptional()
@@ -134,4 +134,10 @@ export class AddTripDto {
     Remarks: string;
     @IsOptional()
     vehicleID: number;
+
+    @IsOptional()
+    TripCategory: string; // Added trip category field
+
+    @IsOptional()
+    TripSubCategory: string;
 }
