@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class AddTripDto {
     // @IsNumber()
@@ -42,10 +43,14 @@ export class AddTripDto {
     //@IsString()
     //@IsString()
     @IsOptional()
-    FromDateTime: string;
-    //@IsString()
+    @IsString()
+    @Transform(({ value }) => (value ? parseDate(value) : null))
+    FromDateTime: Date; // Transformed to Date
+
     @IsOptional()
-    ToDateTime: string;
+    @IsString()
+    @Transform(({ value }) => (value ? parseDate(value) : null))
+    ToDateTime: Date; // Transformed to Date
     //@IsString()
     @IsOptional()
     FlightNo: string;
@@ -140,4 +145,20 @@ export class AddTripDto {
 
     @IsOptional()
     TripSubCategory: string;
+}
+
+function parseDate(dateString: string): Date {
+    const [day, month, yearAndTime] = dateString.split('-');
+    const [year, time] = yearAndTime.split(' ');
+
+    const [hours, minutes] = time.split(':');
+
+
+    return new Date(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        Number(hours),
+        Number(minutes)
+    );
 }
