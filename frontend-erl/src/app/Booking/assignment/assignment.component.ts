@@ -66,6 +66,7 @@ export class AssignmentComponent {
   filteredReservations: any[] = [];
   isVehicleAssigned: boolean = false;
   selectedTransaction: string = '';
+  globalTimeout = null;
 
 
   vehicleRegistrationList: any;
@@ -113,6 +114,7 @@ export class AssignmentComponent {
 
   filteredAssignment: any[] = [];
   formGroup: any;
+  dtElement: any;
 
   toggle(arg0: string) {
     throw new Error("Method not implemented.");
@@ -273,12 +275,19 @@ export class AssignmentComponent {
 
 
    
-   
+    this.dtOptions = {
+      
+      order: [[4, "desc"]],
+      pagingType: 'full_numbers',
+      pageLength: 10,
+    };
+    
 
 
   
    this.apiService.getAllTrip().subscribe((res: any[]) => {
       console.log("Filtered reservations:", res);
+      
       this.assignmentData = [...this.filteredReservations];
     });
 
@@ -323,9 +332,7 @@ export class AssignmentComponent {
     //     }
     //   });
     this.getallTrips();
-    this.dtOptions = {
-      order: [[4, "desc"]],
-    };
+   
     this.apiService.getBookingStatus().subscribe((status: any) => {
       for (const d of status) {
         this.bookingStatusData.push(d);
@@ -405,6 +412,58 @@ export class AssignmentComponent {
 
   }
 
+ ngAfterViewInit(): void {
+  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    
+    dtInstance.columns().every(function () {
+      const column = this;
+
+      $('input', this.header()).on('keyup change', function (event) {
+        
+        const inputElement = event.target as HTMLInputElement;
+        if (column.search() !== inputElement.value) {
+          column
+            .search(inputElement.value)
+            .draw();
+        }
+      });
+    });
+  });
+
+
+
+    // $(document).ready(() => {
+    //   // Setup - add a text input to each footer cell
+    //   $('#ex1 thead th').each(function () {
+    //     const title = $(this).text();
+    //     $(this).append(`<br><input type="text" placeholder="${title}" />`);
+    //   });
+
+    //   // Initialize DataTable with scrollX
+    //   const table = $('#ex1').DataTable({
+    //     scrollX: true
+        
+    //   });
+      
+
+    //   // Iterate over each column
+    //   table.columns().every(function (this:DataTables.ColumnMethods) {
+    //     const column = this;
+
+    //     // Attach 'keyup' and 'change' event listeners to each input in the header
+    //     $('input', this.header()).on('change', function (event) {
+    //       const inputElement = event.target as HTMLInputElement;
+    //       if (column.search() !== inputElement.value) {
+    //         column
+    //           .search(inputElement.value)
+    //           .draw();
+    //       }
+    //     });
+    //   });
+    // });
+    
+  }
+  
   
   search(inputVal: string) {
     throw new Error("Method not implemented.");
