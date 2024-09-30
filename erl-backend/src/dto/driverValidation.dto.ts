@@ -6,7 +6,7 @@ export class DriverValidationDto {
     @IsOptional()
     DriverFirstName:string;
     @IsOptional()
-    FromDateTime: Date;
+    FromDateTime: string;
     @IsOptional()
-    ToDateTime: Date;
+    ToDateTime: string;
 }

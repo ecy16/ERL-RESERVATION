@@ -28,9 +28,9 @@ export class ReservationTripEntity {
     @Column({ nullable: true })
     VehicleRemarks: string;
     @Column( { nullable: true })
-    FromDateTime: Date;
+    FromDateTime: string;
     @Column( { nullable: true })
-    ToDateTime: Date;
+    ToDateTime: string;
     @Column({ nullable: true })
     ArrivalFlightNo: string;
     @Column({ nullable: true })

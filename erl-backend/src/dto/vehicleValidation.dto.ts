@@ -6,8 +6,8 @@ export class VehicleValidationDto {
         @IsOptional()
         vehicleRegNo:string
         @IsOptional()
-    FromDateTime: Date;
+    FromDateTime: string;
     @IsOptional()
-    ToDateTime: Date;
+    ToDateTime: string;
     
 }
