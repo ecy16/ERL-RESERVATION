@@ -43,14 +43,12 @@ export class AddTripDto {
     //@IsString()
     //@IsString()
     @IsOptional()
-    @IsString()
-    @Transform(({ value }) => (value ? parseDate(value) : null))
-    FromDateTime: Date; // Transformed to Date
+    @IsString()    
+    FromDateTime: string; 
 
     @IsOptional()
-    @IsString()
-    @Transform(({ value }) => (value ? parseDate(value) : null))
-    ToDateTime: Date; // Transformed to Date
+    @IsString()    
+    ToDateTime: string;
     //@IsString()
     @IsOptional()
     FlightNo: string;
