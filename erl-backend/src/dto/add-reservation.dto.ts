@@ -43,5 +43,14 @@ export class AddReservationDto {
     companyName: string;
     @IsOptional()
     ContractNo: string;
+
+    @IsString()
+    @IsOptional()
+    costCenterCode: string
+
+    @IsNumber()
+    @IsOptional()
+    fnNumber: number
+
     
 }

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ReservationTripEntity } from 'src/entities/reservationTrip.entity';
 import { VehiclesEntity } from 'src/entities/vehicle.entity';
 import { Repository } from 'typeorm';
-import { ReservationEntity } from 'src/entities/reservation.entity'; // Keep this for query joins
+import { ReservationEntity } from 'src/entities/reservation.entity';
 
 @Injectable()
 export class SearchService {
@@ -26,18 +26,20 @@ export class SearchService {
         branchName?: string,
     ) {
         const queryBuilder = this.reservationTripRepository
-            .createQueryBuilder('trip')
-            .leftJoin(ReservationEntity, 'reservation', 'reservation.ReservationId = trip.ReservationId')
+            .createQueryBuilder('trip')  // 'trip' is the alias for ReservationTripEntity
+            .leftJoinAndSelect('trip.reservation', 'reservation')  // Joins ReservationEntity and selects its fields
+
+            // fields to select from both entities
             .select([
-                // Select all fields from ReservationTripEntity (trip)
+                // Fields from ReservationTripEntity (trip)
                 'trip.TripId',
                 'trip.TripStatus',
                 'trip.FromDateTime',
                 'trip.ToDateTime',
                 'trip.VehicleModel',
                 'trip.DriverId',
-    
-                // Select all fields from ReservationEntity (reservation)
+
+                // Fields from ReservationEntity (reservation)
                 'reservation.ReservationId',
                 'reservation.BookingNo',
                 'reservation.BookingDate',
@@ -60,6 +62,9 @@ export class SearchService {
                 'reservation.ModifiedBy',
                 'reservation.ModifiedOn'
             ]);
+
+       
+
         if (reservationNo) {
             queryBuilder.andWhere('reservation.BookingNo = :reservationNo', { reservationNo });
         }
@@ -94,7 +99,7 @@ export class SearchService {
             queryBuilder.andWhere('reservation.Branch = :branchName', { branchName });
         }
 
-
+        
         const results = await queryBuilder.getMany();
         return results;
     }

@@ -26,13 +26,13 @@ export class ReservationEntity {
     companyName: string;
     @Column({ nullable: true })
     PayeeCompanyName: string;
-    @Column({ nullable: true , length: 255})
+    @Column({ nullable: true, length: 255 })
     Remarks: string;
     @Column({ nullable: true })
     ChargeType: string;
     @Column({ nullable: true })
     ChargeCurr: string;
-    
+
     // @Column('decimal', { nullable: true })
     // TotalAmount: number;
     // @Column('decimal', { nullable: true })
@@ -43,7 +43,7 @@ export class ReservationEntity {
     Source: string;
     @Column({ nullable: true })
     SourceRefNo: string;
-    @Column({ nullable: true  })
+    @Column({ nullable: true })
     ContractId: number;
     @Column({ nullable: true, default: 'Admin' })
     CreatedBy: string;
@@ -55,6 +55,12 @@ export class ReservationEntity {
     @Column({ type: 'datetime', nullable: true })
     ModifiedOn: string;
     reservationTrips: any;
+
+    @Column({ nullable: true })
+    fnNumber: number
+
+    @Column({ nullable: true })
+    costCenterCode: string
 
     constructor(reservations: Partial<ReservationEntity>) {
         Object.assign(this, reservations);
