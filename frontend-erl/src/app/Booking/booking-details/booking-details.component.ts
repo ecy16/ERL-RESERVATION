@@ -871,7 +871,8 @@ export class BookingDetailsComponent {
 
 
         this.apiService.addTripService(serviceWithoutId).subscribe((res) => {
-          this.tripServicesList.push(res)
+          this.tripServicesList= (res);
+          this.fetchServicesByResv(this.reservationId)
           console.log(this.tripServicesList, 'tripservice copied')
 
         })
@@ -1083,7 +1084,7 @@ export class BookingDetailsComponent {
           vehicleType: d.vehicleType,
           ReservationId: d.ReservationId,
           tripNumber: d.tripNumber,
-          TripId: d.TripId,
+          // TripId: d.TripId,
           BookingNo: d.BookingNo,
           Remarks:d.Remarks
 
@@ -1226,16 +1227,13 @@ export class BookingDetailsComponent {
 
 
   editTripDetails(TripId: any) {
+    console.log('tripdeyailsEdit',this.tripFormUpdate.value)
     this.apiService.editTrip(TripId, this.tripFormUpdate.value).subscribe((res) => {
       this.tripReservationList = (res)
       this.fetchRelatedTrips(this.reservationId);
 
     })
-    // .subscribe((res) => {
-    //   this.tripReservationList.push(res)
-    //   this.fetchRelatedTrips(this.reservationId);
-    //   this.toastr.success("trip updated successfully");
-    // });
+
 
   }
 

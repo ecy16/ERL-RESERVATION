@@ -90,6 +90,10 @@ export class ReservationTripEntity {
     vehicleID: number;
     @Column({ nullable: true })
     vehicleRegNo: string;
+    @Column({ nullable: true })
+    TripCategory: string;
+    @Column({ nullable: true })
+    TripSubCategory: string;
   
 
     @Column({ nullable: true })

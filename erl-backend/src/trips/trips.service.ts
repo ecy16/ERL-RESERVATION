@@ -121,6 +121,7 @@ from _cplReservationTrips  a
 
     //   }
 
+    
 
     async findTrips1(id: number) {
 
@@ -148,12 +149,12 @@ from _cplReservationTrips  a
         try {
             await trip.startTransaction();
             const tripInfo = await trip.query(
-                `select TOP 1 b.companyName,a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor,format(FromDateTime,'dd-MM-yyyy HH:mm') as FromDate,format(ToDateTime,'dd-MM-yyyy HH:mm') as ToDate
+                `select TOP 1 b.companyName,a.*,d.DriverFirstName+' '+d.DriverLastName [Driver Name] ,b.BookingCategory,b.BookingNo,b.BookingFor
                 from _cplReservationTrips  a 
                 left join _cplReservations b on a.ReservationId = b.ReservationId 
                 left join _cplVehicles c on a.VehicleId = c.vehicleID 
 				left join _cplChaufferDrivers d on a.DriverId = d.DriverId
-				where a.TripId=@0  ` , [reservationId],
+				where a.TripId=@0 ` , [reservationId],
             );
             await trip.commitTransaction();
             return  tripInfo;
@@ -209,9 +210,8 @@ from _cplReservationTrips  a
           a.TripId, a.tripNumber, a.ReservationId, a.FromDateTime, a.ToDateTime, a.PickupAddress, 
           a.DropAddress, a.PickupContactNo, a.PickupEmail, a.vehicleID, a.VehicleMake, a.VehicleModel,h.serviceCode,h.serviceName,
           a.PickupFirstName + ' ' + a.PickupLastName AS [PickupName], 
-          FORMAT(a.FromDateTime, 'dd-MM-yyyy HH:mm') AS [TripFromDateTime], 
           a.ArrivalFlightDateTime, a.ArrivalFlightNo, a.DepartureFlightDateTime, a.DepartureFlightNo, 
-          a.Remarks, t.vehicleRegNo, FORMAT(a.ToDateTime, 'dd-MM-yyyy HH:mm') AS [TripToDateTime], 
+          a.Remarks, t.vehicleRegNo,  
           b.BookingFor, b.BookingStatus, b.Branch, b.BookingNo, b.BookingCategory, b.BookingType, 
           b.Source, b.companyName, d.DriverFirstName + ' ' + d.DriverLastName AS [DriverName], 
           t.TransactionId, t.MileageIN, t.MileageOUT, t.FuelIN, t.FuelOUT, t.[Transaction]
@@ -264,12 +264,9 @@ from _cplReservationTrips  a
             const tripInfo = await trip.query(
                 `select c.vehicleID, a.*,d.DriverFirstName+' '+d.DriverLastName [DriverName] ,b.BookingFor,e.ContractId,d.email,
 				case when b.companyName=' ' then e.companyName else b.companyName end [companyName],
-				b.BookingCategory,b.BookingNo,
-				format(FromDateTime,'dd-MM-yyyy ') as FromDate,format(ToDateTime,'dd-MM-yyyy ') as ToDate ,
-				format(FromDateTime,' HH:mm:ss') as FromTime,format(ToDateTime,'HH:mm:ss') as ToTime
+				b.BookingCategory,b.BookingNo
 				from _cplReservationTrips  a join _cplReservations b on a.ReservationId = b.ReservationId  left join _cplVehicles c on a.VehicleId = c.vehicleID 
 				left join _cplChaufferDrivers d on a.DriverId = d.DriverId left join _cplContracts e on b.ContractId=e.ContractId where a.TripId=@0 `, [TripId]
-
             );
             await trip.commitTransaction();
             return tripInfo;

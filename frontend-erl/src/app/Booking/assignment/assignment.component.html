@@ -42,12 +42,12 @@
       <div class="flex gap-2">
         <div>
           <label for="FromDateTime" class="text-xs">From Date Time</label>
-          <input type="datetime-local" id="FromDateTime" formControlName="tripDateFrom"
+          <input type="datetime-local" id="FromDateTime" formControlName="FromDateTime"
             class="rounded-md border-gray-300 text-sm h-8 w-32">
         </div>
         <div>
           <label for="ToDateTime" class="text-xs">To Date Time</label>
-          <input type="datetime-local" id="ToDateTime" formControlName="tripDateTo"
+          <input type="datetime-local" id="ToDateTime" formControlName="ToDateTime"
             class="rounded-md border-gray-300 text-sm h-8 w-32">
         </div>
       </div>
@@ -63,10 +63,10 @@
   </div>
 
   <div class="resourceAssignmnet  p-1 bg-white rounded-lg shadow-md">
-    <table id="ex1" datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display">
+    <table id="ex1" datatable [dtOptions]="dtOptions" class="row-border hover booking  " class="display" >
       <thead class=" text-sm bg-red-50">
 
-        <tr class="search">
+        <!-- <tr class="search">
           <th><input type="text" class="border-none text-sm" id="0" placeholder="ReservationNo" name="BookingNo" /></th>
           <th><input type="text" id="1" placeholder="PickupName" name="PickupName" /></th>
           <th><input type="text" id="2" placeholder="CompanyName" name="CompanyName" /></th>
@@ -76,9 +76,9 @@
           <th><input type="text" id="4" placeholder="ToDateTime" name="ToDateTime" /></th>
           <th><input type="text" id="4" placeholder="vehicleMake" name="vehicleMake" /></th>
           <th><input type="text" id="4" placeholder="vehicleModel" name="vehicleModel" /></th>        
-        </tr>
+        </tr> -->
         <tr>
-          <th class="text-center">ReservationNo</th>
+          <th class="text-center">TripNo</th>
           <th class="text-center ">PickupName</th>
           <th class="text-center  whitespace-nowrap">Company Name</th>
           <th class="text-center">Description</th>
@@ -149,11 +149,11 @@
             <input type="text" class="rounded-md border border-gray-400 form-control" id="BookingNo" readonly
               formControlName="BookingNo" />
           </div>
-          <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
+          <!-- <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
             <label>TripId</label>
             <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
               formControlName="TripId" />
-          </div>
+          </div> -->
           <div class="m-2 text-sm gap-2" [formGroup]="tripAssignmentForm">
             <label>TripNo</label>
             <input type="text" class="rounded-md border border-gray-400 form-control" id="tripNumber" readonly

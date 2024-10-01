@@ -63,6 +63,7 @@ export class TripsController {
 
     @Patch('update/:id')
     updateTripById(@Param('id') id: string, @Body() body: UpdateTripDto) {
+        console.log(body)
         return this.tripService.updateTrip(parseInt(id), body);
     }
 

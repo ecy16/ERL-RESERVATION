@@ -158,7 +158,7 @@ export class AssignmentComponent {
       FromDateTime: "",
       ToDateTime: "",
       FlightNo: "",
-      FlightDate: "",
+      // FlightDate: "",
       Airline: "",
       PickupAddress: "",
       PickupContactNo: "",
@@ -279,10 +279,12 @@ export class AssignmentComponent {
       
       order: [[4, "desc"]],
       pagingType: 'full_numbers',
-      pageLength: 5,
-      lengthMenu : [5, 10, 25],
-        processing: true    };
-    
+      pageLength: 10,
+      lengthMenu : [ 10, 25],
+        processing: true    ,
+        autoWidth: true,
+        
+    }
 
 
   
@@ -609,8 +611,8 @@ export class AssignmentComponent {
           DriverServiceStatus: d.DriverServiceStatus,
           TripStatus: d.TripStatus,
           VehicleMarks: d.VehicleMarks,
-          FromDateTime: moment(d.FromDateTime).format("YYYY-MM-DD HH:mm"),
-          ToDateTime: moment(d.ToDateTime).format("YYYY-MM-DD HH:mm"),
+          FromDateTime: d.FromDateTime,
+          ToDateTime: d.ToDateTime,
           FlightNo: d.FlightNo,
           // FlightDateTime: moment(d.FlightDateTime).format("YYYY-MM-DD HH:mm"),
           Airline: d.Airline,
