@@ -131,14 +131,27 @@ from _cplReservationTrips  a
         }
     }
 
-    async updateTrip(id: number, attrs: Partial<ReservationTripEntity>) {
-        const trips = await this.findTrips1(id);
-        if (!trips) {
-            throw new NotFoundException('trips not found');
+    // async updateTrip(id: number, attrs: Partial<ReservationTripEntity>) {
+    //     const trips = await this.findTrips1(id);
+    //     if (!trips) {
+    //         throw new NotFoundException('trips not found');
+    //     }
+    //     Object.assign(trips, attrs);
+    //     return this.tripsRepo.save(trips);
+    // }
+
+    async updateTrip(tripId: number, updateData: Partial<ReservationTripEntity>): Promise<ReservationTripEntity> {
+        const trip = await this.tripsRepo.findOne({ where: { TripId: tripId } });
+    
+        if (!trip) {
+          throw new NotFoundException(`Trip with ID ${tripId} not found`);
         }
-        Object.assign(trips, attrs);
-        return this.tripsRepo.save(trips);
-    }
+    
+        Object.assign(trip, updateData);
+        trip.ModifiedOn = new Date().toISOString(); 
+    
+        return this.tripsRepo.save(trip);
+      }
 
 
 
