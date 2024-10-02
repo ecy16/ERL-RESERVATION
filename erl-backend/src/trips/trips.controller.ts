@@ -3,6 +3,7 @@ import {
     Controller,
     Get,
     Param,
+    ParseIntPipe,
     Patch,
     Post,
     Query,
@@ -17,6 +18,7 @@ import { VehicleMovementDto } from 'src/dto/vehicleMovement.dto';
 import { SearchService } from 'src/search/search.service';
 import { SearchResourceDto } from 'src/dto/SearchResourceDto.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { ReservationTripEntity } from 'src/entities/reservationTrip.entity';
 
 @ApiTags('trips')
 @Controller('trips')
@@ -61,10 +63,16 @@ export class TripsController {
     }
 
 
+    // @Patch('update/:id')
+    // updateTripById(@Param('id') id: string, @Body() body: UpdateTripDto) {
+    //     return this.tripService.updateTrip(parseInt(id), body);
+    // }
     @Patch('update/:id')
-    updateTripById(@Param('id') id: string, @Body() body: UpdateTripDto) {
-        console.log(body)
-        return this.tripService.updateTrip(parseInt(id), body);
+    async updateTrip(
+        @Param('id', ParseIntPipe) tripId: number,
+        @Body() updateData: Partial<ReservationTripEntity>,
+    ): Promise<ReservationTripEntity> {
+        return this.tripService.updateTrip(tripId, updateData);
     }
 
     // @Get('')
