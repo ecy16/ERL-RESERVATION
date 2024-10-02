@@ -26,12 +26,7 @@ export class TripServicesEntity {
     InvoiceLineNo: number;
     @Column('date', { nullable: true })
     InvoiceDate: string;
-    @Column({ nullable: true })
-    TripCategory: string; // Added trip category column
-
-    @Column({ nullable: true })
-    TripSubCategory: string; // Added subcategory column
-    @Column({ nullable: true })
+       @Column({ nullable: true })
     CreatedBy: string;
     @Column('datetime', { nullable: true })
     CreatedOn: string;

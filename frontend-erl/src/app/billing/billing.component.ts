@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../api.services';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router,RouterModule } from '@angular/router';
@@ -9,6 +9,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { MatIconModule } from "@angular/material/icon";
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -35,9 +36,8 @@ export class BillingComponent {
 
   dtOptions: DataTables.Settings = {};
   completedBillings: any;
-  modalService: any;
   closeResult='';
-  bookingInfo: any ='';
+  bookingInfo: any;
   billingDetails: any = {};
   ReservationId: any;
   billingForm: FormGroup;
@@ -45,6 +45,9 @@ export class BillingComponent {
   serviceInfo: any ='';
   formBuilder: any;
     getDismissReason: any;
+    private modalService = inject(NgbModal);
+    // searchForm:FormGroup;
+
 
   constructor(
     private apiService: ApiService,
@@ -56,6 +59,20 @@ export class BillingComponent {
     this.billingDetails = []
     this.tripInfo =[]
     this.billingForm=this.formBuilder
+    this.bookingInfo=[]
+
+
+    
+    // this.searchForm = this.formBuilder.group({
+    //   BookingNo: ["", Validators.required],
+    //   fromDate: ["", Validators.required],
+    //   toDate: ["", Validators.required],
+    //   BookingStatus: ["InProgress", Validators.required],
+    //   BookingType: ["", Validators.required],
+    //   Branch: ["", Validators.required],
+    //   BookingCategory: ["", Validators.required]
+
+    // })
     // this.billingForm = this.formBuilder.group({
     //   BookingNo: [''], // Initialize with appropriate form controls based on your needs
     //   Date: [''],
@@ -83,52 +100,39 @@ export class BillingComponent {
 
   ngOnInit() {
     this.dtOptions = {
-      order: [[8, 'asc']],
-      // ordering: false,
+      order: [[4, 'asc']],
+      pagingType:'full_numbers',
+      pageLength:10,
+      processing:true,
       autoWidth: true
 
 
 
     }
     this.completedBillings=[]
-    // this.apiService.getAllBillings().subscribe((billing: any) => {
-    //   console.log(billing,'billings')
-    //   // this.completedBillings.push(billing)
-    // for (const c of billing) {
-    //   this.completedBillings.push(c);
-    // }
-
-    //   console.log('CompletedBillings', this.completedBillings)
-    // })
-
+      //   this.apiService.fetchAllTransactions().subscribe((res: any) => {
+      //   console.log(res, 'the vehicleouts/in');
+      //   for (const t of res) {
+      //     if (t.MileageIN>0 && t.FuelIN>0) {
+      //       this.completedBillings.push(t);
+      //     }
+      //   }
+      // });
       this.apiService.fetchAllTransactions().subscribe((res: any) => {
         console.log(res, 'the vehicleouts/in');
-        for (const t of res) {
-          if (t.MileageIN>0 && t.FuelIN>0) {
-            this.completedBillings.push(t);
-          }
-        }
+        this.completedBillings =(res)
+        // this.completedBillings = res.filter((t: any) => t.tripStatus === 'Completed' && t.MileageIN > 0 && t.FuelIN > 0);
+        console.log(this.completedBillings, 'completed billings');
       });
-    
-
-
-    // reservationData: any[] = [];
-
-    // fetchAllTrips() {
-    //   this.reservationData = [];
-    //   this.apiService.getReservations().subscribe((reservations: any[]) => {
-    //     this.reservationData.push(reservations)
-    //     // this.reservationData.push(reservations);
-    //     // this.filteredReservations = reservations;
-    //   });
-    // }
+      
 
 
 
 
 
 
-    // console.log('customernme',this.completedBillings)
+
+
 
 
 
@@ -141,19 +145,34 @@ export class BillingComponent {
   show(){
     this.toastr.success("Billing is successful.Proceed to Print invoice");
   }
+  
+  fetchBill(TripId:any){
+this.apiService.fetchTrips(TripId).subscribe((res)=>{
+  console.log('BillingRes',res)
+  for( const m of res){
+    this.bookingInfo = (m)
+
+  }
+
+})
+
+
+  }
 
   openBill(viewBilling: any) {
     console.log("viewBilling");
 
     this.modalService.open(viewBilling, { size: "lg" }).result.then(
-      (result: any) => {
+      (result) => {
         this.closeResult = `Closed with: ${result}`;
       },
-      (reason: any) => {
+      (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
   }
   
+ 
+
  
 }

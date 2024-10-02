@@ -169,7 +169,9 @@ select
             );
             await tripService.commitTransaction();
             return tripServiceInfo;
+
         } catch (e) {
+            
             throw new Error(`Failed to find trips: ${e.message}`);
         }
     }
