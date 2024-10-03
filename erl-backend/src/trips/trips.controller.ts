@@ -28,6 +28,7 @@ export class TripsController {
     @Get('/:id')
     fetchTrips(@Param('id') id: number) {
         return this.tripService.findTrips((id));
+        
     }
 
 
@@ -61,7 +62,7 @@ export class TripsController {
     addNewTrip(@Body(ValidationPipe) body: AddTripDto) {
         return this.tripService.createTrip(body);
     }
-
+    
 
     // @Patch('update/:id')
     // updateTripById(@Param('id') id: string, @Body() body: UpdateTripDto) {

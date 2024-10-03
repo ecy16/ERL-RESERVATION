@@ -548,7 +548,8 @@ export class AssignmentComponent {
           vehicleRegNo: dd.vehicleRegNo,
           BookingDate: dd.BookingDate,
           TripStatus: dd.TripStatus,
-          BookingCategory: dd.BookingCategory
+          BookingCategory: dd.BookingCategory,
+          Remarks:dd.Remarks
         })
         console.log('deliverysxh', this.deliveryForm.value)
 
@@ -894,7 +895,8 @@ export class AssignmentComponent {
           vehicleOUT: dd.vehicleOUT,
           TripId: dd.TripId,
           TripStatus: dd.TripStatus,
-          BookingCategory: dd.BookingCategory
+          BookingCategory: dd.BookingCategory,
+          Remarks:dd.Remarks
         })
         console.log('vehiclemovementpatched', this.tripAssignmentForm.value)
 
@@ -910,10 +912,21 @@ export class AssignmentComponent {
     JSON.stringify(this.deliveryForm.value,TripId)
     console.log("Delivery form", this.deliveryForm.value)
     // this.AllTransactions.push(this.deliveryForm.value, 'deliveryList')
-    this.apiService.addTransaction(this.deliveryForm.value).subscribe((res) => {
+
+    this.apiService.editTrip(TripId,this.deliveryForm.value).subscribe((res)=>{
+      
       console.log('AddFuels', res)
+
       this.AllTransactions.push(res)
+
     })
+
+
+
+    // this.apiService.addTransaction(this.deliveryForm.value).subscribe((res) => {
+    //   console.log('AddFuels', res)
+    //   this.AllTransactions.push(res)
+    // })
 
 
     const isSelfDriven = this.deliveryForm.value.BookingCategory === 'SelfDriven';

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../api.services';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router,RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule, JsonPipe, NgFor } from "@angular/common";
 import { Config } from 'datatables.net';
 import { DataTablesModule } from 'angular-datatables';
@@ -14,7 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
-  standalone:true,
+  standalone: true,
   selector: 'app-billing',
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.css'],
@@ -24,8 +24,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
     JsonPipe,
     DataTablesModule,
     RouterModule,
-MatIconModule,
-ReactiveFormsModule
+    MatIconModule,
+    ReactiveFormsModule
 
   ]
 })
@@ -36,17 +36,17 @@ export class BillingComponent {
 
   dtOptions: DataTables.Settings = {};
   completedBillings: any;
-  closeResult='';
+  closeResult = '';
   bookingInfo: any;
   billingDetails: any = {};
   ReservationId: any;
   billingForm: FormGroup;
-  tripInfo: any ;
-  serviceInfo: any ='';
+  tripInfo: any;
+  serviceInfo: any = '';
   formBuilder: any;
-    getDismissReason: any;
-    private modalService = inject(NgbModal);
-    // searchForm:FormGroup;
+  getDismissReason: any;
+  private modalService = inject(NgbModal);
+  // searchForm:FormGroup;
 
 
   constructor(
@@ -57,12 +57,12 @@ export class BillingComponent {
 
   ) {
     this.billingDetails = []
-    this.tripInfo =[]
-    this.billingForm=this.formBuilder
-    this.bookingInfo=[]
+    this.tripInfo = []
+    this.billingForm = this.formBuilder
+    this.bookingInfo = []
 
 
-    
+
     // this.searchForm = this.formBuilder.group({
     //   BookingNo: ["", Validators.required],
     //   fromDate: ["", Validators.required],
@@ -101,30 +101,31 @@ export class BillingComponent {
   ngOnInit() {
     this.dtOptions = {
       order: [[4, 'asc']],
-      pagingType:'full_numbers',
-      pageLength:10,
-      processing:true,
+      pagingType: 'full_numbers',
+      pageLength: 10,
+      processing: true,
       autoWidth: true
 
 
 
     }
-    this.completedBillings=[]
-      //   this.apiService.fetchAllTransactions().subscribe((res: any) => {
-      //   console.log(res, 'the vehicleouts/in');
-      //   for (const t of res) {
-      //     if (t.MileageIN>0 && t.FuelIN>0) {
-      //       this.completedBillings.push(t);
-      //     }
-      //   }
-      // });
-      this.apiService.fetchAllTransactions().subscribe((res: any) => {
-        console.log(res, 'the vehicleouts/in');
-        this.completedBillings =(res)
-        // this.completedBillings = res.filter((t: any) => t.tripStatus === 'Completed' && t.MileageIN > 0 && t.FuelIN > 0);
-        console.log(this.completedBillings, 'completed billings');
+    this.completedBillings = []
+
+    this.apiService.fetchAllTrips().subscribe((bills: any[]) => {
+
+      this.completedBillings = bills.filter(resv => {
+        return resv.TripStatus === 'Completed'
+
       });
-      
+    })
+
+
+    // this.apiService.fetchAllTransactions().subscribe((res: any) => {
+    //   console.log(res, 'the vehicleouts/in');
+    //   this.completedBillings =(res)
+    //   // this.completedBillings = res.filter((t: any) => t.tripStatus === 'Completed' && t.MileageIN > 0 && t.FuelIN > 0);
+    //   console.log(this.completedBillings, 'completed billings');
+    // });
 
 
 
@@ -137,24 +138,34 @@ export class BillingComponent {
 
 
 
-  }
-  viewBill(){
-    console.log("sucesss");
-
-  }
-  show(){
-    this.toastr.success("Billing is successful.Proceed to Print invoice");
-  }
-  
-  fetchBill(TripId:any){
-this.apiService.fetchTrips(TripId).subscribe((res)=>{
-  console.log('BillingRes',res)
-  for( const m of res){
-    this.bookingInfo = (m)
 
   }
 
-})
+  loaderVisible = false; // Initially the loader is hidden
+  divVisible = false;
+  show() {
+    this.loaderVisible = true;
+    this.toastr.info('Posting to sage')
+
+    setTimeout(() => {
+      this.loaderVisible = false;
+
+      this.toastr.show("Billing is successful. Proceed to Print invoice");
+      this.divVisible = true;
+    }, 3000);
+  }
+
+
+
+  fetchBill(TripId: any) {
+    this.apiService.fetchTrips(TripId).subscribe((res) => {
+      console.log('BillingRes', res)
+      // for( const m of res){
+      this.bookingInfo = (res)
+
+      // }
+
+    })
 
 
   }
@@ -171,8 +182,8 @@ this.apiService.fetchTrips(TripId).subscribe((res)=>{
       }
     );
   }
-  
- 
 
- 
+
+
+
 }

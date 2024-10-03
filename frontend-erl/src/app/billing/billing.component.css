@@ -2,3 +2,17 @@ table{
     zoom: 0.9;
     background-color: white;
 } 
+.loader {
+    border: 6px solid #f3f3f3; /* Light grey */
+    border-top: 6px solid #e32b2b; /* Blue */
+    border-radius: 50%;
+    width: 40px;  /* Smaller width */
+    height: 40px; /* Smaller height */
+    animation: spin 1.5s linear infinite; /* Slightly faster spin */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  

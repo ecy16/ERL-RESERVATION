@@ -598,18 +598,19 @@
               <thead class=" triphead text-sm align-text-top whitespace-nowrap bg-gray-400">
                 <tr>
                   <th>Trip No</th>
-                  <th>Driver Status</th>
-                  <th>Trip Status</th>
+                  <th>PickupFirstName</th>
+                  <th>PickupLastName</th>
+                  <th>Pick Up Address</th>
+                  <th>Drop Address</th>
+                  <th>Pick Up Contacts</th>
                   <th>From DateTime</th>
                   <th>To DateTime</th>
                   <th>ArrivalFlightNo</th>
                   <!-- <th>ArrivalFlightDateTime</th> -->
                   <th>DepartureFlightNo</th>
                   <!-- <th>DepartureFlightDateTime</th> -->
-                  <th>Airline</th>
-                  <th>Pick Up Address</th>
-                  <th>Drop Address</th>
-                  <th>Pick Up Contacts</th>
+                  <!-- <th>Airline</th> -->
+
                   <th>Description</th>
 
                   <th class="text-center">Action</th>
@@ -617,19 +618,20 @@
               </thead>
               <tbody class="text-sm whitespace-nowrap ">
                 <tr class="bg-white" *ngFor="let trip of tripReservationList">
-                  <td><span>{{ trip.tripNumber }}</span></td>
-                  <td><span>{{ trip.DriverServiceStatus }}</span></td>
-                  <td><span>{{ trip.TripStatus }}</span></td>
+                  <td class="text-sm font-medium"><span>{{ trip.BookingNo }}/{{ trip.tripNumber }}</span></td>
+                  <td><span>{{ trip.PickupFirstName }}</span></td>
+                  <td><span>{{ trip.PickupLastName }}</span></td>
+                  <td><span>{{ trip.PickupAddress }}</span></td>
+                  <td><span>{{ trip.DropAddress }}</span></td>
+                  <td><span>{{ trip.PickupContactNo }}</span></td>
                   <td><span>{{ trip.FromDateTime }}</span></td>
                   <td><span>{{ trip.ToDateTime }}</span></td>
                   <td><span>{{ trip.ArrivalFlightNo }}</span></td>
                   <!-- <td><span>{{ trip.ArrivalFlightDateTime }}</span></td> -->
                   <td><span>{{ trip.DepartureFlightNo }}</span></td>
                   <!-- <td><span>{{ trip.DepartureFlightDateTime }}</span></td> -->
-                  <td><span>{{ trip.Airline }}</span></td>
-                  <td><span>{{ trip.PickupAddress }}</span></td>
-                  <td><span>{{ trip.DropAddress }}</span></td>
-                  <td><span>{{ trip.PickupContactNo }}</span></td>
+                  <!-- <td><span>{{ trip.Airline }}</span></td> -->
+                 
                   <td><span>{{ trip.Remarks }}</span></td>
 
                   <td class="text-center w-24">
@@ -1202,12 +1204,12 @@
                     </div>
                     <div class="m-2" [formGroup]="tripFormUpdate">
                       <label>Trip No</label>
-                      <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
-                        formControlName="TripId" readonly value="{{ tripNumber }} " />
+                      <input type="text" class="rounded-md border border-gray-400 form-control"
+                        formControlName="tripNumber" readonly value="{{ tripNumber }} " />
                     </div>
 
 
-                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate" hidden>
+                    <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
                       <label>TripId</label>
                       <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId"
                         formControlName="TripId" />
@@ -1352,7 +1354,37 @@
                         ">*This field is required</small>
                         </div>
                       </div>
-
+                      
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
+                        <label>Pickup FirstName</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupFirstName" id="PickupFirstName" />
+                        <div *ngIf="
+                      (tripFormUpdate.get('PickupFirstName')?.invalid &&
+                      tripFormUpdate.get('PickupFirstName')?.errors &&
+                      tripFormUpdate.get('PickupFirstName')?.dirty) ||
+                      tripFormUpdate.get('PickupFirstName')?.touched
+                    ">
+                          <small class="text-red-700" *ngIf="
+                          tripFormUpdate.get('FirstName')?.hasError('required')
+                      ">*This field is required</small>
+                        </div>
+                      </div>
+                      <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
+                        <label>Pickup LastName</label>
+                        <input type="text" class="rounded-md border border-gray-400 form-control"
+                          formControlName="PickupLastName" id="PickupLastName" />
+                        <div *ngIf="
+                      (tripFormUpdate.get('PickupLastName')?.invalid &&
+                      tripFormUpdate.get('PickupLastName')?.errors &&
+                      tripFormUpdate.get('PickupLastName')?.dirty) ||
+                      tripFormUpdate.get('PickupLastName')?.touched
+                    ">
+                          <small class="text-red-700" *ngIf="
+                          tripFormUpdate.get('LastName')?.hasError('required')
+                      ">*This field is required</small>
+                        </div>
+                      </div>
                       <div class="m-2 text-sm gap-2" [formGroup]="tripFormUpdate">
                         <label>Pickup Contact No</label>
                         <input type="text" class="rounded-md border border-gray-400 form-control"
@@ -1555,11 +1587,11 @@
                       formControlName="tripNumber" />
                   </div>
 
-                  <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
+                   <div class="m-2 text-sm gap-2" [formGroup]="tripServicesFormUpdate" hidden>
                     <label>TripId</label>
                     <input type="text" class="rounded-md border border-gray-400 form-control" id="TripId" readonly
                       formControlName="TripId" />
-                  </div>
+                  </div> 
                   <div class="text-sm" [formGroup]="tripServicesFormUpdate">
                     <label for="serviceName">Service Name</label>
                     <select class="text-sm form-control" id="serviceName" formControlName="serviceName"

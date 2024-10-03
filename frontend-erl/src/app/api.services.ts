@@ -13,7 +13,7 @@ const httpOptions = {
   }),
 };
 
-const url = 'localhost:3000'
+const url = '192.168.1.247:3000'
 
 @Injectable({
   providedIn: "root",
@@ -35,6 +35,8 @@ export class ApiService {
   // --------------Trips---------------
   tripUrl = `http://${url}/api/trips`;
   updateTrip = `http://${url}/api/trips/update/`;
+  patchTripUrl = `http://${url}/api/trips/update`;
+
   // tripIncident = `http://${url}/api/trips-incidents`;
   fetchTripIds = `http://${url}/api/trips/trip/`;
   fetchRelatedReservationTrip = `http://${url}/api/trips/findTrip/`;
@@ -319,6 +321,9 @@ transactionsUrlUpdate=`http://${url}/api/transactions/update/`
   }
   editTrip(TripId: any, tripForm: any): Observable<any> {
     return this.http.patch<any[]>(`${this.updateTrip}` + TripId, tripForm);
+  }
+    UpdateTrip( tripForm: any): Observable<any> {
+    return this.http.patch<any[]>(`${this.updateTrip}/:id`,tripForm );
   }
   updateTripById(TripId: any, tripForm: any): Observable<any> {
     return this.http.patch<any[]>(`${this.updateTrip}` + TripId, tripForm);

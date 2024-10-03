@@ -28,8 +28,8 @@ export class TripsService {
 
         private readonly tripsEntity: EntityManager,
         private readonly tripDataSource: DataSource,
-        // private readonly tripDataSource: DataSource,
-    ) { }
+        // private readonly tripDataSource: DataSource
+            ) { }
 
     async createTrip(addTripsDto: AddTripDto) {
         const reservationTrip = new ReservationTripEntity(addTripsDto);
@@ -43,7 +43,7 @@ export class TripsService {
         } catch (err) {
             console.log(err)
             throw new Error(err.message);
-        }
+                  }
     }
 
 
