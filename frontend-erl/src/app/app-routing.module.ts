@@ -39,7 +39,7 @@ export const routes: Routes = [
   {path:"BookingDetails",component:BookingDetailsComponent},
   {path:"Billing",component:BillingComponent},
   {path:"BillingDetails/:ReservationId",component:BillingDetailsComponent},
-  { path: 'BillingDetails/:id', component: BillingDetailsComponent },
+  { path: 'BillingDetails', component: BillingDetailsComponent },
   {path:"Roster",component:RosterComponent},
   {path:"contract-details/related/:ContractId",component:ContractInformationComponent},
   {path:"delivery/:TripId",component:DeliveryComponent},

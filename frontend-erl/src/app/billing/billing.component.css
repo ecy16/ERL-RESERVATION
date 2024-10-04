@@ -15,4 +15,14 @@ table{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+  .floating-button {
+    position: fixed;
+    top: 100px; /* Distance from the bottom */
+    right: 8px; /* Distance from the right */
+    z-index: 1000; /* Make sure it stays on top */
+  }
+  
+  .floating-button button {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add some shadow for better visibility */
+  }
   

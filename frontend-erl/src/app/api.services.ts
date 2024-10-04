@@ -13,7 +13,7 @@ const httpOptions = {
   }),
 };
 
-const url = '192.168.1.247:3000'
+const url = 'localhost:3000'
 
 @Injectable({
   providedIn: "root",
