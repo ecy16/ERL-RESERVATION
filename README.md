@@ -1,5 +1,5 @@
 # ERL-Car-Reservations
-Executive Rentals is a comprehensive car reservation system designed to streamline the process of renting executive cars. Built using Angular for the frontend and NestJS for the backend, this system offers a seamless user experience coupled with robust backend functionality.
+Executive Rentals is a comprehensive car reservation system designed to streamline the process of renting executive cars. Built using NEXTJS for the frontend and NestJS for the backend, this system offers a seamless user experience coupled with robust backend functionality.
 
 Features:
 User Authentication: Secure user authentication and authorization system to ensure data privacy and access control.
